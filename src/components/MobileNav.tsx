@@ -1,0 +1,5 @@
+"use client";
+import { useEffect, useState } from "react";
+import { Menu, X } from "lucide-react";
+import { Brand, links } from "./SidebarNav";
+export function MobileNav() { const [open, setOpen] = useState(false); useEffect(() => { const close = (event: KeyboardEvent) => event.key === "Escape" && setOpen(false); window.addEventListener("keydown", close); return () => window.removeEventListener("keydown", close); }, []); return <header className="mobile-header"><Brand /><button className="menu-toggle" type="button" aria-label={open ? "Close navigation" : "Open navigation"} aria-expanded={open} aria-controls="mobile-menu" onClick={() => setOpen(!open)}>{open ? <X /> : <Menu />}</button>{open && <><button className="drawer-scrim" aria-label="Close navigation" onClick={() => setOpen(false)} /><nav className="mobile-drawer" id="mobile-menu" aria-label="Mobile navigation">{links.map(([label, href, Icon]) => <a key={label} href={href} onClick={() => setOpen(false)}><Icon aria-hidden="true" size={20} />{label}</a>)}<a className="waitlist" href="#waitlist" onClick={() => setOpen(false)}>Join Waitlist <span>→</span></a></nav></>}</header>; }

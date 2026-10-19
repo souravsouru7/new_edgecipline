@@ -1,0 +1,142 @@
+/* ==========================================================================
+   Section 09 — Frequently Asked Questions (layout only)
+   Class names are prefixed `faq`: CSS Modules are not scoped in this project.
+   ========================================================================== */
+
+.faq {
+  position: relative;
+  min-height: clamp(300px, 24vw, 440px);
+  margin-left: clamp(210px, 13.3vw, 250px);
+  overflow: hidden;
+  isolation: isolate;
+  /* Calmest section on the page: the glow drops away here. */
+  background: #020b12;
+  box-shadow: inset 0 44px 72px -14px #020b10;
+}
+
+.faqGlow {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 126%, rgba(0, 150, 160, .2), transparent 58%);
+}
+
+.faqInner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  align-items: start;
+  gap: clamp(22px, 3vw, 64px);
+  width: min(100%, 1480px);
+  min-height: inherit;
+  padding: clamp(40px, 3.8vw, 70px) clamp(28px, 3.6vw, 62px) clamp(44px, 4.2vw, 76px);
+  margin: 0 auto;
+}
+
+.faqHeader h2 {
+  margin: 0;
+  color: #f5faff;
+  font-size: clamp(28px, 2.7vw, 46px);
+  line-height: 1;
+  letter-spacing: -.05em;
+  font-weight: 850;
+}
+
+.faqHeader h2 span { color: #31e6f1; }
+.faqHeader h2 span + span { color: #00f5ac; }
+
+.faqHeader p {
+  margin: clamp(8px, .8vw, 13px) 0 0;
+  color: #a7b9c5;
+  font-size: clamp(13px, 1.05vw, 17px);
+  font-weight: 500;
+}
+
+.faqRule {
+  display: block;
+  width: clamp(48px, 5vw, 76px);
+  height: 2px;
+  margin-top: clamp(14px, 1.4vw, 22px);
+  background: linear-gradient(90deg, #00f5ac, transparent);
+}
+
+/* --- accordion --- */
+
+.faqList {
+  display: grid;
+  gap: clamp(7px, .7vw, 11px);
+}
+
+.faqItem {
+  border: 1px solid rgba(0, 229, 229, .18);
+  border-radius: clamp(10px, .9vw, 14px);
+  background: rgba(3, 24, 34, .72);
+}
+
+.faqQuestion {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.faqQuestion button {
+  display: flex;
+  width: 100%;
+  min-height: clamp(40px, 3.3vw, 54px);
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: clamp(9px, .8vw, 14px) clamp(13px, 1.2vw, 20px);
+  color: #e6f2f4;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  font: inherit;
+  font-size: clamp(12px, .95vw, 15px);
+  font-weight: 650;
+  text-align: left;
+  cursor: pointer;
+}
+
+.faqIcon { flex: none; color: #8fd7dd; }
+
+.faqPanel {
+  display: grid;
+  grid-template-rows: 0fr;
+}
+
+.faqPanelInner { overflow: hidden; }
+
+.faqPanelInner p {
+  margin: 0;
+  padding: 0 clamp(13px, 1.2vw, 20px) clamp(12px, 1.1vw, 18px);
+  color: #a7b9c5;
+  font-size: clamp(12px, .92vw, 15px);
+  line-height: 1.5;
+}
+
+/* --- tablet --- */
+
+@media (max-width: 1100px) {
+  .faq { margin-left: 0; }
+}
+
+@media (max-width: 1023px) {
+  .faqInner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(20px, 3vw, 32px);
+  }
+}
+
+/* --- mobile --- */
+
+@media (max-width: 767px) {
+  .faq { min-height: 0; }
+  .faqInner { padding: 58px 20px 54px; }
+  .faqHeader h2 { font-size: clamp(27px, 8.6vw, 38px); }
+  .faqHeader p { font-size: 15px; }
+  .faqQuestion button { font-size: 14px; }
+  .faqPanelInner p { font-size: 14px; }
+}

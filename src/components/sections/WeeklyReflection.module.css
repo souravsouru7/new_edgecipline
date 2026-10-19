@@ -1,0 +1,304 @@
+/* ==========================================================================
+   Section 06 — Weekly Reflection & Habits (layout only; motion is in motion.css)
+
+   CSS Modules are not scoped in this project (next.config.ts routes every
+   *.css through the Tailwind turbopack loader), so every name here is
+   prefixed `wr`.
+   ========================================================================== */
+
+.wr {
+  position: relative;
+  min-height: clamp(420px, 32vw, 580px);
+  margin-left: clamp(210px, 13.3vw, 250px);
+  overflow: hidden;
+  isolation: isolate;
+  background: #020b12;
+  box-shadow:
+    inset 0 44px 72px -14px #020b10,
+    inset 0 -44px 72px -14px #020b10;
+}
+
+.wrBackdrop {
+  position: absolute;
+  z-index: -2;
+  inset: -3%;
+  pointer-events: none;
+}
+
+.wrBackdrop img {
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+.wrVeil {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(2, 11, 18, .62), rgba(2, 11, 18, .34) 34%, rgba(2, 11, 18, .88)),
+    linear-gradient(90deg, rgba(2, 11, 18, .8), rgba(2, 11, 18, .22) 46%, rgba(2, 11, 18, .5));
+}
+
+.wrInner {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 1480px);
+  min-height: inherit;
+  padding: clamp(42px, 4vw, 72px) clamp(28px, 3.6vw, 62px) clamp(46px, 4.4vw, 78px);
+  margin: 0 auto;
+}
+
+.wrHeader h2 {
+  margin: 0;
+  color: #f5faff;
+  font-size: clamp(28px, 2.7vw, 46px);
+  line-height: 1;
+  letter-spacing: -.05em;
+  font-weight: 850;
+}
+
+.wrHeader h2 span { color: #31e6f1; }
+
+.wrHeader p {
+  margin: clamp(8px, .8vw, 13px) 0 0;
+  color: #a7b9c5;
+  font-size: clamp(13px, 1.05vw, 17px);
+  font-weight: 500;
+}
+
+/* Four cards: two compact stat tiles, then two wider panels. */
+.wrCards {
+  display: grid;
+  grid-template-columns: .86fr .86fr 1.5fr 1.28fr;
+  gap: clamp(12px, 1.3vw, 22px);
+  padding: 0;
+  margin: clamp(26px, 2.6vw, 44px) 0 0;
+  list-style: none;
+}
+
+.wrCard {
+  position: relative;
+  display: flex;
+  min-height: clamp(126px, 10.5vw, 178px);
+  flex-direction: column;
+  padding: clamp(14px, 1.3vw, 22px);
+  overflow: hidden;
+  border: 1px solid rgba(0, 229, 229, .25);
+  border-radius: clamp(14px, 1.2vw, 20px);
+  /* Deliberately not backdrop-filter: blurring the scene behind four cards
+     cost more per scrolled frame than it was worth. */
+  background: rgba(4, 26, 36, .9);
+  box-shadow:
+    inset 0 1px 0 rgba(195, 255, 250, .07),
+    0 16px 38px rgba(0, 0, 0, .3);
+}
+
+/* --- card 01, day streak --- */
+
+.wrStreak {
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  text-align: center;
+}
+
+.wrStreak::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: -44% 12% auto;
+  height: 76%;
+  pointer-events: none;
+  background: radial-gradient(ellipse, rgba(255, 138, 30, .3), transparent 66%);
+}
+
+.wrFlame {
+  position: relative;
+  color: #ff9a2e;
+  filter: drop-shadow(0 0 10px rgba(255, 138, 30, .55));
+}
+
+.wrStreakValue {
+  position: relative;
+  color: #ff9f3d;
+  font-size: clamp(28px, 2.7vw, 44px);
+  line-height: 1.04;
+  letter-spacing: -.04em;
+  font-weight: 850;
+  font-variant-numeric: tabular-nums;
+}
+
+.wrCardLabel {
+  position: relative;
+  color: #a7b9c5;
+  font-size: clamp(11px, .88vw, 14px);
+  font-weight: 700;
+}
+
+/* --- card 02, discipline score --- */
+
+.wrScore {
+  align-items: center;
+  justify-content: center;
+  gap: clamp(8px, .8vw, 13px);
+  text-align: center;
+}
+
+.wrDial {
+  position: relative;
+  width: clamp(62px, 5.4vw, 92px);
+  aspect-ratio: 1;
+}
+
+.wrDial svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.wrDialValue {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #f5faff;
+  font-size: clamp(14px, 1.2vw, 20px);
+  letter-spacing: -.03em;
+  font-weight: 850;
+  font-variant-numeric: tabular-nums;
+}
+
+.wrScore .wrCardLabel { color: #d6e6ea; }
+
+/* --- card 03, weekly reflection --- */
+
+.wrReflect {
+  flex-direction: row;
+  align-items: center;
+  gap: clamp(12px, 1.2vw, 20px);
+}
+
+.wrReflectIcon {
+  display: grid;
+  flex: none;
+  width: clamp(42px, 3.6vw, 62px);
+  height: clamp(42px, 3.6vw, 62px);
+  place-items: center;
+  color: #00f5ac;
+  border: 1px solid rgba(0, 245, 172, .5);
+  border-radius: clamp(10px, .9vw, 15px);
+  background: rgba(0, 245, 172, .1);
+  box-shadow:
+    0 0 0 5px rgba(0, 245, 172, .05),
+    0 0 24px rgba(0, 245, 172, .22);
+}
+
+.wrReflect h3 {
+  margin: 0;
+  color: #f5faff;
+  font-size: clamp(14px, 1.12vw, 19px);
+  line-height: 1.1;
+  letter-spacing: -.03em;
+  font-weight: 800;
+}
+
+.wrReflect p {
+  max-width: 28ch;
+  margin: clamp(5px, .5vw, 9px) 0 0;
+  color: #a7b9c5;
+  font-size: clamp(12px, .94vw, 15px);
+  line-height: 1.35;
+}
+
+/* --- card 04, your progress --- */
+
+.wrProgress h3 {
+  margin: 0;
+  color: #f5faff;
+  font-size: clamp(13px, 1.04vw, 17px);
+  letter-spacing: -.03em;
+  font-weight: 800;
+}
+
+.wrBars {
+  display: grid;
+  flex: 1;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  align-items: end;
+  gap: clamp(5px, .55vw, 10px);
+  padding: 0;
+  margin: clamp(10px, 1vw, 16px) 0 0;
+  list-style: none;
+}
+
+.wrBars li {
+  display: grid;
+  height: 100%;
+  grid-template-rows: 1fr auto;
+  align-items: end;
+  gap: 5px;
+  text-align: center;
+}
+
+.wrBar {
+  display: block;
+  width: 100%;
+  height: var(--h);
+  border-radius: 4px 4px 2px 2px;
+  background: linear-gradient(180deg, #8affc8, #15c98d);
+  box-shadow: 0 0 12px rgba(0, 245, 172, .22);
+  transform-origin: bottom center;
+}
+
+.wrBars span:last-child {
+  color: #8ea4ad;
+  font-size: clamp(8px, .66vw, 11px);
+  font-weight: 700;
+}
+
+/* --- laptop / tablet --- */
+
+@media (max-width: 1199px) {
+  .wrCards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(12px, 1.8vw, 18px);
+  }
+  .wrCard { min-height: clamp(130px, 17vw, 176px); }
+}
+
+@media (max-width: 1100px) {
+  .wr { margin-left: 0; }
+}
+
+/* --- mobile --- */
+
+@media (max-width: 767px) {
+  .wr { min-height: 0; }
+  .wrBackdrop img { object-position: 62% 30%; }
+
+  .wrVeil {
+    background: linear-gradient(180deg, rgba(2, 11, 18, .86), rgba(2, 11, 18, .56) 40%, rgba(2, 11, 18, .9));
+  }
+
+  .wrInner { padding: 64px 20px 54px; }
+  .wrHeader h2 { font-size: clamp(27px, 8.6vw, 38px); }
+  .wrHeader p { font-size: 15px; }
+
+  .wrCards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 24px;
+  }
+  .wrCard { min-height: 124px; padding: 14px; }
+
+  /* The two wide panels keep the full row so their copy stays readable. */
+  .wrReflect,
+  .wrProgress { grid-column: 1 / -1; }
+  .wrReflect p { max-width: none; }
+}
+
+@media (max-width: 380px) {
+  .wrCards { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,221 @@
+/* ==========================================================================
+   Section 10 — Final CTA / footer (layout only)
+   Class names are prefixed `cta`: CSS Modules are not scoped in this project.
+
+   The reference's artwork for this scene (a seated figure against a large
+   moon) is not in the supplied packages, so the scene is composed from the
+   existing mountain plate, the existing trader silhouette and a CSS moon.
+   ========================================================================== */
+
+.cta {
+  position: relative;
+  min-height: clamp(380px, 30vw, 540px);
+  margin-left: clamp(210px, 13.3vw, 250px);
+  overflow: hidden;
+  isolation: isolate;
+  background: #01080c;
+  box-shadow: inset 0 60px 90px -20px #020b10;
+}
+
+.ctaBackdrop {
+  position: absolute;
+  z-index: -4;
+  inset: -4% -2%;
+  pointer-events: none;
+}
+
+.ctaBackdrop img {
+  object-fit: cover;
+  object-position: center 72%;
+}
+
+/* The celestial body behind the figure. */
+.ctaMoon {
+  position: absolute;
+  z-index: -3;
+  top: 8%;
+  left: 54%;
+  width: min(44vw, 440px);
+  translate: -50% 0;
+  aspect-ratio: 1;
+  pointer-events: none;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 46%, rgba(206, 240, 255, .26) 0 40%, rgba(120, 206, 224, .16) 46%, rgba(80, 170, 190, .05) 58%, transparent 68%),
+    radial-gradient(circle at 42% 38%, rgba(255, 255, 255, .12), transparent 46%);
+}
+
+.ctaFigure {
+  position: absolute;
+  z-index: -2;
+  bottom: 0;
+  left: 54%;
+  width: clamp(90px, 8.6vw, 150px);
+  translate: -50% 0;
+  pointer-events: none;
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, .7));
+}
+
+.ctaFigure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ctaVeil {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(1, 8, 12, .92) 0%, rgba(1, 8, 12, .58) 26%, rgba(1, 8, 12, .08) 50%, rgba(1, 8, 12, .62) 86%, rgba(1, 8, 12, .9) 100%),
+    linear-gradient(180deg, rgba(1, 8, 12, .72), transparent 34%, rgba(1, 8, 12, .62));
+}
+
+.ctaMotes {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+}
+
+.ctaMotes span {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background: #cdeff5;
+  box-shadow: 0 0 8px rgba(150, 230, 240, .8);
+  opacity: 0;
+}
+
+.ctaInner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(20px, 3vw, 48px);
+  width: min(100%, 1480px);
+  min-height: inherit;
+  padding: clamp(40px, 3.8vw, 70px) clamp(28px, 3.6vw, 62px) clamp(52px, 4.6vw, 84px);
+  margin: 0 auto;
+}
+
+.ctaCopy { max-width: min(100%, 34ch); }
+
+.ctaCopy h2 {
+  margin: 0;
+  color: #f5faff;
+  font-size: clamp(28px, 2.9vw, 50px);
+  line-height: 1.02;
+  letter-spacing: -.05em;
+  font-weight: 850;
+}
+
+.ctaCopy h2 span { color: #00f5ac; }
+
+.ctaCopy p {
+  margin: clamp(10px, 1vw, 16px) 0 0;
+  color: #a7b9c5;
+  font-size: clamp(13px, 1.1vw, 18px);
+  font-weight: 500;
+}
+
+.ctaActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(10px, 1.1vw, 18px);
+  margin-top: clamp(18px, 1.8vw, 30px);
+}
+
+/* The hero's button styles already exist globally; these only size them for
+   the footer band. */
+.ctaActions a {
+  min-height: clamp(40px, 3.3vw, 50px);
+  padding: 0 clamp(16px, 1.5vw, 24px);
+  font-size: clamp(12px, .95vw, 15px);
+}
+
+.ctaBrand {
+  display: grid;
+  justify-items: center;
+  gap: clamp(8px, .8vw, 14px);
+  text-align: center;
+}
+
+.ctaBrand img {
+  display: block;
+  width: clamp(120px, 12vw, 200px);
+  height: auto;
+}
+
+.ctaTagline {
+  margin: 0;
+  color: #7fb3b8;
+  font-size: clamp(8px, .68vw, 11px);
+  font-weight: 800;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+
+.ctaTagline span { color: #00f5ac; }
+
+/* --- tablet --- */
+
+@media (max-width: 1100px) {
+  .cta { margin-left: 0; }
+}
+
+@media (max-width: 1023px) {
+  .ctaMoon { left: 60%; width: min(56vw, 400px); }
+  .ctaFigure { left: 60%; }
+}
+
+/* --- mobile: stacked, with the scene behind the copy --- */
+
+@media (max-width: 767px) {
+  .cta { min-height: 0; }
+
+  .ctaBackdrop img { object-position: 56% 76%; }
+
+  /* The scene becomes a band across the bottom of the section, below the copy
+     and the brand, rather than sitting behind them. */
+  .ctaMoon {
+    top: auto;
+    bottom: -3%;
+    left: 50%;
+    width: min(70vw, 280px);
+  }
+
+  .ctaFigure {
+    left: 50%;
+    bottom: 4%;
+    width: clamp(76px, 22vw, 112px);
+  }
+
+  .ctaVeil {
+    background: linear-gradient(180deg, rgba(1, 8, 12, .92) 0%, rgba(1, 8, 12, .72) 34%, rgba(1, 8, 12, .5) 62%, rgba(1, 8, 12, .94));
+  }
+
+  .ctaInner {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    gap: 0;
+    min-height: 0;
+    /* The bottom padding is the scene band the artwork sits in. */
+    padding: 58px 20px clamp(215px, 62vw, 300px);
+    text-align: center;
+  }
+
+  .ctaCopy { max-width: none; }
+  .ctaCopy h2 { font-size: clamp(27px, 8.8vw, 38px); }
+  .ctaCopy p { font-size: 15px; }
+
+  .ctaActions { justify-content: center; }
+  .ctaActions a { flex: 1 1 150px; }
+
+  .ctaBrand { margin-top: 26px; }
+}

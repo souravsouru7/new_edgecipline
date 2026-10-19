@@ -1,0 +1,291 @@
+/* ==========================================================================
+   Section 08 — Pricing Plans (layout only)
+   Class names are prefixed `pr`: CSS Modules are not scoped in this project.
+   ========================================================================== */
+
+.pr {
+  position: relative;
+  min-height: clamp(460px, 34vw, 620px);
+  margin-left: clamp(210px, 13.3vw, 250px);
+  overflow: hidden;
+  isolation: isolate;
+  background: #020b12;
+  box-shadow:
+    inset 0 44px 72px -14px #020b10,
+    inset 0 -44px 72px -14px #020b10;
+}
+
+/* The landscape thins out here so the cards carry the section. */
+.prBackdrop {
+  position: absolute;
+  z-index: -2;
+  inset: -3%;
+  pointer-events: none;
+  opacity: .5;
+}
+
+.prBackdrop img {
+  object-fit: cover;
+  object-position: center 22%;
+}
+
+.prVeil {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 42%, rgba(0, 245, 172, .07), transparent 54%),
+    linear-gradient(180deg, rgba(2, 11, 18, .78), rgba(2, 11, 18, .94) 42%, #020b12);
+}
+
+.prInner {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 1480px);
+  min-height: inherit;
+  padding: clamp(42px, 4vw, 72px) clamp(28px, 3.6vw, 62px) clamp(46px, 4.4vw, 78px);
+  margin: 0 auto;
+}
+
+.prHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: clamp(14px, 2vw, 30px);
+}
+
+.prHeader h2 {
+  margin: 0;
+  color: #f5faff;
+  font-size: clamp(28px, 2.7vw, 46px);
+  line-height: 1;
+  letter-spacing: -.05em;
+  font-weight: 850;
+}
+
+.prHeader h2 span { color: #31e6f1; }
+
+.prHeader p {
+  margin: clamp(8px, .8vw, 13px) 0 0;
+  color: #a7b9c5;
+  font-size: clamp(13px, 1.05vw, 17px);
+  font-weight: 500;
+}
+
+/* --- billing selector --- */
+
+.prBilling {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid rgba(0, 229, 229, .2);
+  border-radius: 999px;
+  background: rgba(3, 24, 34, .8);
+}
+
+.prBillingOption {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 34px;
+  padding: 0 16px;
+  color: #a7b9c5;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  font: inherit;
+  font-size: clamp(11px, .88vw, 14px);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.prBillingOption[aria-disabled="true"] {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.prBillingOption[data-active] {
+  color: #042018;
+  background: linear-gradient(180deg, #7cf7c4, #16d79a);
+  box-shadow: 0 0 18px rgba(0, 245, 172, .3);
+}
+
+.prBillingNote {
+  font-size: .86em;
+  font-weight: 800;
+  letter-spacing: .02em;
+  opacity: .9;
+}
+
+/* --- cards --- */
+
+.prCards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  gap: clamp(14px, 1.6vw, 28px);
+  padding: 0;
+  margin: clamp(26px, 2.8vw, 46px) 0 0;
+  list-style: none;
+}
+
+.prCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(20px, 1.9vw, 32px) clamp(18px, 1.7vw, 28px) clamp(18px, 1.7vw, 26px);
+  border: 1px solid rgba(0, 229, 229, .25);
+  border-radius: clamp(14px, 1.2vw, 20px);
+  background: rgba(3, 24, 34, .82);
+  box-shadow:
+    inset 0 1px 0 rgba(195, 255, 250, .07),
+    0 18px 44px rgba(0, 0, 0, .34);
+}
+
+.prCard[data-featured] {
+  border-color: rgba(0, 245, 172, .6);
+  background: linear-gradient(170deg, rgba(5, 42, 38, .88), rgba(3, 26, 30, .9));
+  box-shadow:
+    inset 0 1px 0 rgba(195, 255, 250, .1),
+    0 0 0 1px rgba(0, 245, 172, .12),
+    0 22px 54px rgba(0, 0, 0, .4);
+}
+
+.prBadge {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  padding: 4px 14px;
+  translate: -50% -50%;
+  color: #042018;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #8dffcd, #19dd9f);
+  box-shadow: 0 0 20px rgba(0, 245, 172, .4);
+  font-size: clamp(8px, .66vw, 11px);
+  font-weight: 850;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.prName {
+  margin: 0;
+  color: #d8e8ec;
+  font-size: clamp(12px, .95vw, 15px);
+  letter-spacing: .01em;
+  font-weight: 800;
+}
+
+.prCard[data-featured] .prName { color: #9affd8; }
+
+.prPrice {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  margin: clamp(6px, .6vw, 11px) 0 0;
+}
+
+.prAmount {
+  color: #31e6f1;
+  font-size: clamp(26px, 2.3vw, 40px);
+  line-height: 1.05;
+  letter-spacing: -.045em;
+  font-weight: 850;
+}
+
+.prCard[data-featured] .prAmount { color: #00f5ac; }
+
+.prPeriod {
+  color: #a7b9c5;
+  font-size: clamp(12px, .95vw, 16px);
+  font-weight: 600;
+}
+
+/* One price per billing mode is rendered; the section's data-billing picks. */
+.prPriceFor { display: none; }
+.pr[data-billing="monthly"] .prPriceFor[data-mode="monthly"],
+.pr[data-billing="yearly"] .prPriceFor[data-mode="yearly"] { display: flex; }
+
+.prFeatures {
+  display: grid;
+  gap: clamp(5px, .5vw, 9px);
+  padding: 0;
+  margin: clamp(14px, 1.4vw, 24px) 0 clamp(16px, 1.6vw, 26px);
+  list-style: none;
+}
+
+.prFeatures li {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  color: #cfe0e4;
+  font-size: clamp(11px, .92vw, 15px);
+  line-height: 1.3;
+}
+
+.prFeatures svg {
+  flex: none;
+  margin-top: .1em;
+  color: #00f5ac;
+}
+
+.prCta {
+  display: inline-flex;
+  min-height: clamp(38px, 3.1vw, 48px);
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: auto;
+  padding: 0 18px;
+  color: #eafcff;
+  border: 1px solid rgba(0, 229, 229, .4);
+  border-radius: 10px;
+  background: rgba(2, 18, 26, .7);
+  font-size: clamp(12px, .95vw, 15px);
+  font-weight: 800;
+}
+
+.prCard[data-featured] .prCta {
+  color: #042018;
+  border-color: transparent;
+  background: linear-gradient(180deg, #8dffcd, #16d79a);
+  box-shadow: 0 0 24px rgba(0, 245, 172, .3);
+}
+
+.prCta span { font-size: 1.15em; line-height: 0; }
+
+/* --- tablet --- */
+
+@media (max-width: 1100px) {
+  .pr { margin-left: 0; }
+}
+
+@media (max-width: 1023px) {
+  .prCards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* The featured plan keeps the full row rather than being squeezed. */
+  .prCard[data-featured] { grid-column: 1 / -1; order: -1; }
+}
+
+/* --- mobile --- */
+
+@media (max-width: 767px) {
+  .pr { min-height: 0; }
+  .prInner { padding: 62px 20px 56px; }
+  .prHeader { align-items: flex-start; }
+  .prHeader h2 { font-size: clamp(27px, 8.6vw, 38px); }
+  .prHeader p { font-size: 15px; }
+
+  .prCards {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    margin-top: 28px;
+  }
+  .prCard,
+  .prCard[data-featured] { grid-column: auto; order: 0; }
+  .prCard[data-featured] { order: -1; }
+  .prBadge { font-size: 9px; }
+  .prAmount { font-size: 32px; }
+}
