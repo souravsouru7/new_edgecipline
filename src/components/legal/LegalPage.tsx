@@ -2,8 +2,8 @@ import type { CSSProperties } from "react";
 import Link from "next/link";
 import { ChevronRight, FileText, Mail } from "lucide-react";
 
-import { MobileNav } from "@/components/MobileNav";
-import { SidebarNav } from "@/components/SidebarNav";
+import { Navbar } from "@/components/nav/Navbar";
+import { SiteFooter } from "@/components/SiteFooter";
 import { RevealObserver } from "@/components/motion/RevealObserver";
 import { renderMarkdown } from "@/components/blog/markdown";
 import type { LegalDoc } from "@/data/legal";
@@ -39,8 +39,7 @@ export function LegalPage({ doc }: { doc: LegalDoc }) {
       </a>
 
       <RevealObserver />
-      <SidebarNav />
-      <MobileNav />
+      <Navbar />
 
       <section className={css("lgHero")} aria-labelledby="legal-title">
         <div className={css("lgHeroGlow")} aria-hidden="true" />
@@ -117,6 +116,7 @@ export function LegalPage({ doc }: { doc: LegalDoc }) {
           </div>
         </div>
       </main>
+      <SiteFooter />
     </div>
   );
 }

@@ -17,7 +17,7 @@ export type DnaIconName = "emotions" | "risk" | "strengths" | "personality";
 
 const GLYPHS: Record<DnaIconName, { color: string; glyph: JSX.Element }> = {
   emotions: {
-    color: "#b847ff",
+    color: "#39ff88",
     glyph: (
       <>
         <path d="M500 360 C385 300 340 500 430 555 C380 640 480 686 500 610 C570 700 670 620 580 551 C690 481 610 301 500 360 Z" />
@@ -26,7 +26,7 @@ const GLYPHS: Record<DnaIconName, { color: string; glyph: JSX.Element }> = {
     ),
   },
   risk: {
-    color: "#ff9a14",
+    color: "#00c878",
     glyph: (
       <>
         <path d="M400 630 C352 550 372 433 447 401 C493 345 591 384 603 454 C658 494 629 573 567 587 L567 657 H410 Z" />
@@ -35,7 +35,7 @@ const GLYPHS: Record<DnaIconName, { color: string; glyph: JSX.Element }> = {
     ),
   },
   strengths: {
-    color: "#02e893",
+    color: "#7dd3fc",
     glyph: (
       <>
         <circle cx="500" cy="505" r="134" />
@@ -46,7 +46,7 @@ const GLYPHS: Record<DnaIconName, { color: string; glyph: JSX.Element }> = {
     ),
   },
   personality: {
-    color: "#05c4ff",
+    color: "#38bdf8",
     glyph: (
       <>
         <circle cx="500" cy="448" r="92" />
@@ -68,7 +68,7 @@ export function DnaFeatureIcon({ name }: { name: DnaIconName }) {
       focusable="false"
       style={vars({ "--icon": color })}
     >
-      <circle cx="500" cy="500" r="275" fill="#00151b" stroke={color} strokeWidth="25" />
+      <circle cx="500" cy="500" r="275" fill="#050914" stroke={color} strokeWidth="25" />
       <circle cx="500" cy="500" r="240" fill="none" stroke={color} strokeWidth="8" opacity=".5" />
       <g fill="none" stroke={color} strokeWidth="22" strokeLinecap="round" strokeLinejoin="round">
         {glyph}

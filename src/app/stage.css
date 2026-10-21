@@ -1,427 +1,82 @@
 /* ==========================================================================
-   The scroll stage
+   Section arrival
    --------------------------------------------------------------------------
-   The landing page is one pinned frame. `.stage-pin` is held still in the
-   viewport while the document scrolls past `.stage`, and all eleven sections
-   share that frame: each one's content cross-fades in, holds, and cross-fades
-   out again over the page's single background (app/backdrop.css), so a
-   section arrives and leaves rather than scrolling by.
+   The landing page's eleven sections scroll normally. This file gives them
+   one shared arrival so the page reads as a single continuous experience
+   rather than eleven unrelated blocks: a section fades up as it comes into
+   the viewport and then stays put, at full opacity, for as long as it is on
+   screen.
 
-   Nothing in here is timed. Every value is a function of `--stage-p`, which
-   StageMotion publishes: 0 the instant the pin takes hold, 1 the instant
-   before it lets go. That is what makes the sequence reverse exactly on the
-   way back up and keeps it from ever drifting out of step with the scrollbar.
-   The document's own scrolling is untouched — no wheel handler, no scroll
-   locking, no snapping anywhere on the page.
+   It replaced a pinned frame — all eleven sections held in the viewport and
+   cross-faded through it, driven by a `--stage-p` this file derived half a
+   dozen values from. A pinned document is scroll hijacking however carefully
+   it is built, and it put an animation between a visitor and the hero's call
+   to action.
 
-   Knobs (on `.stage`):
-     --stage-travel  scroll distance each section after the first is given.
-                     Eleven panels at this value is the whole page's length.
-     --stage-span    how far out, in panels, a section is still on screen
-     --stage-rise    how far a panel travels on its way in
+   The one rule that matters here: a section never fades OUT. The old
+   crossfade had to, because two sections shared one frame. On a normally
+   scrolling page, fading a section as it leaves means the paragraph someone
+   is still reading at the top of the viewport is half transparent. So the
+   ramp is one-directional.
 
-   THE CURVE, and why it is shaped this way.
+   Nothing here is timed. The value is `--mo-enter`, which StageMotion
+   publishes per section: 0 the moment the section's top crosses the bottom of
+   the viewport, 1 three tenths of a viewport later. That is what makes it
+   track the scrollbar exactly and reverse on the way back up.
 
-   The first version held a section at full opacity while it was within a
-   quarter-panel of the frame, then ramped. That looked right in a filmstrip
-   and felt wrong to use: more than half of every section's scroll produced no
-   visual change at all, so scrolling through the hold felt like the page had
-   stopped responding. A pinned page has nothing else moving — opacity is the
-   only feedback there is — so it can never be flat.
+   It is deliberately not derived from `--mo-progress`. That value runs across
+   the section's OWN travel, so "the first 28% of it" is a different distance
+   for every section — on one three viewports tall the fade would last more
+   than a full viewport of scrolling and the opening paragraph would be read
+   at half opacity. `--mo-enter` is the same distance for every section.
 
-   So there is no plateau. `--stage-l` is a plain triangle, 1 in the frame and
-   0 a full `--stage-span` away, and the opacity is `l² (2 − l)`:
-
-     distance   0     0.2    0.35   0.5    0.65   0.8    1
-     opacity    1.00  0.77   0.57   0.38   0.21   0.07   0
-
-   Every pixel of scroll moves it, so the page always answers immediately. The
-   curve is steep in the middle and gentle at both ends, so a section still
-   reads as arriving and settling rather than sliding linearly, and at the
-   half-way point between two sections both sit at 0.38 — a dissolve through
-   the background, not two legible headlines at once.
-
-   Derived, per panel:
-     --stage-d    distance from the frame, in panels; 0 = in the frame
-     --stage-in   arrival ramp, 0..1
-     --stage-out  departure ramp, 0..1
-
-   Everything pinned is scoped to `.stage[data-stage-pinned]`, an attribute
-   StageMotion only sets when it is actually pinning. With JavaScript off, on a
-   viewport too small to hold a section, or for a visitor who asked for reduced
-   motion, none of this matches and the page is an ordinary scrolling column of
-   sections with every word of every one of them visible.
+   Knob, on `.stage`:
+     --stage-rise  how far a section travels on its way in
    ========================================================================== */
 
-/* --stage-p is read by the rail and by the background layer, both of which
-   are small; it is deliberately NOT published on `.stage`. */
-@property --stage-p {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 0;
-}
-
-/* The crossfade's working values, and the single most important detail in
-   this file: `inherits: false`.
- *
- * These used to be derived on each panel from a `--stage-t` published on
- * `.stage`. That is one inherited custom property on an ancestor of the whole
- * page, rewritten every frame, and it invalidated the style of all ~1200
- * elements under the stage every time: style recalculation measured 3985ms
- * across a nine-second scroll and a third of all frames were dropped, with
- * stalls up to 250ms.
- *
- * Declared non-inherited and written per panel, a change invalidates that one
- * element and nothing below it. Eleven elements per frame instead of twelve
- * hundred. Any new value the crossfade needs belongs here, with
- * `inherits: false`, for the same reason.
- *
- * --stage-d's initial value is a parked distance, not 0. 0 means "in the
- * frame", so a panel StageMotion has not written yet renders at full
- * opacity — and when that happened to all of them at once (a NaN in the
- * change guard meant the write was skipped forever) the page showed every
- * section stacked on top of the others. Out of reach is the safe default. */
-@property --stage-d {
+@property --mo-enter {
   syntax: "<number>";
   inherits: false;
-  initial-value: 9;
-}
-
-@property --stage-in {
-  syntax: "<number>";
-  inherits: false;
-  initial-value: 0;
-}
-
-@property --stage-out {
-  syntax: "<number>";
-  inherits: false;
-  initial-value: 0;
-}
-
-@property --stage-l {
-  syntax: "<number>";
-  inherits: false;
-  initial-value: 0;
+  /* 1, not 0: an unwritten section must be fully visible, never invisible.
+     A section StageMotion has not reached yet — or will never reach, because
+     JavaScript failed — has to render as ordinary content. */
+  initial-value: 1;
 }
 
 .stage {
-  --stage-travel: 70svh;
-  --stage-span: 1;
-  --stage-rise: 30px;
-  --stage-count: 11;
+  --stage-rise: 28px;
   position: relative;
 }
 
-/* --------------------------------------------------------------------------
-   1. The pin
-   --------------------------------------------------------------------------
-   Stage height = one viewport to hold the frame, plus one --stage-travel for
-   every section after the first. The pinned child is exactly one viewport
-   tall, so the pin takes hold the moment the stage's top reaches the top of
-   the viewport and releases the moment its bottom reaches the bottom — the
-   same window --stage-p measures. The release needs no handling of its own:
-   the last panel is still at full opacity when the sticky box runs out of
-   travel and simply scrolls away with the stage.
-   -------------------------------------------------------------------------- */
-
-.stage[data-stage-pinned] {
-  height: calc(100svh + (var(--stage-count) - 1) * var(--stage-travel));
+/*
+ * The arrival ramp.
+ *
+ * `--mo-enter` is declared `inherits: false` on purpose. The equivalent value
+ * used to be derived from an inherited property written on the stage itself,
+ * which invalidated the style of every element on the page on every scroll
+ * frame: style recalculation measured 3985ms across a nine-second scroll.
+ * Written per section and non-inherited, a change invalidates that one
+ * element and nothing inside it.
+ */
+.stage > :is(main, section) {
+  opacity: var(--mo-enter, 1);
+  translate: 0 calc((1 - var(--mo-enter, 1)) * var(--stage-rise));
+  /* Each section owns a scroll position the navbar must not cover. */
+  scroll-margin-top: calc(var(--navbar-h) + 18px);
 }
 
-.stage[data-stage-pinned] .stage-pin {
-  position: sticky;
-  top: 0;
-  display: grid;
-  height: 100svh;
-  /* The sidebar gutter each section used to carry individually. Moving it
-     here is what keeps all eleven panels in register. StageMotion only pins
-     above the sidebar's own breakpoint, so this is never a gutter beside
-     nothing. The gutter on the other side is the progress rail's: it is
-     fixed over the frame, so the frame has to leave it room rather than let
-     a section run underneath it. */
-  margin-left: clamp(210px, 13.3vw, 250px);
-  padding-right: clamp(38px, 3.2vw, 54px);
-  /* `clip`, not `hidden`: `hidden` would make this a scroll container of its
-     own and the pin would scroll away inside it. */
-  overflow: clip;
-}
-
-/* --------------------------------------------------------------------------
-   2. The crossfade
-   --------------------------------------------------------------------------
-   All panels share one grid cell, so nothing has to be measured or absolutely
-   positioned and the frame is as tall as the viewport, no more. A panel's
-   opacity is a function of its distance from the frame alone, so the mapping
-   is symmetric and scrolling up runs it backwards exactly. See THE CURVE
-   above for the shape and the reasoning.
-   -------------------------------------------------------------------------- */
-
-.stage[data-stage-pinned] [data-stage-panel] {
-  grid-area: 1 / 1;
-  /* Both are load-bearing. A grid item's automatic minimum size is its
-     content's, so without these a section whose widest row does not want to
-     compress — the final CTA's two-column block, say — makes itself wider
-     than the frame and spills past the rail instead of laying out inside it.
-     The same applies vertically. */
-  min-width: 0;
-  min-height: 0;
-  width: 100%;
-  height: 100%;
-  margin-left: 0;
-  /* The panel clips, exactly as each section's own `overflow: hidden` used
-     to: several of them compose with artwork deliberately hung past their
-     edges — the hero's rock and figure, the Built by traders portrait — and
-     that was always meant to be cut off, not to become something to scroll.
-     Content that genuinely does not fit scrolls inside its own wrapper
-     instead; see section 3. */
-  overflow: clip;
-
-  /* --stage-d is written per panel by StageMotion: distance from the frame,
-     in panels. See the @property block above for why it is not derived from
-     an inherited value here. */
-  --stage-in: clamp(0, calc((var(--stage-d) + var(--stage-span)) / var(--stage-span)), 1);
-  --stage-out: clamp(0, calc((var(--stage-span) - var(--stage-d)) / var(--stage-span)), 1);
-  --stage-l: calc(var(--stage-in) * var(--stage-out));
-  opacity: calc(var(--stage-l) * var(--stage-l) * (2 - var(--stage-l)));
-
-  /* The secondary transition: a small upward travel under the fade, running
-     continuously from --stage-rise below the frame, through nothing in it, to
-     --stage-rise above it on the way out.
-
-     It is tied straight to distance rather than to the arrival ramp, which
-     buys two things. The sections separate as they cross — without it the
-     outgoing headline sits exactly on top of the incoming one and the
-     dissolve reads as a double exposure rather than a handover. And because
-     it never stops changing, the page answers every pixel of scroll with
-     movement, not only with a change in opacity.
-
-     Applied to the panel rather than to its headings, because `translate` is
-     what the reveals inside it already animate and the two must not fight
-     over the same property. */
-  translate: 0 calc(clamp(-1, var(--stage-d), 1) * var(--stage-rise) * -1);
-
-  /* Only the section in the frame takes the pointer; the faded ones must not
-     intercept a click meant for it. Focus is handled in StageMotion, which
-     brings a panel into the frame when something inside it is focused, so
-     this cannot strand the keyboard. */
-  pointer-events: none;
-}
-
-.stage[data-stage-pinned] [data-stage-panel][data-stage-active] {
-  pointer-events: auto;
-}
-
-/* ---- Off-frame artwork is not rendered ---------------------------------
-   `opacity: 0` is not enough to stop a panel costing anything.
-
-   A section's decorative layers — the hero's planet canvas and figure, the
-   Built by traders portrait and ribbons, the final CTA's moon and motes —
-   each force their own compositor layer. Before the stage existed they left
-   the viewport after one screen and the browser dropped them. As panels of a
-   pinned frame they never leave, and Chrome keeps rastering and re-committing
-   a subtree whose ancestor opacity is animating, however transparent that
-   ancestor is. Measured: compositor `Commit` was 435ms of a 4.5s scroll, the
-   largest single cost on the page, and the page was at its slowest exactly
-   where the hero was invisible.
-
-   `display: none` is what actually drops the layers; `visibility: hidden`,
-   `content-visibility: auto`, `contain: paint` and `will-change` were all
-   measured and none of them did. It is keyed to `data-mo-live` — the flag
-   StageMotion already sets on the panel in the frame and its two neighbours —
-   so it flips on a panel change, not on a frame, and a panel's artwork is
-   back about two thirds of a step before its crossfade can start.
-
-   Only `aria-hidden` children of a panel are ever dropped, and only the
-   panel's own top-level ones. Every heading, paragraph, control and link
-   stays in the document at all times, so nothing here is hidden from a
-   crawler or from assistive technology. */
-.stage[data-stage-pinned] [data-stage-panel]:not([data-mo-live]) > [aria-hidden="true"] {
-  display: none;
-}
-
-/* --------------------------------------------------------------------------
-   3. Fitting a section into one frame
-   --------------------------------------------------------------------------
-   The sections were written to be as tall as their content needed, with
-   padding measured against the viewport's width. In the frame the constraint
-   is its height, so the vertical rhythm is re-expressed in `svh` — a short
-   laptop window and a tall desktop are what decide whether a section fits, and
-   neither is a function of how wide the screen is. Nothing here changes a
-   layout, a column count or a type scale.
-   -------------------------------------------------------------------------- */
-
-.stage[data-stage-pinned] :is(
-  .loop-inner,
-  .chart-inner,
-  .hiwFrame,
-  .dnaInner,
-  .wrInner,
-  .jyInner,
-  .prInner,
-  .faqInner,
-  .ctaInner
-) {
-  min-height: 100%;
-  max-height: 100%;
-  padding-block: clamp(16px, 3.6svh, 56px);
-  align-content: center;
-  /* The safety net. If a section ever does not fit the frame — a long
-     translation, a very large font size, every FAQ answer open at once — its
-     content scrolls here rather than being cut off. Scroll chaining is left
-     on, so reaching the end carries on down the page as usual. These wrappers
-     hold content only; the artwork that hangs past a section's edge is
-     outside them and stays clipped by the panel. */
-  overflow: hidden auto;
-  overscroll-behavior-y: auto;
-}
-
-/* The two sections that compose themselves out of absolutely placed artwork
-   rather than an inner wrapper. */
-.stage[data-stage-pinned] :is(.chart-copy, .story-copy) {
-  padding-block: clamp(16px, 3.6svh, 56px);
-}
-
-/* --------------------------------------------------------------------------
-   4. The progress rail
-   --------------------------------------------------------------------------
-   A section index down the right-hand edge: a line that fills with scroll
-   progress itself — `scaleY(--stage-p)`, so it tracks the scrollbar rather
-   than approximating it — and one number per section, the one in the frame
-   lit. The links are real, so this is also the way to jump straight to a
-   section; StageMotion turns a click into a scroll to that panel's place on
-   the stage.
-   -------------------------------------------------------------------------- */
-
-.stage-rail { display: none; }
-
-.stage[data-stage-pinned] .stage-rail {
-  position: fixed;
-  z-index: 15;
-  top: 50%;
-  right: clamp(8px, 1.1vw, 18px);
-  display: grid;
-  grid-template-columns: 1px auto;
-  gap: 0 12px;
-  translate: 0 -50%;
-}
-
-.stage-rail-track {
-  position: relative;
-  overflow: hidden;
-  border-radius: 1px;
-  background: rgba(120, 220, 232, .16);
-}
-
-.stage-rail-track [data-stage-fill] {
-  position: absolute;
-  inset: 0;
-  display: block;
-  border-radius: inherit;
-  background: linear-gradient(180deg, var(--mint), var(--cyan));
-  box-shadow: 0 0 10px rgba(0, 239, 179, .5);
-  transform-origin: top center;
-  transform: scaleY(var(--stage-p, 0));
-}
-
-.stage-rail ol {
-  display: grid;
-  gap: clamp(4px, 1.1svh, 11px);
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-.stage-rail a {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  min-height: 22px;
-  color: #5d7980;
-  font-family: var(--font-geist-mono), ui-monospace, monospace;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  transition: color var(--mo-dur-fast, .45s) var(--mo-ease-soft, ease);
-}
-
-.stage-rail a span {
-  max-width: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  opacity: 0;
-  transition:
-    max-width var(--mo-dur-fast, .45s) var(--mo-ease-soft, ease),
-    opacity var(--mo-dur-fast, .45s) var(--mo-ease-soft, ease);
-}
-
-/* The label is a hover affordance, so the rail reads as a quiet column of
-   numbers until it is asked what they are. */
-.stage-rail:hover a span,
-.stage-rail a:focus-visible span {
-  max-width: 16ch;
+/* The hero is the first thing painted and must never arrive: it would mean
+   the headline and the primary call to action fading in on load, which is
+   exactly the wait the approved direction rules out. */
+.stage > section#hero {
   opacity: 1;
-}
-
-.stage-rail a:hover { color: #d7eef0; }
-
-/* The current section. Driven by the same distance the crossfade uses, so the
-   rail cannot disagree with what is on screen. `--stage-p` is published on
-   the rail rather than on the stage: the rail is a dozen small elements, so
-   an inherited property is cheap here and ruinous there. */
-.stage-rail { --stage-t: calc(var(--stage-p, 0) * (var(--stage-count, 11) - 1)); }
-
-.stage[data-stage-pinned] .stage-rail li {
-  --stage-dm: calc(var(--stage-t) - var(--i, 0));
-  --stage-near: calc(
-    clamp(0, calc((var(--stage-dm) + .7) / .5), 1) *
-    clamp(0, calc((.7 - var(--stage-dm)) / .5), 1)
-  );
-}
-
-.stage[data-stage-pinned] .stage-rail a {
-  color: rgb(
-    calc(93 + 141 * var(--stage-near))
-    calc(121 + 134 * var(--stage-near))
-    calc(128 + 121 * var(--stage-near))
-  );
-  text-shadow: 0 0 calc(10px * var(--stage-near)) rgba(0, 239, 179, calc(.45 * var(--stage-near)));
-}
-
-/* The hero's keyword column lives at the right edge too, so it steps aside
-   for the rail rather than sitting under it. */
-.stage[data-stage-pinned] .keyword-list {
-  right: clamp(54px, 4.4vw, 78px);
-}
-
-/* --------------------------------------------------------------------------
-   5. Not pinned
-   --------------------------------------------------------------------------
-   Phones, short windows, reduced motion and no JavaScript at all. The page is
-   an ordinary scrolling column again — but the sections still arrive and
-   leave, because each panel's `--mo-progress` is still published and the
-   fade is simply tied to the section's own travel through the viewport
-   instead of to a frame. Same design language, no pinning, no clipping and
-   nothing that could hold a touch gesture.
-   -------------------------------------------------------------------------- */
-
-.stage:not([data-stage-pinned]) [data-stage-panel] {
-  --stage-p1: var(--mo-progress, .5);
-  --stage-in: clamp(0, calc(var(--stage-p1) / .3), 1);
-  --stage-out: clamp(0, calc((1 - var(--stage-p1)) / .3), 1);
-  opacity: calc(var(--stage-in) * var(--stage-out));
-  translate: 0 calc((1 - var(--stage-in)) * var(--stage-rise));
+  translate: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  /* Never fade anything a visitor asked to be left alone. Both states are
-     spelled out so this outranks the fallback rule above, which is one
-     selector more specific than a bare `.stage [data-stage-panel]` would
-     be — reduced motion losing that cascade would leave ten of the eleven
-     sections sitting at a fraction of full opacity, permanently. */
-  .stage:not([data-stage-pinned]) [data-stage-panel],
-  .stage[data-stage-pinned] [data-stage-panel] {
+  /* Nothing moves and nothing is ever partly transparent for a visitor who
+     asked to be left alone. */
+  .stage > :is(main, section) {
     opacity: 1;
     translate: none;
   }

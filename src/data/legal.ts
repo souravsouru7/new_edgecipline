@@ -224,3 +224,27 @@ export const legalDocs: readonly LegalDoc[] = [privacyPolicy, termsOfService];
 export function getLegalDoc(slug: string): LegalDoc | undefined {
   return legalDocs.find((doc) => doc.slug === slug);
 }
+
+/**
+ * "January 2026" → "2026-01-01".
+ *
+ * Both legal pages print a month-granularity "Last updated" line, and both
+ * their `dateModified` in schema and their sitemap entry have to agree with
+ * it. Parsing the printed line is what guarantees that: the date can only be
+ * wrong in one place now instead of three, and it can never silently become
+ * "today" the way a hardcoded literal eventually does.
+ *
+ * Returns undefined rather than guessing if the line is not in that form, so
+ * a malformed date is omitted instead of being invented.
+ */
+const MONTH_NAMES = [
+  "january", "february", "march", "april", "may", "june",
+  "july", "august", "september", "october", "november", "december",
+];
+
+export function legalDateModified(updated: string): string | undefined {
+  const [month, year] = updated.trim().toLowerCase().split(/\s+/);
+  const index = MONTH_NAMES.indexOf(month ?? "");
+  if (index < 0 || !/^\d{4}$/.test(year ?? "")) return undefined;
+  return `${year}-${String(index + 1).padStart(2, "0")}-01`;
+}

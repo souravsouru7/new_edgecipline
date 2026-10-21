@@ -13,8 +13,8 @@ import {
   Zap,
 } from "lucide-react";
 
-import { MobileNav } from "@/components/MobileNav";
-import { SidebarNav } from "@/components/SidebarNav";
+import { Navbar } from "@/components/nav/Navbar";
+import { SiteFooter } from "@/components/SiteFooter";
 import { RevealObserver } from "@/components/motion/RevealObserver";
 import {
   beliefs,
@@ -39,10 +39,9 @@ const description =
   "Why Edgecipline exists: the mission, the vision, the founder story, and the journey from a behavioural journal to an AI discipline coach for Forex and Indian market traders.";
 
 export const metadata: Metadata = {
-  title,
+  title: { absolute: title },
   description,
   alternates: { canonical: absoluteUrl("/about") },
-  robots: { index: true, follow: true },
   openGraph: {
     siteName: BRAND_NAME,
     title,
@@ -122,8 +121,7 @@ export default function AboutPage() {
       </a>
 
       <RevealObserver />
-      <SidebarNav />
-      <MobileNav />
+      <Navbar />
 
       <section className={css("abHero")} aria-labelledby="about-title">
         <div className={css("abHeroGlow")} aria-hidden="true" />
@@ -363,6 +361,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      <SiteFooter />
     </div>
   );
 }

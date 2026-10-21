@@ -2,21 +2,9 @@
  * /faq content, taken from the previous site's copy deck:
  * `edgeclipine/site-content.md` → "# FAQ Page".
  *
- * All 25 questions and answers are that page's wording, in its order and its
- * six categories. The layout, the search and the category rail are new.
- *
- * This module is a plain data file rather than part of the client component on
- * purpose: the page emits FAQPage structured data from the same array that
- * renders the accordion, so the markup can never describe a question the page
- * does not actually show. Exports crossing a client boundary would reach the
- * server component as client references rather than real values.
- *
- * Two links in the old copy are deliberately not reproduced, because the routes
- * do not exist on this site yet:
- *   * "Full details are in our Privacy Policy" — the sentence is kept, the link
- *     is not (/privacy is unbuilt);
- *   * "Contact us →" — replaced by the real support address from the old
- *     `lib/brand.ts`, which is a destination that works today.
+ * The 25 questions retain their original categories and order. Answers about
+ * pre-launch availability, security, broker support, and pricing have been
+ * clarified so they do not imply unverified live product capabilities.
  */
 
 export type FaqCategory =
@@ -107,7 +95,7 @@ export const faqItems: readonly FaqItem[] = [
     id: "is-there-a-mobile-app",
     category: "About Edgecipline",
     q: "Is there a mobile app?",
-    a: "Yes. Edgecipline ships as a native Android app with camera/gallery screenshot upload, push notifications for streaks and the morning mentor, and your full journal, analytics, and Trading DNA on the go.",
+    a: "A native Android app is planned for launch. Edgecipline is currently in pre-launch early access; join the waitlist for availability updates.",
   },
 
   // ── AI & Features ─────────────────────────────────────────────────────────
@@ -121,7 +109,7 @@ export const faqItems: readonly FaqItem[] = [
     id: "supported-brokers",
     category: "AI & Features",
     q: "What brokers and platforms does Edgecipline support?",
-    a: "Edgecipline auto-detects 20+ Forex and Indian broker platforms from your screenshot — MT4, MT5, cTrader, Zerodha, Upstox, Angel One, Dhan, Groww, Fyers, 5paisa, ICICI Direct, Kotak Securities, Paytm Money, and more.",
+    a: "Edgecipline is being built for Forex platforms such as MT4, MT5 and cTrader, and Indian brokers such as Zerodha, Upstox, Angel One, Dhan and Groww. Confirmed support for each screenshot format will be published as the product becomes available.",
   },
   {
     id: "what-is-trading-dna",
@@ -179,7 +167,7 @@ export const faqItems: readonly FaqItem[] = [
     id: "how-much-does-it-cost",
     category: "Pricing & Access",
     q: "How much does Edgecipline cost?",
-    a: "Three plans: Standard at ₹349/month, Professional at ₹899 for 3 months (~₹9.99/day), and Ultimate at ₹1,499 for 6 months (~₹8.33/day). One bad trade costs more than a year of Edgecipline.",
+    a: "The published launch plans are Standard at ₹349/month, Professional at ₹899 for 3 months, and Ultimate at ₹1,499 for 6 months. Joining the waitlist is free, and no payment is collected today.",
   },
   {
     id: "is-the-waitlist-free",
@@ -205,13 +193,13 @@ export const faqItems: readonly FaqItem[] = [
     id: "how-data-is-stored",
     category: "Privacy & Data",
     q: "How is my trade data stored?",
-    a: "Your trade data is stored securely and encrypted. We never share your personal trading information with third parties. Full details are in our Privacy Policy.",
+    a: "The full trading product has not launched. The current Privacy Policy describes data collected through this website; product trade-data storage details need to be confirmed before launch.",
   },
   {
     id: "broker-account-access",
     category: "Privacy & Data",
     q: "Does Edgecipline have access to my broker account?",
-    a: "No. Edgecipline never connects to your broker. You upload screenshots — we never need your login credentials or direct broker access. Your account security is never at risk.",
+    a: "The planned screenshot workflow does not require broker login credentials or a direct broker connection. Never share broker credentials through a screenshot or message.",
   },
   {
     id: "waitlist-data-collected",

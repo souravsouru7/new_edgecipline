@@ -5,8 +5,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, Check, ChevronRight, Mail, SquareArrowOutUpRight } from "lucide-react";
 
-import { MobileNav } from "@/components/MobileNav";
-import { SidebarNav } from "@/components/SidebarNav";
+import { Navbar } from "@/components/nav/Navbar";
+import { SiteFooter } from "@/components/SiteFooter";
 import { RevealObserver } from "@/components/motion/RevealObserver";
 import {
   FOUNDER_NAMES_SENTENCE,
@@ -40,10 +40,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description = `${founder.name} is a co-founder of Edgecipline and leads ${founder.leads}. ${founder.bio}`;
 
   return {
-    title,
+    title: { absolute: title },
     description,
     alternates: { canonical },
-    robots: { index: true, follow: true },
     openGraph: {
     siteName: BRAND_NAME,
       title,
@@ -139,8 +138,7 @@ export default async function FounderProfilePage({ params }: Props) {
       </a>
 
       <RevealObserver />
-      <SidebarNav />
-      <MobileNav />
+      <Navbar />
 
       <section className={css("fdHero")} aria-labelledby="founder-name">
         <div className={css("fdHeroGlow")} aria-hidden="true" />
@@ -318,6 +316,7 @@ export default async function FounderProfilePage({ params }: Props) {
           </div>
         </div>
       </section>
+      <SiteFooter />
     </div>
   );
 }

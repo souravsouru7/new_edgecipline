@@ -24,17 +24,16 @@
 /**
  * Canonical origin.
  *
- * Defaults to the real production host rather than returning nothing when the
- * environment variable is missing. That default matters: with no origin, every
- * canonical, Open Graph URL and sitemap entry on the site silently evaluated
- * to nothing, which is the weakest possible signal for a brand that search
- * engines already mis-spell. Set NEXT_PUBLIC_SITE_URL to override it for a
- * preview or staging deployment.
+ * The verified www host is fixed here so staging builds cannot accidentally
+ * publish staging URLs as canonicals, social URLs, or entity identifiers.
  */
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.edgecipline.com").replace(
-  /\/$/,
-  "",
-);
+export const SITE_URL = "https://www.edgecipline.com";
+
+/** Preview deployments keep production canonicals, but must not be indexed. */
+export const IS_PREVIEW_DEPLOYMENT =
+  (process.env.VERCEL_ENV !== undefined && process.env.VERCEL_ENV !== "production") ||
+  (process.env.NEXT_PUBLIC_SITE_URL !== undefined &&
+    process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "") !== SITE_URL);
 
 /** Absolute URL for a site-relative path. Always returns a string. */
 export function absoluteUrl(path = "/") {
@@ -66,9 +65,16 @@ export const SITE_TITLE =
 
 /** Shown on the home page, in OG tags and as the WebSite description. */
 export const SITE_DESCRIPTION =
-  "Edgecipline is an AI-powered trading journal and discipline coach that helps Forex and Indian market traders understand their trading behavior, identify repeated mistakes, and build better trading habits.";
+  "Edgecipline is a pre-launch AI trading journal and discipline coach being built to help Forex and Indian market traders review decisions, identify repeated mistakes, and build better trading habits.";
 
-export const BRAND_SLOGAN = "Not just a journal — a discipline coach.";
+/**
+ * The brand slogan, as it appears in the footer and on the Open Graph card.
+ * This is the approved wording; BRAND_PROMISE below is the longer positioning
+ * line, which is a description rather than a slogan.
+ */
+export const BRAND_SLOGAN = "Trade Disciplined · Live Freer";
+
+export const BRAND_PROMISE = "Not just a journal — a discipline coach.";
 
 export const BRAND_ETYMOLOGY =
   "Edgecipline is a coined brand name, a portmanteau of 'Edge' and 'discipline'. It is spelled E-D-G-E-C-I-P-L-I-N-E and is not a misspelling of 'discipline'.";
@@ -76,9 +82,17 @@ export const BRAND_ETYMOLOGY =
 export const CONTACT_EMAIL = "support@edgecipline.com";
 export const TWITTER_HANDLE = "@edgecipline";
 
-/** The brand mark the Organization node points at. */
-export const LOGO_PATH = "/hero/logo.webp";
-export const LOGO_SIZE = { width: 440, height: 330 } as const;
+/**
+ * The brand mark the Organization node points at.
+ *
+ * The supplied stacked lockup with its black plate lifted off, so the same
+ * artwork serves the page, the schema graph and anything that embeds it.
+ * /brand/mark.webp is the angular E on its own, for places too small for the
+ * wordmark.
+ */
+export const LOGO_PATH = "/brand/logo.webp";
+export const LOGO_SIZE = { width: 1200, height: 1377 } as const;
+export const MARK_PATH = "/brand/mark.webp";
 
 /** The generated Open Graph card served at /opengraph-image. */
 export const OG_IMAGE_PATH = "/opengraph-image";

@@ -31,9 +31,9 @@ export default function OpengraphImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "72px 80px",
-          background: "#02080e",
+          background: "#03060d",
           backgroundImage:
-            "radial-gradient(900px 480px at 18% -10%, rgba(0,239,181,0.22), transparent 60%), radial-gradient(760px 420px at 92% 108%, rgba(35,216,255,0.16), transparent 60%)",
+            "radial-gradient(900px 480px at 18% -10%, rgba(0,239,104,0.22), transparent 60%), radial-gradient(760px 420px at 92% 108%, rgba(35,185,255,0.16), transparent 60%)",
           fontFamily: "Helvetica, Arial, sans-serif",
         }}
       >
@@ -44,12 +44,12 @@ export default function OpengraphImage() {
               width: 12,
               height: 12,
               borderRadius: 999,
-              background: "#00efb5",
+              background: "#00ef68",
             }}
           />
           <div
             style={{
-              color: "#9fd9e2",
+              color: "#9dcde4",
               fontSize: 24,
               fontWeight: 700,
               letterSpacing: 6,
@@ -78,7 +78,7 @@ export default function OpengraphImage() {
             style={{
               display: "flex",
               marginTop: 26,
-              color: "#00efb5",
+              color: "#00ef68",
               fontSize: 42,
               fontWeight: 700,
               letterSpacing: -1.4,
@@ -92,7 +92,7 @@ export default function OpengraphImage() {
               display: "flex",
               marginTop: 22,
               maxWidth: 940,
-              color: "#a9c0c7",
+              color: "#a8bec8",
               fontSize: 27,
               lineHeight: 1.45,
             }}
@@ -108,10 +108,10 @@ export default function OpengraphImage() {
               width: 180,
               height: 5,
               borderRadius: 999,
-              background: "linear-gradient(90deg, #00efb5, #23d8ff)",
+              background: "linear-gradient(90deg, #00ef68, #23b9ff)",
             }}
           />
-          <div style={{ color: "#7f979e", fontSize: 25, fontWeight: 600 }}>{host}</div>
+          <div style={{ color: "#7e949f", fontSize: 25, fontWeight: 600 }}>{host}</div>
         </div>
       </div>
     ),

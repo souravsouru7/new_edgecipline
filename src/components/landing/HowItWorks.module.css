@@ -1,176 +1,223 @@
 /* ==========================================================================
-   Section 05 — How it works (layout and skin only; motion is in motion.css)
+   Section 05 — How It Works
+   --------------------------------------------------------------------------
+   Layout and skin only; the motion is in app/motion.css, and the shared
+   spine, type scale, rhythm and card surface are in app/sections.css.
 
    CSS Modules are NOT scoped in this project — next.config.ts routes every
-   *.css file through the Tailwind turbopack loader, so these names land in the
-   global stylesheet exactly as written. Hence the `hiw` prefix and the `css()`
-   fallback helper in the component.
+   stylesheet through the Tailwind turbopack loader exactly as written. Hence
+   the `hiw` prefix and the `css()` fallback helper in the component.
 
-   The section carries no background of its own: it is transparent over the
-   page's one continuous background layer (app/backdrop.css).
+   What changed from the previous version:
+
+     * All three cards had a green border and a green inner glow, the step
+       number was a 26px green numeral and the icon was a green ring with two
+       green shadows. That is five green elements per card, three times over —
+       the "neon on every card" the direction rules out. One accent per card
+       now: the icon ring. The surface, the border and the radius come from
+       the shared card definition.
+     * The connector was `position: absolute; top: 62%` inside the section.
+       That was a fixed fraction of a fixed-height frame; with height coming
+       from content it would land wherever. It is a rail above the cards in
+       normal flow, with a node per step.
+     * Card heights were set in `svh` (`clamp(230px, 26svh, 290px)`), which is
+       a panel-of-a-pinned-frame measurement. Cards are as tall as their
+       content, and the grid keeps them equal.
+     * The 2-column breakpoint left the third card as a half-width orphan on
+       its own row. Three across, then one down.
    ========================================================================== */
 
 .hiw {
   position: relative;
-  min-height: 540px;
-  margin-left: clamp(210px, 13.3vw, 250px);
   isolation: isolate;
 }
 
 .hiwFrame {
   position: relative;
   display: grid;
-  align-content: center;
-  width: min(100%, 1480px);
-  gap: clamp(20px, 2.4vw, 34px);
-  padding: clamp(48px, 4.2vw, 72px) clamp(34px, 5.2vw, 88px) clamp(52px, 4.6vw, 76px);
-  margin: 0 auto;
 }
 
-/* ---- Heading ------------------------------------------------------------ */
+/* --------------------------------------------------------------------------
+   The process rail
+   --------------------------------------------------------------------------
+   A dashed line with three nodes on it, one above each card, and a light that
+   walks between them (motion.css, `mo-connector`). It is the connective motif
+   this section contributes to the page — the same idea as the loop's
+   travelling spark and the chart's price line, drawn the same way.
+   -------------------------------------------------------------------------- */
 
-.hiwHeader h2 {
-  margin: 0;
-  color: #fff;
-  font-size: clamp(40px, 3.25vw, 56px);
-  line-height: 1;
-  letter-spacing: -.055em;
-  font-weight: 850;
+.hiwRail {
+  position: relative;
+  height: 30px;
+  margin-bottom: 14px;
 }
 
-.hiwHeader h2 span { color: #01edce; }
-
-.hiwHeader p {
-  margin: 10px 0 0;
-  color: #e9f7fb;
-  font-size: clamp(15px, 1.35vw, 21px);
-  font-weight: 600;
-}
-
-/* ---- The connector that runs behind the three cards --------------------- */
-
-.hiwConnector {
+/* The line itself, inset so it starts and ends under the first and last node
+   rather than running to the section's edges. */
+.hiwRail::before {
+  content: "";
   position: absolute;
-  z-index: 0;
-  top: 62%;
-  right: 13%;
-  left: 13%;
+  top: 14px;
+  right: 16.6%;
+  left: 16.6%;
   height: 1px;
-  overflow: hidden;
-  border-top: 1px dashed rgba(2, 213, 246, .4);
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(56, 189, 248, .45) 0 6px,
+    transparent 6px 12px
+  );
 }
 
-.hiwConnector span {
+/* The travelling light. motion.css animates its translateX; the width is a
+   third of the rail so one step of the walk is one card. */
+.hiwRail > span {
+  position: absolute;
+  top: 12px;
+  left: 16.6%;
   display: block;
-  width: 35%;
+  width: 33.3%;
   height: 3px;
-  background: linear-gradient(90deg, transparent, #02d5f6, transparent);
-  box-shadow: 0 0 12px #02d5f6;
+  border-radius: 3px;
+  background: linear-gradient(90deg, transparent, var(--blue), transparent);
+  box-shadow: 0 0 14px rgba(56, 189, 248, calc(.8 * var(--mo-glow, 1)));
 }
 
-/* ---- The three steps ---------------------------------------------------- */
+/* One node per step, on the line, above its card. */
+.hiwRail > i {
+  position: absolute;
+  top: 10px;
+  width: 9px;
+  height: 9px;
+  border: 1px solid rgba(56, 189, 248, .7);
+  border-radius: 50%;
+  background: var(--bg);
+  translate: -50% 0;
+}
+
+.hiwRail > i:nth-of-type(1) { left: 16.6%; }
+.hiwRail > i:nth-of-type(2) { left: 50%; }
+.hiwRail > i:nth-of-type(3) { left: 83.3%; }
+
+/* --------------------------------------------------------------------------
+   The three steps
+   -------------------------------------------------------------------------- */
 
 .hiwSteps {
   position: relative;
   z-index: 1;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(22px, 2.6vw, 40px);
+  gap: clamp(16px, 2vw, 28px);
   padding: 0;
   margin: 0;
   list-style: none;
 }
 
+/* The surface, border, radius and shadow come from app/sections.css, so all
+   six card groups on the page are the same object. Only what is specific to
+   a step is here. */
 .hiwStep {
   position: relative;
-  min-height: clamp(230px, 26svh, 290px);
-  padding: clamp(18px, 2.4svh, 26px) clamp(18px, 1.7vw, 28px);
+  display: grid;
+  align-content: start;
+  padding: clamp(22px, 2.4vw, 32px) clamp(20px, 2vw, 28px) clamp(26px, 2.6vw, 34px);
   overflow: hidden;
   text-align: center;
-  border: 1px solid rgba(1, 237, 206, .42);
-  border-radius: 18px;
-  background: linear-gradient(145deg, rgba(3, 31, 41, .8), rgba(1, 15, 23, .72));
-  box-shadow:
-    inset 0 1px 0 rgba(195, 255, 250, .09),
-    0 18px 46px rgba(0, 0, 0, .3);
 }
 
+/* The one accent per card: a soft pool of light under the icon. */
 .hiwStep::before {
   content: "";
   position: absolute;
-  inset: -28% 5% auto;
-  height: 55%;
+  top: -40%;
+  right: 10%;
+  left: 10%;
+  height: 70%;
   pointer-events: none;
-  background: radial-gradient(ellipse, rgba(0, 237, 206, .15), transparent 65%);
+  background: radial-gradient(ellipse, rgba(56, 189, 248, calc(.16 * var(--mo-glow, 1))), transparent 66%);
 }
 
+/* The step number. Mono and quiet: it is an index, and the rail above already
+   makes the order unmistakable. */
 .hiwNumber {
-  position: absolute;
-  top: 17px;
-  left: 20px;
-  color: #01edce;
-  font-size: 26px;
-  line-height: 1;
-  font-weight: 850;
-  letter-spacing: -.06em;
+  position: relative;
+  color: var(--text-3);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: .14em;
 }
 
 .hiwIcon {
   position: relative;
   z-index: 1;
   display: grid;
-  width: clamp(60px, 6.4svh, 72px);
-  height: clamp(60px, 6.4svh, 72px);
+  width: 68px;
+  height: 68px;
   place-items: center;
-  margin: clamp(10px, 1.8svh, 20px) auto clamp(10px, 1.6svh, 16px);
-  color: #00f7d3;
-  border: 1px solid rgba(0, 247, 211, .7);
+  margin: clamp(14px, 1.8vw, 22px) auto clamp(14px, 1.6vw, 20px);
+  color: var(--blue);
+  border: 1px solid rgba(56, 189, 248, .45);
   border-radius: 50%;
-  background: rgba(1, 40, 48, .6);
-  box-shadow:
-    0 0 0 6px rgba(1, 237, 206, .05),
-    0 0 22px rgba(0, 247, 211, .23);
+  background: rgba(5, 9, 20, .7);
+  box-shadow: 0 0 24px rgba(56, 189, 248, calc(.18 * var(--mo-glow, 1)));
 }
 
 .hiwStep h3 {
   position: relative;
   margin: 0;
-  color: #fff;
-  font-size: clamp(19px, 1.6vw, 25px);
-  line-height: 1.08;
-  letter-spacing: -.04em;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -.028em;
 }
 
-.hiwStep p {
+.hiwStep > p {
   position: relative;
-  max-width: 300px;
-  margin: 11px auto 0;
-  color: #c7d9dc;
-  font-size: clamp(14px, 1.04vw, 16px);
-  line-height: 1.38;
+  max-width: 34ch;
+  margin: 10px auto 0;
+  color: var(--text-2);
+  font-size: var(--step-0);
+  line-height: 1.55;
 }
 
-/* ---- Responsive --------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   Narrower viewports
+   -------------------------------------------------------------------------- */
 
-@media (max-width: 1199px) {
-  .hiwSteps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .hiwStep:last-child { grid-column: 1 / -1; width: calc(50% - clamp(11px, 1.3vw, 20px)); }
-  .hiwConnector { display: none; }
-}
+@media (max-width: 900px) {
+  .hiwSteps {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
 
-@media (max-width: 1100px) {
-  .hiw { margin-left: 0; }
-}
+  /* Stacked, the horizontal rail has nothing to connect. The order is carried
+     by the numbers and by the stacking itself. */
+  .hiwRail { display: none; }
 
-@media (max-width: 767px) {
-  .hiw { min-height: 0; }
-  .hiwFrame { gap: 18px; padding: 100px 20px 48px; }
-  .hiwHeader h2 { font-size: clamp(30px, 10vw, 40px); }
-  .hiwHeader p { margin-top: 9px; font-size: 16px; }
-  .hiwSteps { grid-template-columns: 1fr; gap: 20px; }
-  .hiwStep, .hiwStep:last-child { width: auto; min-height: 240px; grid-column: auto; }
-  .hiwNumber { font-size: 24px; }
-  .hiwIcon { width: 66px; height: 66px; margin-top: 20px; }
-  .hiwStep h3 { font-size: 22px; }
-  .hiwStep p { max-width: 290px; font-size: 15px; }
+  /* A row rather than a centred column: with one card per line there is room
+     for the icon to lead and the text to sit beside it, which keeps three
+     stacked cards from filling the whole screen. */
+  .hiwStep {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 4px 18px;
+    padding: 20px;
+    text-align: left;
+  }
+
+  .hiwStep::before { display: none; }
+
+  .hiwNumber { grid-column: 2; }
+
+  .hiwIcon {
+    width: 56px;
+    height: 56px;
+    grid-row: 1 / span 3;
+    margin: 0;
+  }
+
+  .hiwStep h3 { grid-column: 2; font-size: var(--step-1); }
+  .hiwStep > p { grid-column: 2; max-width: none; margin-inline: 0; }
 }

@@ -1,76 +1,22 @@
 /* ==========================================================================
-   Section 10 — Final CTA / footer (layout only)
+   Section 11 — A calmer mind. A stronger trader.
+   --------------------------------------------------------------------------
+   Layout and skin only; the motion is in app/motion.css, and the shared
+   spine, type scale, rhythm and card surface are in app/sections.css.
+
    Class names are prefixed `cta`: CSS Modules are not scoped in this project.
 
-   The reference's artwork for this scene (a seated figure against a large
-   moon) is not in the supplied packages, so the scene is composed from the
-   existing mountain plate, the existing trader silhouette and a CSS moon.
+   What changed from the previous version:
+
+     * The section was a landscape scene — a mountain plate, a CSS moon and
+       the trader silhouette — with the copy and the form stacked in a 34ch
+       column beside an oversized logo. That column squeezed a two-across form
+       into one narrow stack, and the scene reserved up to 300px of empty
+       bottom padding on a phone to make room for artwork. The scene is gone;
+       the form has a column of its own and the full width of it.
+     * The form is the point of the page, so it is the brightest surface in
+       the section rather than one item in a list of four.
    ========================================================================== */
-
-.cta {
-  position: relative;
-  min-height: clamp(380px, 30vw, 540px);
-  margin-left: clamp(210px, 13.3vw, 250px);
-  overflow: hidden;
-  isolation: isolate;
-  /* No background and no edge-softening shadow: this section is transparent
-     over the page's one continuous background layer (app/backdrop.css). */
-}
-
-.ctaBackdrop {
-  position: absolute;
-  z-index: -4;
-  inset: -4% -2%;
-  pointer-events: none;
-}
-
-.ctaBackdrop img {
-  object-fit: cover;
-  object-position: center 72%;
-}
-
-/* The celestial body behind the figure. */
-.ctaMoon {
-  position: absolute;
-  z-index: -3;
-  top: 8%;
-  left: 54%;
-  width: min(44vw, 440px);
-  translate: -50% 0;
-  aspect-ratio: 1;
-  pointer-events: none;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 50% 46%, rgba(206, 240, 255, .26) 0 40%, rgba(120, 206, 224, .16) 46%, rgba(80, 170, 190, .05) 58%, transparent 68%),
-    radial-gradient(circle at 42% 38%, rgba(255, 255, 255, .12), transparent 46%);
-}
-
-.ctaFigure {
-  position: absolute;
-  z-index: -2;
-  bottom: 0;
-  left: 54%;
-  width: clamp(90px, 8.6vw, 150px);
-  translate: -50% 0;
-  pointer-events: none;
-  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, .7));
-}
-
-.ctaFigure img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.ctaVeil {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(90deg, rgba(1, 8, 12, .92) 0%, rgba(1, 8, 12, .58) 26%, rgba(1, 8, 12, .08) 50%, rgba(1, 8, 12, .62) 86%, rgba(1, 8, 12, .9) 100%),
-    linear-gradient(180deg, rgba(1, 8, 12, .72), transparent 34%, rgba(1, 8, 12, .62));
-}
 
 .ctaMotes {
   position: absolute;
@@ -86,8 +32,8 @@
   width: var(--size);
   height: var(--size);
   border-radius: 50%;
-  background: #cdeff5;
-  box-shadow: 0 0 8px rgba(150, 230, 240, .8);
+  background: var(--blue);
+  box-shadow: 0 0 8px rgba(56, 189, 248, .75);
   opacity: 0;
 }
 
@@ -95,132 +41,97 @@
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, .92fr);
   align-items: center;
-  gap: clamp(20px, 3vw, 48px);
-  width: min(100%, 1480px);
-  min-height: inherit;
-  padding: clamp(40px, 3.8vw, 70px) clamp(28px, 3.6vw, 62px) clamp(52px, 4.6vw, 84px);
-  margin: 0 auto;
+  gap: clamp(28px, 4vw, 64px);
 }
 
-.ctaCopy { max-width: min(100%, 34ch); }
+.ctaCopy { max-width: 46ch; }
 
-.ctaCopy h2 {
-  margin: 0;
-  color: #f5faff;
-  font-size: clamp(28px, 2.9vw, 50px);
-  line-height: 1.02;
-  letter-spacing: -.05em;
-  font-weight: 850;
+.ctaCopy > p {
+  margin: clamp(12px, 1.4vh, 18px) 0 0;
+  color: var(--text-2);
+  font-size: var(--step-1);
+  line-height: 1.55;
 }
 
-.ctaCopy h2 span { color: #00f5ac; }
+/* --------------------------------------------------------------------------
+   The demo destination
+   --------------------------------------------------------------------------
+   #demo used to be an empty screen-reader-only heading, so every "Watch
+   Demo" on the site was a link to nothing. There is no recorded walkthrough
+   yet, so this is what the anchor is: a short, plainly designed note that
+   says so and points at the thing that does exist. Not a card dressed up as
+   a video player, and not a fake thumbnail.
+   -------------------------------------------------------------------------- */
 
-.ctaCopy p {
-  margin: clamp(10px, 1vw, 16px) 0 0;
-  color: #a7b9c5;
-  font-size: clamp(13px, 1.1vw, 18px);
-  font-weight: 500;
-}
-
-.ctaActions {
+.ctaDemo {
   display: flex;
-  flex-wrap: wrap;
-  gap: clamp(10px, 1.1vw, 18px);
-  margin-top: clamp(18px, 1.8vw, 30px);
+  align-items: flex-start;
+  gap: 14px;
+  max-width: 56ch;
+  padding: clamp(16px, 1.6vw, 20px) clamp(18px, 1.8vw, 24px);
+  margin-top: clamp(22px, 2.6vh, 34px);
+  scroll-margin-top: calc(var(--navbar-h) + 24px);
 }
 
-/* The hero's button styles already exist globally; these only size them for
-   the footer band. */
-.ctaActions a {
-  min-height: clamp(40px, 3.3vw, 50px);
-  padding: 0 clamp(16px, 1.5vw, 24px);
-  font-size: clamp(12px, .95vw, 15px);
-}
-
-.ctaBrand {
+.ctaDemoMark {
   display: grid;
-  justify-items: center;
-  gap: clamp(8px, .8vw, 14px);
-  text-align: center;
+  flex: none;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  color: var(--blue);
+  border: 1px solid rgba(56, 189, 248, .35);
+  border-radius: 50%;
+  background: rgba(56, 189, 248, .08);
 }
 
-.ctaBrand img {
-  display: block;
-  width: clamp(120px, 12vw, 200px);
-  height: auto;
+.ctaDemo h3 {
+  margin: 0 0 4px;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: var(--step-0);
+  font-weight: 700;
+  letter-spacing: -.02em;
 }
 
-.ctaTagline {
+.ctaDemo p {
   margin: 0;
-  color: #7fb3b8;
-  font-size: clamp(8px, .68vw, 11px);
-  font-weight: 800;
-  letter-spacing: .22em;
-  text-transform: uppercase;
+  color: var(--text-2);
+  font-size: var(--step--1);
+  line-height: 1.6;
 }
 
-.ctaTagline span { color: #00f5ac; }
+/* --------------------------------------------------------------------------
+   The form column
+   --------------------------------------------------------------------------
+   The form draws its own panel (waitlist/Waitlist.module.css); this only
+   gives it the column and lets it use all of it.
+   -------------------------------------------------------------------------- */
 
-/* --- tablet --- */
+.ctaForm { width: 100%; }
 
-@media (max-width: 1100px) {
-  .cta { margin-left: 0; }
-}
+/* --------------------------------------------------------------------------
+   Narrower viewports
+   --------------------------------------------------------------------------
+   One column, and the form moves above the demo note: on a phone the next
+   thing after "Same markets. A better you." should be the form, not a note
+   about a video that does not exist yet.
+   -------------------------------------------------------------------------- */
 
-@media (max-width: 1023px) {
-  .ctaMoon { left: 60%; width: min(56vw, 400px); }
-  .ctaFigure { left: 60%; }
-}
-
-/* --- mobile: stacked, with the scene behind the copy --- */
-
-@media (max-width: 767px) {
-  .cta { min-height: 0; }
-
-  .ctaBackdrop img { object-position: 56% 76%; }
-
-  /* The scene becomes a band across the bottom of the section, below the copy
-     and the brand, rather than sitting behind them. */
-  .ctaMoon {
-    top: auto;
-    bottom: -3%;
-    left: 50%;
-    width: min(70vw, 280px);
-  }
-
-  .ctaFigure {
-    left: 50%;
-    bottom: 4%;
-    width: clamp(76px, 22vw, 112px);
-  }
-
-  .ctaVeil {
-    background: linear-gradient(180deg, rgba(1, 8, 12, .92) 0%, rgba(1, 8, 12, .72) 34%, rgba(1, 8, 12, .5) 62%, rgba(1, 8, 12, .94));
-  }
-
+@media (max-width: 900px) {
   .ctaInner {
     grid-template-columns: minmax(0, 1fr);
-    justify-items: center;
-    gap: 0;
-    min-height: 0;
-    /* The bottom padding is the scene band the artwork sits in. */
-    padding: 58px 20px clamp(215px, 62vw, 300px);
-    text-align: center;
+    gap: clamp(24px, 4vh, 34px);
   }
 
-  .ctaCopy { max-width: none; }
-  .ctaCopy h2 { font-size: clamp(27px, 8.8vw, 38px); }
-  .ctaCopy p { font-size: 15px; }
+  .ctaCopy {
+    display: grid;
+    max-width: none;
+  }
 
-  .ctaActions { justify-content: center; }
-  .ctaActions a { flex: 1 1 150px; }
+  .ctaForm { order: -1; }
 
-  .ctaBrand { margin-top: 26px; }
+  .ctaDemo { max-width: none; }
 }
-
-/* The waitlist form sits in the closing scene; it needs room above the
-   secondary action and must not stretch to the full column width. */
-.ctaForm { margin-top: clamp(20px, 2.4vw, 30px); }
-.ctaForm + .ctaActions { margin-top: clamp(14px, 1.6vw, 20px); }

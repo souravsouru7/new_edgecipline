@@ -50,8 +50,8 @@ export function MissionDemo() {
           <svg viewBox="0 0 74 74" aria-hidden="true" focusable="false">
             <defs>
               <linearGradient id="ft-ring-gradient" x1="0" y1="0" x2="1" y2="1">
-                <stop stopColor="#00efb5" />
-                <stop offset="1" stopColor="#23d8ff" />
+                <stop stopColor="#00ef68" />
+                <stop offset="1" stopColor="#23b9ff" />
               </linearGradient>
             </defs>
             <circle className={css("ftRingTrack")} cx="37" cy="37" r={RADIUS} />

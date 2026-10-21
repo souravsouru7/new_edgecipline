@@ -1,0 +1,287 @@
+/* ==========================================================================
+   Section 02 — The Emotional Loop
+   --------------------------------------------------------------------------
+   Layout and skin only; the motion is in app/motion.css, and the shared
+   spine, type scale and rhythm are in app/sections.css.
+
+   Class names are global: this project routes every stylesheet through the
+   Tailwind turbopack loader without CSS Modules scoping, so `.loop-copy` is
+   really `.loop-copy`. The file lives beside its component for the same
+   reason the other sections' stylesheets do — organisation, not scoping.
+
+   What changed from the previous version:
+
+     * The four stage nodes were four saturated neons — red, purple, blue and
+       green — each with its own triple box-shadow. Purple is not in the
+       palette at all, and four competing glows in one diagram is the
+       "saturate everything with neon" failure the direction rules out. The
+       nodes share one surface now and the diagram carries one accent: blue
+       for the connectors, green for the signal travelling them. Each stage is
+       still told apart by its index, its name and its line — never by colour,
+       which is also what keeps it readable for anyone who cannot separate
+       the four hues.
+     * The detail line was only in a hover tooltip on narrow screens. It is
+       permanent text in every node, so nothing essential needs a pointer.
+     * The section set its own container and its own `min-height`; both now
+       come from the shared system.
+   ========================================================================== */
+
+.emotional-loop {
+  position: relative;
+  isolation: isolate;
+}
+
+.loop-inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 1.1fr) minmax(0, .8fr);
+  align-items: center;
+  gap: clamp(28px, 4vw, 72px);
+}
+
+/* --------------------------------------------------------------------------
+   The wheel
+   --------------------------------------------------------------------------
+   A square figure with the four stages on its compass points and the
+   connectors drawn between them, so the cycle reads as a cycle. It keeps its
+   aspect ratio at every width, which is what stops the SVG connectors and the
+   absolutely placed nodes from drifting apart.
+   -------------------------------------------------------------------------- */
+
+.loop-figure {
+  position: relative;
+  width: min(100%, 440px);
+  aspect-ratio: 1;
+  justify-self: center;
+  margin: 0;
+}
+
+/* A soft field behind the wheel, so it sits in its own pool of light rather
+   than floating on the page background. One radial gradient, no blur filter. */
+.loop-figure::before {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, .1), transparent 68%);
+}
+
+.loop-connectors {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.loop-connectors path {
+  stroke: rgba(56, 189, 248, .75);
+  stroke-width: 2;
+  filter: drop-shadow(0 0 5px rgba(56, 189, 248, calc(.7 * var(--mo-glow, 1))));
+}
+
+.loop-nodes {
+  position: absolute;
+  inset: 0;
+}
+
+/* --------------------------------------------------------------------------
+   A stage
+   --------------------------------------------------------------------------
+   One surface, one hairline, one index. The circle is kept — it is what makes
+   the four of them read as points on a cycle rather than four cards — but
+   everything inside it is now type on the shared scale.
+   -------------------------------------------------------------------------- */
+
+.emotion-node {
+  position: absolute;
+  display: flex;
+  width: 33%;
+  aspect-ratio: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 10px 8px;
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 28%, rgba(56, 189, 248, .12), rgba(16, 27, 42, .94) 62%, rgba(5, 9, 20, .96));
+  box-shadow: 0 14px 34px rgba(2, 4, 10, .44);
+  cursor: pointer;
+  transition:
+    transform var(--mo-dur-fast, .45s) var(--mo-ease-soft, ease),
+    border-color var(--mo-dur-fast, .45s) var(--mo-ease-soft, ease),
+    box-shadow var(--mo-dur-fast, .45s) var(--mo-ease-soft, ease);
+}
+
+/* The hover and focus state is a lift and a green edge — the same affordance
+   the cards elsewhere on the page use, so an interactive thing looks
+   interactive in one consistent way. Both states, so the keyboard sees it. */
+.emotion-node:hover,
+.emotion-node:focus-visible {
+  transform: scale(1.04);
+  border-color: var(--green);
+  box-shadow: 0 18px 44px rgba(2, 4, 10, .5), 0 0 24px rgba(57, 255, 136, calc(.22 * var(--mo-glow, 1)));
+}
+
+/* The stage number. Mono, because it is an index, and it is the thing that
+   tells the four stages apart without relying on colour. */
+.emotion-index {
+  color: var(--blue);
+  font-family: var(--font-mono);
+  font-size: .64rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+}
+
+.emotion-node strong {
+  font-family: var(--font-display);
+  font-size: clamp(.8rem, 1.5vw, 1.02rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  text-align: center;
+}
+
+.emotion-detail {
+  max-width: 13ch;
+  color: var(--text-2);
+  font-size: clamp(.58rem, 1.05vw, .76rem);
+  line-height: 1.25;
+  text-align: center;
+}
+
+/* The 3D renders supplied for the four stages. They are the only 3D in this
+   section, which is the "selective" the direction asks for. */
+.emotion-node .emotion-icon {
+  display: block;
+  width: clamp(30px, 3.6vw, 48px);
+  height: clamp(30px, 3.6vw, 48px);
+  flex: none;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, .55));
+}
+
+/* Compass points. The stages are placed in cycle order, clockwise from the
+   top, which is the order the connectors and the travelling signal follow. */
+.emotion-node.rush { top: 0; left: 33.5%; }
+.emotion-node.rule { top: 33.5%; right: 0; }
+.emotion-node.regret { bottom: 0; left: 33.5%; }
+.emotion-node.repeat { top: 33.5%; left: 0; }
+
+/* The tooltip is now a duplicate of text that is always visible in the node,
+   so it is not rendered. The element stays in the markup as the node's
+   accessible description. */
+.node-tooltip {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   The closing line
+   -------------------------------------------------------------------------- */
+
+.loop-callout {
+  align-self: center;
+  padding-left: clamp(18px, 1.6vw, 28px);
+  border-left: 2px solid rgba(57, 255, 136, .55);
+}
+
+.loop-callout p {
+  margin: 0 0 18px;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  font-weight: 500;
+  line-height: 1.22;
+  letter-spacing: -.025em;
+}
+
+/* --------------------------------------------------------------------------
+   Narrower viewports
+   --------------------------------------------------------------------------
+   The three columns become two, then one. The wheel stays a wheel — it is the
+   section's whole point — but at phone width it would be a 300px circle with
+   four 100px nodes in it, so below 640px the stages become a vertical
+   sequence instead, which is what the direction asks for.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1100px) {
+  .loop-inner { grid-template-columns: minmax(0, 1fr) minmax(300px, 1fr); }
+  .loop-callout {
+    grid-column: 2;
+    justify-self: start;
+    width: min(100%, 340px);
+  }
+}
+
+@media (max-width: 760px) {
+  .loop-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(26px, 5vw, 40px);
+  }
+
+  .loop-callout {
+    grid-column: 1;
+    width: auto;
+  }
+
+  /* The wheel unrolls. The connectors are the circular part, so they go; the
+     stages become a numbered column, each one a full-width row, which is the
+     same information in the shape a phone can actually show. */
+  .loop-figure {
+    width: 100%;
+    aspect-ratio: auto;
+  }
+
+  .loop-figure::before,
+  .loop-connectors { display: none; }
+
+  .loop-nodes {
+    position: static;
+    display: grid;
+    gap: 10px;
+  }
+
+  .emotion-node {
+    position: static;
+    width: 100%;
+    aspect-ratio: auto;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 14px;
+    min-height: 76px;
+    padding: 12px 16px;
+    border-radius: var(--radius);
+    text-align: left;
+  }
+
+  .emotion-node:hover,
+  .emotion-node:focus-visible { transform: none; }
+
+  /* A row, so the index leads and the name and line stack beside the render. */
+  .emotion-node strong,
+  .emotion-detail { text-align: left; }
+
+  .emotion-detail { max-width: none; }
+
+  .emotion-node strong { font-size: var(--step-0); }
+  .emotion-detail { font-size: var(--step--1); }
+  .emotion-node .emotion-icon { width: 46px; height: 46px; }
+  .emotion-index { min-width: 2.2ch; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .emotion-node { transition: none; }
+  .emotion-node:hover,
+  .emotion-node:focus-visible { transform: none; }
+}

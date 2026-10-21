@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ChevronRight, Sparkles } from "lucide-react";
 
-import { MobileNav } from "@/components/MobileNav";
-import { SidebarNav } from "@/components/SidebarNav";
+import { Navbar } from "@/components/nav/Navbar";
+import { SiteFooter } from "@/components/SiteFooter";
 import { RevealObserver } from "@/components/motion/RevealObserver";
 import { BlogIndex } from "@/components/blog/BlogIndex";
 import { getFeaturedPosts, postsByDate, usedCategories } from "@/data/blog";
@@ -25,7 +25,6 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: url("/blog") },
-  robots: { index: true, follow: true },
   openGraph: {
     siteName: BRAND_NAME,
     title,
@@ -80,7 +79,7 @@ export default function BlogPage() {
           description: post.description,
           articleSection: post.category,
           datePublished: post.publishedAt,
-          dateModified: post.publishedAt,
+          dateModified: post.updatedAt ?? post.publishedAt,
         })),
       },
       {
@@ -105,8 +104,7 @@ export default function BlogPage() {
       </a>
 
       <RevealObserver />
-      <SidebarNav />
-      <MobileNav />
+      <Navbar />
 
       <section className={css("blHero")} aria-labelledby="blog-title">
         <div className={css("blHeroGlow")} aria-hidden="true" />
@@ -180,6 +178,7 @@ export default function BlogPage() {
           </div>
         </div>
       </section>
+      <SiteFooter />
     </div>
   );
 }

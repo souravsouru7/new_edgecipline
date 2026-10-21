@@ -172,9 +172,9 @@ function JournalVisual() {
 
 /** Relative, unlabelled strength — the shape of an edge, not a claimed number. */
 const DNA_BREAKDOWN = [
-  { label: "London", bar: "86%", from: "#00efb5", to: "#23d8ff" },
-  { label: "New York", bar: "54%", from: "#00efb5", to: "#23d8ff" },
-  { label: "Asia", bar: "31%", from: "#00efb5", to: "#23d8ff" },
+  { label: "London", bar: "86%", from: "#00ef68", to: "#23b9ff" },
+  { label: "New York", bar: "54%", from: "#00ef68", to: "#23b9ff" },
+  { label: "Asia", bar: "31%", from: "#00ef68", to: "#23b9ff" },
 ] as const;
 
 function TradingDnaVisual() {
@@ -227,8 +227,8 @@ function TradingDnaVisual() {
 /* -- 05 — Psychology Cost Calculator --------------------------------------- */
 
 const EMOTIONS = [
-  { label: "Calm", bar: "18%", swatch: "#00efb5" },
-  { label: "Confident", bar: "26%", swatch: "#23d8ff" },
+  { label: "Calm", bar: "18%", swatch: "#00ef68" },
+  { label: "Confident", bar: "26%", swatch: "#23b9ff" },
   { label: "Anxious", bar: "48%", swatch: "#a18bff" },
   { label: "Revenge", bar: "92%", swatch: "#ff8e7d" },
   { label: "FOMO", bar: "74%", swatch: "#ffc76e" },
@@ -252,7 +252,7 @@ function PsychologyVisual() {
               <dd>
                 <span
                   className={css("ftBarTrack")}
-                  style={vars({ "--ft-bar": row.bar, "--ft-bar-from": row.swatch, "--ft-bar-to": "rgba(35,216,255,.35)" })}
+                  style={vars({ "--ft-bar": row.bar, "--ft-bar-from": row.swatch, "--ft-bar-to": "rgba(35,185,255,.35)" })}
                 >
                   <i />
                 </span>
@@ -404,8 +404,8 @@ function AnalyticsVisual() {
         >
           <defs>
             <linearGradient id="ft-equity-fill" x1="0" y1="0" x2="0" y2="1">
-              <stop stopColor="#00efb5" stopOpacity=".3" />
-              <stop offset="1" stopColor="#00efb5" stopOpacity="0" />
+              <stop stopColor="#00ef68" stopOpacity=".3" />
+              <stop offset="1" stopColor="#00ef68" stopOpacity="0" />
             </linearGradient>
           </defs>
 
@@ -423,14 +423,14 @@ function AnalyticsVisual() {
             className={css("ftLine")}
             style={vars({ "--i": 0 })}
             pathLength={1}
-            stroke="#00efb5"
+            stroke="#00ef68"
             d="M40 176 C110 166 150 150 196 142 C250 132 286 142 330 118 C382 90 418 96 466 74 C512 54 546 46 580 36"
           />
           <path
             className={css("ftLine")}
             style={vars({ "--i": 1 })}
             pathLength={1}
-            stroke="#23d8ff"
+            stroke="#23b9ff"
             strokeDasharray="1"
             d="M40 190 C112 186 152 172 198 170 C252 168 288 152 332 148 C384 142 420 120 468 112 C514 104 548 88 580 82"
           />
@@ -447,18 +447,18 @@ function AnalyticsVisual() {
               cx={cx}
               cy={cy}
               r="4.5"
-              fill="#021018"
-              stroke="#00efb5"
+              fill="#050a15"
+              stroke="#00ef68"
               strokeWidth="2"
             />
           ))}
         </svg>
         <ul className={css("ftLegend")}>
           <li>
-            <i style={vars({ "--ft-swatch": "#00efb5" })} aria-hidden="true" /> Equity
+            <i style={vars({ "--ft-swatch": "#00ef68" })} aria-hidden="true" /> Equity
           </li>
           <li>
-            <i style={vars({ "--ft-swatch": "#23d8ff" })} aria-hidden="true" /> Discipline
+            <i style={vars({ "--ft-swatch": "#23b9ff" })} aria-hidden="true" /> Discipline
           </li>
         </ul>
       </div>
@@ -620,8 +620,8 @@ function AndroidVisual() {
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"] as const;
 
 const SERIES = [
-  { label: "Psychology score", colour: "#00efb5", d: "M60 168 L150 158 L240 132 L330 126 L420 96 L510 80" },
-  { label: "Discipline %", colour: "#23d8ff", d: "M60 182 L150 164 L240 150 L330 118 L420 104 L510 72" },
+  { label: "Psychology score", colour: "#00ef68", d: "M60 168 L150 158 L240 132 L330 126 L420 96 L510 80" },
+  { label: "Discipline %", colour: "#23b9ff", d: "M60 182 L150 164 L240 150 L330 118 L420 104 L510 72" },
   { label: "Average mood", colour: "#a18bff", d: "M60 158 L150 162 L240 140 L330 136 L420 118 L510 108" },
   { label: "Monthly P&L", colour: "#ffc76e", d: "M60 196 L150 198 L240 186 L330 158 L420 138 L510 104" },
 ] as const;

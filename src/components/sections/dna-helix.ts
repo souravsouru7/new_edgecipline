@@ -32,10 +32,10 @@ const RUNG_COUNT = 54;
 
 export const HELIX_COLORS = {
   strandCoreA: "url(#dna-strand-gradient)",
-  strandCoreB: "#8dfff3",
-  strandGlowA: "#00ffd3",
-  strandGlowB: "#00b9ff",
-  rung: "#72fbe8",
+  strandCoreB: "#9bf6c4",
+  strandGlowA: "#39ff88",
+  strandGlowB: "#38bdf8",
+  rung: "#7dd3fc",
 } as const;
 
 const offsetAt = (y: number) => AMPLITUDE * Math.sin(y * TWIST);
@@ -73,7 +73,7 @@ export const RUNGS: Rung[] = Array.from({ length: RUNG_COUNT }, (_, index) => {
  * coordinates compress badly — so a much smaller set is generated here.
  * Deterministic, so the server and client markup always match.
  */
-const PARTICLE_COLORS = ["#00ffc7", "#00a6ca", "#8ef6ff"] as const;
+const PARTICLE_COLORS = ["#39ff88", "#0284c7", "#bae6fd"] as const;
 const PARTICLE_COUNT = 96;
 
 function mulberry32(seed: number) {

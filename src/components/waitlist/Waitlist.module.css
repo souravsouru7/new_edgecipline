@@ -12,13 +12,16 @@
 
 .wlForm {
   display: grid;
-  gap: 12px;
-  width: min(100%, 520px);
-  padding: clamp(18px, 2vw, 24px);
-  border: 1px solid rgba(0, 239, 179, .26);
-  border-radius: 20px;
-  background: linear-gradient(158deg, rgba(4, 28, 34, .92), rgba(2, 13, 18, .94));
-  box-shadow: inset 0 1px 0 rgba(210, 255, 252, .08), 0 24px 60px rgba(0, 0, 0, .42);
+  gap: 14px;
+  width: 100%;
+  padding: clamp(20px, 2.2vw, 30px);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(170deg, rgba(20, 34, 52, .94), rgba(8, 13, 24, .96));
+  box-shadow:
+    inset 0 1px 0 rgba(226, 231, 239, .07),
+    0 0 0 1px rgba(57, 255, 136, .08),
+    0 28px 70px rgba(2, 4, 10, .5);
 }
 
 .wlRow { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
@@ -26,11 +29,11 @@
 .wlField { display: grid; gap: 6px; min-width: 0; }
 
 .wlField label {
-  color: #7f979e;
-  font-family: var(--font-geist-mono), ui-monospace, monospace;
-  font-size: 9.5px;
-  font-weight: 700;
-  letter-spacing: .14em;
+  color: var(--text-3);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: .12em;
   text-transform: uppercase;
 }
 
@@ -39,24 +42,24 @@
 .wlField input,
 .wlField select {
   width: 100%;
-  min-height: 46px;
-  padding: 11px 13px;
-  color: #eef8fb;
-  border: 1px solid rgba(120, 220, 232, .18);
-  border-radius: 11px;
-  background: rgba(2, 12, 17, .8);
+  min-height: 50px;
+  padding: 12px 14px;
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: rgba(5, 9, 20, .8);
   font: inherit;
-  font-size: 14px;
+  font-size: var(--step-0);
   transition: border-color .2s ease;
 }
 
-.wlField input::placeholder { color: #6f888f; }
-.wlField input:hover, .wlField select:hover { border-color: rgba(120, 220, 232, .32); }
+.wlField input::placeholder { color: var(--text-3); }
+.wlField input:hover, .wlField select:hover { border-color: var(--blue); }
 
 .wlField input:focus-visible,
 .wlField select:focus-visible {
   border-color: var(--mint);
-  outline: 2px solid rgba(0, 239, 179, .3);
+  outline: 2px solid rgba(0,239,104, .3);
   outline-offset: 1px;
 }
 
@@ -67,14 +70,16 @@
   padding-right: 38px;
   cursor: pointer;
   background-image:
-    linear-gradient(45deg, transparent 50%, #8fa8af 50%),
-    linear-gradient(135deg, #8fa8af 50%, transparent 50%);
+    linear-gradient(45deg, transparent 50%, var(--text-2) 50%),
+    linear-gradient(135deg, var(--text-2) 50%, transparent 50%);
   background-position: calc(100% - 18px) 20px, calc(100% - 13px) 20px;
   background-size: 5px 5px, 5px 5px;
   background-repeat: no-repeat;
 }
 
-.wlField select option { color: #0b1b22; background: #e9f7f9; }
+/* Drawn by the operating system, not by this stylesheet, so these two stay
+   literal — a custom property does not reliably reach an <option>. */
+.wlField select option { color: #0b1222; background: #edf0f5; }
 
 /* The honeypot. Off-screen rather than display:none, because some bots skip
    fields they can tell are hidden. */
@@ -93,8 +98,8 @@
   gap: 7px;
   margin: 0;
   color: #ffb4a2;
-  font-size: 12px;
-  font-weight: 700;
+  font-size: var(--step--1);
+  font-weight: 600;
   line-height: 1.45;
 }
 
@@ -105,22 +110,23 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  min-height: 52px;
-  margin-top: 2px;
+  min-height: 54px;
+  margin-top: 4px;
   padding: 0 22px;
-  color: #002c29;
+  color: var(--on-green);
   border: 0;
-  border-radius: 12px;
-  background: var(--mint);
+  border-radius: 999px;
+  background: var(--green);
   font: inherit;
-  font-size: 15px;
-  font-weight: 850;
+  font-family: var(--font-display);
+  font-size: var(--step-0);
+  font-weight: 700;
   cursor: pointer;
   transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
-  box-shadow: 0 0 0 1px rgba(183, 255, 237, .3) inset, 0 0 23px rgba(0, 239, 179, .2);
+  box-shadow: 0 0 0 1px rgba(183,255,214, .3) inset, 0 0 23px rgba(0,239,104, .2);
 }
 
-.wlSubmit:hover { transform: translateY(-2px); box-shadow: 0 0 0 2px #b6ffec inset, 0 10px 28px rgba(0, 239, 179, .28); }
+.wlSubmit:hover { transform: translateY(-2px); box-shadow: 0 0 0 2px rgba(226, 255, 237, .5) inset, 0 12px 32px rgba(57, 255, 136, .3); }
 .wlSubmit[disabled] { opacity: .72; cursor: progress; transform: none; }
 
 .wlSpin { animation: wl-spin 900ms linear infinite; }
@@ -132,9 +138,9 @@
   align-items: flex-start;
   gap: 8px;
   margin: 0;
-  color: #8fa8af;
-  font-size: 11.5px;
-  line-height: 1.5;
+  color: var(--text-3);
+  font-size: var(--step--1);
+  line-height: 1.6;
 }
 
 .wlNote svg { flex: none; margin-top: 2px; color: var(--mint); }
@@ -146,11 +152,11 @@
   grid-template-columns: auto minmax(0, 1fr);
   gap: 14px;
   align-items: start;
-  width: min(100%, 520px);
-  padding: clamp(20px, 2.2vw, 26px);
-  border: 1px solid rgba(0, 239, 179, .4);
-  border-radius: 20px;
-  background: linear-gradient(150deg, rgba(0, 239, 179, .14), rgba(2, 13, 18, .92));
+  width: 100%;
+  padding: clamp(22px, 2.4vw, 30px);
+  border: 1px solid rgba(57, 255, 136, .38);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(150deg, rgba(0,239,104, .14), rgba(4,8,16, .92));
   box-shadow: 0 24px 60px rgba(0, 0, 0, .4);
 }
 
@@ -159,13 +165,13 @@
   width: 42px;
   height: 42px;
   place-items: center;
-  color: #002c29;
-  border-radius: 12px;
-  background: var(--mint);
+  color: var(--on-green);
+  border-radius: var(--radius-sm);
+  background: var(--green);
 }
 
-.wlDone b { display: block; color: #fff; font-size: 16px; font-weight: 800; letter-spacing: -.02em; }
-.wlDone p { margin: 7px 0 0; color: #cfe3e7; font-size: 13.5px; line-height: 1.6; }
+.wlDone b { display: block; color: var(--text); font-family: var(--font-display); font-size: var(--step-1); font-weight: 700; letter-spacing: -.02em; }
+.wlDone p { margin: 8px 0 0; color: var(--text-2); font-size: var(--step-0); line-height: 1.6; }
 
 /* ---- Responsive --------------------------------------------------------- */
 

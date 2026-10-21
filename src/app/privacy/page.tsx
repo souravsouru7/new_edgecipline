@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { LegalPage } from "@/components/legal/LegalPage";
-import { privacyPolicy } from "@/data/legal";
+import { legalDateModified, privacyPolicy } from "@/data/legal";
 import { BRAND_NAME, OG_IMAGE_PATH, OG_IMAGE_SIZE, absoluteUrl } from "@/data/brand";
 
 const url = absoluteUrl;
@@ -13,7 +13,6 @@ export const metadata: Metadata = {
   title,
   description: privacyPolicy.description,
   alternates: { canonical: url("/privacy") },
-  robots: { index: true, follow: true },
   openGraph: {
     siteName: BRAND_NAME,
     title,
@@ -40,7 +39,8 @@ export default function PrivacyPage() {
     name: privacyPolicy.title,
     description: privacyPolicy.description,
     inLanguage: "en-IN",
-    dateModified: "2026-01-01",
+    // From the document's own "Last updated" line, never today's date.
+    dateModified: legalDateModified(privacyPolicy.updated),
     ...(url("/")
       ? { publisher: { "@type": "Organization", name: "Edgecipline Technologies", url: url("/") } }
       : {}),

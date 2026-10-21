@@ -1,0 +1,346 @@
+/* ==========================================================================
+   The section system
+   --------------------------------------------------------------------------
+   One spine, one vertical rhythm, one type scale and one card language for
+   all eleven sections of the landing page.
+
+   Why this file exists. Every section was written as its own self-contained
+   scene for an earlier version of the page: each one set its own container
+   width (`min(100%, 1480px)`, while the hero and the navbar use 1240px), its
+   own asymmetric padding, its own `min-height` tuned to fill a pinned frame
+   that no longer exists, and its own hard-coded heading sizes and colours.
+   Read in sequence the result was eleven differently-aligned blocks — the
+   headline of one section started 60px to the left of the next, and no two
+   headings were the same size.
+
+   So the shared decisions live here, once:
+
+     1. the spine        every section's inner wrapper, same width, centred
+     2. the rhythm       vertical padding, and no arbitrary minimum heights
+     3. the type         section headings and sub-copy on the --step-* scale
+     4. the cards        one radius, one surface, one border
+     5. the accents      the recurring green/blue rule-and-glow motif
+
+   Scoped under `.site-shell` throughout. These class names are global — this
+   project routes every stylesheet through the Tailwind loader without CSS
+   Modules scoping, so `.prCard` really is `.prCard` — and a section's own
+   single-class rule would otherwise win on source order. Two classes beats
+   one, so this file wins wherever it speaks, and stays silent everywhere
+   else, which is how each section keeps the parts that are genuinely its own.
+
+   Imported last in app/layout.tsx.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. The spine
+   --------------------------------------------------------------------------
+   Every section's inner wrapper is the same column, the same width as the
+   hero copy, the navbar and the footer. This single rule is what makes the
+   page read as one document rather than eleven posters.
+   -------------------------------------------------------------------------- */
+
+.site-shell :is(
+  .loop-inner,
+  .chart-inner,
+  .story-inner,
+  .hiwFrame,
+  .dnaInner,
+  .wrInner,
+  .jyInner,
+  .prInner,
+  .faqInner,
+  .ctaInner
+) {
+  width: min(100% - var(--gutter) * 2, var(--shell));
+  padding-inline: 0;
+  margin-inline: auto;
+}
+
+/* --------------------------------------------------------------------------
+   2. The rhythm
+   --------------------------------------------------------------------------
+   The `min-height` each section carried existed to fill one viewport-tall
+   panel of the pinned stage. On a normally scrolling page a minimum height is
+   just enforced emptiness: a short section is padded out with nothing and a
+   tall one is unaffected. Height comes from content and one shared padding
+   instead.
+   -------------------------------------------------------------------------- */
+
+.site-shell > .stage > section {
+  min-height: 0;
+}
+
+/* The hero is now a section inside the page's main landmark. Keep its
+   viewport-height composition while the later sections size to content. */
+.site-shell > .stage > section#hero {
+  min-height: min(100svh, 940px);
+}
+
+@media (max-width: 640px) {
+  .site-shell > .stage > section#hero { min-height: auto; }
+}
+
+.site-shell :is(
+  .loop-inner,
+  .chart-inner,
+  .story-inner,
+  .hiwFrame,
+  .dnaInner,
+  .wrInner,
+  .jyInner,
+  .prInner,
+  .faqInner,
+  .ctaInner
+) {
+  padding-block: clamp(64px, 9vh, 128px);
+}
+
+/* The final call to action closes the page, so it carries a little more air
+   above it and hands straight over to the footer below. */
+.site-shell .ctaInner { padding-block: clamp(72px, 10vh, 140px) clamp(56px, 7vh, 104px); }
+
+/* --------------------------------------------------------------------------
+   3. The type
+   --------------------------------------------------------------------------
+   Nine sections, nine different heading sizes — clamp(40px, 3.25vw, 56px),
+   clamp(36px, 3.15vw, 59px), clamp(28px, 2.7vw, 46px) and so on — all of them
+   expressed in viewport width, which is the one dimension that should not
+   decide how big a heading is. They are all --step-4 now, from the scale in
+   globals.css, and the accent span is the one place a section heading takes
+   brand colour.
+   -------------------------------------------------------------------------- */
+
+.site-shell :is(
+  .loop-copy,
+  .chart-copy,
+  .story-copy,
+  .hiwHeader,
+  .dnaHeader,
+  .wrHeader,
+  .jyHeader,
+  .prHeader,
+  .faqHeader,
+  .ctaCopy
+) > h2 {
+  max-width: 24ch;
+  margin: 0;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: var(--step-4);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -.03em;
+}
+
+/* One accent per heading. Green on the sections about behaviour and progress,
+   blue on the ones about the analysis itself — the same split the rest of the
+   palette uses, so the colour carries meaning rather than decoration. */
+.site-shell :is(.loop-copy, .story-copy, .wrHeader, .jyHeader, .prHeader, .ctaCopy) > h2 span { color: var(--green); }
+.site-shell :is(.chart-copy, .hiwHeader, .dnaHeader, .faqHeader) > h2 span { color: var(--blue); }
+
+/* The line under each heading. Same size, same colour, same measure
+   everywhere, so a section's sub-copy is recognisably the same kind of text
+   from one section to the next. */
+.site-shell :is(
+  .hiwHeader,
+  .dnaHeader,
+  .wrHeader,
+  .jyHeader,
+  .prHeader,
+  .faqHeader
+) > p {
+  max-width: 54ch;
+  margin: clamp(12px, 1.4vh, 20px) 0 0;
+  color: var(--text-2);
+  font-family: var(--font-text);
+  font-size: var(--step-1);
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: 0;
+}
+
+/* The two narrative sections lead with a larger statement rather than a
+   sub-heading, so they keep more weight — but on the scale, not off it. */
+.site-shell :is(.loop-copy, .chart-copy) > p {
+  max-width: 42ch;
+  color: var(--text-2);
+  font-family: var(--font-text);
+  font-size: var(--step-2);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: -.01em;
+}
+
+/* Every section heading gets the same space above its content. */
+.site-shell :is(.hiwHeader, .dnaHeader, .wrHeader, .jyHeader, .prHeader, .faqHeader) {
+  margin-bottom: clamp(32px, 4vh, 56px);
+}
+
+/* --------------------------------------------------------------------------
+   4. The cards
+   --------------------------------------------------------------------------
+   Six sections present a row of cards and each had drawn its own: different
+   radii (11px, 12px, 14px, 20px, 22px), different surfaces, different
+   borders, some with a neon outline on all four sides. One definition, one
+   radius, one hairline, and the glow kept for the one card that is actually
+   emphasised.
+   -------------------------------------------------------------------------- */
+
+.site-shell :is(.hiwStep, .prCard, .wrCard, .faqItem, .dnaInsight, .ctaDemo) {
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background:
+    linear-gradient(180deg, rgba(16, 27, 42, .72), rgba(10, 16, 26, .66));
+  box-shadow: 0 18px 44px rgba(2, 4, 10, .3);
+}
+
+/* A card lifts on hover, and only by a little. Transform and shadow, so
+   nothing re-lays-out and nothing below it moves. */
+/* `.hiwStep` is deliberately not in this list: it owns its own `transform` in
+   motion.css — a perspective tilt plus a scroll parallax — and a hover
+   `translateY` here would replace the whole thing, so the card would jump the
+   moment the pointer entered. It gets the border and the shadow only. */
+.site-shell .prCard:hover {
+  transform: translateY(-3px);
+}
+
+.site-shell :is(.hiwStep, .prCard):hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 24px 54px rgba(2, 4, 10, .42);
+}
+
+.site-shell .prCard {
+  transition:
+    transform var(--mo-dur-fast, .45s) var(--mo-ease-soft, ease),
+    border-color var(--mo-dur-fast, .45s) var(--mo-ease-soft, ease),
+    box-shadow var(--mo-dur-fast, .45s) var(--mo-ease-soft, ease);
+}
+
+.site-shell .hiwStep {
+  transition:
+    border-color var(--mo-dur-fast, .45s) var(--mo-ease-soft, ease),
+    box-shadow var(--mo-dur-fast, .45s) var(--mo-ease-soft, ease);
+}
+
+/* The one emphasised card on the page. Green edge and a green cast, because
+   it is the recommended plan — nothing else gets this treatment. */
+.site-shell .prCard[data-featured] {
+  border-color: rgba(57, 255, 136, .42);
+  background:
+    linear-gradient(180deg, rgba(20, 44, 38, .8), rgba(10, 20, 26, .7));
+  box-shadow: 0 24px 60px rgba(2, 4, 10, .44), 0 0 0 1px rgba(57, 255, 136, .12);
+}
+
+/* --------------------------------------------------------------------------
+   5. The accents
+   --------------------------------------------------------------------------
+   The recurring motif that ties the storytelling sections together: a short
+   brand rule with a soft glow. It already existed in four sections, drawn
+   four different ways. It is one thing now, and it is the connective element
+   the sections share instead of each inventing its own flourish.
+   -------------------------------------------------------------------------- */
+
+.site-shell :is(.loop-copy, .loop-callout) > i,
+.site-shell .faqRule {
+  display: block;
+  width: 56px;
+  height: 2px;
+  border: 0;
+  border-radius: 2px;
+  background: var(--brand-gradient);
+  box-shadow: 0 0 14px rgba(57, 255, 136, calc(.4 * var(--mo-glow, 1)));
+}
+
+/* Small uppercase labels — badges, rail labels, tags, step numbers, chart
+   annotations. All of them are metadata, so all of them are mono. */
+.site-shell :is(
+  .story-badges li,
+  .story-rail-labels li,
+  .story-features li,
+  .dnaTags li span,
+  .hiwNumber,
+  .jyLabel span:last-child
+) {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  letter-spacing: .08em;
+}
+
+/* --------------------------------------------------------------------------
+   6. The leftovers
+   --------------------------------------------------------------------------
+   Each section used to paint a full-bleed photograph and a veil over it. The
+   photographs are gone and backdrop.css already removes the veils' colour,
+   but the elements themselves were still in the markup taking up a layer
+   each. They are removed from the components; these rules keep the page
+   correct for anything that still renders one.
+   -------------------------------------------------------------------------- */
+
+.site-shell :is(
+  .loop-backdrop,
+  .wrBackdrop,
+  .jyBackdrop,
+  .prBackdrop,
+  .ctaBackdrop,
+  .dnaVeil,
+  .wrVeil,
+  .jyVeil,
+  .prVeil,
+  .ctaVeil,
+  .faqGlow,
+  .ctaMoon,
+  .ctaFigure
+) {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   7. Narrow viewports
+   --------------------------------------------------------------------------
+   One place to tighten the rhythm, rather than nine media queries each
+   picking a different phone padding.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 767px) {
+  .site-shell :is(
+    .loop-inner,
+    .chart-inner,
+    .hiwFrame,
+    .dnaInner,
+    .wrInner,
+    .jyInner,
+    .prInner,
+    .faqInner,
+    .ctaInner
+  ) {
+    padding-block: clamp(52px, 7vh, 76px);
+  }
+
+  .site-shell :is(
+    .loop-copy,
+    .chart-copy,
+    .hiwHeader,
+    .dnaHeader,
+    .wrHeader,
+    .jyHeader,
+    .prHeader,
+    .faqHeader,
+    .ctaCopy
+  ) > h2 {
+    max-width: none;
+  }
+
+  .site-shell :is(.loop-copy, .chart-copy) > p { max-width: none; }
+
+  /* Hover lift is a pointer affordance; on a touch screen it only fires after
+     a tap and reads as the card wobbling. */
+  .site-shell .prCard:hover { transform: none; }
+  .site-shell :is(.hiwStep, .prCard):hover {
+    box-shadow: 0 18px 44px rgba(2, 4, 10, .3);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-shell :is(.hiwStep, .prCard) { transition: none; }
+  .site-shell .prCard:hover { transform: none; }
+}

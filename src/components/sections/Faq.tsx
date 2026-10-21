@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react";
+import Link from "next/link";
 
+import { faqItems } from "@/data/faq";
 import { FaqAccordion } from "./FaqAccordion";
 import styles from "./Faq.module.css";
 
@@ -24,6 +26,14 @@ export function Faq() {
         <div data-reveal style={vars({ "--mo-delay": ".14s" })}>
           <FaqAccordion />
         </div>
+
+        {/* The canonical answers live on /faq, which is the only page that
+            carries FAQPage schema. These few are the ones worth asking before
+            someone scrolls; the link is how both a reader and a crawler get
+            from here to the full set. */}
+        <p className={css("faqMore")} data-reveal style={vars({ "--mo-delay": ".2s" })}>
+          <Link href="/faq">All {faqItems.length} questions, answered in full</Link>
+        </p>
       </div>
     </section>
   );

@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Briefcase, Building2, Camera, ChevronRight, Mail, Sparkles, SquarePlay, X } from "lucide-react";
 
-import { MobileNav } from "@/components/MobileNav";
-import { SidebarNav } from "@/components/SidebarNav";
+import { Navbar } from "@/components/nav/Navbar";
+import { SiteFooter } from "@/components/SiteFooter";
 import { RevealObserver } from "@/components/motion/RevealObserver";
 import { ContactForm } from "@/components/contact/ContactForm";
 import {
@@ -29,10 +29,9 @@ const description =
   "Have a question about Edgecipline? Reach out to the team. We respond to every message within 24–48 hours. Questions about waitlist, features, pricing, or partnerships welcome.";
 
 export const metadata: Metadata = {
-  title,
+  title: { absolute: title },
   description,
   alternates: { canonical: url("/contact") },
-  robots: { index: true, follow: true },
   openGraph: {
     siteName: BRAND_NAME,
     title,
@@ -133,8 +132,7 @@ export default function ContactPage() {
       </a>
 
       <RevealObserver />
-      <SidebarNav />
-      <MobileNav />
+      <Navbar />
 
       <section className={css("ctHero")} aria-labelledby="contact-title">
         <div className={css("ctHeroGlow")} aria-hidden="true" />
@@ -261,6 +259,7 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+      <SiteFooter />
     </div>
   );
 }

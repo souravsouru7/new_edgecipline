@@ -1,89 +1,66 @@
 /* ==========================================================================
-   Section 06 — Trading DNA (layout and skin only; motion lives in motion.css)
+   Section 06 — Your Trading DNA
+   --------------------------------------------------------------------------
+   Layout and skin only; the motion is in app/motion.css, and the shared
+   spine, type scale, rhythm and card surface are in app/sections.css.
 
-   Note for whoever edits this next: CSS Modules are NOT scoped in this project
-   — next.config.ts routes every *.css file through the Tailwind turbopack
-   loader, so these class names land in the global stylesheet exactly as
-   written (HowItWorks.module.css behaves the same way, which is why it has
-   the `css()` fallback helper). Every name here is therefore prefixed `dna`.
+   Note for whoever edits this next: CSS Modules are NOT scoped in this
+   project — next.config.ts routes every *.css file through the Tailwind
+   turbopack loader, so these class names land in the global stylesheet
+   exactly as written. Every name here is therefore prefixed `dna`.
+
+   What changed from the previous version:
+
+     * The five helix tags each had a 2px `#00ea65` border and the insight
+       panel had a 2px green border with a second blue ring inset 7px inside
+       it. Between them that is six bright green outlines in one section, plus
+       a double-bordered box — the "green border round everything" the
+       direction rules out. The tags are quiet mono pills now and the insight
+       panel takes the shared card surface with a single green rule down its
+       edge.
+     * The heading used gradient-clipped text. The page has exactly one
+       gradient headline, in the hero; a second one competes with it.
+     * `min-height: clamp(560px, 44vw, 820px)` and `min-height: inherit` were
+       there to fill a pinned panel.
+     * At phone width the section painted `background: #04070f` over the
+       page's continuous background, which put a hard rectangular edge back
+       into the one place the whole background layer exists to avoid.
+     * The four trait rows were borderless on desktop and bordered on mobile.
+       They are the same object at every width.
    ========================================================================== */
 
 .dna {
   position: relative;
-  min-height: clamp(560px, 44vw, 820px);
-  margin-left: clamp(210px, 13.3vw, 250px);
-  overflow: hidden;
   isolation: isolate;
-  /* No background and no edge-softening shadow: this section is transparent
-     over the page's one continuous background layer (app/backdrop.css). */
-}
-
-/* Keeps the copy on the left and the panel on the right at AA contrast over
-   the cosmic field, and lifts the middle where the helix sits. */
-.dnaVeil {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse at 52% 50%, rgba(0, 150, 160, .16), transparent 56%),
-    linear-gradient(90deg, rgba(2, 11, 17, .88) 0%, rgba(2, 11, 17, .5) 32%, rgba(2, 11, 17, .14) 58%, rgba(2, 11, 17, .66) 100%),
-    linear-gradient(180deg, rgba(2, 11, 17, .5), transparent 26%, rgba(2, 11, 17, .55));
 }
 
 .dnaInner {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: 31fr 39fr 30fr;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, .8fr) minmax(0, .95fr);
   align-items: center;
-  gap: clamp(18px, 2.4vw, 48px);
-  width: min(100%, 1360px);
-  min-height: inherit;
-  padding: clamp(44px, 4.2vw, 76px) clamp(28px, 3.6vw, 60px);
-  margin: 0 auto;
+  gap: clamp(20px, 3vw, 52px);
 }
-
-/* --- left column ---------------------------------------------------------- */
 
 .dnaLead {
   display: grid;
   align-content: center;
-  gap: clamp(16px, 2vw, 30px);
+  gap: clamp(20px, 2.4vw, 32px);
 }
 
-/* Sized so "Your Trading DNA" holds one line inside the 31% column at every
-   desktop width, as in the reference; `balance` keeps it tidy if it ever wraps. */
-.dnaHeader h2 {
-  margin: 0;
-  color: #fff;
-  font-size: clamp(28px, 2.6vw, 42px);
-  line-height: .98;
-  letter-spacing: -.055em;
-  font-weight: 850;
-  text-wrap: balance;
-}
+/* The heading and its sub-line come from app/sections.css; this only resets
+   the margin the shared rule adds, because the grid gap above already
+   separates the header from the trait list. */
+.dnaHeader { margin-bottom: 0; }
 
-.dnaHeader h2 span {
-  color: #2ff0cf;
-  background: linear-gradient(104deg, #35f2d2 0%, #24e6ae 46%, #13c6dc 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.dnaHeader p {
-  max-width: 24ch;
-  margin: clamp(8px, .9vw, 14px) 0 0;
-  color: #dceef0;
-  font-size: clamp(14px, 1.12vw, 19px);
-  line-height: 1.3;
-  font-weight: 600;
-}
+/* --------------------------------------------------------------------------
+   The four traits
+   -------------------------------------------------------------------------- */
 
 .dnaFeatures {
   display: grid;
-  gap: clamp(6px, .9vw, 14px);
+  gap: 10px;
   padding: 0;
   margin: 0;
   list-style: none;
@@ -92,17 +69,18 @@
 .dnaFeatures li {
   display: flex;
   align-items: center;
-  gap: clamp(10px, 1vw, 16px);
-  padding: clamp(5px, .6vw, 9px) clamp(8px, .9vw, 14px);
-  border: 1px solid transparent;
-  border-radius: 14px;
+  gap: clamp(12px, 1.2vw, 18px);
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: rgba(16, 27, 42, .46);
 }
 
 .dnaFeatureIcon {
   display: grid;
   flex: none;
-  width: clamp(38px, 3.2vw, 56px);
-  height: clamp(38px, 3.2vw, 56px);
+  width: clamp(40px, 3.2vw, 52px);
+  height: clamp(40px, 3.2vw, 52px);
   place-items: center;
 }
 
@@ -115,34 +93,41 @@
 
 .dnaFeatures h3 {
   margin: 0;
-  color: #fff;
-  font-size: clamp(14px, 1.16vw, 20px);
-  line-height: 1.1;
-  letter-spacing: -.03em;
-  font-weight: 800;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: var(--step-0);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -.02em;
 }
 
 .dnaFeatures li > div > p {
   margin: 3px 0 0;
-  color: #bed2d5;
-  font-size: clamp(12px, .94vw, 15px);
-  line-height: 1.25;
+  color: var(--text-2);
+  font-size: var(--step--1);
+  line-height: 1.4;
 }
 
-/* --- centre column -------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   The helix
+   --------------------------------------------------------------------------
+   The one piece of signature artwork in this section: a luminous double
+   strand standing for behavioural patterns. It keeps a fixed aspect ratio, so
+   the tags beside it stay in register at every width.
+   -------------------------------------------------------------------------- */
 
 .dnaStage {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(10px, 1.6vw, 30px);
+  gap: clamp(14px, 1.8vw, 28px);
 }
 
 .dnaHelix {
   position: relative;
   flex: none;
-  width: clamp(140px, 14.5vw, 250px);
+  width: clamp(130px, 13vw, 210px);
   aspect-ratio: 1000 / 1800;
 }
 
@@ -153,9 +138,11 @@
   overflow: visible;
 }
 
+/* The five labels beside it. Metadata, so mono and quiet: the helix is the
+   bright object here, and five lit outlines next to it only dim it. */
 .dnaTags {
   display: grid;
-  gap: clamp(7px, 1.05vw, 18px);
+  gap: 8px;
   justify-items: start;
   padding: 0;
   margin: 0;
@@ -164,156 +151,112 @@
 
 .dnaTags span {
   display: inline-flex;
-  min-height: clamp(26px, 2.2vw, 38px);
+  min-height: 30px;
   align-items: center;
-  justify-content: center;
-  padding: 0 clamp(9px, 1vw, 18px);
-  color: #f2ffff;
-  border: 2px solid #04e6b6;
+  padding: 0 13px;
+  color: var(--text-2);
+  border: 1px solid var(--border);
   border-radius: 999px;
-  background: #00191c;
-  font-size: clamp(9px, .76vw, 13px);
-  font-weight: 800;
+  background: rgba(5, 9, 20, .72);
+  font-size: var(--step--1);
+  line-height: 1;
   text-transform: uppercase;
-  letter-spacing: .06em;
   white-space: nowrap;
 }
 
-/* --- right column --------------------------------------------------------- */
+/* One accent, and it marks position rather than decorating: a short rule in
+   the brand gradient, running green to blue down the five labels in the same
+   order the helix reads. */
+.dnaTags li { display: flex; align-items: center; gap: 10px; }
+
+.dnaTags li::before {
+  content: "";
+  width: 14px;
+  height: 2px;
+  flex: none;
+  border-radius: 2px;
+  background: color-mix(in oklab, var(--green), var(--blue) calc(var(--i, 0) * 25%));
+  box-shadow: 0 0 8px color-mix(in oklab, var(--green), var(--blue) calc(var(--i, 0) * 25%));
+}
+
+/* --------------------------------------------------------------------------
+   The closing insight
+   --------------------------------------------------------------------------
+   Surface, border and radius come from the shared card definition. The only
+   thing added is the green rule down its leading edge, which is the same
+   accent the Emotional Loop's closing line uses — the two closing statements
+   on the page are marked the same way.
+   -------------------------------------------------------------------------- */
 
 .dnaInsight {
   position: relative;
   display: grid;
   align-content: center;
-  gap: clamp(10px, 1.2vw, 18px);
-  padding: clamp(20px, 2.2vw, 38px) clamp(18px, 2vw, 32px);
-  border: 2px solid #11cfbc;
-  border-radius: clamp(18px, 1.8vw, 30px);
-  background: radial-gradient(ellipse at 50% 38%, #063541, #00131d 78%);
-  box-shadow:
-    0 0 34px rgba(17, 207, 188, .13),
-    inset 0 0 44px rgba(0, 0, 0, .42);
+  gap: clamp(10px, 1.2vw, 16px);
+  padding: clamp(22px, 2.2vw, 34px) clamp(20px, 2vw, 30px);
+  overflow: hidden;
 }
 
-/* The artwork's second, fainter outline. */
 .dnaInsight::before {
   content: "";
   position: absolute;
-  inset: 7px;
-  border: 1px solid rgba(9, 166, 170, .45);
-  border-radius: clamp(13px, 1.4vw, 24px);
-  pointer-events: none;
+  inset: 0 auto 0 0;
+  width: 2px;
+  background: var(--brand-gradient);
 }
 
 .dnaInsightLead {
   margin: 0;
-  color: #fff;
-  font-size: clamp(15px, 1.26vw, 22px);
-  line-height: 1.24;
-  letter-spacing: -.03em;
-  font-weight: 800;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  font-weight: 500;
+  line-height: 1.22;
+  letter-spacing: -.025em;
 }
 
 .dnaInsightBody {
-  max-width: 30ch;
+  max-width: 34ch;
   margin: 0;
-  color: #c3d8db;
-  font-size: clamp(13px, 1vw, 17px);
-  line-height: 1.45;
+  color: var(--text-2);
+  font-size: var(--step-0);
+  line-height: 1.55;
 }
 
-/* --- tablet --------------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   Narrower viewports
+   -------------------------------------------------------------------------- */
 
 @media (max-width: 1199px) {
-  .dna { min-height: clamp(620px, 68vw, 900px); }
-
   .dnaInner {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     align-items: start;
-    gap: clamp(20px, 3vw, 40px) clamp(18px, 2.6vw, 36px);
+    gap: clamp(24px, 3vw, 40px);
   }
 
   .dnaLead { align-content: start; }
-  .dnaStage { align-items: start; justify-content: center; }
+  .dnaStage { align-items: start; }
 
   .dnaInsight {
     grid-column: 1 / -1;
-    justify-self: center;
-    width: min(100%, 720px);
+    width: 100%;
   }
 
   .dnaInsightBody { max-width: none; }
 }
 
-/* The sidebar is hidden from here down, so the section reclaims its gutter. */
-@media (max-width: 1100px) {
-  .dna { margin-left: 0; }
-}
-
-/* --- mobile --------------------------------------------------------------- */
-
 @media (max-width: 767px) {
-  .dna {
-    min-height: 0;
-    /* The backdrop is a wide band; anchor it so the brighter centre stays
-       behind the helix rather than drifting off the side. */
-    background: #020b11;
-  }
-
-
-  .dnaVeil {
-    background:
-      radial-gradient(ellipse at 50% 46%, rgba(0, 150, 160, .14), transparent 58%),
-      linear-gradient(180deg, rgba(2, 11, 17, .84), rgba(2, 11, 17, .52) 38%, rgba(2, 11, 17, .8));
-  }
-
   .dnaInner {
-    display: flex;
-    flex-direction: column;
+    grid-template-columns: minmax(0, 1fr);
     gap: 26px;
-    width: min(100%, 500px);
-    min-height: 0;
-    padding: 72px 20px 56px;
   }
 
-  .dnaHeader h2 { font-size: clamp(30px, 9.4vw, 42px); }
-  .dnaHeader p { max-width: none; font-size: 16px; }
+  .dnaHelix { width: min(36vw, 150px); }
 
-  .dnaFeatures { gap: 8px; }
-  .dnaFeatures li {
-    padding: 8px 12px;
-    border-color: rgba(17, 207, 188, .2);
-    border-radius: 12px;
-    background: rgba(2, 18, 24, .55);
+  /* The five labels keep their order but wrap, so the helix is not squeezed
+     into a sliver beside a tall column of pills. */
+  .dnaTags {
+    grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
+    justify-items: stretch;
   }
-  .dnaFeatures h3 { font-size: 16px; }
-  .dnaFeatures li > div > p { font-size: 13px; }
-  .dnaFeatureIcon { width: 44px; height: 44px; }
-
-  /* The full helix stays visible — it is never cropped, only scaled. */
-  .dnaStage {
-    align-items: center;
-    justify-content: center;
-    gap: 18px;
-  }
-  .dnaHelix { width: min(38vw, 165px); }
-  .dnaTags { gap: 10px; }
-  .dnaTags span {
-    min-height: 30px;
-    padding: 0 14px;
-    font-size: 11px;
-  }
-
-  .dnaInsight {
-    width: auto;
-    padding: 22px 20px;
-  }
-  .dnaInsightLead { font-size: 19px; }
-  .dnaInsightBody { font-size: 15px; }
-}
-
-@media (max-width: 360px) {
-  .dnaStage { gap: 12px; }
-  .dnaHelix { width: 36vw; }
-  .dnaTags span { padding: 0 10px; font-size: 10px; }
 }

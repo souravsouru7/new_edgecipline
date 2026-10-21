@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 
-import { MobileNav } from "@/components/MobileNav";
-import { SidebarNav } from "@/components/SidebarNav";
+import { Navbar } from "@/components/nav/Navbar";
+import { SiteFooter } from "@/components/SiteFooter";
 import { RevealObserver } from "@/components/motion/RevealObserver";
 import { FeatureExplorer } from "@/components/features/FeatureExplorer";
 import { FeatureSection } from "@/components/features/FeatureSection";
 import { FeaturesCta } from "@/components/features/FeaturesCta";
 import { FeaturesHero } from "@/components/features/FeaturesHero";
 import { features, featuresInGroup, groups } from "@/data/features";
-import { BRAND_NAME, OG_IMAGE_PATH, OG_IMAGE_SIZE, SOFTWARE_ID, WEBSITE_ID, absoluteUrl, jsonLd } from "@/data/brand";
+import { BRAND_NAME, SOFTWARE_ID, WEBSITE_ID, absoluteUrl, jsonLd } from "@/data/brand";
 import styles from "@/components/features/Features.module.css";
 
 const css = (name: string) => styles[name] || name;
@@ -17,24 +17,27 @@ const title = "Edgecipline Features | AI Trading Discipline Coach for Forex & In
 const description =
   "All 14 Edgecipline features: AI screenshot extraction, Forex and Indian market modes, Trading DNA, the psychology cost calculator, missions and streaks, and daily AI coaching.";
 
+  /* No `images` here on purpose: `opengraph-image.tsx` in this segment
+     generates the card, and an explicit `images` in metadata would override
+     the file convention and put the generic sitewide card back. Twitter has
+     no separate `twitter-image` because the crop is identical — 1200x630,
+     summary_large_image — and X falls back to og:image, so a second file
+     would be the same picture generated twice. */
 export const metadata: Metadata = {
-  title,
+  title: { absolute: title },
   description,
   alternates: { canonical: absoluteUrl("/features") },
-  robots: { index: true, follow: true },
   openGraph: {
     siteName: BRAND_NAME,
     title,
     description,
     type: "website",
     url: absoluteUrl("/features"),
-    images: [{ url: OG_IMAGE_PATH, ...OG_IMAGE_SIZE }],
   },
   twitter: {
     card: "summary_large_image",
     title,
     description,
-    images: [OG_IMAGE_PATH],
   },
 };
 
@@ -44,7 +47,39 @@ export const metadata: Metadata = {
  * tool needs to answer "what does Edgecipline do". The Organization, WebSite,
  * Brand and SoftwareApplication nodes come from the root layout; these
  * reference them by `@id` rather than restating them.
+ *
+ * It also carries the glossary. "Trading DNA", "Psychology Cost" and
+ * "Self-Awareness Score" are coined product concepts, and an answer engine
+ * asked what Trading DNA is has no way to tell a defined term from a marketing
+ * phrase unless the page says so. A `DefinedTermSet` says so, and each term
+ * points at the feature section that defines it — so the definition a model
+ * retrieves is the one on the page, not one it invented.
+ *
+ * Only these three are listed. The other eleven features are ordinary product
+ * capabilities with self-explanatory names; defining "Trading Journal" as a
+ * term of art would be noise.
  */
+
+/**
+ * The coined terms, each tied to the feature that defines it. The definition
+ * text is the feature's own `solution` line — one source, so the glossary can
+ * never describe the term differently from the section beneath it.
+ */
+const GLOSSARY_IDS = ["trading-dna", "psychology", "self-awareness"] as const;
+
+const glossaryTerms = GLOSSARY_IDS.map((id) => {
+  const feature = features.find((item) => item.id === id);
+  if (!feature) throw new Error(`Glossary term "${id}" is not a known feature id.`);
+
+  return {
+    "@type": "DefinedTerm",
+    "@id": `${absoluteUrl("/features")}#term-${feature.id}`,
+    name: feature.title,
+    description: feature.solution,
+    url: `${absoluteUrl("/features")}#${feature.id}`,
+    inDefinedTermSet: `${absoluteUrl("/features")}#glossary`,
+  };
+});
 const featuresGraph = {
   "@context": "https://schema.org",
   "@graph": [
@@ -71,6 +106,16 @@ const featuresGraph = {
         url: `${absoluteUrl("/features")}#${feature.id}`,
       })),
     },
+    {
+      "@type": "DefinedTermSet",
+      "@id": `${absoluteUrl("/features")}#glossary`,
+      name: `${BRAND_NAME} glossary`,
+      description: `Concepts coined by ${BRAND_NAME} and defined on this page.`,
+      url: absoluteUrl("/features"),
+      inLanguage: "en-IN",
+      hasDefinedTerm: glossaryTerms,
+    },
+    ...glossaryTerms,
     {
       "@type": "BreadcrumbList",
       itemListElement: [
@@ -103,8 +148,7 @@ export default function FeaturesPage() {
       </a>
 
       <RevealObserver />
-      <SidebarNav />
-      <MobileNav />
+      <Navbar />
 
       <FeaturesHero />
       <FeatureExplorer />
@@ -144,6 +188,7 @@ export default function FeaturesPage() {
       </main>
 
       <FeaturesCta />
+      <SiteFooter />
     </div>
   );
 }

@@ -36,9 +36,9 @@ export function DnaHelix() {
 
       <defs>
         <linearGradient id="dna-strand-gradient" x1="0" x2="1" y1="0" y2="1">
-          <stop stopColor="#05f8c8" />
-          <stop offset=".52" stopColor="#7efbff" />
-          <stop offset="1" stopColor="#0068ff" />
+          <stop stopColor="#39ff88" />
+          <stop offset=".52" stopColor="#bae6fd" />
+          <stop offset="1" stopColor="#38bdf8" />
         </linearGradient>
       </defs>
 

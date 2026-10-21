@@ -4,8 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Check, ChevronRight, Mail, SquareArrowOutUpRight } from "lucide-react";
 
-import { MobileNav } from "@/components/MobileNav";
-import { SidebarNav } from "@/components/SidebarNav";
+import { Navbar } from "@/components/nav/Navbar";
+import { SiteFooter } from "@/components/SiteFooter";
 import { RevealObserver } from "@/components/motion/RevealObserver";
 import {
   FOUNDER_NAMES_SENTENCE,
@@ -32,10 +32,9 @@ const description =
   "Edgecipline has two founders. Sourav R is a co-founder and leads product, technology and strategy. Munavvir TP is a co-founder and leads operations, administration and people.";
 
 export const metadata: Metadata = {
-  title,
+  title: { absolute: title },
   description,
   alternates: { canonical: url("/founders") },
-  robots: { index: true, follow: true },
   openGraph: {
     siteName: BRAND_NAME,
     title,
@@ -135,8 +134,7 @@ export default function FoundersPage() {
       </a>
 
       <RevealObserver />
-      <SidebarNav />
-      <MobileNav />
+      <Navbar />
 
       <section className={css("fdHero")} aria-labelledby="founders-title">
         <div className={css("fdHeroGlow")} aria-hidden="true" />
@@ -365,6 +363,7 @@ export default function FoundersPage() {
           </div>
         </div>
       </section>
+      <SiteFooter />
     </div>
   );
 }

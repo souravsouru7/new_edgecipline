@@ -13,15 +13,15 @@
    ========================================================================== */
 
 .ftPage {
-  --ft-ink: #02080e;
-  --ft-ink-2: #061723;
-  --ft-mint: #00efb5;
-  --ft-cyan: #23d8ff;
+  --ft-ink: #03060d;
+  --ft-ink-2: #080f21;
+  --ft-mint: #00ef68;
+  --ft-cyan: #23b9ff;
   --ft-violet: #a18bff;
-  --ft-text: #eef8fb;
-  --ft-muted: #a9c0c7;
-  --ft-line: rgba(120, 220, 232, .16);
-  --ft-surface: linear-gradient(152deg, rgba(10, 42, 54, .58), rgba(3, 15, 23, .72));
+  --ft-text: #f1f4f8;
+  --ft-muted: #a8bec8;
+  --ft-line: rgba(117,198,235, .16);
+  --ft-surface: linear-gradient(152deg, rgba(12,24,52, .58), rgba(5,10,21, .72));
   --ft-gutter: clamp(20px, 4.4vw, 76px);
   --ft-max: 1400px;
   --ft-radius: 24px;
@@ -29,7 +29,7 @@
   position: relative;
   min-height: 100svh;
   background:
-    radial-gradient(ellipse at 52% -8%, #07303a 0%, rgba(2, 11, 16, 0) 52%),
+    radial-gradient(ellipse at 52% -8%, #0c1835 0%, rgba(3,7,15, 0) 52%),
     linear-gradient(180deg, var(--ft-ink) 0%, var(--ft-ink-2) 46%, var(--ft-ink) 100%);
   color: var(--ft-text);
 }
@@ -40,9 +40,6 @@
 .ftHero,
 .ftExplorer,
 .ftBody,
-.ftCta {
-  margin-left: clamp(210px, 13.3vw, 250px);
-}
 
 .ftInner {
   width: min(100%, var(--ft-max));
@@ -57,7 +54,7 @@
   top: 10px;
   left: 50%;
   padding: 11px 18px;
-  color: #00231c;
+  color: #070d1c;
   border-radius: 10px;
   background: var(--ft-mint);
   font-size: 14px;
@@ -103,7 +100,7 @@
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse at 18% 18%, rgba(0, 239, 181, .14), transparent 42%),
+    radial-gradient(ellipse at 18% 18%, rgba(0,239,104, .14), transparent 42%),
     radial-gradient(ellipse at 78% 62%, rgba(161, 139, 255, .12), transparent 46%);
 }
 
@@ -152,10 +149,10 @@
   gap: 9px;
   padding: 7px 14px 7px 11px;
   margin: 0 0 clamp(16px, 1.8vw, 24px);
-  color: #c8fff0;
-  border: 1px solid rgba(0, 239, 181, .4);
+  color: #c8ffe0;
+  border: 1px solid rgba(0,239,104, .4);
   border-radius: 999px;
-  background: rgba(0, 239, 181, .07);
+  background: rgba(0,239,104, .07);
   font-size: 12px;
   font-weight: 800;
   letter-spacing: .1em;
@@ -186,7 +183,7 @@
 .ftHeroSummary {
   max-width: 56ch;
   margin: clamp(18px, 2vw, 26px) 0 0;
-  color: #dbeaee;
+  color: #dbe8ee;
   font-size: clamp(16px, 1.3vw, 21px);
   line-height: 1.5;
   font-weight: 500;
@@ -235,10 +232,10 @@
   gap: 10px;
   min-height: 46px;
   padding: 0 20px;
-  color: #e8f7f9;
+  color: #ecf0f5;
   border: 1px solid var(--ft-line);
   border-radius: 999px;
-  background: rgba(5, 26, 34, .55);
+  background: rgba(7,15,32, .55);
   font-size: 14px;
   font-weight: 750;
   letter-spacing: -.01em;
@@ -247,8 +244,8 @@
 
 .ftPills a:hover {
   color: #fff;
-  border-color: rgba(0, 239, 181, .55);
-  background: rgba(0, 239, 181, .08);
+  border-color: rgba(0,239,104, .55);
+  background: rgba(0,239,104, .08);
   transform: translateY(-2px);
 }
 
@@ -268,7 +265,7 @@
   z-index: 12;
   top: 0;
   border-block: 1px solid var(--ft-line);
-  background: rgba(2, 10, 15, .9);
+  background: rgba(3,6,14, .9);
   /* No backdrop-filter: blurring a full-width bar on every scrolled frame is
      the single most expensive thing this page could do. */
 }
@@ -311,12 +308,12 @@
   color: var(--ft-text);
   border: 1px solid var(--ft-line);
   border-radius: 12px;
-  background: rgba(4, 20, 27, .8);
+  background: rgba(6,12,25, .8);
   font: inherit;
   font-size: 14px;
 }
 
-.ftSearch input::placeholder { color: #7f979e; }
+.ftSearch input::placeholder { color: #7e949f; }
 .ftSearch input:focus-visible { border-color: var(--ft-mint); outline: none; }
 
 .ftCount {
@@ -341,8 +338,8 @@
   pointer-events: none;
 }
 
-.ftIndexWrap::before { left: 0; background: linear-gradient(90deg, rgba(2, 10, 15, .95), transparent); }
-.ftIndexWrap::after { right: 0; background: linear-gradient(270deg, rgba(2, 10, 15, .95), transparent); }
+.ftIndexWrap::before { left: 0; background: linear-gradient(90deg, rgba(3,6,14, .95), transparent); }
+.ftIndexWrap::after { right: 0; background: linear-gradient(270deg, rgba(3,6,14, .95), transparent); }
 
 .ftIndex {
   display: flex;
@@ -363,20 +360,20 @@
   gap: 8px;
   min-height: 44px;
   padding: 0 14px;
-  color: #cfe3e7;
+  color: #cee0e8;
   border: 1px solid transparent;
   border-radius: 10px;
-  background: rgba(7, 28, 36, .5);
+  background: rgba(8,16,35, .5);
   font-size: 13px;
   font-weight: 700;
   white-space: nowrap;
   transition: color .2s, border-color .2s, background .2s;
 }
 
-.ftIndex a:hover { color: #fff; border-color: rgba(35, 216, 255, .45); }
+.ftIndex a:hover { color: #fff; border-color: rgba(35,185,255, .45); }
 .ftIndex a b { color: var(--ft-cyan); font-size: 11px; font-weight: 850; font-variant-numeric: tabular-nums; }
-.ftIndex [aria-current] { color: #00231c; background: var(--ft-mint); }
-.ftIndex [aria-current] b { color: #00231c; opacity: .65; }
+.ftIndex [aria-current] { color: #070d1c; background: var(--ft-mint); }
+.ftIndex [aria-current] b { color: #070d1c; opacity: .65; }
 .ftIndex li[hidden] { display: none; }
 
 .ftNoMatch {
@@ -413,7 +410,7 @@
 .ftGroupHead p {
   max-width: 62ch;
   margin: 14px 0 0;
-  color: #cadde2;
+  color: #c9dbe3;
   font-size: clamp(19px, 2vw, 30px);
   line-height: 1.26;
   letter-spacing: -.035em;
@@ -424,7 +421,7 @@
   display: block;
   height: 1px;
   margin-top: clamp(22px, 2.4vw, 34px);
-  background: linear-gradient(90deg, rgba(0, 239, 181, .6), rgba(35, 216, 255, .18) 38%, transparent 76%);
+  background: linear-gradient(90deg, rgba(0,239,104, .6), rgba(35,185,255, .18) 38%, transparent 76%);
 }
 
 /* One feature. Scroll margin clears the sticky explorer on anchor jumps. */
@@ -432,7 +429,7 @@
   --ft-span: 1fr;
   position: relative;
   padding-block: clamp(42px, 5vw, 78px);
-  border-top: 1px solid rgba(120, 220, 232, .09);
+  border-top: 1px solid rgba(117,198,235, .09);
   scroll-margin-top: 86px;
 }
 
@@ -505,7 +502,7 @@
 
 .ftProse dt {
   margin-bottom: 7px;
-  color: #8fa8af;
+  color: #8ea5b0;
   font-size: 11px;
   font-weight: 850;
   letter-spacing: .13em;
@@ -515,7 +512,7 @@
 .ftProse dd {
   max-width: 66ch;
   margin: 0;
-  color: #d4e5e9;
+  color: #d3e3ea;
   font-size: clamp(14.5px, 1.1vw, 17px);
   line-height: 1.58;
 }
@@ -524,10 +521,10 @@
 .ftProse .ftSolution dt { color: var(--ft-mint); }
 .ftProse .ftSolution {
   padding-left: clamp(14px, 1.2vw, 20px);
-  border-left: 2px solid rgba(0, 239, 181, .45);
+  border-left: 2px solid rgba(0,239,104, .45);
 }
 
-.ftProse .ftSolution dd { color: #e7f4f6; }
+.ftProse .ftSolution dd { color: #eaeef3; }
 
 .ftBenefits {
   display: grid;
@@ -539,7 +536,7 @@
 
 .ftBenefitsTitle {
   margin: 0 0 12px;
-  color: #8fa8af;
+  color: #8ea5b0;
   font-size: 11px;
   font-weight: 850;
   letter-spacing: .13em;
@@ -551,7 +548,7 @@
   grid-template-columns: 20px minmax(0, 1fr);
   gap: 11px;
   align-items: start;
-  color: #dbebee;
+  color: #dbe8ee;
   font-size: clamp(14px, 1.05vw, 16px);
   line-height: 1.45;
   font-weight: 550;
@@ -565,10 +562,10 @@
   gap: 10px;
   min-height: 46px;
   margin-top: clamp(22px, 2.2vw, 30px);
-  color: #c9fff1;
+  color: #c9ffe0;
   font-size: 14px;
   font-weight: 800;
-  border-bottom: 1px solid rgba(0, 239, 181, .4);
+  border-bottom: 1px solid rgba(0,239,104, .4);
   transition: color .2s, border-color .2s, gap .2s;
 }
 
@@ -586,7 +583,7 @@
   border: 1px solid var(--ft-line);
   border-radius: var(--ft-radius);
   background: var(--ft-surface);
-  box-shadow: inset 0 1px 0 rgba(210, 255, 252, .07), 0 24px 60px rgba(0, 0, 0, .34);
+  box-shadow: inset 0 1px 0 rgba(226,231,239, .07), 0 24px 60px rgba(0, 0, 0, .34);
 }
 
 .ftVisual::before {
@@ -594,7 +591,7 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse at 76% -10%, rgba(35, 216, 255, .12), transparent 54%);
+  background: radial-gradient(ellipse at 76% -10%, rgba(35,185,255, .12), transparent 54%);
 }
 
 /* Everything in these panels is drawn, not captured. The badge says so. */
@@ -604,10 +601,10 @@
   top: 14px;
   right: 14px;
   padding: 5px 9px;
-  color: #b9d3d8;
-  border: 1px solid rgba(120, 220, 232, .28);
+  color: #b8ced9;
+  border: 1px solid rgba(117,198,235, .28);
   border-radius: 7px;
-  background: rgba(2, 12, 17, .82);
+  background: rgba(4,7,15, .82);
   font-size: 10px;
   font-weight: 850;
   letter-spacing: .1em;
@@ -625,7 +622,7 @@
 
 .ftVisualCaption {
   margin: 12px 2px 0;
-  color: #8fa8af;
+  color: #8ea5b0;
   font-size: 11.5px;
   line-height: 1.4;
 }
@@ -633,9 +630,9 @@
 /* A small reusable panel used inside several visuals. */
 .ftPanel {
   padding: 14px;
-  border: 1px solid rgba(120, 220, 232, .14);
+  border: 1px solid rgba(117,198,235, .14);
   border-radius: 14px;
-  background: rgba(3, 17, 24, .66);
+  background: rgba(5,10,22, .66);
 }
 
 .ftPanelTitle {
@@ -643,7 +640,7 @@
   align-items: center;
   gap: 8px;
   margin: 0 0 10px;
-  color: #9fd9e2;
+  color: #9dcde4;
   font-size: 11px;
   font-weight: 850;
   letter-spacing: .1em;
@@ -654,17 +651,17 @@
 
 .ftChips li {
   padding: 6px 10px;
-  color: #d7ecef;
-  border: 1px solid rgba(120, 220, 232, .2);
+  color: #d6e8f0;
+  border: 1px solid rgba(117,198,235, .2);
   border-radius: 8px;
-  background: rgba(6, 26, 34, .7);
+  background: rgba(8,15,32, .7);
   font-size: 11.5px;
   font-weight: 700;
 }
 
-.ftChips [data-accent="mint"] { color: #b9ffe9; border-color: rgba(0, 239, 181, .4); }
-.ftChips [data-accent="cyan"] { color: #c3f1ff; border-color: rgba(35, 216, 255, .4); }
-.ftChips [data-accent="violet"] { color: #ded3ff; border-color: rgba(161, 139, 255, .42); }
+.ftChips [data-accent="mint"] { color: #b9ffd7; border-color: rgba(0,239,104, .4); }
+.ftChips [data-accent="cyan"] { color: #c3ecff; border-color: rgba(35,185,255, .4); }
+.ftChips [data-accent="violet"] { color: #e2e8f0; border-color: rgba(161, 139, 255, .42); }
 
 /* --------------------------------------------------------------------------
    01 — screenshot: a light pass that sweeps the capture into fields
@@ -678,7 +675,7 @@
   inset: 0 auto 0 0;
   width: 34%;
   pointer-events: none;
-  background: linear-gradient(90deg, transparent, rgba(0, 239, 181, .22) 55%, rgba(185, 255, 240, .5));
+  background: linear-gradient(90deg, transparent, rgba(0,239,104, .22) 55%, rgba(185,255,215, .5));
   mask-image: linear-gradient(90deg, transparent, #000 70%);
   opacity: 0;
 }
@@ -704,9 +701,9 @@
 
 .ftFields > div {
   padding: 9px 11px;
-  border: 1px solid rgba(0, 239, 181, .22);
+  border: 1px solid rgba(0,239,104, .22);
   border-radius: 10px;
-  background: rgba(0, 239, 181, .05);
+  background: rgba(0,239,104, .05);
   opacity: 0;
 }
 
@@ -720,7 +717,7 @@
 }
 
 .ftFields dt {
-  color: #8fa8af;
+  color: #8ea5b0;
   font-size: 9.5px;
   font-weight: 850;
   letter-spacing: .1em;
@@ -729,7 +726,7 @@
 
 .ftFields dd {
   margin: 4px 0 0;
-  color: #dff7f1;
+  color: #e5eaf1;
   font-size: 13px;
   font-weight: 750;
   font-variant-numeric: tabular-nums;
@@ -745,13 +742,13 @@
   padding: 5px;
   border: 1px solid var(--ft-line);
   border-radius: 12px;
-  background: rgba(2, 13, 19, .7);
+  background: rgba(4,8,17, .7);
 }
 
 .ftTabs button {
   min-height: 42px;
   padding: 0 16px;
-  color: #bdd6db;
+  color: #bcd2dc;
   border: 0;
   border-radius: 9px;
   background: transparent;
@@ -762,7 +759,7 @@
   transition: color .2s, background .2s;
 }
 
-.ftTabs [aria-selected="true"] { color: #00231c; background: var(--ft-mint); }
+.ftTabs [aria-selected="true"] { color: #070d1c; background: var(--ft-mint); }
 
 .ftTabPanel { margin-top: 14px; }
 
@@ -774,14 +771,14 @@
   gap: 12px;
   align-items: center;
   padding: 11px 13px;
-  border: 1px solid rgba(120, 220, 232, .13);
+  border: 1px solid rgba(117,198,235, .13);
   border-radius: 11px;
-  background: rgba(4, 20, 27, .6);
+  background: rgba(6,12,25, .6);
   font-size: 13px;
 }
 
-.ftRows dt { color: #9fb6bc; font-size: 11.5px; font-weight: 750; }
-.ftRows dd { margin: 0; color: #e4f4f6; font-weight: 750; font-variant-numeric: tabular-nums; }
+.ftRows dt { color: #9eb3bd; font-size: 11.5px; font-weight: 750; }
+.ftRows dd { margin: 0; color: #e8ecf2; font-weight: 750; font-variant-numeric: tabular-nums; }
 
 /* --------------------------------------------------------------------------
    03 — journal: filter bar over illustrative rows
@@ -801,10 +798,10 @@
   gap: 8px;
   min-height: 36px;
   padding: 0 12px;
-  color: #b6cfd4;
-  border: 1px solid rgba(120, 220, 232, .18);
+  color: #b5cbd5;
+  border: 1px solid rgba(117,198,235, .18);
   border-radius: 9px;
-  background: rgba(3, 17, 23, .7);
+  background: rgba(5,10,21, .7);
   font-size: 11.5px;
   font-weight: 700;
 }
@@ -820,21 +817,21 @@
 }
 
 .ftTableScroll::-webkit-scrollbar { height: 6px; }
-.ftTableScroll::-webkit-scrollbar-thumb { border-radius: 999px; background: rgba(120, 220, 232, .3); }
+.ftTableScroll::-webkit-scrollbar-thumb { border-radius: 999px; background: rgba(117,198,235, .3); }
 
 .ftLedger { width: 100%; min-width: 420px; border-collapse: collapse; font-size: 12.5px; }
 
 .ftLedger caption {
   padding-bottom: 10px;
-  color: #8fa8af;
+  color: #8ea5b0;
   font-size: 11px;
   text-align: left;
 }
 
 .ftLedger th {
   padding: 8px 10px;
-  color: #8fa8af;
-  border-bottom: 1px solid rgba(120, 220, 232, .16);
+  color: #8ea5b0;
+  border-bottom: 1px solid rgba(117,198,235, .16);
   font-size: 10px;
   font-weight: 850;
   letter-spacing: .09em;
@@ -844,20 +841,20 @@
 
 .ftLedger td {
   padding: 11px 10px;
-  color: #dcecef;
-  border-bottom: 1px solid rgba(120, 220, 232, .07);
+  color: #dce9ef;
+  border-bottom: 1px solid rgba(117,198,235, .07);
   font-weight: 600;
 }
 
 .ftLedger tbody tr:last-child td { border-bottom: 0; }
-.ftLedger [data-tone="up"] { color: #52f5c0; font-variant-numeric: tabular-nums; }
+.ftLedger [data-tone="up"] { color: #48ff97; font-variant-numeric: tabular-nums; }
 .ftLedger [data-tone="down"] { color: #ff8e7d; font-variant-numeric: tabular-nums; }
 
 .ftTag {
   display: inline-block;
   padding: 3px 8px;
-  color: #cfe6ea;
-  border: 1px solid rgba(120, 220, 232, .22);
+  color: #cee2eb;
+  border: 1px solid rgba(117,198,235, .22);
   border-radius: 6px;
   font-size: 10.5px;
   font-weight: 750;
@@ -878,10 +875,10 @@
 
 .ftDnaCombo span {
   padding: 8px 12px;
-  color: #e9fffa;
-  border: 1px solid rgba(0, 239, 181, .4);
+  color: #f1f3f7;
+  border: 1px solid rgba(0,239,104, .4);
   border-radius: 9px;
-  background: linear-gradient(140deg, rgba(0, 239, 181, .14), rgba(35, 216, 255, .06));
+  background: linear-gradient(140deg, rgba(0,239,104, .14), rgba(35,185,255, .06));
   font-size: 12px;
   font-weight: 800;
 }
@@ -901,7 +898,7 @@
   align-items: center;
 }
 
-.ftBars dt { color: #cfe3e7; font-size: 11.5px; font-weight: 800; }
+.ftBars dt { color: #cee0e8; font-size: 11.5px; font-weight: 800; }
 
 .ftBars dd { margin: 0; }
 
@@ -910,7 +907,7 @@
   height: 10px;
   overflow: hidden;
   border-radius: 999px;
-  background: rgba(120, 220, 232, .1);
+  background: rgba(117,198,235, .1);
 }
 
 .ftBarTrack i {
@@ -918,7 +915,7 @@
   width: var(--ft-bar, 50%);
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, var(--ft-bar-from, #00efb5), var(--ft-bar-to, #23d8ff));
+  background: linear-gradient(90deg, var(--ft-bar-from, #00ef68), var(--ft-bar-to, #23b9ff));
   transform-origin: left center;
   scale: 0 1;
 }
@@ -945,7 +942,7 @@
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  color: #b9ced3;
+  color: #b8cbd4;
   font-size: 11.5px;
   font-weight: 700;
 }
@@ -971,11 +968,11 @@
   padding: 13px;
   border: 1px solid rgba(255, 150, 118, .22);
   border-radius: 13px;
-  background: linear-gradient(140deg, rgba(60, 22, 18, .5), rgba(3, 17, 24, .6));
+  background: linear-gradient(140deg, rgba(60, 22, 18, .5), rgba(5,10,22, .6));
 }
 
 .ftAlert[data-tone="warn"] { border-color: rgba(255, 199, 110, .24); }
-.ftAlert[data-tone="info"] { border-color: rgba(35, 216, 255, .24); }
+.ftAlert[data-tone="info"] { border-color: rgba(35,185,255, .24); }
 
 .ftAlertIcon {
   display: grid;
@@ -988,7 +985,7 @@
 }
 
 .ftAlert[data-tone="warn"] .ftAlertIcon { color: #ffd38a; }
-.ftAlert[data-tone="info"] .ftAlertIcon { color: #8ee6ff; }
+.ftAlert[data-tone="info"] .ftAlertIcon { color: #8edbff; }
 
 .ftAlert h4 {
   margin: 0;
@@ -998,7 +995,7 @@
   letter-spacing: -.01em;
 }
 
-.ftAlert p { margin: 5px 0 0; color: #c6d9dd; font-size: 12px; line-height: 1.45; }
+.ftAlert p { margin: 5px 0 0; color: #c5d6de; font-size: 12px; line-height: 1.45; }
 
 .ftRule {
   display: inline-flex;
@@ -1006,8 +1003,8 @@
   gap: 7px;
   margin-top: 9px;
   padding: 6px 10px;
-  color: #c4ffee;
-  border: 1px dashed rgba(0, 239, 181, .4);
+  color: #c4ffde;
+  border: 1px dashed rgba(0,239,104, .4);
   border-radius: 8px;
   font-size: 11.5px;
   font-weight: 750;
@@ -1021,21 +1018,21 @@
 
 .ftMatrix caption {
   padding-bottom: 10px;
-  color: #8fa8af;
+  color: #8ea5b0;
   font-size: 11px;
   text-align: left;
 }
 
 .ftMatrix th {
   padding: 9px;
-  color: #9fb6bc;
+  color: #9eb3bd;
   font-size: 10px;
   font-weight: 850;
   letter-spacing: .08em;
   text-transform: uppercase;
 }
 
-.ftMatrix thead th { border-bottom: 1px solid rgba(120, 220, 232, .16); }
+.ftMatrix thead th { border-bottom: 1px solid rgba(117,198,235, .16); }
 .ftMatrix tbody th { text-align: left; white-space: nowrap; }
 
 .ftMatrix td {
@@ -1050,19 +1047,19 @@
   min-height: 78px;
   padding: 11px 9px;
   align-content: center;
-  border: 1px solid rgba(120, 220, 232, .14);
+  border: 1px solid rgba(117,198,235, .14);
   border-radius: 12px;
-  background: rgba(5, 23, 30, .6);
+  background: rgba(7,13,28, .6);
 }
 
-.ftCell b { color: #e8f6f8; font-size: 12px; font-weight: 800; }
-.ftCell span { color: #a3bcc2; font-size: 10.5px; line-height: 1.35; }
+.ftCell b { color: #ebeff4; font-size: 12px; font-weight: 800; }
+.ftCell span { color: #a2b8c3; font-size: 10.5px; line-height: 1.35; }
 
 /* The dangerous quadrant is the whole point of the feature, so it is marked. */
 .ftCell[data-flag] {
   color: #ffd9c9;
   border-color: rgba(255, 143, 112, .5);
-  background: linear-gradient(140deg, rgba(90, 32, 22, .6), rgba(10, 20, 26, .6));
+  background: linear-gradient(140deg, rgba(90, 32, 22, .6), rgba(10,15,26, .6));
   box-shadow: 0 0 0 1px rgba(255, 143, 112, .14), 0 0 24px rgba(255, 110, 80, .12);
 }
 
@@ -1075,8 +1072,8 @@
 
 .ftChart { display: block; width: 100%; height: auto; overflow: visible; }
 
-.ftChart .ftAxis { stroke: rgba(120, 220, 232, .18); stroke-width: 1; }
-.ftChart .ftGridLine { stroke: rgba(120, 220, 232, .09); stroke-width: 1; }
+.ftChart .ftAxis { stroke: rgba(117,198,235, .18); stroke-width: 1; }
+.ftChart .ftGridLine { stroke: rgba(117,198,235, .09); stroke-width: 1; }
 
 .ftChart .ftLine {
   fill: none;
@@ -1112,7 +1109,7 @@
   to { opacity: 1; scale: 1; }
 }
 
-.ftChart text { fill: #8fa8af; font-size: 13px; font-weight: 700; }
+.ftChart text { fill: #8ea5b0; font-size: 13px; font-weight: 700; }
 
 .ftMetrics {
   display: grid;
@@ -1125,13 +1122,13 @@
 
 .ftMetrics > div {
   padding: 11px;
-  border: 1px solid rgba(120, 220, 232, .14);
+  border: 1px solid rgba(117,198,235, .14);
   border-radius: 11px;
-  background: rgba(4, 20, 27, .6);
+  background: rgba(6,12,25, .6);
 }
 
-.ftMetrics dt { color: #8fa8af; font-size: 10px; font-weight: 850; letter-spacing: .09em; text-transform: uppercase; }
-.ftMetrics dd { margin: 6px 0 0; color: #e2f2f4; font-size: 12.5px; font-weight: 700; line-height: 1.35; }
+.ftMetrics dt { color: #8ea5b0; font-size: 10px; font-weight: 850; letter-spacing: .09em; text-transform: uppercase; }
+.ftMetrics dd { margin: 6px 0 0; color: #e5eaf1; font-size: 12.5px; font-weight: 700; line-height: 1.35; }
 
 /* --------------------------------------------------------------------------
    09 — missions and streaks
@@ -1143,9 +1140,9 @@
 
 .ftMission {
   padding: 12px 13px;
-  border: 1px solid rgba(120, 220, 232, .15);
+  border: 1px solid rgba(117,198,235, .15);
   border-radius: 12px;
-  background: rgba(4, 20, 27, .62);
+  background: rgba(6,12,25, .62);
 }
 
 .ftMissionHead {
@@ -1155,7 +1152,7 @@
   justify-content: space-between;
 }
 
-.ftMissionHead b { color: #e9f7f9; font-size: 13px; font-weight: 780; }
+.ftMissionHead b { color: #edf0f5; font-size: 13px; font-weight: 780; }
 .ftMissionHead span { flex: none; color: var(--ft-mint); font-size: 11.5px; font-weight: 800; font-variant-numeric: tabular-nums; }
 
 .ftProgress {
@@ -1163,7 +1160,7 @@
   margin-top: 10px;
   overflow: hidden;
   border-radius: 999px;
-  background: rgba(120, 220, 232, .12);
+  background: rgba(117,198,235, .12);
 }
 
 .ftProgress i {
@@ -1171,7 +1168,7 @@
   width: var(--ft-progress, 0%);
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, #00efb5, #23d8ff);
+  background: linear-gradient(90deg, #00ef68, #23b9ff);
   transition: width .6s var(--mo-ease-out, ease);
 }
 
@@ -1181,15 +1178,15 @@
   gap: 14px;
   align-items: center;
   padding: 14px;
-  border: 1px solid rgba(0, 239, 181, .22);
+  border: 1px solid rgba(0,239,104, .22);
   border-radius: 13px;
-  background: linear-gradient(140deg, rgba(0, 239, 181, .1), rgba(3, 17, 24, .6));
+  background: linear-gradient(140deg, rgba(0,239,104, .1), rgba(5,10,22, .6));
 }
 
 .ftRing { position: relative; width: 74px; height: 74px; flex: none; }
 .ftRing svg { width: 100%; height: 100%; rotate: -90deg; }
 .ftRing circle { fill: none; stroke-width: 7; }
-.ftRing .ftRingTrack { stroke: rgba(120, 220, 232, .16); }
+.ftRing .ftRingTrack { stroke: rgba(117,198,235, .16); }
 
 .ftRing .ftRingValue {
   stroke: url(#ft-ring-gradient);
@@ -1208,9 +1205,9 @@
 }
 
 .ftRingLabel b { display: block; color: #fff; font-size: 19px; font-weight: 850; line-height: 1; font-variant-numeric: tabular-nums; }
-.ftRingLabel span { color: #8fa8af; font-size: 9px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
+.ftRingLabel span { color: #8ea5b0; font-size: 9px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
 
-.ftStreakBody p { margin: 0; color: #cfe3e7; font-size: 12.5px; line-height: 1.45; }
+.ftStreakBody p { margin: 0; color: #cee0e8; font-size: 12.5px; line-height: 1.45; }
 
 .ftDemoButton {
   display: inline-flex;
@@ -1219,7 +1216,7 @@
   min-height: 40px;
   margin-top: 10px;
   padding: 0 14px;
-  color: #00231c;
+  color: #070d1c;
   border: 0;
   border-radius: 10px;
   background: var(--ft-mint);
@@ -1230,12 +1227,12 @@
   transition: transform .2s, box-shadow .2s;
 }
 
-.ftDemoButton:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0, 239, 181, .25); }
+.ftDemoButton:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,239,104, .25); }
 .ftDemoButton[disabled] { opacity: .55; cursor: default; transform: none; box-shadow: none; }
 
 .ftMilestone {
   margin: 10px 0 0;
-  color: #b9ffe9;
+  color: #b9ffd7;
   font-size: 12px;
   font-weight: 750;
 }
@@ -1249,9 +1246,9 @@
 .ftCoach > div {
   position: relative;
   padding: 13px 14px 13px 46px;
-  border: 1px solid rgba(120, 220, 232, .16);
+  border: 1px solid rgba(117,198,235, .16);
   border-radius: 13px;
-  background: rgba(4, 20, 27, .66);
+  background: rgba(6,12,25, .66);
   opacity: 0;
 }
 
@@ -1268,7 +1265,7 @@
   height: 16px;
   border: 1px solid var(--ft-mint);
   border-radius: 50%;
-  background: rgba(0, 239, 181, .14);
+  background: rgba(0,239,104, .14);
 }
 
 /* The connecting thread between the three steps. */
@@ -1279,11 +1276,11 @@
   left: 23px;
   bottom: -11px;
   width: 1px;
-  background: linear-gradient(180deg, rgba(0, 239, 181, .5), transparent);
+  background: linear-gradient(180deg, rgba(0,239,104, .5), transparent);
 }
 
 .ftCoach dt { color: var(--ft-mint); font-size: 10px; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; }
-.ftCoach dd { margin: 6px 0 0; color: #dbebee; font-size: 12.5px; line-height: 1.5; }
+.ftCoach dd { margin: 6px 0 0; color: #dbe8ee; font-size: 12.5px; line-height: 1.5; }
 
 .ftMorning {
   display: grid;
@@ -1294,10 +1291,10 @@
   padding: 12px 14px;
   border: 1px solid rgba(161, 139, 255, .28);
   border-radius: 13px;
-  background: linear-gradient(140deg, rgba(60, 46, 110, .4), rgba(3, 17, 24, .6));
+  background: linear-gradient(140deg, rgba(60, 46, 110, .4), rgba(5,10,22, .6));
 }
 
-.ftMorning time { color: #ded3ff; font-size: 17px; font-weight: 850; font-variant-numeric: tabular-nums; }
+.ftMorning time { color: #e2e8f0; font-size: 17px; font-weight: 850; font-variant-numeric: tabular-nums; }
 .ftMorning p { margin: 0; color: #cfd6ee; font-size: 12px; line-height: 1.45; }
 
 /* --------------------------------------------------------------------------
@@ -1313,21 +1310,21 @@
   align-items: baseline;
   justify-content: space-between;
   padding-bottom: 11px;
-  border-bottom: 1px solid rgba(120, 220, 232, .16);
+  border-bottom: 1px solid rgba(117,198,235, .16);
 }
 
 .ftReportHead b { color: #fff; font-size: 15px; font-weight: 850; letter-spacing: -.02em; }
-.ftReportHead span { color: #8fa8af; font-size: 11px; font-weight: 750; letter-spacing: .08em; text-transform: uppercase; }
+.ftReportHead span { color: #8ea5b0; font-size: 11px; font-weight: 750; letter-spacing: .08em; text-transform: uppercase; }
 
 .ftFocus {
   padding: 13px 14px;
-  border: 1px solid rgba(0, 239, 181, .32);
+  border: 1px solid rgba(0,239,104, .32);
   border-radius: 12px;
-  background: linear-gradient(140deg, rgba(0, 239, 181, .1), rgba(3, 17, 24, .55));
+  background: linear-gradient(140deg, rgba(0,239,104, .1), rgba(5,10,22, .55));
 }
 
 .ftFocus dt { color: var(--ft-mint); font-size: 10px; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; }
-.ftFocus dd { margin: 7px 0 0; color: #e9f7f9; font-size: 14px; line-height: 1.45; font-weight: 650; }
+.ftFocus dd { margin: 7px 0 0; color: #edf0f5; font-size: 14px; line-height: 1.45; font-weight: 650; }
 
 .ftArchive { display: flex; gap: 7px; padding: 0; margin: 0; list-style: none; overflow-x: auto; scrollbar-width: none; }
 .ftArchive::-webkit-scrollbar { display: none; }
@@ -1335,16 +1332,16 @@
 .ftArchive li {
   flex: none;
   padding: 9px 11px;
-  color: #b6cfd4;
-  border: 1px solid rgba(120, 220, 232, .16);
+  color: #b5cbd5;
+  border: 1px solid rgba(117,198,235, .16);
   border-radius: 9px;
-  background: rgba(4, 20, 27, .6);
+  background: rgba(6,12,25, .6);
   font-size: 11px;
   font-weight: 750;
   white-space: nowrap;
 }
 
-.ftArchive li:first-child { color: #c9fff1; border-color: rgba(0, 239, 181, .4); }
+.ftArchive li:first-child { color: #c9ffe0; border-color: rgba(0,239,104, .4); }
 
 /* --------------------------------------------------------------------------
    12 — checklist demo
@@ -1359,10 +1356,10 @@
   align-items: center;
   min-height: 44px;
   padding: 9px 12px;
-  color: #dbebee;
-  border: 1px solid rgba(120, 220, 232, .14);
+  color: #dbe8ee;
+  border: 1px solid rgba(117,198,235, .14);
   border-radius: 11px;
-  background: rgba(4, 20, 27, .6);
+  background: rgba(6,12,25, .6);
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
@@ -1371,7 +1368,7 @@
   position: relative;
 }
 
-.ftChecklist label:hover { border-color: rgba(0, 239, 181, .38); }
+.ftChecklist label:hover { border-color: rgba(0,239,104, .38); }
 .ftChecklist input { position: absolute; width: 1px; height: 1px; opacity: 0; }
 
 .ftBox {
@@ -1380,13 +1377,13 @@
   height: 22px;
   place-items: center;
   color: transparent;
-  border: 1px solid rgba(120, 220, 232, .4);
+  border: 1px solid rgba(117,198,235, .4);
   border-radius: 7px;
   transition: color .18s, border-color .18s, background .18s, scale .18s;
 }
 
 .ftChecklist input:checked ~ .ftBox {
-  color: #00231c;
+  color: #070d1c;
   border-color: var(--ft-mint);
   background: var(--ft-mint);
   scale: 1.06;
@@ -1404,7 +1401,7 @@
   margin-top: 12px;
 }
 
-.ftChecklistFoot p { margin: 0; color: #9fb6bc; font-size: 11.5px; }
+.ftChecklistFoot p { margin: 0; color: #9eb3bd; font-size: 11.5px; }
 .ftChecklistFoot b { color: var(--ft-mint); font-variant-numeric: tabular-nums; }
 
 /* --------------------------------------------------------------------------
@@ -1416,10 +1413,10 @@
 .ftPhone {
   position: relative;
   padding: 11px 9px;
-  border: 1px solid rgba(120, 220, 232, .28);
+  border: 1px solid rgba(117,198,235, .28);
   border-radius: 26px;
-  background: linear-gradient(170deg, rgba(10, 36, 46, .9), rgba(2, 12, 18, .95));
-  box-shadow: inset 0 1px 0 rgba(210, 255, 252, .1), 0 22px 48px rgba(0, 0, 0, .42);
+  background: linear-gradient(170deg, rgba(11,21,45, .9), rgba(4,8,16, .95));
+  box-shadow: inset 0 1px 0 rgba(226,231,239, .1), 0 22px 48px rgba(0, 0, 0, .42);
 }
 
 .ftPhoneScreen {
@@ -1427,7 +1424,7 @@
   gap: 8px;
   padding: 12px 10px 10px;
   border-radius: 18px;
-  background: rgba(1, 10, 15, .9);
+  background: rgba(3,6,13, .9);
 }
 
 .ftPhoneBar {
@@ -1435,18 +1432,18 @@
   width: 34%;
   margin: 0 auto 4px;
   border-radius: 999px;
-  background: rgba(120, 220, 232, .3);
+  background: rgba(117,198,235, .3);
 }
 
 .ftPhoneCard {
   padding: 9px 10px;
-  border: 1px solid rgba(120, 220, 232, .16);
+  border: 1px solid rgba(117,198,235, .16);
   border-radius: 10px;
-  background: rgba(6, 26, 34, .8);
+  background: rgba(8,15,32, .8);
 }
 
-.ftPhoneCard b { display: block; color: #d7ecef; font-size: 9.5px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
-.ftPhoneCard i { display: block; height: 4px; margin-top: 7px; border-radius: 999px; background: linear-gradient(90deg, rgba(0, 239, 181, .7), rgba(35, 216, 255, .2)); }
+.ftPhoneCard b { display: block; color: #d6e8f0; font-size: 9.5px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+.ftPhoneCard i { display: block; height: 4px; margin-top: 7px; border-radius: 999px; background: linear-gradient(90deg, rgba(0,239,104, .7), rgba(35,185,255, .2)); }
 .ftPhoneCard i + i { width: 62%; margin-top: 5px; }
 
 .ftPhoneNav {
@@ -1455,21 +1452,21 @@
   gap: 6px;
   padding-top: 9px;
   margin-top: 2px;
-  border-top: 1px solid rgba(120, 220, 232, .14);
+  border-top: 1px solid rgba(117,198,235, .14);
 }
 
-.ftPhoneNav span { display: grid; place-items: center; color: #7f979e; }
+.ftPhoneNav span { display: grid; place-items: center; color: #7e949f; }
 .ftPhoneNav span:first-child { color: var(--ft-mint); }
 
 .ftShade {
   padding: 12px;
   border: 1px solid rgba(161, 139, 255, .3);
   border-radius: 14px;
-  background: linear-gradient(150deg, rgba(42, 36, 86, .55), rgba(3, 17, 24, .7));
+  background: linear-gradient(150deg, rgba(42, 36, 86, .55), rgba(5,10,22, .7));
 }
 
-.ftShadeHead { display: flex; align-items: center; gap: 8px; color: #ded3ff; font-size: 10px; font-weight: 850; letter-spacing: .1em; text-transform: uppercase; }
-.ftShade p { margin: 9px 0 0; color: #dbe3f6; font-size: 12.5px; line-height: 1.45; }
+.ftShadeHead { display: flex; align-items: center; gap: 8px; color: #e2e8f0; font-size: 10px; font-weight: 850; letter-spacing: .1em; text-transform: uppercase; }
+.ftShade p { margin: 9px 0 0; color: #e2e7ef; font-size: 12.5px; line-height: 1.45; }
 
 .ftShadeActions { display: flex; gap: 7px; margin-top: 11px; }
 
@@ -1501,7 +1498,7 @@
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse at 50% 112%, rgba(0, 239, 181, .2), transparent 58%),
+    radial-gradient(ellipse at 50% 112%, rgba(0,239,104, .2), transparent 58%),
     radial-gradient(ellipse at 14% 10%, rgba(161, 139, 255, .12), transparent 46%);
 }
 
@@ -1524,7 +1521,7 @@
 .ftCtaInner > p {
   max-width: 58ch;
   margin: clamp(16px, 1.8vw, 22px) 0 0;
-  color: #d4e5e9;
+  color: #d3e3ea;
   font-size: clamp(15px, 1.25vw, 19px);
   line-height: 1.5;
 }
@@ -1533,7 +1530,7 @@
 
 .ftTrust { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 22px; padding: 0; margin: clamp(26px, 3vw, 40px) 0 0; list-style: none; }
 
-.ftTrust li { display: inline-flex; align-items: center; gap: 8px; color: #a9c0c7; font-size: 12.5px; font-weight: 650; }
+.ftTrust li { display: inline-flex; align-items: center; gap: 8px; color: #a8bec8; font-size: 12.5px; font-weight: 650; }
 .ftTrust svg { color: var(--ft-mint); }
 
 /* --------------------------------------------------------------------------

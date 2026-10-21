@@ -12,23 +12,23 @@
    ========================================================================== */
 
 .ppPage {
-  --pp-ink: #02080e;
-  --pp-ink-2: #061723;
-  --pp-mint: #00efb5;
-  --pp-cyan: #23d8ff;
+  --pp-ink: #03060d;
+  --pp-ink-2: #080f21;
+  --pp-mint: #00ef68;
+  --pp-cyan: #23b9ff;
   --pp-violet: #a18bff;
   --pp-amber: #f5a623;
-  --pp-text: #eef8fb;
-  --pp-muted: #a9c0c7;
-  --pp-dim: #7f979e;
-  --pp-line: rgba(120, 220, 232, .16);
+  --pp-text: #f1f4f8;
+  --pp-muted: #a8bec8;
+  --pp-dim: #7e949f;
+  --pp-line: rgba(117,198,235, .16);
   --pp-gutter: clamp(20px, 4.4vw, 76px);
   --pp-max: 1240px;
 
   position: relative;
   min-height: 100svh;
   background:
-    radial-gradient(ellipse at 50% -10%, #07303a 0%, rgba(2, 11, 16, 0) 54%),
+    radial-gradient(ellipse at 50% -10%, #0c1835 0%, rgba(3,7,15, 0) 54%),
     linear-gradient(180deg, var(--pp-ink) 0%, var(--pp-ink-2) 44%, var(--pp-ink) 100%);
   color: var(--pp-text);
 }
@@ -37,7 +37,6 @@
 .ppPlans,
 .ppCompare,
 .ppFaq,
-.ppCta { margin-left: clamp(210px, 13.3vw, 250px); }
 
 .ppInner {
   width: min(100%, var(--pp-max));
@@ -51,7 +50,7 @@
   top: 10px;
   left: 50%;
   padding: 11px 18px;
-  color: #00231c;
+  color: #070d1c;
   border-radius: 10px;
   background: var(--pp-mint);
   font-size: 14px;
@@ -74,7 +73,7 @@
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse at 50% 2%, rgba(0, 239, 181, .15), transparent 46%),
+    radial-gradient(ellipse at 50% 2%, rgba(0,239,104, .15), transparent 46%),
     radial-gradient(ellipse at 84% 72%, rgba(161, 139, 255, .1), transparent 44%);
 }
 
@@ -123,10 +122,10 @@
   gap: 9px;
   padding: 7px 14px 7px 11px;
   margin: 0 0 clamp(16px, 1.8vw, 24px);
-  color: #c8fff0;
-  border: 1px solid rgba(0, 239, 181, .4);
+  color: #c8ffe0;
+  border: 1px solid rgba(0,239,104, .4);
   border-radius: 999px;
-  background: rgba(0, 239, 181, .07);
+  background: rgba(0,239,104, .07);
   font-size: 12px;
   font-weight: 800;
   letter-spacing: .1em;
@@ -156,7 +155,7 @@
 .ppLede {
   max-width: 54ch;
   margin: clamp(18px, 2vw, 26px) 0 0;
-  color: #dbeaee;
+  color: #dbe8ee;
   font-size: clamp(16px, 1.3vw, 21px);
   line-height: 1.5;
   font-weight: 500;
@@ -185,15 +184,15 @@
   padding: clamp(22px, 2.2vw, 32px);
   border: 1px solid var(--pp-line);
   border-radius: 24px;
-  background: linear-gradient(162deg, rgba(10, 42, 54, .5), rgba(3, 15, 23, .72));
-  box-shadow: inset 0 1px 0 rgba(210, 255, 252, .06);
+  background: linear-gradient(162deg, rgba(12,24,52, .5), rgba(5,10,21, .72));
+  box-shadow: inset 0 1px 0 rgba(226,231,239, .06);
   transition: border-color .26s var(--mo-ease-soft, ease), transform .26s var(--mo-ease-soft, ease), box-shadow .26s var(--mo-ease-soft, ease);
 }
 
 .ppCard:hover {
-  border-color: rgba(120, 220, 232, .34);
+  border-color: rgba(117,198,235, .34);
   transform: translateY(-3px);
-  box-shadow: inset 0 1px 0 rgba(210, 255, 252, .09), 0 22px 54px rgba(0, 0, 0, .34);
+  box-shadow: inset 0 1px 0 rgba(226,231,239, .09), 0 22px 54px rgba(0, 0, 0, .34);
 }
 
 /* The featured plan: a gradient hairline, drawn as a border-box mask so the
@@ -201,9 +200,9 @@
 .ppCard[data-featured] {
   border-color: transparent;
   background:
-    linear-gradient(162deg, rgba(0, 239, 181, .1), rgba(3, 17, 24, .78)) padding-box,
-    linear-gradient(150deg, var(--pp-mint), rgba(35, 216, 255, .5) 52%, rgba(161, 139, 255, .45)) border-box;
-  box-shadow: inset 0 1px 0 rgba(210, 255, 252, .12), 0 24px 60px rgba(0, 0, 0, .4), 0 0 40px rgba(0, 239, 181, .08);
+    linear-gradient(162deg, rgba(0,239,104, .1), rgba(5,10,22, .78)) padding-box,
+    linear-gradient(150deg, var(--pp-mint), rgba(35,185,255, .5) 52%, rgba(161, 139, 255, .45)) border-box;
+  box-shadow: inset 0 1px 0 rgba(226,231,239, .12), 0 24px 60px rgba(0, 0, 0, .4), 0 0 40px rgba(0,239,104, .08);
 }
 
 .ppCard[data-featured]:hover { border-color: transparent; }
@@ -216,7 +215,7 @@
   align-items: center;
   gap: 7px;
   padding: 6px 12px;
-  color: #00231c;
+  color: #070d1c;
   border-radius: 0 0 9px 9px;
   background: linear-gradient(120deg, var(--pp-mint), var(--pp-cyan));
   font-size: 10px;
@@ -271,7 +270,7 @@
 .ppMeta { display: grid; gap: 5px; margin: 12px 0 0; }
 
 .ppPerDay {
-  color: #c9fff1;
+  color: #c9ffe0;
   font-size: 12.5px;
   font-weight: 750;
   font-variant-numeric: tabular-nums;
@@ -283,10 +282,10 @@
   align-items: center;
   gap: 6px;
   padding: 5px 9px;
-  color: #bdf7d9;
-  border: 1px solid rgba(0, 239, 181, .3);
+  color: #bafad6;
+  border: 1px solid rgba(0,239,104, .3);
   border-radius: 7px;
-  background: rgba(0, 239, 181, .07);
+  background: rgba(0,239,104, .07);
   font-size: 11px;
   font-weight: 750;
   font-variant-numeric: tabular-nums;
@@ -300,30 +299,30 @@
   min-height: 50px;
   margin: clamp(18px, 2vw, 26px) 0 0;
   padding: 0 18px;
-  color: #d7eef1;
-  border: 1px solid rgba(120, 220, 232, .3);
+  color: #d6e9f2;
+  border: 1px solid rgba(117,198,235, .3);
   border-radius: 12px;
-  background: rgba(4, 20, 27, .6);
+  background: rgba(6,12,25, .6);
   font-size: 14px;
   font-weight: 800;
   transition: color .22s, border-color .22s, background .22s, transform .22s;
 }
 
-.ppCardCta:hover { color: #fff; border-color: rgba(0, 239, 181, .6); background: rgba(0, 239, 181, .09); transform: translateY(-2px); }
+.ppCardCta:hover { color: #fff; border-color: rgba(0,239,104, .6); background: rgba(0,239,104, .09); transform: translateY(-2px); }
 
 .ppCard[data-featured] .ppCardCta {
-  color: #00231c;
+  color: #070d1c;
   border-color: transparent;
   background: linear-gradient(120deg, var(--pp-mint), var(--pp-cyan));
-  box-shadow: 0 10px 26px rgba(0, 239, 181, .22);
+  box-shadow: 0 10px 26px rgba(0,239,104, .22);
 }
 
-.ppCard[data-featured] .ppCardCta:hover { color: #00231c; transform: translateY(-2px); box-shadow: 0 14px 32px rgba(0, 239, 181, .3); }
+.ppCard[data-featured] .ppCardCta:hover { color: #070d1c; transform: translateY(-2px); box-shadow: 0 14px 32px rgba(0,239,104, .3); }
 
 .ppDivider {
   height: 1px;
   margin: clamp(18px, 2vw, 26px) 0 clamp(14px, 1.6vw, 20px);
-  background: linear-gradient(90deg, rgba(120, 220, 232, .28), transparent 82%);
+  background: linear-gradient(90deg, rgba(117,198,235, .28), transparent 82%);
 }
 
 .ppAllIn {
@@ -332,10 +331,10 @@
   gap: 8px;
   padding: 9px 11px;
   margin: 0 0 13px;
-  color: #c9fff1;
-  border: 1px solid rgba(0, 239, 181, .26);
+  color: #c9ffe0;
+  border: 1px solid rgba(0,239,104, .26);
   border-radius: 10px;
-  background: rgba(0, 239, 181, .06);
+  background: rgba(0,239,104, .06);
   font-size: 11.5px;
   font-weight: 750;
   line-height: 1.35;
@@ -350,7 +349,7 @@
   grid-template-columns: 18px minmax(0, 1fr);
   gap: 10px;
   align-items: start;
-  color: #dbebee;
+  color: #dbe8ee;
   font-size: 13px;
   line-height: 1.45;
   font-weight: 550;
@@ -359,9 +358,9 @@
 .ppIncludes svg { margin-top: 2px; color: var(--pp-mint); }
 
 /* Not included: struck through and dimmed, as the old cards had it. */
-.ppIncludes li[data-off] { color: #6d848a; }
-.ppIncludes li[data-off] span { text-decoration: line-through; text-decoration-color: rgba(125, 150, 157, .6); }
-.ppIncludes li[data-off] svg { color: #4f666d; }
+.ppIncludes li[data-off] { color: #6c818b; }
+.ppIncludes li[data-off] span { text-decoration: line-through; text-decoration-color: rgba(124,147,158, .6); }
+.ppIncludes li[data-off] svg { color: #4e646e; }
 
 .ppFootnote {
   display: flex;
@@ -381,7 +380,7 @@
 .ppDerived {
   padding: 10px 0 0;
   margin: 0;
-  color: #6d848a;
+  color: #6c818b;
   font-size: 11.5px;
   text-align: center;
 }
@@ -405,13 +404,13 @@
 .ppSectionHead p { max-width: 58ch; margin: 0; color: var(--pp-muted); font-size: clamp(14px, 1.1vw, 17px); line-height: 1.55; }
 
 /* The mobile plan picker. Hidden on desktop, where all three columns fit. */
-.ppPicker { display: none; gap: 5px; padding: 5px; margin-bottom: 14px; border: 1px solid var(--pp-line); border-radius: 12px; background: rgba(2, 13, 19, .7); }
+.ppPicker { display: none; gap: 5px; padding: 5px; margin-bottom: 14px; border: 1px solid var(--pp-line); border-radius: 12px; background: rgba(4,8,17, .7); }
 
 .ppPicker button {
   flex: 1;
   min-height: 44px;
   padding: 0 10px;
-  color: #bdd6db;
+  color: #bcd2dc;
   border: 0;
   border-radius: 9px;
   background: transparent;
@@ -422,13 +421,13 @@
   transition: color .2s, background .2s;
 }
 
-.ppPicker [aria-pressed="true"] { color: #00231c; background: var(--pp-mint); }
+.ppPicker [aria-pressed="true"] { color: #070d1c; background: var(--pp-mint); }
 
 .ppTableWrap {
   overflow: hidden;
   border: 1px solid var(--pp-line);
   border-radius: 20px;
-  background: linear-gradient(170deg, rgba(8, 34, 44, .4), rgba(3, 15, 23, .6));
+  background: linear-gradient(170deg, rgba(10,20,42, .4), rgba(5,10,21, .6));
 }
 
 .ppTable { width: 100%; border-collapse: collapse; }
@@ -437,9 +436,9 @@
 
 .ppTable thead th {
   padding: 14px 12px;
-  color: #cfe3e7;
+  color: #cee0e8;
   border-bottom: 1px solid var(--pp-line);
-  background: rgba(2, 12, 17, .72);
+  background: rgba(4,7,15, .72);
   font-size: 12px;
   font-weight: 850;
   letter-spacing: .04em;
@@ -447,7 +446,7 @@
 }
 
 .ppTable thead th:first-child { text-align: left; }
-.ppTable thead th[data-featured] { color: #c9fff1; }
+.ppTable thead th[data-featured] { color: #c9ffe0; }
 
 .ppTable thead th small { display: block; margin-top: 4px; color: var(--pp-dim); font-size: 10.5px; font-weight: 650; letter-spacing: 0; }
 
@@ -464,8 +463,8 @@
 
 .ppTable tbody th {
   padding: 11px 16px;
-  color: #dbebee;
-  border-top: 1px solid rgba(120, 220, 232, .07);
+  color: #dbe8ee;
+  border-top: 1px solid rgba(117,198,235, .07);
   font-size: 13px;
   font-weight: 550;
   text-align: left;
@@ -473,18 +472,18 @@
 
 .ppTable tbody td {
   padding: 11px 12px;
-  border-top: 1px solid rgba(120, 220, 232, .07);
-  color: #dbebee;
+  border-top: 1px solid rgba(117,198,235, .07);
+  color: #dbe8ee;
   font-size: 12.5px;
   font-weight: 700;
   text-align: center;
 }
 
 /* The featured column reads as one continuous band down the table. */
-.ppTable [data-featured] { background: rgba(0, 239, 181, .045); }
+.ppTable [data-featured] { background: rgba(0,239,104, .045); }
 
-.ppYes { display: inline-grid; width: 22px; height: 22px; place-items: center; color: #00231c; border-radius: 50%; background: linear-gradient(140deg, var(--pp-mint), var(--pp-cyan)); }
-.ppNo { color: #4f666d; }
+.ppYes { display: inline-grid; width: 22px; height: 22px; place-items: center; color: #070d1c; border-radius: 50%; background: linear-gradient(140deg, var(--pp-mint), var(--pp-cyan)); }
+.ppNo { color: #4e646e; }
 
 /* --------------------------------------------------------------------------
    FAQ
@@ -498,13 +497,13 @@
   border: 1px solid var(--pp-line);
   border-radius: 20px;
   padding: 10px;
-  background: linear-gradient(170deg, rgba(8, 34, 44, .34), rgba(3, 15, 23, .56));
+  background: linear-gradient(170deg, rgba(10,20,42, .34), rgba(5,10,21, .56));
 }
 
 /* `contain` bounds the layout an opening answer costs to this card, rather
    than letting it re-run through the list and the page below it. */
-.ppFaqItem { contain: layout style; border-radius: 14px; background: rgba(4, 20, 27, .5); transition: background .22s; }
-.ppFaqItem[data-open] { background: rgba(0, 239, 181, .06); }
+.ppFaqItem { contain: layout style; border-radius: 14px; background: rgba(6,12,25, .5); transition: background .22s; }
+.ppFaqItem[data-open] { background: rgba(0,239,104, .06); }
 
 .ppFaqItem h3 { margin: 0; }
 
@@ -516,7 +515,7 @@
   width: 100%;
   min-height: 60px;
   padding: 14px 16px;
-  color: #eaf6f8;
+  color: #edf0f5;
   border: 0;
   border-radius: inherit;
   background: transparent;
@@ -553,7 +552,7 @@
 .ppFaqPanel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .24s var(--mo-ease-soft, ease); }
 .ppFaqItem[data-open] .ppFaqPanel { grid-template-rows: 1fr; }
 .ppFaqPanel > div { overflow: hidden; }
-.ppFaqPanel p { margin: 0; padding: 0 16px 16px; color: #c6d9dd; font-size: 14px; line-height: 1.65; }
+.ppFaqPanel p { margin: 0; padding: 0 16px 16px; color: #c5d6de; font-size: 14px; line-height: 1.65; }
 
 /* Opacity composites, so the answer reads as open on the first frame. */
 .ppFaqPanel p { opacity: 0; transition: opacity .2s ease .04s; }
@@ -578,7 +577,7 @@
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse at 50% 112%, rgba(0, 239, 181, .2), transparent 56%),
+    radial-gradient(ellipse at 50% 112%, rgba(0,239,104, .2), transparent 56%),
     radial-gradient(ellipse at 16% 8%, rgba(161, 139, 255, .12), transparent 44%);
 }
 
@@ -593,7 +592,7 @@
   font-weight: 850;
 }
 
-.ppCtaInner > p { max-width: 56ch; margin: clamp(16px, 1.8vw, 22px) 0 0; color: #d4e5e9; font-size: clamp(15px, 1.25vw, 19px); line-height: 1.5; }
+.ppCtaInner > p { max-width: 56ch; margin: clamp(16px, 1.8vw, 22px) 0 0; color: #d3e3ea; font-size: clamp(15px, 1.25vw, 19px); line-height: 1.5; }
 
 .ppCtaActions { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: clamp(24px, 2.6vw, 34px); }
 
@@ -633,3 +632,19 @@
   .ppCard:hover, .ppCardCta:hover { transform: none; }
   .ppSkip { transition: none; }
 }
+
+/* Link out to the canonical FAQ page, under the pricing questions. */
+.ppFaqMore {
+  margin: clamp(22px, 2.4vw, 32px) 0 0;
+  text-align: center;
+  font-size: var(--step-0);
+  color: var(--text-2);
+}
+
+.ppFaqMore a {
+  color: var(--green);
+  border-bottom: 1px solid rgba(57, 255, 136, .3);
+  transition: border-color .2s;
+}
+
+.ppFaqMore a:hover { border-bottom-color: currentColor; }

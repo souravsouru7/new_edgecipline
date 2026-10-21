@@ -1,76 +1,51 @@
 /* ==========================================================================
-   Section 07 — Your Journey to a Stronger You (layout only)
+   Section 08 — Your Journey to a Stronger You
+   --------------------------------------------------------------------------
+   Layout and skin only; the motion is in app/motion.css, and the shared
+   spine, type scale and rhythm are in app/sections.css.
+
    Class names are prefixed `jy`: CSS Modules are not scoped in this project.
+
+   The composition — an organic curve rising left to right with a pin at each
+   milestone — is the right shape for this section and is kept. What changed:
+
+     * The curve and its pins started on purple. They run electric blue to
+       cyber green now, so the colour is the progression rather than decoration.
+     * The stage was the only thing holding the layout together: everything
+       else (`min-height`, its own 1480px container, its own heading sizes) was
+       panel-of-a-pinned-frame furniture.
+     * The labels were bare text with a heavy `text-shadow` to lift them off a
+       photograph that no longer exists. They are proper labels on the page's
+       own background.
+     * At phone width the four milestones were a bare vertical line with text
+       beside it. They are numbered rows now, so the order is explicit rather
+       than implied by position.
    ========================================================================== */
 
 .jy {
   position: relative;
-  min-height: clamp(360px, 30vw, 500px);
-  margin-left: clamp(210px, 13.3vw, 250px);
-  overflow: hidden;
   isolation: isolate;
-  /* No background and no edge-softening shadow: this section is transparent
-     over the page's one continuous background layer (app/backdrop.css). */
-}
-
-.jyBackdrop {
-  position: absolute;
-  z-index: -2;
-  inset: -3%;
-  pointer-events: none;
-}
-
-.jyBackdrop img {
-  object-fit: cover;
-  object-position: center 58%;
-}
-
-.jyVeil {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(90deg, rgba(2, 11, 18, .9) 0%, rgba(2, 11, 18, .44) 34%, rgba(2, 11, 18, .1) 64%, rgba(2, 11, 18, .3) 100%),
-    linear-gradient(180deg, rgba(2, 11, 18, .82), rgba(2, 11, 18, .2) 42%, rgba(2, 11, 18, .4));
 }
 
 .jyInner {
   position: relative;
   z-index: 1;
   display: flex;
-  min-height: inherit;
   flex-direction: column;
-  width: min(100%, 1480px);
-  padding: clamp(40px, 3.8vw, 68px) clamp(28px, 3.6vw, 62px) clamp(30px, 3vw, 54px);
-  margin: 0 auto;
 }
 
-.jyHeader h2 {
-  margin: 0;
-  color: #f5faff;
-  font-size: clamp(28px, 2.7vw, 46px);
-  line-height: 1;
-  letter-spacing: -.05em;
-  font-weight: 850;
-}
+/* --------------------------------------------------------------------------
+   The path
+   --------------------------------------------------------------------------
+   A fixed aspect ratio, which is what lets the pins be placed on the curve by
+   coordinate: the SVG and the absolutely positioned pins share one box, so
+   they cannot drift apart at any width.
+   -------------------------------------------------------------------------- */
 
-.jyHeader h2 span { color: #2fe3c4; }
-
-.jyHeader p {
-  margin: clamp(8px, .8vw, 13px) 0 0;
-  color: #a7b9c5;
-  font-size: clamp(13px, 1.05vw, 17px);
-  font-weight: 500;
-}
-
-/* The stage holds the line and the pins in one 1200 x 260 coordinate space.
-   Its aspect ratio is locked to that box, so the SVG scales uniformly and the
-   pins — positioned as percentages — land exactly on the drawn curve. */
 .jyStage {
   position: relative;
   width: 100%;
-  margin-top: clamp(14px, 1.6vw, 26px);
+  margin-top: clamp(8px, 1.4vh, 20px);
   aspect-ratio: 1200 / 260;
 }
 
@@ -89,37 +64,37 @@
   translate: -50% -50%;
 }
 
-/* The pin, its stem and the dot where it meets the line. */
+/* The pin. One tone per milestone, mixed from `--tone`, so the pin, the stem
+   and the segment of curve beneath it are the same colour. */
 .jyPin {
   position: relative;
   display: grid;
-  width: clamp(34px, 3vw, 52px);
-  height: clamp(34px, 3vw, 52px);
+  width: clamp(36px, 3vw, 48px);
+  height: clamp(36px, 3vw, 48px);
   place-items: center;
   color: var(--tone);
-  border: 2px solid color-mix(in oklab, var(--tone), #ffffff 18%);
+  border: 1px solid color-mix(in oklab, var(--tone), #ffffff 24%);
   border-radius: 50%;
-  background: radial-gradient(circle at 50% 36%, color-mix(in oklab, var(--tone), #ffffff 30%), var(--tone) 70%);
+  background: radial-gradient(circle at 50% 34%, color-mix(in oklab, var(--tone), #ffffff 26%), var(--tone) 72%);
   box-shadow:
-    0 0 0 6px color-mix(in oklab, var(--tone), transparent 88%),
-    0 0 26px color-mix(in oklab, var(--tone), transparent 42%);
+    0 0 0 5px color-mix(in oklab, var(--tone), transparent 90%),
+    0 0 22px color-mix(in oklab, var(--tone), transparent 52%);
 }
 
-.jyPin svg { color: #061923; }
+/* The glyph sits on a bright pin, so it takes the canvas colour. */
+.jyPin svg { color: var(--bg); }
 
-/* Label sits beside the pin, or under it for the last milestone, which is
-   close enough to the right edge that a side label would overflow. */
 .jyLabel {
   position: absolute;
   top: 50%;
-  left: calc(100% + clamp(8px, .8vw, 14px));
+  left: calc(100% + clamp(10px, .9vw, 16px));
   width: max-content;
-  max-width: clamp(130px, 13vw, 210px);
+  max-width: clamp(130px, 13vw, 200px);
   translate: 0 -50%;
 }
 
 .jyMilestone[data-align="below"] .jyLabel {
-  top: calc(100% + clamp(8px, .7vw, 12px));
+  top: calc(100% + clamp(10px, .8vw, 14px));
   left: 50%;
   translate: -50% 0;
   text-align: center;
@@ -127,80 +102,86 @@
 
 .jyLabel h3 {
   margin: 0;
-  color: #f5faff;
-  font-size: clamp(12px, 1.02vw, 17px);
-  line-height: 1.12;
-  letter-spacing: -.03em;
-  font-weight: 800;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, .85);
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: var(--step-0);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -.02em;
 }
 
 .jyLabel p {
-  margin: 3px 0 0;
-  color: #a7b9c5;
-  font-size: clamp(10px, .84vw, 14px);
-  line-height: 1.25;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, .85);
+  margin: 4px 0 0;
+  color: var(--text-2);
+  font-size: var(--step--1);
+  line-height: 1.4;
 }
 
-/* --- tablet --- */
+/* --------------------------------------------------------------------------
+   Narrower viewports
+   --------------------------------------------------------------------------
+   A curve wide enough for four labelled pins needs about 760px. Below that it
+   becomes a vertical sequence: one numbered row per milestone, the rail
+   running through the pins, with the same four tones in the same order.
+   -------------------------------------------------------------------------- */
 
-@media (max-width: 1100px) {
-  .jy { margin-left: 0; }
-}
-
-/* --- mobile: the curve becomes a vertical timeline --- */
-
-@media (max-width: 767px) {
-  .jy { min-height: 0; }
-
-  .jyBackdrop img { object-position: 58% 56%; }
-  .jyVeil {
-    background: linear-gradient(180deg, rgba(2, 11, 18, .9), rgba(2, 11, 18, .56) 40%, rgba(2, 11, 18, .88));
-  }
-
-  .jyInner { padding: 62px 20px 54px; }
-  .jyHeader h2 { font-size: clamp(27px, 8.6vw, 38px); }
-  .jyHeader p { font-size: 15px; }
-
+@media (max-width: 860px) {
   .jyStage {
-    margin-top: 26px;
-    padding-left: 8px;
+    display: grid;
+    gap: 14px;
+    margin-top: clamp(20px, 3vh, 32px);
+    padding-left: 4px;
     aspect-ratio: auto;
   }
 
-  /* The drawn curve is replaced by a straight rail down the left. */
+  /* The curve is the horizontal composition; stacked there is nothing for it
+     to describe, so the rail below replaces it. */
   .jyLine { display: none; }
 
   .jyStage::before {
     content: "";
     position: absolute;
-    top: 14px;
-    bottom: 14px;
-    left: 25px;
+    top: 24px;
+    bottom: 24px;
+    left: 27px;
     width: 2px;
-    background: linear-gradient(180deg, #a855f7, #3b9bff 38%, #22d3ee 68%, #00f5ac);
-    box-shadow: 0 0 14px rgba(0, 245, 172, .3);
+    background: linear-gradient(180deg, #38bdf8, #19dba8 56%, #39ff88);
+    box-shadow: 0 0 14px rgba(57, 255, 136, calc(.3 * var(--mo-glow, 1)));
   }
 
   .jyMilestone,
   .jyMilestone[data-align="below"] {
     position: relative;
-    left: auto;
     top: auto;
-    display: flex;
+    left: auto;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
     align-items: center;
-    gap: 14px;
+    gap: 16px;
     translate: none;
   }
 
-  .jyMilestone + .jyMilestone { margin-top: 20px; }
-
   .jyPin {
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
     flex: none;
   }
+
+  /* The step number, so the order is stated rather than inferred from
+     vertical position. `--i` is already on the milestone. */
+  .jyLabel::before {
+    content: counter(jy-step, decimal-leading-zero);
+    display: block;
+    margin-bottom: 3px;
+    color: var(--text-3);
+    font-family: var(--font-mono);
+    font-size: .64rem;
+    font-weight: 500;
+    letter-spacing: .14em;
+  }
+
+  .jyStage { counter-reset: jy-step; }
+  .jyMilestone { counter-increment: jy-step; }
 
   .jyLabel,
   .jyMilestone[data-align="below"] .jyLabel {
@@ -212,6 +193,9 @@
     text-align: left;
   }
 
-  .jyLabel h3 { font-size: 16px; }
-  .jyLabel p { font-size: 13px; }
+  .jyLabel h3 { font-size: var(--step-1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jyPin { box-shadow: 0 0 0 5px color-mix(in oklab, var(--tone), transparent 90%); }
 }

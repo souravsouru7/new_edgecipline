@@ -1,151 +1,171 @@
 /* ==========================================================================
-   Section 06 — Weekly Reflection & Habits (layout only; motion is in motion.css)
+   Section 07 — Weekly Reflection & Habits
+   --------------------------------------------------------------------------
+   Layout and skin only; the motion is in app/motion.css, and the shared
+   spine, type scale and rhythm are in app/sections.css.
 
-   CSS Modules are not scoped in this project (next.config.ts routes every
-   *.css through the Tailwind turbopack loader), so every name here is
-   prefixed `wr`.
+   CSS Modules are not scoped in this project, so every class here is prefixed
+   `wr`.
+
+   What changed from the previous version:
+
+     * The section was four loose cards in a `.86fr .86fr 1.5fr 1.28fr` row —
+       a streak, a dial, a feature blurb and a bar chart, each floating on the
+       page with its own border. Set out that way the numbers read as claims
+       the marketing page is making. They are one framed panel now, with a
+       title bar: it is recognisably a drawing of the product's weekly view,
+       which is what the section is for, and the "Example data" label sits
+       inside the frame where the numbers are.
+     * The streak was orange — the only orange on the site. Green: it is a
+       measure of discipline, which is what green means here.
+     * Card and bar heights were sized in `svh` to fill a pinned panel.
    ========================================================================== */
 
 .wr {
   position: relative;
-  min-height: clamp(420px, 32vw, 580px);
-  margin-left: clamp(210px, 13.3vw, 250px);
-  overflow: hidden;
   isolation: isolate;
-  /* No background and no edge-softening shadow: this section is transparent
-     over the page's one continuous background layer (app/backdrop.css). */
-}
-
-.wrBackdrop {
-  position: absolute;
-  z-index: -2;
-  inset: -3%;
-  pointer-events: none;
-}
-
-.wrBackdrop img {
-  object-fit: cover;
-  object-position: center 30%;
-}
-
-.wrVeil {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(180deg, rgba(2, 11, 18, .62), rgba(2, 11, 18, .34) 34%, rgba(2, 11, 18, .88)),
-    linear-gradient(90deg, rgba(2, 11, 18, .8), rgba(2, 11, 18, .22) 46%, rgba(2, 11, 18, .5));
 }
 
 .wrInner {
   position: relative;
   z-index: 1;
-  width: min(100%, 1480px);
-  min-height: inherit;
-  padding: clamp(42px, 4vw, 72px) clamp(28px, 3.6vw, 62px) clamp(46px, 4.4vw, 78px);
-  margin: 0 auto;
 }
 
-.wrHeader h2 {
-  margin: 0;
-  color: #f5faff;
-  font-size: clamp(28px, 2.7vw, 46px);
-  line-height: 1;
-  letter-spacing: -.05em;
-  font-weight: 850;
+/* --------------------------------------------------------------------------
+   The panel
+   --------------------------------------------------------------------------
+   One frame, so the whole thing reads as a screen rather than as decoration.
+   The title bar is the signal: nothing else on the page has one.
+   -------------------------------------------------------------------------- */
+
+.wrPanel {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, rgba(16, 27, 42, .78), rgba(10, 16, 26, .7));
+  box-shadow: 0 24px 60px rgba(2, 4, 10, .38);
 }
 
-.wrHeader h2 span { color: #31e6f1; }
+.wrPanelBar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px clamp(16px, 2vw, 24px);
+  border-bottom: 1px solid var(--border);
+  background: rgba(5, 9, 20, .5);
+}
 
-.wrHeader p {
-  margin: clamp(8px, .8vw, 13px) 0 0;
-  color: #a7b9c5;
-  font-size: clamp(13px, 1.05vw, 17px);
+/* The three dots a window has. Decorative, and the only reason they are here
+   is that they are what makes the frame read as an application window at a
+   glance. */
+.wrPanelDots {
+  display: flex;
+  flex: none;
+  gap: 6px;
+}
+
+.wrPanelDots i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border-strong);
+}
+
+.wrPanelDots i:first-child { background: var(--green-deep); }
+
+.wrPanelTitle {
+  color: var(--text-2);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
   font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
 }
 
-/* Four cards: two compact stat tiles, then two wider panels. */
+/* The illustrative-data label. Inside the frame, beside the title, in the
+   same mono as the rest of the panel's chrome — a fact about the screen, not
+   a disclaimer hidden under it. */
+.wrSample {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  padding: 4px 10px;
+  color: var(--text-3);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(5, 9, 20, .6);
+  font-family: var(--font-mono);
+  font-size: .64rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.wrSample svg { flex: none; }
+
+/* --------------------------------------------------------------------------
+   The panel's contents
+   --------------------------------------------------------------------------
+   Two stat tiles and the week chart across the top, the feature row across
+   the foot. A real dashboard puts its numbers and its chart on one line and
+   its actions under them; this follows that.
+   -------------------------------------------------------------------------- */
+
+.wrGrid {
+  display: grid;
+  grid-template-columns: minmax(200px, .62fr) minmax(0, 1fr);
+  gap: clamp(16px, 2vw, 26px);
+  padding: clamp(18px, 2.2vw, 30px);
+}
+
 .wrCards {
   display: grid;
-  grid-template-columns: .86fr .86fr 1.5fr 1.28fr;
-  gap: clamp(12px, 1.3vw, 22px);
+  gap: 12px;
   padding: 0;
-  margin: clamp(26px, 2.6vw, 44px) 0 0;
+  margin: 0;
   list-style: none;
 }
 
+/* The two tiles. Surface, border and radius come from the shared card
+   definition in app/sections.css. */
 .wrCard {
-  position: relative;
   display: flex;
-  min-height: clamp(126px, 10.5vw, 178px);
-  flex-direction: column;
-  padding: clamp(14px, 1.3vw, 22px);
-  overflow: hidden;
-  border: 1px solid rgba(0, 229, 229, .25);
-  border-radius: clamp(14px, 1.2vw, 20px);
-  /* Deliberately not backdrop-filter: blurring the scene behind four cards
-     cost more per scrolled frame than it was worth. */
-  background: rgba(4, 26, 36, .9);
-  box-shadow:
-    inset 0 1px 0 rgba(195, 255, 250, .07),
-    0 16px 38px rgba(0, 0, 0, .3);
-}
-
-/* --- card 01, day streak --- */
-
-.wrStreak {
   align-items: center;
-  justify-content: center;
-  gap: 2px;
-  text-align: center;
+  gap: 16px;
+  padding: clamp(14px, 1.6vw, 20px);
 }
 
-.wrStreak::before {
-  content: "";
-  position: absolute;
-  z-index: 0;
-  inset: -44% 12% auto;
-  height: 76%;
-  pointer-events: none;
-  background: radial-gradient(ellipse, rgba(255, 138, 30, .3), transparent 66%);
-}
+.wrStreak > div { display: grid; }
 
 .wrFlame {
-  position: relative;
-  color: #ff9a2e;
-  filter: drop-shadow(0 0 10px rgba(255, 138, 30, .55));
+  flex: none;
+  color: var(--green);
+  filter: drop-shadow(0 0 10px rgba(57, 255, 136, calc(.5 * var(--mo-glow, 1))));
 }
 
 .wrStreakValue {
-  position: relative;
-  color: #ff9f3d;
-  font-size: clamp(28px, 2.7vw, 44px);
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: var(--step-3);
+  font-weight: 700;
   line-height: 1.04;
   letter-spacing: -.04em;
-  font-weight: 850;
   font-variant-numeric: tabular-nums;
 }
 
 .wrCardLabel {
-  position: relative;
-  color: #a7b9c5;
-  font-size: clamp(11px, .88vw, 14px);
-  font-weight: 700;
-}
-
-/* --- card 02, discipline score --- */
-
-.wrScore {
-  align-items: center;
-  justify-content: center;
-  gap: clamp(8px, .8vw, 13px);
-  text-align: center;
+  color: var(--text-2);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: .06em;
+  text-transform: uppercase;
 }
 
 .wrDial {
   position: relative;
-  width: clamp(62px, 5.4vw, 92px);
+  flex: none;
+  width: clamp(66px, 5.4vw, 86px);
   aspect-ratio: 1;
 }
 
@@ -161,63 +181,36 @@
   inset: 0;
   display: grid;
   place-items: center;
-  color: #f5faff;
-  font-size: clamp(14px, 1.2vw, 20px);
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  font-weight: 700;
   letter-spacing: -.03em;
-  font-weight: 850;
   font-variant-numeric: tabular-nums;
 }
 
-.wrScore .wrCardLabel { color: #d6e6ea; }
+/* --------------------------------------------------------------------------
+   The week
+   -------------------------------------------------------------------------- */
 
-/* --- card 03, weekly reflection --- */
-
-.wrReflect {
-  flex-direction: row;
-  align-items: center;
-  gap: clamp(12px, 1.2vw, 20px);
+.wrProgress {
+  display: flex;
+  flex-direction: column;
+  min-height: 190px;
+  padding: clamp(14px, 1.6vw, 20px) clamp(16px, 1.8vw, 22px) clamp(12px, 1.4vw, 16px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: rgba(5, 9, 20, .42);
 }
-
-.wrReflectIcon {
-  display: grid;
-  flex: none;
-  width: clamp(42px, 3.6vw, 62px);
-  height: clamp(42px, 3.6vw, 62px);
-  place-items: center;
-  color: #00f5ac;
-  border: 1px solid rgba(0, 245, 172, .5);
-  border-radius: clamp(10px, .9vw, 15px);
-  background: rgba(0, 245, 172, .1);
-  box-shadow:
-    0 0 0 5px rgba(0, 245, 172, .05),
-    0 0 24px rgba(0, 245, 172, .22);
-}
-
-.wrReflect h3 {
-  margin: 0;
-  color: #f5faff;
-  font-size: clamp(14px, 1.12vw, 19px);
-  line-height: 1.1;
-  letter-spacing: -.03em;
-  font-weight: 800;
-}
-
-.wrReflect p {
-  max-width: 28ch;
-  margin: clamp(5px, .5vw, 9px) 0 0;
-  color: #a7b9c5;
-  font-size: clamp(12px, .94vw, 15px);
-  line-height: 1.35;
-}
-
-/* --- card 04, your progress --- */
 
 .wrProgress h3 {
   margin: 0;
-  color: #f5faff;
-  font-size: clamp(13px, 1.04vw, 17px);
-  letter-spacing: -.03em;
-  font-weight: 800;
+  color: var(--text-2);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
 }
 
 .wrBars {
@@ -225,9 +218,9 @@
   flex: 1;
   grid-template-columns: repeat(7, minmax(0, 1fr));
   align-items: end;
-  gap: clamp(5px, .55vw, 10px);
+  gap: clamp(6px, .6vw, 12px);
   padding: 0;
-  margin: clamp(10px, 1vw, 16px) 0 0;
+  margin: clamp(12px, 1.4vw, 18px) 0 0;
   list-style: none;
 }
 
@@ -236,7 +229,7 @@
   height: 100%;
   grid-template-rows: 1fr auto;
   align-items: end;
-  gap: 5px;
+  gap: 7px;
   text-align: center;
 }
 
@@ -244,59 +237,82 @@
   display: block;
   width: 100%;
   height: var(--h);
-  border-radius: 4px 4px 2px 2px;
-  background: linear-gradient(180deg, #8affc8, #15c98d);
-  box-shadow: 0 0 12px rgba(0, 245, 172, .22);
+  border-radius: 5px 5px 2px 2px;
+  background: linear-gradient(180deg, var(--green), var(--green-deep));
+  box-shadow: 0 0 12px rgba(57, 255, 136, calc(.22 * var(--mo-glow, 1)));
   transform-origin: bottom center;
 }
 
+/* The last day is the one the week has built to, so it is the lit one. */
+.wrBars li:last-child .wrBar {
+  box-shadow: 0 0 18px rgba(57, 255, 136, calc(.45 * var(--mo-glow, 1)));
+}
+
 .wrBars span:last-child {
-  color: #8ea4ad;
-  font-size: clamp(8px, .66vw, 11px);
+  color: var(--text-3);
+  font-family: var(--font-mono);
+  font-size: .64rem;
+  letter-spacing: .04em;
+}
+
+/* --------------------------------------------------------------------------
+   The feature row
+   -------------------------------------------------------------------------- */
+
+.wrReflect {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  grid-column: 1 / -1;
+  padding: clamp(14px, 1.6vw, 20px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: rgba(5, 9, 20, .42);
+}
+
+.wrReflectIcon {
+  display: grid;
+  flex: none;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  color: var(--green);
+  border: 1px solid rgba(57, 255, 136, .4);
+  border-radius: var(--radius-sm);
+  background: rgba(57, 255, 136, .08);
+}
+
+.wrReflect h3 {
+  margin: 0;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: var(--step-1);
   font-weight: 700;
+  letter-spacing: -.02em;
 }
 
-/* --- laptop / tablet --- */
-
-@media (max-width: 1199px) {
-  .wrCards {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: clamp(12px, 1.8vw, 18px);
-  }
-  .wrCard { min-height: clamp(130px, 17vw, 176px); }
+.wrReflect p {
+  margin: 4px 0 0;
+  color: var(--text-2);
+  font-size: var(--step-0);
+  line-height: 1.5;
 }
 
-@media (max-width: 1100px) {
-  .wr { margin-left: 0; }
+/* --------------------------------------------------------------------------
+   Narrower viewports
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 860px) {
+  .wrGrid { grid-template-columns: minmax(0, 1fr); }
+
+  /* The two tiles sit side by side once they have the full width. */
+  .wrCards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-/* --- mobile --- */
-
-@media (max-width: 767px) {
-  .wr { min-height: 0; }
-  .wrBackdrop img { object-position: 62% 30%; }
-
-  .wrVeil {
-    background: linear-gradient(180deg, rgba(2, 11, 18, .86), rgba(2, 11, 18, .56) 40%, rgba(2, 11, 18, .9));
-  }
-
-  .wrInner { padding: 64px 20px 54px; }
-  .wrHeader h2 { font-size: clamp(27px, 8.6vw, 38px); }
-  .wrHeader p { font-size: 15px; }
-
-  .wrCards {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-    margin-top: 24px;
-  }
-  .wrCard { min-height: 124px; padding: 14px; }
-
-  /* The two wide panels keep the full row so their copy stays readable. */
-  .wrReflect,
-  .wrProgress { grid-column: 1 / -1; }
-  .wrReflect p { max-width: none; }
-}
-
-@media (max-width: 380px) {
-  .wrCards { grid-template-columns: 1fr; }
+@media (max-width: 560px) {
+  .wrPanelBar { flex-wrap: wrap; gap: 10px; }
+  .wrSample { margin-left: 0; }
+  .wrCards { grid-template-columns: minmax(0, 1fr); }
+  .wrProgress { min-height: 160px; }
+  .wrReflect { align-items: flex-start; }
 }

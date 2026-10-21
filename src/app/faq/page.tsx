@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ChevronRight, Mail, Sparkles } from "lucide-react";
 
-import { MobileNav } from "@/components/MobileNav";
-import { SidebarNav } from "@/components/SidebarNav";
+import { Navbar } from "@/components/nav/Navbar";
+import { SiteFooter } from "@/components/SiteFooter";
 import { RevealObserver } from "@/components/motion/RevealObserver";
 import { FaqBrowser } from "@/components/faq/FaqBrowser";
 import { faqItems, SUPPORT_EMAIL } from "@/data/faq";
@@ -20,10 +20,9 @@ const description =
   "Frequently asked questions about Edgecipline — the AI trading journal, discipline coach, and gamified improvement system. Who founded Edgecipline, Trading DNA, missions & streaks, Forex + Indian market support, pricing, and data privacy.";
 
 export const metadata: Metadata = {
-  title,
+  title: { absolute: title },
   description,
   alternates: { canonical: absoluteUrl("/faq") },
-  robots: { index: true, follow: true },
   openGraph: {
     siteName: BRAND_NAME,
     title,
@@ -100,8 +99,7 @@ export default function FaqPage() {
       </a>
 
       <RevealObserver />
-      <SidebarNav />
-      <MobileNav />
+      <Navbar />
 
       <section className={css("fqHero")} aria-labelledby="faq-title">
         <div className={css("fqHeroGlow")} aria-hidden="true" />
@@ -191,6 +189,7 @@ export default function FaqPage() {
           </div>
         </div>
       </section>
+      <SiteFooter />
     </div>
   );
 }

@@ -1,8 +1,7 @@
 import type { CSSProperties } from "react";
 import { Check } from "lucide-react";
 
-import { BillingToggle } from "./BillingToggle";
-import { BILLING_MODES, DEFAULT_BILLING, PLANS } from "./pricing-data";
+import { PLANS } from "./pricing-data";
 import styles from "./Pricing.module.css";
 
 const css = (name: string) => styles[name] || name;
@@ -10,27 +9,15 @@ const vars = (value: Record<string, string | number>) => value as CSSProperties;
 
 export function Pricing() {
   return (
-    <section
-      id="pricing"
-      className={css("pr")}
-      data-sequence
-      data-billing={DEFAULT_BILLING}
-      aria-labelledby="pricing-title"
-    >
-
+    <section id="pricing" className={css("pr")} data-sequence aria-labelledby="pricing-title">
       <div className={css("prInner")}>
         <header className={css("prHeader")}>
-          <div>
-            <h2 id="pricing-title" data-reveal>
-              Pricing <span>Plans</span>
-            </h2>
-            <p data-reveal style={vars({ "--mo-delay": ".1s" })}>
-              Simple and transparent. Choose your path.
-            </p>
-          </div>
-          <div data-reveal style={vars({ "--mo-delay": ".16s" })}>
-            <BillingToggle target="pricing" />
-          </div>
+          <h2 id="pricing-title" data-reveal>
+            Pricing <span>Plans</span>
+          </h2>
+          <p data-reveal style={vars({ "--mo-delay": ".1s" })}>
+            Simple and transparent. Choose your path.
+          </p>
         </header>
 
         <ul className={css("prCards")}>
@@ -46,22 +33,10 @@ export function Pricing() {
 
               <h3 className={css("prName")}>{plan.name}</h3>
 
-              {/* One price per configured billing mode; CSS shows the selected
-                  one, so the amounts stay in server-rendered markup. */}
-              {BILLING_MODES.map((mode) => {
-                const price = plan.prices[mode.id];
-                if (!price) return null;
-                return (
-                  <p
-                    key={mode.id}
-                    className={`${css("prPrice")} ${css("prPriceFor")}`}
-                    data-mode={mode.id}
-                  >
-                    <span className={css("prAmount")}>{price.amount}</span>
-                    <span className={css("prPeriod")}>{price.period}</span>
-                  </p>
-                );
-              })}
+              <p className={css("prPrice")}>
+                <span className={css("prAmount")}>{plan.amount}</span>
+                <span className={css("prPeriod")}>{plan.period}</span>
+              </p>
 
               <ul className={css("prFeatures")}>
                 {plan.features.map((feature) => (
@@ -78,6 +53,14 @@ export function Pricing() {
             </li>
           ))}
         </ul>
+
+        {/* The three buttons above join a waitlist; none of them takes a
+            payment, and nothing on this page can. Saying so is the difference
+            between a price list and a checkout that does not exist. */}
+        <p className={css("prNote")} data-reveal style={vars({ "--mo-delay": ".2s" })}>
+          These are the launch prices. Nothing is charged today — the buttons above join the
+          waitlist, and billing opens when early access does.
+        </p>
       </div>
     </section>
   );

@@ -1,0 +1,560 @@
+/* ==========================================================================
+   The shell
+   --------------------------------------------------------------------------
+   The page furniture every route shares — the floating navbar, the mobile
+   sheet, the footer, the two button styles and the skip link — plus the hero
+   composition, which is the one section whose visual treatment is strong
+   enough to need its own layer.
+
+   It supersedes the old shell: a fixed 250px sidebar every page left a gutter
+   for, a separate mobile header and drawer, and a hero built out of a planet
+   canvas, a photographed rock and a cut-out figure. Those rules are deleted
+   from globals.css rather than overridden here, so there is one definition of
+   each of these things.
+
+   Everything is expressed in the tokens declared at the top of globals.css.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Shell and skip link
+   -------------------------------------------------------------------------- */
+
+.site-shell {
+  position: relative;
+  min-height: 100svh;
+  /* Every page starts below the floating bar. The landing hero pulls itself
+     back up under it, because its visual is meant to bleed behind the bar. */
+  padding-top: var(--navbar-h);
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 60;
+  top: 10px;
+  left: 50%;
+  padding: 11px 20px;
+  color: var(--on-green);
+  border-radius: 999px;
+  background: var(--green);
+  font-size: var(--step--1);
+  font-weight: 700;
+  /* Off-screen until focused, rather than display:none, so it is reachable by
+     the keyboard on the first Tab. */
+  translate: -50% -200%;
+  transition: translate .22s var(--mo-ease-out, ease);
+}
+
+.skip-link:focus-visible { translate: -50% 0; }
+
+/* --------------------------------------------------------------------------
+   2. The floating navbar
+   --------------------------------------------------------------------------
+   Transparent over the hero; once the page has been scrolled past the
+   threshold the component sets data-scrolled and a translucent surface and
+   hairline fade in. The transition is on the bar itself, so the swap costs
+   one composited change rather than anything per frame.
+   -------------------------------------------------------------------------- */
+
+.navbar {
+  position: fixed;
+  z-index: 40;
+  inset: 0 0 auto;
+  height: var(--navbar-h);
+  border-bottom: 1px solid transparent;
+  transition: background .32s ease, border-color .32s ease, backdrop-filter .32s ease;
+}
+
+.navbar[data-scrolled] {
+  border-bottom-color: var(--border-soft);
+  background: rgba(5, 9, 20, .72);
+  backdrop-filter: blur(14px) saturate(130%);
+}
+
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2.4vw, 36px);
+  width: min(100% - var(--gutter) * 2, var(--shell));
+  height: 100%;
+  margin-inline: auto;
+}
+
+/* ---- the brand lockup --------------------------------------------------
+   The supplied logo is a stacked, near-square lockup. In a 68px bar it would
+   have to shrink to about 44px tall and its wordmark would stop being
+   readable, so the navigation sets the two pieces of the real artwork side by
+   side: the mark at a size where its angles still read, and the wordmark at a
+   size where the word still reads. The supplied stacked lockup is used as
+   supplied wherever there is room for it — see `.brand-stacked`. */
+
+.brand {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand img {
+  display: block;
+  width: auto;
+  height: auto;
+}
+
+/* Sized from the mark's own aspect ratio (406 x 600), so the angular E is
+   never squashed. */
+.brand-mark {
+  width: auto;
+  height: clamp(30px, 2.6vw, 36px);
+}
+
+.brand-word {
+  width: auto;
+  height: clamp(13px, 1.15vw, 16px);
+}
+
+/* The supplied lockup, unaltered. */
+.brand-stacked {
+  display: block;
+  width: clamp(150px, 15vw, 210px);
+}
+
+.brand-stacked img {
+  width: 100%;
+  height: auto;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: clamp(4px, 1.5vw, 22px);
+  margin-inline: auto;
+}
+
+.navbar-links a {
+  position: relative;
+  padding: 8px 10px;
+  border-radius: 8px;
+  color: var(--text-2);
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: -.005em;
+  transition: color .2s ease;
+}
+
+.navbar-links a:hover { color: var(--text); }
+
+/* The current route is marked twice over — a colour change and an underline —
+   so it is never carried by colour alone. */
+.navbar-links a[aria-current] { color: var(--text); }
+
+.navbar-links a[aria-current]::after {
+  content: "";
+  position: absolute;
+  right: 10px;
+  bottom: 2px;
+  left: 10px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--brand-gradient);
+}
+
+.navbar-actions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar-cta {
+  min-height: 42px;
+  padding-inline: 18px;
+  font-size: var(--step--1);
+}
+
+.menu-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+  background: rgba(16, 27, 42, .72);
+  cursor: pointer;
+}
+
+.menu-toggle:hover { border-color: var(--blue); }
+
+/* ---- the mobile sheet --------------------------------------------------- */
+
+.sheet-scrim {
+  position: fixed;
+  z-index: 45;
+  inset: 0;
+  background: rgba(2, 5, 11, .7);
+  backdrop-filter: blur(3px);
+}
+
+.nav-sheet {
+  position: fixed;
+  z-index: 46;
+  top: calc(var(--navbar-h) + 8px);
+  right: clamp(12px, 4vw, 28px);
+  left: clamp(12px, 4vw, 28px);
+  display: grid;
+  gap: 6px;
+  max-height: calc(100svh - var(--navbar-h) - 24px);
+  overflow-y: auto;
+  padding: 16px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  background: rgba(10, 16, 26, .97);
+  box-shadow: 0 28px 60px rgba(0, 0, 0, .5);
+}
+
+.sheet-links { display: grid; }
+
+.sheet-links a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 54px;
+  padding-inline: 6px;
+  border-bottom: 1px solid rgba(35, 49, 68, .5);
+  color: var(--text-2);
+  font-size: var(--step-0);
+  font-weight: 600;
+}
+
+.sheet-links a[aria-current] { color: var(--green); }
+.sheet-links a[aria-current] .nav-index { color: var(--green); }
+
+.sheet-cta { width: 100%; margin-top: 16px; }
+
+.sheet-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  padding-top: 14px;
+  color: var(--text-3);
+  font-size: var(--step--1);
+}
+
+.sheet-meta a:hover { color: var(--text-2); }
+
+/* --------------------------------------------------------------------------
+   3. Buttons
+   --------------------------------------------------------------------------
+   Two, and only two: the waitlist action and the quiet secondary one. Both
+   appear on every route, so they live here rather than in any one section.
+   -------------------------------------------------------------------------- */
+
+.waitlist,
+.demo {
+  display: inline-flex;
+  min-height: 52px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding-inline: 24px;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: var(--step-0);
+  font-weight: 700;
+  letter-spacing: -.01em;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
+}
+
+.waitlist {
+  color: var(--on-green);
+  background: var(--green);
+  box-shadow: 0 0 0 1px rgba(197, 255, 219, .28) inset, 0 6px 24px rgba(57, 255, 136, .22);
+}
+
+.waitlist:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 1px rgba(226, 255, 237, .5) inset, 0 12px 32px rgba(57, 255, 136, .3);
+}
+
+.waitlist span {
+  font-size: 1.25em;
+  line-height: 0;
+  transition: transform .2s ease;
+}
+
+.waitlist:hover span { transform: translateX(4px); }
+
+.demo {
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+  background: rgba(16, 27, 42, .56);
+}
+
+.demo:hover {
+  transform: translateY(-2px);
+  border-color: var(--blue);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, .34), 0 0 18px rgba(56, 189, 248, .16);
+}
+
+/* --------------------------------------------------------------------------
+   4. The hero
+   --------------------------------------------------------------------------
+   An asymmetric composition: the copy occupies the left of a wide column and
+   the neural network fills the section behind it, its focal point right of
+   centre so the two never compete. The scene bleeds up behind the transparent
+   navbar, which is why the hero cancels the shell top padding and adds its
+   own.
+   -------------------------------------------------------------------------- */
+
+.hero {
+  position: relative;
+  display: grid;
+  align-items: center;
+  min-height: min(100svh, 940px);
+  margin-top: calc(var(--navbar-h) * -1);
+  padding: calc(var(--navbar-h) + clamp(48px, 9vh, 96px)) 0 clamp(56px, 10vh, 110px);
+  overflow: clip;
+  isolation: isolate;
+}
+
+.scene {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* The ambient light the mesh sits in. Soft radial gradients and no blur
+   filter: a gradient costs nothing to composite, while a full-viewport
+   filter: blur() costs a raster of the whole thing. */
+.scene-glow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(60% 55% at 70% 38%, rgba(57, 255, 136, .13), transparent 70%),
+    radial-gradient(55% 60% at 88% 72%, rgba(56, 189, 248, .12), transparent 72%),
+    radial-gradient(70% 60% at 22% 18%, rgba(56, 189, 248, .06), transparent 70%);
+}
+
+/* The canvas box, sized by CSS alone, so its space is reserved before the
+   canvas has drawn and nothing shifts when it does. */
+.neural {
+  position: absolute;
+  inset: -4% -2% -4% 18%;
+}
+
+.neural-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Keeps the headline legible over the mesh: near-opaque at the copy edge,
+   clear across the focal point. */
+.scene-scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(94deg, rgba(5, 9, 20, .93) 0%, rgba(5, 9, 20, .6) 34%, rgba(5, 9, 20, 0) 62%),
+    linear-gradient(0deg, rgba(5, 9, 20, .55), transparent 42%);
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 2;
+  width: min(100% - var(--gutter) * 2, var(--shell));
+  margin-inline: auto;
+}
+
+.hero-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  padding: 0;
+  margin: 0 0 22px;
+  list-style: none;
+}
+
+.hero-keywords li {
+  padding: 5px 12px;
+  color: var(--blue);
+  border: 1px solid rgba(56, 189, 248, .3);
+  border-radius: 999px;
+  background: rgba(16, 27, 42, .5);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: .02em;
+}
+
+.eyebrow {
+  margin: 0 0 14px;
+  color: var(--text-2);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+}
+
+.hero h1 {
+  max-width: 17ch;
+  margin: 0;
+  color: var(--text);
+  font-size: var(--step-5);
+  font-weight: 700;
+}
+
+/* The second line carries the idea the page turns on, so it takes the brand
+   gradient. One gradient headline on the page, and only in the hero. */
+.hero h1 .line-2 {
+  background: linear-gradient(100deg, var(--green) 10%, var(--blue) 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+@media (forced-colors: active) {
+  /* The gradient is removed by the forced-colours palette; without this the
+     second headline line would be transparent text on an opaque background. */
+  .hero h1 .line-2 {
+    background: none;
+    -webkit-text-fill-color: currentColor;
+    color: CanvasText;
+  }
+}
+
+.summary {
+  max-width: 54ch;
+  margin: 22px 0 0;
+  color: var(--text-2);
+  font-size: var(--step-1);
+  line-height: 1.5;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 32px;
+}
+
+.proof {
+  margin: 30px 0 0;
+  padding-left: 16px;
+  border-left: 2px solid rgba(57, 255, 136, .5);
+  color: var(--text-2);
+  font-size: var(--step-0);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* --------------------------------------------------------------------------
+   5. The footer
+   -------------------------------------------------------------------------- */
+
+.site-footer {
+  position: relative;
+  z-index: 2;
+  border-top: 1px solid var(--border-soft);
+  background: rgba(5, 9, 20, .72);
+}
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px clamp(20px, 4vw, 54px);
+  width: min(100% - var(--gutter) * 2, var(--shell));
+  padding: 34px 0;
+  margin-inline: auto;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.footer-logo { width: clamp(118px, 11vw, 158px); }
+
+.footer-slogan {
+  margin: 0;
+  color: var(--text-2);
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: .01em;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  color: var(--text-3);
+  font-size: var(--step--1);
+}
+
+.footer-links a:hover { color: var(--green); }
+
+.footer-legal {
+  margin: 0;
+  color: var(--text-3);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+}
+
+/* --------------------------------------------------------------------------
+   6. Narrower viewports
+   --------------------------------------------------------------------------
+   The composition is recomposed rather than scaled: the route links move into
+   the sheet, the navbar CTA gives way to the one inside it, and the neural
+   scene becomes a full-width backdrop under the copy instead of a column
+   beside it.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1000px) {
+  .navbar-links { display: none; }
+  .menu-toggle { display: grid; }
+  .navbar-cta { display: none; }
+  .neural { inset: -4%; }
+  .scene-scrim {
+    background:
+      linear-gradient(180deg, rgba(5, 9, 20, .9) 0%, rgba(5, 9, 20, .76) 46%, rgba(5, 9, 20, .9) 100%);
+  }
+}
+
+@media (max-width: 640px) {
+  :root { --navbar-h: 60px; }
+
+  .hero {
+    min-height: auto;
+    padding-top: calc(var(--navbar-h) + 40px);
+  }
+
+  .hero h1 { max-width: none; }
+
+  /* Full width, so the primary action is a comfortable target and the two
+     buttons never end up as one awkward word per line. */
+  .hero-actions { display: grid; }
+  .waitlist,
+  .demo { width: 100%; }
+
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   7. Reduced motion
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .skip-link { transition: none; }
+  .waitlist:hover,
+  .demo:hover,
+  .waitlist:hover span { transform: none; }
+}

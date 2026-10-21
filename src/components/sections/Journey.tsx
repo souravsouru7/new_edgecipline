@@ -14,6 +14,13 @@ import styles from "./Journey.module.css";
 const css = (name: string) => styles[name] || name;
 const vars = (value: Record<string, string | number>) => value as CSSProperties;
 
+/**
+ * The four milestones.
+ *
+ * `tone` runs electric blue to cyber green across the four, so the colour of
+ * the path and its pins is itself the progression the section describes. It
+ * used to start on purple, which is not a colour this site has.
+ */
 type Milestone = {
   title: string;
   description: string;
@@ -23,10 +30,10 @@ type Milestone = {
 };
 
 const MILESTONES: Milestone[] = [
-  { title: "Awareness", description: "Understand your patterns.", tone: "#a855f7", icon: Eye },
-  { title: "Better Habits", description: "Make smarter decisions.", tone: "#00f5ac", icon: Flag },
-  { title: "More Discipline", description: "Stay consistent.", tone: "#3b9bff", icon: BarChart3 },
-  { title: "A Stronger You", description: "Trade with clarity.", tone: "#00f5ac", icon: Sparkles, align: "below" },
+  { title: "Awareness", description: "Understand your patterns.", tone: "#38bdf8", icon: Eye },
+  { title: "Better Habits", description: "Make smarter decisions.", tone: "#22c3f0", icon: Flag },
+  { title: "More Discipline", description: "Stay consistent.", tone: "#19dba8", icon: BarChart3 },
+  { title: "A Stronger You", description: "Trade with clarity.", tone: "#39ff88", icon: Sparkles, align: "below" },
 ];
 
 /** Where the stem leaves the pin, in box units — the pin covers the overlap. */
@@ -55,10 +62,9 @@ export function Journey() {
           >
             <defs>
               <linearGradient id="journey-gradient" x1="0" y1="0" x2="1" y2="0">
-                <stop stopColor="#a855f7" />
-                <stop offset=".34" stopColor="#3b9bff" />
-                <stop offset=".66" stopColor="#22d3ee" />
-                <stop offset="1" stopColor="#00f5ac" />
+                <stop stopColor="#38bdf8" />
+                <stop offset=".5" stopColor="#19dba8" />
+                <stop offset="1" stopColor="#39ff88" />
               </linearGradient>
             </defs>
 

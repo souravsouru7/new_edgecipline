@@ -1,6 +1,9 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Geist_Mono, Inter, Space_Grotesk } from "next/font/google";
 
+import { LoaderDone } from "@/components/loader/LoaderDone";
+import { WebVitals } from "@/components/WebVitals";
+import { NeuralLoader } from "@/components/loader/NeuralLoader";
 import {
   AREA_SERVED,
   BRAND_ALTERNATE_NAMES,
@@ -10,6 +13,7 @@ import {
   BRAND_SLOGAN,
   CONTACT_EMAIL,
   LEGAL_NAME,
+  IS_PREVIEW_DEPLOYMENT,
   LOGO_PATH,
   LOGO_SIZE,
   OG_IMAGE_PATH,
@@ -27,22 +31,51 @@ import {
   jsonLd,
 } from "@/data/brand";
 import "./globals.css";
-// After globals.css on purpose: the motion layer refines those rules.
+// After globals.css on purpose: the shell owns the navbar, the footer, the two
+// button styles and the hero composition, and supersedes what globals.css used
+// to say about them.
+import "./shell.css";
+// Then the motion layer, which refines both.
 import "./motion.css";
 // Last on purpose, in this order: the landing page's one continuous
 // background layer and the section-level backgrounds it replaces, then the
 // scroll stage that turns those sections into panels of one pinned frame.
 import "./backdrop.css";
 import "./stage.css";
+// Last of all: the shared section system — one spine, one vertical rhythm, one
+// type scale and one card language across all eleven sections. It is last
+// because each section's own stylesheet is imported by its component, which
+// is below the layout in the tree.
+import "./sections.css";
+// The intro overlay. Last, so it sits above everything the other layers set.
+import "./loader.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+/**
+ * The hybrid type system: a geometric display face for headings, a highly
+ * readable text face for copy, and a monospace reserved for labels, step
+ * numbers and chart metadata. Only the weights actually used are requested —
+ * `next/font` self-hosts the files and inlines the `@font-face` rules, so
+ * there is no connection to a font CDN on the critical path and no swap.
+ */
+const display = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
+  weight: ["500", "700"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
+const text = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const mono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  weight: ["500", "700"],
+  display: "swap",
 });
 
 /**
@@ -66,11 +99,13 @@ export const metadata: Metadata = {
   description: SITE_DESCRIPTION,
   applicationName: BRAND_NAME,
   alternates: { canonical: absoluteUrl("/") },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
-  },
+  robots: IS_PREVIEW_DEPLOYMENT
+    ? { index: false, follow: false, googleBot: { index: false, follow: false } }
+    : {
+        index: true,
+        follow: true,
+        googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
+      },
   authors: [{ name: LEGAL_NAME, url: SITE_URL }],
   creator: LEGAL_NAME,
   publisher: LEGAL_NAME,
@@ -92,6 +127,47 @@ export const metadata: Metadata = {
     images: [OG_IMAGE_PATH],
   },
   category: "finance",
+  manifest: "/manifest.webmanifest",
+  /**
+   * Search-engine ownership tokens, from the environment so a token is never
+   * committed and a fork never claims someone else's property. Each key is
+   * omitted entirely when its variable is unset — an empty `content` attribute
+   * is a failed verification rather than an absent one.
+   *
+   * `NEXT_PUBLIC_` is correct here despite these rendering server-side: they
+   * are public by definition, since the whole point is that they appear in the
+   * HTML every visitor can read.
+   */
+  verification: {
+    ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+      ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
+      : {}),
+    ...(process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
+      ? { other: { "msvalidate.01": process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION } }
+      : {}),
+  },
+};
+
+/**
+ * The viewport, which is a separate export from `metadata` — `themeColor` and
+ * `colorScheme` moved here, and setting them on `metadata` is deprecated.
+ *
+ * The site has one palette: the deep navy canvas `--bg` in globals.css. Both
+ * theme colours are therefore the same value, declared per scheme anyway so a
+ * light-mode browser tints its chrome to the page rather than to white. And
+ * `colorScheme: "dark"` is what stops a browser painting a white canvas for
+ * the fraction of a second before the stylesheet applies — the one flash a
+ * dark site cannot style its way out of.
+ *
+ * No `maximumScale` or `userScalable`: pinch-zoom stays available. Disabling
+ * it is an accessibility failure, and it is never worth the tidier layout.
+ */
+export const viewport: Viewport = {
+  colorScheme: "dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#050914" },
+    { media: "(prefers-color-scheme: dark)", color: "#050914" },
+  ],
 };
 
 /**
@@ -176,7 +252,6 @@ const siteGraph = {
       name: BRAND_NAME,
       applicationCategory: "FinanceApplication",
       applicationSubCategory: "Trading journal",
-      operatingSystem: "Android, Web",
       description: SITE_DESCRIPTION,
       url: absoluteUrl("/"),
       inLanguage: "en-IN",
@@ -206,11 +281,23 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en-IN"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${display.variable} ${text.variable} ${mono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(siteGraph) }} />
         {children}
+        {/* The intro overlay, last in the body so it paints over the page
+            without needing a stacking context of its own. It is server
+            rendered, so it is on screen from the first frame rather than
+            dropping in after hydration, and it is an overlay on top of the
+            complete document — the page's headings, copy and links are all
+            present and crawlable underneath it the whole time. */}
+        <NeuralLoader />
+        <LoaderDone />
+        {/* Renders nothing; subscribes to the Core Web Vitals the browser
+            reports, so the loader's real-world cost is measurable rather than
+            argued about. */}
+        <WebVitals />
       </body>
     </html>
   );

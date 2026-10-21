@@ -1,5 +1,4 @@
 import type { CSSProperties } from "react";
-import Image from "next/image";
 import { PlayCircle } from "lucide-react";
 
 import { WaitlistForm } from "@/components/waitlist/WaitlistForm";
@@ -23,10 +22,6 @@ const MOTES = [
 export function FinalCta() {
   return (
     <section id="waitlist" className={css("cta")} data-sequence aria-labelledby="cta-title">
-      <div className={css("ctaMoon")} aria-hidden="true" />
-      <div className={css("ctaFigure")} aria-hidden="true">
-        <Image src="/hero/trader.webp" alt="" width={900} height={1350} sizes="(max-width: 767px) 20vw, 150px" />
-      </div>
       <div className={css("ctaMotes")} aria-hidden="true">
         {MOTES.map((mote) => (
           <span
@@ -43,6 +38,12 @@ export function FinalCta() {
       </div>
 
       <div className={css("ctaInner")}>
+        {/*
+          The form is the point of the page, so it gets its own column and the
+          brightest surface in the section. The previous version put it inside
+          a 34ch copy column, which squeezed a two-across form into a single
+          narrow stack beside an oversized logo.
+        */}
         <div className={css("ctaCopy")}>
           <h2 id="cta-title" data-reveal>
             A calmer mind.
@@ -52,28 +53,40 @@ export function FinalCta() {
           <p data-reveal style={vars({ "--mo-delay": ".12s" })}>
             Same markets. A better you.
           </p>
-          {/* The real form, not a button linking back to this same anchor.
-              Every "Join Waitlist" link on the site points at #waitlist, so
-              this is where they all land. */}
-          <div className={css("ctaForm")} data-reveal style={vars({ "--mo-delay": ".2s" })}>
-            <WaitlistForm />
+
+          {/* Every "Watch Demo" on the site points at #demo, and #demo was an
+              empty screen-reader-only heading: a link that went nowhere. There
+              is no recorded demo yet and inventing footage is not an option,
+              so the anchor is a real, visible block that says so and offers
+              the thing that does exist. */}
+          <div
+            className={css("ctaDemo")}
+            id="demo"
+            data-reveal
+            style={vars({ "--mo-delay": ".26s" })}
+          >
+            <span className={css("ctaDemoMark")} aria-hidden="true">
+              <PlayCircle size={20} />
+            </span>
+            <div>
+              <h3>Watch the Edgecipline demo</h3>
+              <p>
+                The walkthrough is being recorded and is not published yet. Join the waitlist and
+                it reaches your inbox the day it goes live, along with your early-access invite.
+              </p>
+            </div>
           </div>
 
-          <div className={css("ctaActions")} data-magnet-group data-reveal style={vars({ "--mo-delay": ".26s" })}>
-            <a className="demo" href="#demo" data-magnetic>
-              Watch Demo
-              <PlayCircle aria-hidden="true" size={18} />
-            </a>
-          </div>
         </div>
 
-        <div className={css("ctaBrand")} data-reveal style={vars({ "--mo-delay": ".32s" })}>
-          <Image src="/hero/logo.webp" alt="Edgecipline" width={440} height={330} sizes="200px" />
-          <p className={css("ctaTagline")}>
-            Trade Disciplined <span aria-hidden="true">·</span> Live Freer
-          </p>
+        {/* The real form, not a button linking back to this same anchor. Every
+            "Join Waitlist" link on the site points at #waitlist, so this is
+            where they all land. */}
+        <div className={css("ctaForm")} data-reveal style={vars({ "--mo-delay": ".2s" })}>
+          <WaitlistForm />
         </div>
       </div>
+
     </section>
   );
 }

@@ -22,6 +22,13 @@
 
 export const EVERY_PLAN_INCLUDES_EVERYTHING = true;
 
+export const ALL_PLAN_FEATURES = [
+  "Trading journal and AI screenshot extraction",
+  "AI coaching and weekly reports",
+  "Trading DNA and behavior analytics",
+  "Missions, streaks, and setup checklists",
+] as const;
+
 export type PlanId = "standard" | "professional" | "ultimate";
 
 export type Plan = {
@@ -77,7 +84,7 @@ const PLAN_COPY: readonly Plan[] = [
     period: "3 months",
     months: 3,
     amount: 899,
-    badge: "Most Popular",
+    badge: "3-Month Access",
     featured: true,
     description:
       "For serious traders who want gamified discipline and personalized AI coaching.",
@@ -98,7 +105,7 @@ const PLAN_COPY: readonly Plan[] = [
     period: "6 months",
     months: 6,
     amount: 1499,
-    badge: "Best Value",
+    badge: "Lowest Monthly Cost",
     featured: false,
     description:
       "For committed traders who want the complete behavioral intelligence platform.",
@@ -115,7 +122,12 @@ const PLAN_COPY: readonly Plan[] = [
 ] as const;
 
 export const plans: readonly Plan[] = EVERY_PLAN_INCLUDES_EVERYTHING
-  ? PLAN_COPY.map((plan) => ({ ...plan, notIncluded: [] }))
+  ? PLAN_COPY.map((plan) => ({
+      ...plan,
+      description: `${plan.months} ${plan.months === 1 ? "month" : "months"} of access to every Edgecipline feature.`,
+      features: ALL_PLAN_FEATURES,
+      notIncluded: [],
+    }))
   : PLAN_COPY;
 
 /**

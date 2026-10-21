@@ -86,7 +86,7 @@ export function FeaturesHero() {
             </div>
 
             <p className={css("ftHeroNote")} data-reveal style={vars({ "--mo-delay": ".4s" })}>
-              Early access is open — the waitlist is the way in.
+              These are planned launch capabilities. Join the waitlist for confirmed availability.
             </p>
           </div>
 

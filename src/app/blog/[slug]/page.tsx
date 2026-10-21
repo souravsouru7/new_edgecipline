@@ -4,14 +4,14 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ChevronRight, Sparkles } from "lucide-react";
 
-import { MobileNav } from "@/components/MobileNav";
-import { SidebarNav } from "@/components/SidebarNav";
+import { Navbar } from "@/components/nav/Navbar";
+import { SiteFooter } from "@/components/SiteFooter";
 import { RevealObserver } from "@/components/motion/RevealObserver";
 import { PostCard, PostMeta, formatDate } from "@/components/blog/PostCard";
 import { renderMarkdown } from "@/components/blog/markdown";
 import { BLOG_POSTS, getBlogPost, getRelatedPosts } from "@/data/blog";
 import { WAITLIST_HREF } from "@/data/features";
-import { BRAND_NAME, OG_IMAGE_PATH, OG_IMAGE_SIZE, absoluteUrl } from "@/data/brand";
+import { BRAND_NAME, ORGANIZATION_ID, absoluteUrl } from "@/data/brand";
 import styles from "@/components/blog/Blog.module.css";
 
 const css = (name: string) => styles[name] || name;
@@ -26,6 +26,12 @@ export function generateStaticParams() {
   return BLOG_POSTS.map((post) => ({ slug: post.slug }));
 }
 
+  /* No `images` here on purpose: `opengraph-image.tsx` in this segment
+     generates the card, and an explicit `images` in metadata would override
+     the file convention and put the generic sitewide card back. Twitter has
+     no separate `twitter-image` because the crop is identical — 1200x630,
+     summary_large_image — and X falls back to og:image, so a second file
+     would be the same picture generated twice. */
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = getBlogPost(slug);
@@ -34,26 +40,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const canonical = url(`/blog/${post.slug}`);
 
   return {
-    title: `${post.title} | Edgecipline Blog`,
+    title: { absolute: `${post.title} | Edgecipline Blog` },
     description: post.description,
     alternates: { canonical },
-    robots: { index: true, follow: true },
     openGraph: {
     siteName: BRAND_NAME,
       title: post.title,
       description: post.description,
       type: "article",
       publishedTime: post.publishedAt,
-      modifiedTime: post.publishedAt,
+      modifiedTime: post.updatedAt ?? post.publishedAt,
       section: post.category,
       url: canonical,
-    images: [{ url: OG_IMAGE_PATH, ...OG_IMAGE_SIZE }],
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: post.description,
-      images: [OG_IMAGE_PATH],
     },
   };
 }
@@ -96,11 +99,14 @@ export default async function BlogPostPage({ params }: Props) {
         description: post.description,
         articleSection: post.category,
         datePublished: post.publishedAt,
-        dateModified: post.publishedAt,
+        dateModified: post.updatedAt ?? post.publishedAt,
+        ...(post.sources?.length ? { citation: post.sources.map((source) => source.url) } : {}),
         wordCount,
         inLanguage: "en-IN",
-        author: { "@type": "Organization", name: "Edgecipline", url: url("/") },
-        publisher: { "@type": "Organization", name: "Edgecipline", url: url("/") },
+        // The post's own generated card, not the sitewide one.
+        image: `${canonical}/opengraph-image`,
+        author: { "@id": ORGANIZATION_ID },
+        publisher: { "@id": ORGANIZATION_ID },
         isPartOf: { "@type": "Blog", "@id": `${url("/blog")}#blog` },
       },
       {
@@ -126,8 +132,7 @@ export default async function BlogPostPage({ params }: Props) {
       </a>
 
       <RevealObserver />
-      <SidebarNav />
-      <MobileNav />
+      <Navbar />
 
       <section className={css("blHero")} aria-labelledby="post-title">
         <div className={css("blHeroGlow")} aria-hidden="true" />
@@ -189,6 +194,19 @@ export default async function BlogPostPage({ params }: Props) {
             <article className={css("blProse")} id="article">
               {blocks}
 
+              {!!post.sources?.length && (
+                <section className={css("blSources")} aria-labelledby="article-sources">
+                  <h2 id="article-sources">Sources</h2>
+                  <ul>
+                    {post.sources.map((source) => (
+                      <li key={source.url}>
+                        <a href={source.url} rel="noopener noreferrer">{source.title}</a>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
+
               <footer className={css("blSignoff")}>
                 <span className={css("blSignoffMark")} aria-hidden="true">
                   <Sparkles size={18} />
@@ -196,7 +214,8 @@ export default async function BlogPostPage({ params }: Props) {
                 <span>
                   <b>Edgecipline</b>
                   <span>
-                    Published {formatDate(post.publishedAt)} in {post.category}
+                    Published {formatDate(post.publishedAt)}
+                    {post.updatedAt && ` · Updated ${formatDate(post.updatedAt)}`} in {post.category}
                   </span>
                 </span>
               </footer>
@@ -255,6 +274,7 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
         </div>
       </section>
+      <SiteFooter />
     </div>
   );
 }

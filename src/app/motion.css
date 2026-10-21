@@ -71,7 +71,6 @@
   --mo-ambient: 1;
 }
 
-
 /* --------------------------------------------------------------------------
    1. Reveal system
    -------------------------------------------------------------------------- */
@@ -119,9 +118,9 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
 
 .waitlist:hover {
   box-shadow:
-    0 0 0 2px #b6ffec inset,
-    0 10px 28px rgba(0, 239, 179, calc(.28 * var(--mo-glow))),
-    0 0 34px rgba(0, 239, 179, calc(.3 * var(--mo-glow)));
+    0 0 0 2px #b6ffd6 inset,
+    0 10px 28px rgba(0,239,104, calc(.28 * var(--mo-glow))),
+    0 0 34px rgba(0,239,104, calc(.3 * var(--mo-glow)));
 }
 
 [data-magnetic].waitlist:hover,
@@ -181,10 +180,9 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
   animation: mo-logo-breathe calc(7s * var(--mo-ambient)) var(--mo-ease-in-out) infinite;
 }
 
-
 @keyframes mo-logo-breathe {
-  0%, 100% { filter: drop-shadow(0 0 0 rgba(0, 239, 179, 0)); }
-  50% { filter: drop-shadow(0 0 14px rgba(0, 239, 179, calc(.33 * var(--mo-glow)))); }
+  0%, 100% { filter: drop-shadow(0 0 0 rgba(0,239,104, 0)); }
+  50% { filter: drop-shadow(0 0 14px rgba(0,239,104, calc(.33 * var(--mo-glow)))); }
 }
 
 /* Headings reveal as one block — no per-word DOM explosion. */
@@ -195,359 +193,49 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
 }
 
 /* --------------------------------------------------------------------------
-   3. Section 01 — Hero: living trading universe
+   3. Section 01 — Hero
    --------------------------------------------------------------------------
-   Knobs: --hero-depth scales the scroll parallax, --hero-pointer the pointer
-   depth. The opening sequence is pure CSS, so it runs on first paint and does
-   not wait for hydration.
+   The hero's visual is one canvas now — components/hero/NeuralNetwork.tsx —
+   and it animates itself, so there is nothing here to drive it.
+
+   What this block used to be: 350 lines animating a planet (spin, graticule,
+   arcs, nodes, aura, sheen, motes), a photographed rock and a cut-out figure,
+   each with its own parallax, entrance and breathing loop, plus a derived
+   `--mo-p` that re-mapped the pinned stage's progress back to the mapping the
+   scene was built against. None of those elements exist.
+
+   What is left is the opening sequence for the copy, which is the part that
+   matters: it is pure CSS, so it runs on first paint without waiting for
+   hydration, and it is over well before anyone could reach for the call to
+   action. The button is clickable from the first frame regardless — the
+   animation only moves it, it never gates it.
    -------------------------------------------------------------------------- */
-
-.hero {
-  --hero-depth: 1;
-  --hero-pointer: 1;
-  --globe-spin: 48s;
-  --globe-cage: .34;
-  --globe-nodes: 1;
-  /* Every panel of the stage is published the same way -- 0 one step before
-     it reaches the frame, .5 in it, 1 one step after. The hero's layers were
-     built against the other mapping, where 0 is "at rest, on screen", so it
-     is re-derived here instead of re-tuning the whole scene. */
-  --mo-p: clamp(0, calc((var(--mo-progress, .5) - .5) * 2), 1);
-  /* The hero's last stretch of travel fades it into the next scene. */
-  --hero-exit: clamp(0, calc((var(--mo-p) - .58) * 2.6), 1);
-}
-
-/* The landscape used to be a layer inside the hero, displaced by the hero's
-   own progress. It is the whole page's background now (app/backdrop.css,
-   `.page-sky-land`), which is what keeps it from restarting at the hero's
-   bottom edge. This entrance is still its own: the keyframe is shared. */
-@keyframes mo-hero-sky {
-  from { opacity: 0; translate: 0 15px; }
-}
-
-.globe {
-  transform: translate3d(
-    calc(var(--mo-px, 0) * 10px * var(--hero-pointer) * var(--mo-parallax)),
-    calc(
-      var(--mo-p) * 86px * var(--hero-depth) * var(--mo-parallax) +
-      var(--mo-py, 0) * 8px * var(--hero-pointer) * var(--mo-parallax)
-    ),
-    0
-  );
-}
-
-.globe-canvas {
-  animation: mo-globe-in calc(var(--mo-dur-slow) * 1.25) var(--mo-ease-out) .3s backwards;
-}
-
-@keyframes mo-globe-in {
-  from { opacity: 0; scale: .96; }
-}
-
-.globe-aura,
-.globe-sheen,
-.globe-motes {
-  position: absolute;
-  inset: 0;
-  display: block;
-  pointer-events: none;
-}
-
-/* Atmospheric pulsation behind the planet. */
-.globe-aura {
-  background: radial-gradient(
-    circle at 50% 46%,
-    rgba(0, 237, 191, calc(.17 * var(--mo-glow))),
-    rgba(49, 230, 241, calc(.07 * var(--mo-glow))) 38%,
-    transparent 62%
-  );
-  animation: mo-aura calc(9s * var(--mo-ambient)) var(--mo-ease-in-out) infinite;
-}
-
-
-@keyframes mo-aura {
-  0%, 100% { opacity: .62; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.045); }
-}
-
-/* A cyan/purple light sweep clipped to the planet, so the light travels
-   across the sphere and nothing else.
-
-   The mask used to be an alpha asset cut from the old globe artwork. The
-   planet is drawn now (components/hero/GlobeCanvas.tsx) as a circle centred
-   in the box at 34% of its smaller side, so the mask is that same circle as a
-   gradient — it tracks the drawn sphere exactly, costs no request, and has a
-   soft edge the bitmap mask never had. Keep the 34%/68% figures in step with
-   the radius in GlobeCanvas if that ever changes. */
-.globe-sheen {
-  overflow: hidden;
-  mix-blend-mode: screen;
-  opacity: .72;
-  --globe-mask: radial-gradient(circle at 50% 50%, #000 0 64%, rgba(0, 0, 0, .35) 78%, transparent 100%);
-  -webkit-mask-image: var(--globe-mask);
-  mask-image: var(--globe-mask);
-  -webkit-mask-size: 68% 68%;
-  mask-size: 68% 68%;
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-}
-
-/* The light band is a transform on a child rather than a moving
-   background-position, so the sweep composites instead of repainting. */
-.globe-sheen::after {
-  content: "";
-  position: absolute;
-  inset: -65% -85%;
-  background: linear-gradient(
-    118deg,
-    transparent 38%,
-    rgba(49, 230, 241, calc(.5 * var(--mo-glow))) 46%,
-    rgba(146, 97, 255, calc(.42 * var(--mo-glow))) 55%,
-    transparent 63%
-  );
-  animation: mo-sheen calc(13s * var(--mo-ambient)) linear infinite;
-}
-
-
-@keyframes mo-sheen {
-  from { transform: translate3d(-44%, -36%, 0); }
-  to { transform: translate3d(44%, 36%, 0); }
-}
-
-/* --- rotating energy mesh -------------------------------------------------
-   The artwork is a flat front view, so the planet itself cannot turn. What
-   turns is the layer over it: a spherical graticule and a field of network
-   nodes, orthographically projected and rotating about the planet's axis. The
-   bright moving elements are the ones the eye tracks, so the globe reads as
-   rotating while the artwork underneath is untouched.
-
-   Knobs: --globe-spin is one full turn, --globe-cage the graticule strength,
-   --globe-nodes the node strength. The sphere's measured circle and the 18°
-   tilt live in src/components/hero/globe-mesh.ts; the keyframe tables below
-   are generated from that tilt.
-   ------------------------------------------------------------------------- */
-
-.globe-mesh {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  mix-blend-mode: screen;
-}
-
-.globe-cage ellipse,
-.globe-cage circle {
-  fill: none;
-  stroke: #5ff3ff;
-  stroke-width: 2.2;
-  opacity: calc(var(--globe-cage) * var(--mo-glow));
-}
-
-/* A meridian projects to a circle when it faces us and to a vertical line when
-   it is edge-on; the matrix below is that projection, phase-shifted per
-   meridian by its longitude. */
-.globe-meridian {
-  transform-box: fill-box;
-  transform-origin: 50% 50%;
-  animation: mo-globe-meridian var(--globe-spin) linear
-    calc(var(--lon, 0) * var(--globe-spin) / -360) infinite;
-}
-
-
-.globe-arcs ellipse {
-  fill: none;
-  stroke: #b6fff2;
-  stroke-width: 4;
-  stroke-dasharray: .045 .955;
-  stroke-dashoffset: 1;
-  opacity: 0;
-  filter: drop-shadow(0 0 5px rgba(130, 255, 240, calc(.9 * var(--mo-glow))));
-  animation: mo-globe-arc calc(var(--globe-spin) / 3) linear calc(var(--i, 0) * -2.6s) infinite;
-}
-
-
-@keyframes mo-globe-arc {
-  0% { stroke-dashoffset: 1; opacity: 0; }
-  6%, 64% { opacity: .95; }
-  72%, 100% { stroke-dashoffset: 0; opacity: 0; }
-}
-
-.globe-nodes {
-  opacity: var(--globe-nodes);
-}
-
-.globe-nodes circle {
-  fill: #c9fffa;
-  opacity: 0;
-  transform-box: fill-box;
-  transform-origin: 50% 50%;
-  filter: drop-shadow(0 0 calc(6px * var(--mo-glow)) rgba(90, 250, 230, .95));
-  animation: mo-globe-node var(--globe-spin) linear
-    calc(var(--lon, 0) * var(--globe-spin) / -360) infinite;
-}
-
-
-@keyframes mo-globe-meridian {
-  0% { transform: matrix(1, 0, 0, -0.9511, 0, 0); }
-  4.167% { transform: matrix(0.9659, 0.08, 0, -0.9511, 0, 0); }
-  8.333% { transform: matrix(0.866, 0.1545, 0, -0.9511, 0, 0); }
-  12.5% { transform: matrix(0.7071, 0.2185, 0, -0.9511, 0, 0); }
-  16.667% { transform: matrix(0.5, 0.2676, 0, -0.9511, 0, 0); }
-  20.833% { transform: matrix(0.2588, 0.2985, 0, -0.9511, 0, 0); }
-  25% { transform: matrix(0, 0.309, 0, -0.9511, 0, 0); }
-  29.167% { transform: matrix(-0.2588, 0.2985, 0, -0.9511, 0, 0); }
-  33.333% { transform: matrix(-0.5, 0.2676, 0, -0.9511, 0, 0); }
-  37.5% { transform: matrix(-0.7071, 0.2185, 0, -0.9511, 0, 0); }
-  41.667% { transform: matrix(-0.866, 0.1545, 0, -0.9511, 0, 0); }
-  45.833% { transform: matrix(-0.9659, 0.08, 0, -0.9511, 0, 0); }
-  50% { transform: matrix(-1, 0, 0, -0.9511, 0, 0); }
-  54.167% { transform: matrix(-0.9659, -0.08, 0, -0.9511, 0, 0); }
-  58.333% { transform: matrix(-0.866, -0.1545, 0, -0.9511, 0, 0); }
-  62.5% { transform: matrix(-0.7071, -0.2185, 0, -0.9511, 0, 0); }
-  66.667% { transform: matrix(-0.5, -0.2676, 0, -0.9511, 0, 0); }
-  70.833% { transform: matrix(-0.2588, -0.2985, 0, -0.9511, 0, 0); }
-  75% { transform: matrix(0, -0.309, 0, -0.9511, 0, 0); }
-  79.167% { transform: matrix(0.2588, -0.2985, 0, -0.9511, 0, 0); }
-  83.333% { transform: matrix(0.5, -0.2676, 0, -0.9511, 0, 0); }
-  87.5% { transform: matrix(0.7071, -0.2185, 0, -0.9511, 0, 0); }
-  91.667% { transform: matrix(0.866, -0.1545, 0, -0.9511, 0, 0); }
-  95.833% { transform: matrix(0.9659, -0.08, 0, -0.9511, 0, 0); }
-  100% { transform: matrix(1, 0, 0, -0.9511, 0, 0); }
-}
-
-@keyframes mo-globe-node {
-  0% { transform: translate(calc(var(--a) * 1 * 1px), calc(var(--b) * 0 * 1px)) scale(0.86); opacity: 0.312; }
-  4.167% { transform: translate(calc(var(--a) * 0.9659 * 1px), calc(var(--b) * 0.2588 * 1px)) scale(0.922); opacity: 0.49; }
-  8.333% { transform: translate(calc(var(--a) * 0.866 * 1px), calc(var(--b) * 0.5 * 1px)) scale(0.98); opacity: 0.656; }
-  12.5% { transform: translate(calc(var(--a) * 0.7071 * 1px), calc(var(--b) * 0.7071 * 1px)) scale(1.03); opacity: 0.798; }
-  16.667% { transform: translate(calc(var(--a) * 0.5 * 1px), calc(var(--b) * 0.866 * 1px)) scale(1.068); opacity: 0.908; }
-  20.833% { transform: translate(calc(var(--a) * 0.2588 * 1px), calc(var(--b) * 0.9659 * 1px)) scale(1.092); opacity: 0.977; }
-  25% { transform: translate(calc(var(--a) * 0 * 1px), calc(var(--b) * 1 * 1px)) scale(1.1); opacity: 1; }
-  29.167% { transform: translate(calc(var(--a) * -0.2588 * 1px), calc(var(--b) * 0.9659 * 1px)) scale(1.092); opacity: 0.977; }
-  33.333% { transform: translate(calc(var(--a) * -0.5 * 1px), calc(var(--b) * 0.866 * 1px)) scale(1.068); opacity: 0.908; }
-  37.5% { transform: translate(calc(var(--a) * -0.7071 * 1px), calc(var(--b) * 0.7071 * 1px)) scale(1.03); opacity: 0.798; }
-  41.667% { transform: translate(calc(var(--a) * -0.866 * 1px), calc(var(--b) * 0.5 * 1px)) scale(0.98); opacity: 0.656; }
-  45.833% { transform: translate(calc(var(--a) * -0.9659 * 1px), calc(var(--b) * 0.2588 * 1px)) scale(0.922); opacity: 0.49; }
-  50% { transform: translate(calc(var(--a) * -1 * 1px), calc(var(--b) * 0 * 1px)) scale(0.86); opacity: 0.312; }
-  54.167% { transform: translate(calc(var(--a) * -0.9659 * 1px), calc(var(--b) * -0.2588 * 1px)) scale(0.798); opacity: 0.14; }
-  58.333% { transform: translate(calc(var(--a) * -0.866 * 1px), calc(var(--b) * -0.5 * 1px)) scale(0.74); opacity: 0.14; }
-  62.5% { transform: translate(calc(var(--a) * -0.7071 * 1px), calc(var(--b) * -0.7071 * 1px)) scale(0.69); opacity: 0.14; }
-  66.667% { transform: translate(calc(var(--a) * -0.5 * 1px), calc(var(--b) * -0.866 * 1px)) scale(0.652); opacity: 0.14; }
-  70.833% { transform: translate(calc(var(--a) * -0.2588 * 1px), calc(var(--b) * -0.9659 * 1px)) scale(0.628); opacity: 0.14; }
-  75% { transform: translate(calc(var(--a) * 0 * 1px), calc(var(--b) * -1 * 1px)) scale(0.62); opacity: 0.14; }
-  79.167% { transform: translate(calc(var(--a) * 0.2588 * 1px), calc(var(--b) * -0.9659 * 1px)) scale(0.628); opacity: 0.14; }
-  83.333% { transform: translate(calc(var(--a) * 0.5 * 1px), calc(var(--b) * -0.866 * 1px)) scale(0.652); opacity: 0.14; }
-  87.5% { transform: translate(calc(var(--a) * 0.7071 * 1px), calc(var(--b) * -0.7071 * 1px)) scale(0.69); opacity: 0.14; }
-  91.667% { transform: translate(calc(var(--a) * 0.866 * 1px), calc(var(--b) * -0.5 * 1px)) scale(0.74); opacity: 0.14; }
-  95.833% { transform: translate(calc(var(--a) * 0.9659 * 1px), calc(var(--b) * -0.2588 * 1px)) scale(0.798); opacity: 0.14; }
-  100% { transform: translate(calc(var(--a) * 1 * 1px), calc(var(--b) * 0 * 1px)) scale(0.86); opacity: 0.312; }
-}
-
-.globe-motes > span {
-  position: absolute;
-  left: var(--x);
-  top: var(--y);
-  width: var(--size);
-  height: var(--size);
-  border-radius: 50%;
-  background: #c9fffa;
-  box-shadow: 0 0 calc(7px * var(--mo-glow)) rgba(80, 245, 230, .9);
-  opacity: 0;
-  animation: mo-mote var(--duration) var(--mo-ease-in-out) var(--delay) infinite;
-}
-
-
-@keyframes mo-mote {
-  0% { opacity: 0; translate: 0 6px; }
-  18% { opacity: .85; }
-  62% { opacity: .5; }
-  100% { opacity: 0; translate: -14px -46px; }
-}
-
-.rock {
-  transform: translate3d(
-    calc(var(--mo-px, 0) * 6px * var(--hero-pointer) * var(--mo-parallax)),
-    calc(var(--mo-p) * 120px * var(--hero-depth) * var(--mo-parallax)),
-    0
-  );
-}
-
-.rock img {
-  animation: mo-rise-in var(--mo-dur-slow) var(--mo-ease-out) .44s backwards;
-}
-
-/* The figure is standing on the rock, so it must travel at exactly the rock's
-   rate — only the pointer depth separates them. */
-.trader {
-  transform: translate3d(
-    calc(var(--mo-px, 0) * 4px * var(--hero-pointer) * var(--mo-parallax)),
-    calc(var(--mo-p) * 120px * var(--hero-depth) * var(--mo-parallax)),
-    0
-  );
-}
-
-/* Breathing and a restrained turquoise rim. No spin, no exaggeration. */
-.trader img {
-  animation:
-    mo-rise-in var(--mo-dur-slow) var(--mo-ease-out) .58s backwards,
-    mo-breathe calc(7.5s * var(--mo-ambient)) var(--mo-ease-in-out) 1.6s infinite;
-}
-
 
 @keyframes mo-rise-in {
   from { opacity: 0; translate: 0 18px; }
 }
 
-@keyframes mo-breathe {
-  0%, 100% {
-    translate: 0 0;
-    filter:
-      drop-shadow(0 8px 8px rgba(0, 0, 0, .42))
-      drop-shadow(0 0 10px rgba(26, 230, 214, calc(.16 * var(--mo-glow))));
-  }
-  50% {
-    translate: 0 -3px;
-    filter:
-      drop-shadow(0 8px 8px rgba(0, 0, 0, .42))
-      drop-shadow(0 0 20px rgba(26, 230, 214, calc(.34 * var(--mo-glow))));
-  }
-}
+/* The sequence: keywords, descriptor, the two headline lines, the summary,
+   the buttons, then the supporting line. The last element starts at .86s and
+   the whole thing has settled before 1.6s. */
+.hero-copy .hero-keywords { animation: mo-rise-in var(--mo-dur) var(--mo-ease-out) .1s backwards; }
+.hero-copy .eyebrow { animation: mo-rise-in var(--mo-dur) var(--mo-ease-out) .2s backwards; }
+.hero-copy h1 .line-1 { animation: mo-rise-in var(--mo-dur) var(--mo-ease-out) .3s backwards; }
+.hero-copy h1 .line-2 { animation: mo-rise-in var(--mo-dur) var(--mo-ease-out) .42s backwards; }
+.hero-copy .summary { animation: mo-rise-in var(--mo-dur) var(--mo-ease-out) .56s backwards; }
+.hero-copy .hero-actions { animation: mo-rise-in var(--mo-dur) var(--mo-ease-out) .7s backwards; }
+.hero-copy .proof { animation: mo-rise-in var(--mo-dur) var(--mo-ease-out) .86s backwards; }
 
-/* The opening sequence: background, landscape, planet, rock, figure, then the
-   copy line by line and the social proof last. The last element starts at
-   1.28s and the whole thing has settled before 2s. */
-.hero-copy .eyebrow { animation: mo-rise-in var(--mo-dur) var(--mo-ease-out) .48s backwards; }
-.hero-copy h1 .line-1 { animation: mo-rise-in var(--mo-dur) var(--mo-ease-out) .58s backwards; }
-.hero-copy h1 .line-2 { animation: mo-rise-in var(--mo-dur) var(--mo-ease-out) .70s backwards; }
-.hero-copy .summary { animation: mo-rise-in var(--mo-dur) var(--mo-ease-out) .84s backwards; }
-.hero-copy .hero-actions { animation: mo-rise-in var(--mo-dur) var(--mo-ease-out) .96s backwards; }
-.hero-copy .proof { animation: mo-rise-in var(--mo-dur) var(--mo-ease-out) 1.1s backwards; }
-
-/* Two headline lines, each its own span; only the second one is mint. */
+/* Two headline lines, each its own span, so they can stagger. */
 .hero-copy h1 .line-1,
 .hero-copy h1 .line-2 { display: inline-block; }
-.hero-copy h1 .line-1 { color: inherit; }
 
-.keyword-list span {
-  animation: mo-keyword var(--mo-dur) var(--mo-ease-out) calc(1s + var(--i, 0) * .07s) backwards;
+/* The ambient light under the mesh drifts with the hero's own travel through
+   the viewport — a slow fade of the scene as the section leaves, nothing
+   more. `--mo-progress` is published per section by StageMotion. */
+.scene-glow {
+  opacity: calc(1 - clamp(0, calc((var(--mo-progress, 0) - .62) * 2.2), 1) * .55);
 }
-
-@keyframes mo-keyword {
-  from { opacity: 0; translate: 10px 0; }
-}
-
-/* Hero → Emotional Loop handover.
-   This used to be a veil that faded the hero into a flat `#020c11` — a cut to
-   black between two sections that no longer exists, since the background
-   behind both is now the same layer. What is left is the honest version of
-   the same idea: the hero's own cast — planet, rock, figure, keywords — eases
-   back as the hero leaves, and the landscape simply carries on. The copy is
-   untouched, so nothing readable ever fades. */
-.scene { opacity: calc(1 - var(--hero-exit) * .5); }
 
 /* --------------------------------------------------------------------------
    4. Section 02 — Emotional Loop
@@ -585,19 +273,18 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
    hands over from connection to connection instead of all four firing at once. */
 .loop-connectors .loop-spark {
   fill: none;
-  stroke: #8dffe4;
+  stroke: #8dffbe;
   stroke-width: 3.4;
   stroke-linecap: round;
   stroke-dasharray: .045 .955;
   stroke-dashoffset: 1;
   opacity: 0;
-  filter: drop-shadow(0 0 5px rgba(109, 255, 222, calc(.9 * var(--mo-glow))));
+  filter: drop-shadow(0 0 5px rgba(109,255,172, calc(.9 * var(--mo-glow))));
 }
 
 .loop-figure[data-inview] .loop-connectors .loop-spark {
   animation: mo-loop-spark var(--loop-cycle) linear calc(1.1s + var(--i, 0) * var(--loop-cycle) / 4) infinite;
 }
-
 
 @keyframes mo-loop-spark {
   0% { stroke-dashoffset: 1; opacity: 0; }
@@ -622,7 +309,6 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
     mo-node-in var(--mo-dur-fast) var(--mo-ease-out) calc(.2s + var(--i, 0) * .16s) backwards,
     mo-node-handover var(--loop-cycle) var(--mo-ease-in-out) calc(1.1s + var(--i, 0) * var(--loop-cycle) / 4) infinite;
 }
-
 
 @keyframes mo-node-in {
   from { opacity: 0; scale: .76; }
@@ -651,9 +337,9 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
 .emotion-node:focus-visible {
   transform: scale(1.055);
   box-shadow:
-    0 0 0 1px rgba(220, 255, 255, .14),
+    0 0 0 1px rgba(232,236,243, .14),
     0 0 42px currentColor,
-    inset 0 0 34px rgba(7, 20, 30, .5);
+    inset 0 0 34px rgba(7,14,30, .5);
 }
 
 .emotion-node strong,
@@ -672,18 +358,18 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
 /* The awareness moment, around 70% of the section: the loop quietens and the
    quotation on the right lights up. Nothing is blocked or scroll-jacked. */
 .loop-callout {
-  border-left-color: color-mix(in oklab, #15d8c2, #8ff6ea calc(var(--loop-awake) * 60%));
-  box-shadow: -3px 0 calc(22px * var(--loop-awake)) rgba(21, 216, 194, calc(.42 * var(--loop-awake) * var(--mo-glow)));
+  border-left-color: color-mix(in oklab, #09e468, #89fcbb calc(var(--loop-awake) * 60%));
+  box-shadow: -3px 0 calc(22px * var(--loop-awake)) rgba(9,228,104, calc(.42 * var(--loop-awake) * var(--mo-glow)));
   transition:
     box-shadow var(--mo-dur-slow) var(--mo-ease-soft),
     border-left-color var(--mo-dur-slow) var(--mo-ease-soft);
 }
 
 .loop-callout p {
-  color: color-mix(in oklab, #f2f9fb, #c7fff3 calc(var(--loop-awake) * 100%));
+  color: color-mix(in oklab, #f4f6f9, #c7ffdf calc(var(--loop-awake) * 100%));
   text-shadow:
     0 2px 8px #000,
-    0 0 calc(26px * var(--loop-awake)) rgba(140, 255, 236, calc(.5 * var(--loop-awake) * var(--mo-glow)));
+    0 0 calc(26px * var(--loop-awake)) rgba(140,255,190, calc(.5 * var(--loop-awake) * var(--mo-glow)));
 }
 
 /* Scaled, not widened: this changes on scroll, and nothing animated during a
@@ -708,25 +394,10 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
   --mo-p: var(--mo-progress, 0);
 }
 
-/* The fit box keeps the artwork's own framing: the full section on desktop
-   (cover, bottom-anchored, exactly as the flattened art was placed) and the
-   chart's own aspect ratio inside the mobile band. */
-.chart-fit {
-  position: absolute;
-  inset: 0;
-}
-
-.chart-svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
 .chart-waves path {
   opacity: .27;
   animation: mo-wave calc(18s * var(--mo-ambient)) var(--mo-ease-in-out) calc(var(--i, 0) * -1.4s) infinite;
 }
-
 
 @keyframes mo-wave {
   0%, 100% { transform: translate3d(0, 0, 0); opacity: .2; }
@@ -738,7 +409,7 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
   transform-origin: 50% 50%;
 }
 
-.chart-art[data-inview] .chart-candle {
+.chart-plot[data-inview] .chart-candle {
   animation: mo-candle var(--mo-dur-fast) var(--mo-ease-out)
     calc(var(--chart-delay) + var(--i, 0) * var(--chart-candle-step)) backwards;
 }
@@ -756,7 +427,7 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
   stroke-dashoffset: 0;
 }
 
-.chart-art[data-inview] .chart-line {
+.chart-plot[data-inview] .chart-line {
   animation: mo-draw-line var(--chart-draw) var(--mo-ease-soft) var(--chart-delay) backwards;
 }
 
@@ -769,14 +440,13 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
   stroke-dasharray: .035 .965;
   stroke-dashoffset: 1;
   opacity: 0;
-  filter: drop-shadow(0 0 6px rgba(190, 255, 245, calc(.9 * var(--mo-glow))));
+  filter: drop-shadow(0 0 6px rgba(190,255,218, calc(.9 * var(--mo-glow))));
 }
 
-.chart-art[data-inview] .chart-line-spark {
+.chart-plot[data-inview] .chart-line-spark {
   animation: mo-chart-spark calc(7s * var(--mo-ambient)) linear
     calc(var(--chart-delay) + var(--chart-draw)) infinite;
 }
-
 
 @keyframes mo-chart-spark {
   0% { stroke-dashoffset: 1; opacity: 0; }
@@ -793,17 +463,17 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
 }
 
 .chart-mark__ring {
-  fill: #00e5c3;
+  fill: #00e563;
   opacity: .32;
   transform-box: fill-box;
   transform-origin: 50% 50%;
   scale: 1.45;
 }
-.chart-mark__core { fill: #e5ffff; }
+.chart-mark__core { fill: #eef1f6; }
 
 .chart-mark__pulse {
   fill: none;
-  stroke: #9bffee;
+  stroke: #9bffc6;
   stroke-width: 3;
   opacity: 0;
   transform-box: fill-box;
@@ -811,10 +481,10 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
 }
 
 /* The final checkpoint is the calm one: greener, and it breathes more slowly. */
-.chart-mark[data-calm] .chart-mark__ring { fill: #2ff0a0; opacity: .62; }
-.chart-mark[data-calm] .chart-mark__pulse { stroke: #78ffc4; }
+.chart-mark[data-calm] .chart-mark__ring { fill: #23fc81; opacity: .62; }
+.chart-mark[data-calm] .chart-mark__pulse { stroke: #78ffb3; }
 
-.chart-art[data-inview] .chart-mark {
+.chart-plot[data-inview] .chart-mark {
   animation: mo-mark-in var(--mo-dur-fast) var(--mo-ease-out) var(--mo-mark-delay) backwards;
 }
 
@@ -822,12 +492,11 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
   from { opacity: 0; transform: scale(.4); }
 }
 
-.chart-art[data-inview] .chart-mark__pulse {
+.chart-plot[data-inview] .chart-mark__pulse {
   animation: mo-mark-pulse calc(4.2s * var(--mo-ambient)) var(--mo-ease-out) var(--mo-mark-delay) infinite;
 }
 
-
-.chart-art[data-inview] .chart-mark[data-calm] .chart-mark__pulse {
+.chart-plot[data-inview] .chart-mark[data-calm] .chart-mark__pulse {
   animation-duration: calc(6.4s * var(--mo-ambient));
 }
 
@@ -848,7 +517,6 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
     calc(var(--mo-delay, 0s) + .3s) infinite;
 }
 
-
 @keyframes mo-dot-pulse {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.5); }
@@ -868,25 +536,14 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
   --story-settle: clamp(0, calc((var(--mo-p) - .6) * 3), 1);
 }
 
-/* Scaled past the section edges so the displacement can never expose one. */
-.story-ribbons {
-  transform:
-    translate3d(
-      calc(var(--mo-px, 0) * -4px * var(--mo-parallax)),
-      calc((.5 - var(--mo-p)) * -34px * var(--story-depth) * var(--mo-parallax)),
-      0
-    )
-    scale(1.06);
-}
-
-/* The portrait moves at most 6px and is never scaled or skewed. */
+/* The portrait moves at most 6px, and only with the pointer. It used to carry
+   a vertical scroll parallax as well, which made sense when it was an
+   absolutely placed layer hanging past the section's edges; in a grid column
+   it would simply drag the image out of its own cell. */
 .story-visual {
   transform: translate3d(
     calc(var(--mo-px, 0) * var(--story-pointer) * var(--mo-parallax)),
-    calc(
-      var(--mo-py, 0) * var(--story-pointer) * var(--mo-parallax) +
-      (.5 - var(--mo-p)) * -16px * var(--story-depth) * var(--mo-parallax)
-    ),
+    calc(var(--mo-py, 0) * var(--story-pointer) * var(--mo-parallax)),
     0
   );
 }
@@ -899,13 +556,12 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
   pointer-events: none;
   background: radial-gradient(
     ellipse at 28% 58%,
-    rgba(0, 247, 211, calc(.16 * var(--mo-glow))),
-    rgba(31, 222, 233, calc(.05 * var(--mo-glow))) 34%,
+    rgba(0,247,107, calc(.16 * var(--mo-glow))),
+    rgba(26,171,238, calc(.05 * var(--mo-glow))) 34%,
     transparent 58%
   );
   animation: mo-aura calc(11s * var(--mo-ambient)) var(--mo-ease-in-out) infinite;
 }
-
 
 /* Neural strands: purple for the struggles, cyan for awareness, green for
    growth. Overlay paths only — the portrait artwork is never deformed. */
@@ -939,7 +595,7 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
    along it, without a DOM node per particle. */
 .story-strand__spark {
   fill: none;
-  stroke: #eafffb;
+  stroke: #f1f4f8;
   stroke-width: 4;
   stroke-linecap: round;
   stroke-dasharray: 3 58;
@@ -957,7 +613,6 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
   animation: mo-strand-spark calc(9s * var(--mo-ambient)) linear calc(.9s + var(--i, 0) * .34s) infinite;
 }
 
-
 @keyframes mo-strand-spark {
   from { stroke-dashoffset: 610; }
   to { stroke-dashoffset: 0; }
@@ -973,13 +628,13 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
 }
 
 .story-rail-labels li:nth-child(1) { --stage: rgba(168, 85, 247, .62); }
-.story-rail-labels li:nth-child(2) { --stage: rgba(10, 240, 228, .62); }
-.story-rail-labels li:nth-child(3) { --stage: rgba(2, 237, 169, .62); }
+.story-rail-labels li:nth-child(2) { --stage: rgba(0,250,108, .62); }
+.story-rail-labels li:nth-child(3) { --stage: rgba(0,239,104, .62); }
 
 .built-traders[data-inview] .story-rail-labels li {
   text-shadow:
     0 2px 7px rgba(0, 0, 0, .8),
-    0 0 calc(18px * var(--mo-glow)) var(--stage, rgba(0, 247, 211, .55));
+    0 0 calc(18px * var(--mo-glow)) var(--stage, rgba(0,247,107, .55));
 }
 
 .story-features li {
@@ -995,7 +650,7 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
   inset: 0;
   pointer-events: none;
   opacity: var(--story-settle);
-  background: linear-gradient(180deg, transparent 38%, rgba(1, 25, 33, .45) 76%, rgba(2, 14, 20, .92) 100%);
+  background: linear-gradient(180deg, transparent 38%, rgba(6,13,28, .45) 76%, rgba(4,8,18, .92) 100%);
 }
 
 /* --------------------------------------------------------------------------
@@ -1009,12 +664,13 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
    (data-step-card, data-step, data-connector) so these rules never depend on
    the class names the CSS module generates.
 
-   The one-shot artwork is keyed to `data-stage-active` — the flag StageMotion
-   puts on the section in the frame — rather than to `data-inview`. In a pinned
-   frame every panel is technically on screen from the start, so `data-inview`
-   would fire all three pieces at once, off frame, and never again. Keyed this
-   way each plays when the section arrives, in both scroll directions, because
-   the declaration stops matching when it leaves and matches again on return.
+   The one-shot artwork is keyed to `data-inview`, which RevealObserver sets on
+   the section the first time it is seen. (It used to key off
+   `data-stage-active`, a flag the pinned stage put on whichever section held
+   the frame — necessary then, because in a pinned frame every section is
+   technically on screen from the start and `data-inview` would have fired all
+   three pieces at once, off frame. On a normally scrolling page the in-view
+   flag means what it says.)
    -------------------------------------------------------------------------- */
 
 #how-it-works {
@@ -1053,7 +709,7 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
   transition: opacity var(--mo-dur-fast) var(--mo-ease-soft);
   background: radial-gradient(
     260px circle at var(--mo-sx, 50%) var(--mo-sy, 50%),
-    rgba(0, 247, 211, calc(.17 * var(--mo-glow))),
+    rgba(0,247,107, calc(.17 * var(--mo-glow))),
     transparent 68%
   );
 }
@@ -1069,29 +725,29 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
 #how-it-works [data-step-card][data-hover] [data-step] {
   transform: translateY(-3px);
   box-shadow:
-    0 0 0 6px rgba(1, 237, 206, .07),
-    0 0 30px rgba(0, 247, 211, calc(.4 * var(--mo-glow)));
+    0 0 0 6px rgba(0,238,103, .07),
+    0 0 30px rgba(0,247,107, calc(.4 * var(--mo-glow)));
 }
 
 /* ---- The step artwork, played on arrival ------------------------------- */
 
-#how-it-works[data-stage-active] .step-progress > i {
+#how-it-works[data-inview] .step-progress > i {
   animation: mo-upload 1.6s var(--mo-ease-soft) .35s backwards;
 }
 
-#how-it-works[data-stage-active] [data-step="upload"] {
+#how-it-works[data-inview] [data-step="upload"] {
   animation: mo-icon-pop .9s var(--mo-ease-out) .4s backwards;
 }
 
-#how-it-works[data-stage-active] .step-motes > i {
+#how-it-works[data-inview] .step-motes > i {
   animation: mo-converge 2.4s var(--mo-ease-soft) calc(.5s + var(--i, 0) * .14s) 2;
 }
 
-#how-it-works[data-stage-active] [data-step="analysis"] {
+#how-it-works[data-inview] [data-step="analysis"] {
   animation: mo-spark 1.5s var(--mo-ease-in-out) .55s 2;
 }
 
-#how-it-works[data-stage-active] .step-bars > i {
+#how-it-works[data-inview] .step-bars > i {
   animation: mo-bar-grow .8s var(--mo-ease-out) calc(.45s + var(--i, 0) * .13s) backwards;
 }
 
@@ -1105,15 +761,15 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
   height: 2px;
   overflow: hidden;
   border-radius: 2px;
-  background: rgba(1, 237, 206, .14);
+  background: rgba(0,238,103, .14);
 }
 
 .step-progress > i {
   display: block;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, #01edce, #7af9ff);
-  box-shadow: 0 0 10px rgba(1, 237, 206, .6);
+  background: linear-gradient(90deg, #00ee67, #7ad5ff);
+  box-shadow: 0 0 10px rgba(0,238,103, .6);
   transform-origin: left center;
 }
 
@@ -1142,8 +798,8 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #8ef9ff;
-  box-shadow: 0 0 8px rgba(120, 243, 255, .85);
+  background: #8edbff;
+  box-shadow: 0 0 8px rgba(120,212,255, .85);
   opacity: 0;
 }
 
@@ -1154,8 +810,8 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
 }
 
 @keyframes mo-spark {
-  0%, 100% { filter: drop-shadow(0 0 0 rgba(0, 247, 211, 0)); }
-  40% { filter: drop-shadow(0 0 12px rgba(122, 249, 255, calc(.95 * var(--mo-glow)))); }
+  0%, 100% { filter: drop-shadow(0 0 0 rgba(0,247,107, 0)); }
+  40% { filter: drop-shadow(0 0 12px rgba(122,213,255, calc(.95 * var(--mo-glow)))); }
 }
 
 /* Step 03 — the bars grow, with a calm green confirmation. */
@@ -1174,8 +830,8 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
   width: 5px;
   height: calc(34% + var(--i, 0) * 22%);
   border-radius: 2px;
-  background: linear-gradient(180deg, #4dffb4, #0d9f78);
-  box-shadow: 0 0 10px rgba(45, 232, 143, calc(.45 * var(--mo-glow)));
+  background: linear-gradient(180deg, #4dff9a, #04a866);
+  box-shadow: 0 0 10px rgba(34,243,125, calc(.45 * var(--mo-glow)));
   transform-origin: bottom center;
 }
 
@@ -1225,11 +881,11 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
 
 #trading-dna .dnaFeatures li:hover {
   transform: translateY(-2px);
-  border-color: rgba(17, 207, 188, .42);
-  background-color: rgba(3, 22, 28, .5);
+  border-color: rgba(6,218,98, .42);
+  background-color: rgba(6,12,25, .5);
   box-shadow:
     0 10px 26px rgba(0, 0, 0, .3),
-    0 0 22px rgba(17, 207, 188, calc(.14 * var(--mo-glow)));
+    0 0 22px rgba(6,218,98, calc(.14 * var(--mo-glow)));
 }
 
 .dnaIcon {
@@ -1255,7 +911,6 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
   animation: mo-dna-breathe var(--dna-breathe) var(--mo-ease-in-out) infinite;
 }
 
-
 @keyframes mo-dna-breathe {
   0%, 100% { translate: 0 0; scale: 1; }
   50% { translate: 0 -8px; scale: 1.025; }
@@ -1266,12 +921,12 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
    --mo-glow, and does not have to be re-rasterised while the helix breathes. */
 .dnaGlow {
   filter:
-    drop-shadow(0 0 calc(7px * var(--mo-glow)) rgba(0, 255, 211, .55))
-    drop-shadow(0 0 calc(16px * var(--mo-glow)) rgba(0, 185, 255, .35));
+    drop-shadow(0 0 calc(7px * var(--mo-glow)) rgba(0,255,111, .55))
+    drop-shadow(0 0 calc(16px * var(--mo-glow)) rgba(0,174,255, .35));
 }
 
 .dnaStrands {
-  filter: drop-shadow(0 0 calc(4px * var(--mo-glow)) rgba(141, 255, 243, .5));
+  filter: drop-shadow(0 0 calc(4px * var(--mo-glow)) rgba(141,255,190, .5));
 }
 
 /* Strands draw themselves, then each carries a light down its length. */
@@ -1285,19 +940,18 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
 }
 
 .dnaSpark {
-  stroke: #eafffb;
+  stroke: #f1f4f8;
   stroke-width: 7;
   stroke-linecap: round;
   stroke-dasharray: .03 .97;
   stroke-dashoffset: 1;
   opacity: 0;
-  filter: drop-shadow(0 0 6px rgba(190, 255, 245, calc(.9 * var(--mo-glow))));
+  filter: drop-shadow(0 0 6px rgba(190,255,218, calc(.9 * var(--mo-glow))));
 }
 
 #trading-dna[data-inview] .dnaSpark {
   animation: mo-dna-spark calc(6.5s * var(--mo-ambient)) linear calc(1.5s + var(--i, 0) * 1.1s) infinite;
 }
-
 
 @keyframes mo-dna-spark {
   0% { stroke-dashoffset: 1; opacity: 0; }
@@ -1319,7 +973,6 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
   animation: mo-dna-shimmer calc(14s * var(--mo-ambient)) var(--mo-ease-in-out) infinite;
 }
 
-
 @keyframes mo-dna-shimmer {
   0%, 100% { opacity: .7; translate: 0 0; }
   50% { opacity: 1; translate: 0 -12px; }
@@ -1340,7 +993,7 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
   position: absolute;
   inset: -3px;
   border-radius: 999px;
-  box-shadow: 0 0 16px rgba(4, 230, 182, calc(.55 * var(--mo-glow)));
+  box-shadow: 0 0 16px rgba(0,234,101, calc(.55 * var(--mo-glow)));
   opacity: 0;
   pointer-events: none;
 }
@@ -1348,7 +1001,6 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
 #trading-dna[data-inview] .dnaTags span::after {
   animation: mo-dna-tag calc(4.6s * var(--mo-ambient)) var(--mo-ease-in-out) calc(var(--i, 0) * .46s) infinite;
 }
-
 
 @keyframes mo-dna-tag {
   0%, 100% { opacity: 0; }
@@ -1368,47 +1020,12 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
   --mo-p: var(--mo-progress, 0);
 }
 
-#reflection .wrBackdrop {
-  transform: translate3d(0, calc((.5 - var(--mo-p)) * 26px * var(--mo-parallax)), 0) scale(1.04);
-}
-
 #reflection .wrCard {
   --mo-delay: calc(var(--i, 0) * var(--wr-stagger));
   transition:
-    transform var(--mo-dur-fast) var(--mo-ease-soft),
-    border-color var(--mo-dur-fast) var(--mo-ease-soft),
-    box-shadow var(--mo-dur-fast) var(--mo-ease-soft),
     opacity var(--mo-dur) var(--mo-ease-out) var(--mo-delay),
     translate var(--mo-dur) var(--mo-ease-out) var(--mo-delay);
 }
-
-#reflection .wrCard:hover {
-  transform: translateY(-3px);
-  border-color: rgba(0, 229, 229, .45);
-  box-shadow:
-    inset 0 1px 0 rgba(195, 255, 250, .1),
-    0 20px 44px rgba(0, 0, 0, .36),
-    0 0 26px rgba(0, 229, 229, calc(.12 * var(--mo-glow)));
-}
-
-/* A highlight that travels the top edge of the reflection card on hover. */
-#reflection .wrReflect::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 40%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #00f5ac, transparent);
-  opacity: 0;
-  pointer-events: none;
-}
-
-#reflection .wrReflect:hover::after {
-  opacity: 1;
-  animation: mo-wr-sheen 1.1s var(--mo-ease-soft) infinite;
-}
-
 
 @keyframes mo-wr-sheen {
   from { transform: translateX(-100%); }
@@ -1416,13 +1033,13 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
 }
 
 /* The discipline dial draws from empty to its value. */
-.wr-dial-track { stroke: rgba(0, 245, 172, .14); }
+.wr-dial-track { stroke: rgba(0,245,106, .14); }
 
 .wr-dial-value {
-  stroke: #2ff0a8;
+  stroke: #23fc81;
   stroke-dasharray: var(--dash);
   stroke-dashoffset: var(--gap);
-  filter: drop-shadow(0 0 calc(6px * var(--mo-glow)) rgba(0, 245, 172, .6));
+  filter: drop-shadow(0 0 calc(6px * var(--mo-glow)) rgba(0,245,106, .6));
 }
 
 #reflection [data-inview] .wr-dial-value {
@@ -1502,19 +1119,18 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
 
 .jy-line-spark {
   fill: none;
-  stroke: #eafffb;
+  stroke: #f1f4f8;
   stroke-width: 4.5;
   stroke-linecap: round;
   stroke-dasharray: .02 .98;
   stroke-dashoffset: 1;
   opacity: 0;
-  filter: drop-shadow(0 0 5px rgba(180, 255, 245, calc(.9 * var(--mo-glow))));
+  filter: drop-shadow(0 0 5px rgba(180,255,213, calc(.9 * var(--mo-glow))));
 }
 
 #journey[data-inview] .jy-line-spark {
   animation: mo-jy-spark calc(8s * var(--mo-ambient)) linear calc(var(--jy-delay) + var(--jy-draw)) infinite;
 }
-
 
 @keyframes mo-jy-spark {
   0% { stroke-dashoffset: 1; opacity: 0; }
@@ -1599,19 +1215,19 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
 
 #pricing .prCard:hover {
   transform: translateY(-6px) scale(1.015);
-  border-color: rgba(0, 229, 229, .55);
+  border-color: rgba(0,156,229, .55);
   box-shadow:
-    inset 0 1px 0 rgba(195, 255, 250, .1),
+    inset 0 1px 0 rgba(195,255,221, .1),
     0 26px 58px rgba(0, 0, 0, .42),
-    0 0 30px rgba(0, 229, 229, calc(.14 * var(--mo-glow)));
+    0 0 30px rgba(0,156,229, calc(.14 * var(--mo-glow)));
 }
 
 #pricing .prCard[data-featured]:hover {
-  border-color: rgba(0, 245, 172, .8);
+  border-color: rgba(0,245,106, .8);
   box-shadow:
-    inset 0 1px 0 rgba(195, 255, 250, .12),
+    inset 0 1px 0 rgba(195,255,221, .12),
     0 26px 58px rgba(0, 0, 0, .46),
-    0 0 36px rgba(0, 245, 172, calc(.26 * var(--mo-glow)));
+    0 0 36px rgba(0,245,106, calc(.26 * var(--mo-glow)));
 }
 
 /* The featured card breathes on a pseudo-element's opacity, so no large
@@ -1622,11 +1238,10 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
   inset: -1px;
   pointer-events: none;
   border-radius: inherit;
-  box-shadow: 0 0 34px rgba(0, 245, 172, calc(.32 * var(--mo-glow)));
+  box-shadow: 0 0 34px rgba(0,245,106, calc(.32 * var(--mo-glow)));
   opacity: 0;
   animation: mo-pr-breathe calc(6s * var(--mo-ambient)) var(--mo-ease-in-out) infinite;
 }
-
 
 @keyframes mo-pr-breathe {
   0%, 100% { opacity: .22; }
@@ -1647,22 +1262,13 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
 }
 
 #pricing .prCta:hover {
-  color: #042018;
+  color: #070e1d;
   border-color: transparent;
-  background: linear-gradient(180deg, #8dffcd, #16d79a);
+  background: linear-gradient(180deg, #8dffbe, #0ae368);
 }
 
 #pricing .prCta:hover span { transform: translateX(4px); }
 #pricing .prCta:active { transform: scale(.985); }
-
-#pricing .prBillingOption {
-  transition:
-    color var(--mo-dur-fast) var(--mo-ease-soft),
-    background-color var(--mo-dur-fast) var(--mo-ease-soft),
-    box-shadow var(--mo-dur-fast) var(--mo-ease-soft);
-}
-
-#pricing .prPriceFor { transition: opacity var(--mo-dur-fast) var(--mo-ease-soft); }
 
 /* --------------------------------------------------------------------------
    12. Section 09 — FAQ
@@ -1679,11 +1285,11 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
     background-color var(--faq-speed) var(--mo-ease-soft);
 }
 
-#faq .faqItem:hover { border-color: rgba(0, 229, 229, .34); }
+#faq .faqItem:hover { border-color: rgba(0,156,229, .34); }
 
 #faq .faqItem[data-open] {
-  border-color: rgba(0, 229, 229, .5);
-  box-shadow: 0 0 24px rgba(0, 229, 229, calc(.1 * var(--mo-glow)));
+  border-color: rgba(0,156,229, .5);
+  box-shadow: 0 0 24px rgba(0,156,229, calc(.1 * var(--mo-glow)));
 }
 
 /* Height animates from 0fr to 1fr, so nothing has to be measured and the text
@@ -1717,14 +1323,14 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
   height: 2px;
   translate: -50% -50%;
   border-radius: 2px;
-  background: #8fd7dd;
+  background: #8dc5df;
   transition:
     transform var(--faq-speed) var(--mo-ease-soft),
     background-color var(--faq-speed) var(--mo-ease-soft);
 }
 
 #faq .faqIcon i:last-child { transform: rotate(90deg); }
-#faq .faqItem[data-open] .faqIcon i { background: #00f5ac; }
+#faq .faqItem[data-open] .faqIcon i { background: #00f56a; }
 #faq .faqItem[data-open] .faqIcon i:last-child { transform: rotate(90deg) scaleX(0); }
 
 /* --------------------------------------------------------------------------
@@ -1764,7 +1370,6 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
   animation: mo-cta-mote var(--duration) var(--mo-ease-in-out) var(--delay) infinite;
 }
 
-
 @keyframes mo-cta-mote {
   0% { opacity: 0; translate: 0 8px; }
   22% { opacity: .8; }
@@ -1776,10 +1381,9 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
   animation: mo-cta-brand calc(8s * var(--mo-ambient)) var(--mo-ease-in-out) infinite;
 }
 
-
 @keyframes mo-cta-brand {
-  0%, 100% { filter: drop-shadow(0 0 0 rgba(0, 245, 172, 0)); }
-  50% { filter: drop-shadow(0 0 16px rgba(0, 245, 172, calc(.3 * var(--mo-glow)))); }
+  0%, 100% { filter: drop-shadow(0 0 0 rgba(0,245,106, 0)); }
+  50% { filter: drop-shadow(0 0 16px rgba(0,245,106, calc(.3 * var(--mo-glow)))); }
 }
 
 /* --------------------------------------------------------------------------
@@ -1803,12 +1407,6 @@ html.motion-ready [data-reveal="from-right"]:not([data-inview]) { translate: var
    `html.motion-ready` so that without JavaScript nothing is left frozen. */
 
 html[data-scrolling] :is(.brand img,
-  .side-live-head i,
-  .globe-aura,
-  .globe-meridian,
-  .globe-arcs ellipse,
-  .globe-nodes circle,
-  .globe-motes > span,
   .loop-connectors .loop-spark,
   .chart-waves path,
   .chart-line-spark,
@@ -1823,11 +1421,6 @@ html[data-scrolling] :is(.brand img,
   .ctaMotes span,
   .ctaBrand img),
 html.motion-ready [data-mo-scene]:not([data-mo-live]) :is(.brand img,
-  .globe-aura,
-  .globe-meridian,
-  .globe-arcs ellipse,
-  .globe-nodes circle,
-  .globe-motes > span,
   .loop-connectors .loop-spark,
   .chart-waves path,
   .chart-line-spark,
@@ -1844,11 +1437,9 @@ html.motion-ready [data-mo-scene]:not([data-mo-live]) :is(.brand img,
 }
 
 /* `:is()` cannot hold a pseudo-element, so these four are spelled out. */
-html[data-scrolling] .globe-sheen::after,
 html[data-scrolling] .chart-events li::before,
 html[data-scrolling] .dnaTags span::after,
 html[data-scrolling] .prCard[data-featured]::after,
-html.motion-ready [data-mo-scene]:not([data-mo-live]) .globe-sheen::after,
 html.motion-ready [data-mo-scene]:not([data-mo-live]) .chart-events li::before,
 html.motion-ready [data-mo-scene]:not([data-mo-live]) .dnaTags span::after,
 html.motion-ready [data-mo-scene]:not([data-mo-live]) .prCard[data-featured]::after {
@@ -1856,33 +1447,27 @@ html.motion-ready [data-mo-scene]:not([data-mo-live]) .prCard[data-featured]::af
 }
 
 /* Two animations each: the entrance keeps running, only the loop stands down. */
-html[data-scrolling] .trader img,
 html[data-scrolling] .emotion-node,
-html.motion-ready [data-mo-scene]:not([data-mo-live]) .trader img,
 html.motion-ready [data-mo-scene]:not([data-mo-live]) .emotion-node {
   animation-play-state: running, paused;
 }
 
-/* Containment used to be free here, because each section clipped its own
-   artwork and never moved. It is not free now: every section is a panel of
-   one pinned frame (app/stage.css), and `contain: paint` on an element that
-   holds — or is held by — a `position: sticky` box is a combination browsers
-   disagree about. The frame clips instead, in one place, and the panels are
-   `overflow: hidden auto` so nothing can escape one either. */
+/* Containment is deliberately not used here. Each section clips its own
+   artwork already, and `contain: paint` measured no better than the
+   `animation-play-state` rules above while making a section's own
+   `position: sticky` children behave differently between browsers. */
 
 /* --------------------------------------------------------------------------
    15. Responsive dialling
    -------------------------------------------------------------------------- */
 
 @media (max-width: 1439px) and (min-width: 1024px) {
-  .hero { --hero-depth: .72; }
   .built-traders { --story-depth: .72; }
 }
 
 @media (max-width: 1023px) {
   /* Tablet: keep the reveals, drop every pointer-driven effect. */
   :root { --mo-parallax: .5; }
-  .hero { --hero-pointer: 0; }
   .built-traders { --story-pointer: 0px; }
 }
 
@@ -1892,18 +1477,15 @@ html.motion-ready [data-mo-scene]:not([data-mo-live]) .emotion-node {
     --mo-rise: 18px;
   }
 
-  /* Fewer particles and fewer decorative waves on phone GPUs. */
-  .globe-motes > span:nth-child(n + 7) { display: none; }
-  .globe-meridian:nth-of-type(2n) { display: none; }
-  .globe-nodes circle:nth-of-type(2n) { display: none; }
-  .hero { --globe-cage: .24; }
-  .globe-sheen { opacity: .5; }
+  /* Fewer decorative waves on phone GPUs. The hero's own scene scales itself
+     down from JavaScript — NeuralNetwork.tsx picks the node count and the
+     device pixel ratio per device — so there is nothing to dial here. */
   .chart-waves path:nth-child(n + 7) { display: none; }
 
   /* 105 individually staggered candles is a lot of work for a phone GPU, so
      the cascade collapses into one fade of the whole group. */
-  .chart-art[data-inview] .chart-candle { animation: none; }
-  .chart-art[data-inview] .chart-candles {
+  .chart-plot[data-inview] .chart-candle { animation: none; }
+  .chart-plot[data-inview] .chart-candles {
     animation: mo-candles-in var(--mo-dur) var(--mo-ease-out) var(--chart-delay) backwards;
   }
 
@@ -1914,18 +1496,6 @@ html.motion-ready [data-mo-scene]:not([data-mo-live]) .emotion-node {
     bottom: 190px;
     height: min(70vw, 330px);
     opacity: .6;
-  }
-
-  /* The chart band is in normal flow on mobile, so the fit box holds the
-     artwork's aspect ratio inside it rather than cropping the composition. */
-  .chart-fit {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    bottom: auto;
-    left: 0;
-    translate: 0 -50%;
-    aspect-ratio: 2200 / 527;
   }
 
   .step-progress { right: 20px; left: 20px; }
@@ -1954,26 +1524,21 @@ html.motion-ready [data-mo-scene]:not([data-mo-live]) .emotion-node {
     translate: none;
   }
 
-  .page-sky-land,
-  .globe img,
-  .globe-aura,
-  .rock img,
-  .trader img,
   .brand img,
+  .hero-copy .hero-keywords,
   .hero-copy .eyebrow,
   .hero-copy h1 .line-1,
   .hero-copy h1 .line-2,
   .hero-copy .summary,
   .hero-copy .hero-actions,
   .hero-copy .proof,
-  .keyword-list span,
   .loop-figure[data-inview] .loop-connectors .loop-path,
   .loop-figure[data-inview] .emotion-node,
-  .chart-art[data-inview] .chart-candle,
-  .chart-art[data-inview] .chart-candles,
-  .chart-art[data-inview] .chart-line,
-  .chart-art[data-inview] .chart-mark,
-  .chart-art[data-inview] .chart-mark__pulse,
+  .chart-plot[data-inview] .chart-candle,
+  .chart-plot[data-inview] .chart-candles,
+  .chart-plot[data-inview] .chart-line,
+  .chart-plot[data-inview] .chart-mark,
+  .chart-plot[data-inview] .chart-mark__pulse,
   .chart-waves path,
   .chart-events li::before,
   .story-aura,
@@ -1991,7 +1556,6 @@ html.motion-ready [data-mo-scene]:not([data-mo-live]) .emotion-node {
   #reflection [data-inview] .wr-check,
   #reflection [data-inview] .wrReflectIcon,
   #reflection [data-inview] .wrBar,
-  #reflection .wrReflect:hover::after,
   #journey[data-inview] .jy-line,
   #journey[data-inview] .jy-anchor,
   #journey[data-inview] .jyPin::after,
@@ -2000,9 +1564,10 @@ html.motion-ready [data-mo-scene]:not([data-mo-live]) .emotion-node {
     animation: none !important;
   }
 
+  /* The hero's ambient light stops being tied to the scroll. */
+  .scene-glow { opacity: 1; }
+
   /* Elements whose only purpose is movement are simply not shown. */
-  .globe-mesh,
-  .globe-motes,
   .step-motes,
   .chart-line-spark,
   .story-strand__spark,
@@ -2018,6 +1583,4 @@ html.motion-ready [data-mo-scene]:not([data-mo-live]) .emotion-node {
 
   #pricing .prCard[data-featured]::after { opacity: .4; }
 
-  .globe-sheen { opacity: .4; }
-  .globe-sheen::after { animation: none !important; }
 }

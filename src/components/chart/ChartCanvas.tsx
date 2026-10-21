@@ -6,6 +6,7 @@ import {
   CANDLE_UP,
   CANDLE_WICK_OVERSHOOT,
   CANDLES,
+  CHART_FRAME,
   CHART_VIEWBOX,
   CHECKPOINTS,
   ECHO_WAVES,
@@ -33,8 +34,8 @@ export function ChartCanvas() {
   return (
     <svg
       className="chart-svg"
-      viewBox={`0 0 ${CHART_VIEWBOX.width} ${CHART_VIEWBOX.height}`}
-      preserveAspectRatio="xMidYMax slice"
+      viewBox={`${CHART_FRAME.x} ${CHART_FRAME.y} ${CHART_FRAME.width} ${CHART_FRAME.height}`}
+      preserveAspectRatio="none"
       role="img"
       aria-labelledby="chart-art-title"
       focusable="false"
@@ -46,10 +47,9 @@ export function ChartCanvas() {
 
       <defs>
         <linearGradient id="chart-line-gradient" x1="0" y1="0" x2="1" y2="0">
-          <stop stopColor="#28f7c0" />
-          <stop offset=".4" stopColor="#54b9ff" />
-          <stop offset=".7" stopColor="#9b61ff" />
-          <stop offset="1" stopColor="#11ffab" />
+          <stop stopColor="#39ff88" />
+          <stop offset=".45" stopColor="#38bdf8" />
+          <stop offset="1" stopColor="#39ff88" />
         </linearGradient>
       </defs>
 
@@ -125,7 +125,7 @@ export function ChartCanvas() {
         d={PRICE_LINE}
         pathLength="1"
         fill="none"
-        stroke="#e9fffb"
+        stroke="#f1f3f7"
         strokeWidth="7"
         strokeLinecap="round"
       />

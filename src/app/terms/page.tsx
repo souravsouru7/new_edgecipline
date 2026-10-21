@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { LegalPage } from "@/components/legal/LegalPage";
-import { termsOfService } from "@/data/legal";
+import { legalDateModified, termsOfService } from "@/data/legal";
 import { BRAND_NAME, OG_IMAGE_PATH, OG_IMAGE_SIZE, absoluteUrl } from "@/data/brand";
 
 const url = absoluteUrl;
@@ -13,7 +13,6 @@ export const metadata: Metadata = {
   title,
   description: termsOfService.description,
   alternates: { canonical: url("/terms") },
-  robots: { index: true, follow: true },
   openGraph: {
     siteName: BRAND_NAME,
     title,
@@ -39,7 +38,8 @@ export default function TermsPage() {
     name: termsOfService.title,
     description: termsOfService.description,
     inLanguage: "en-IN",
-    dateModified: "2026-01-01",
+    // From the document's own "Last updated" line, never today's date.
+    dateModified: legalDateModified(termsOfService.updated),
     ...(url("/")
       ? { publisher: { "@type": "Organization", name: "Edgecipline Technologies", url: url("/") } }
       : {}),

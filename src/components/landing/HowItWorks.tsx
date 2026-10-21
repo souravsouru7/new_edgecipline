@@ -10,8 +10,13 @@ const vars = (value: Record<string, string | number>) => value as CSSProperties;
 /**
  * The three steps. `step` keys the artwork inside each card; motion.css
  * animates it by that attribute when this section takes the frame.
+ *
+ * Exported because the home page's `HowTo` schema is built from it. The
+ * machine-readable version of this process and the version on screen have to
+ * be the same three steps in the same words, and the only way to guarantee
+ * that is for both to read this array.
  */
-const steps = [
+export const steps = [
   { number: "01", title: "Upload Your Trades", description: "Import your trading history in seconds.", icon: CloudUpload, step: "upload" },
   { number: "02", title: "AI Analysis", description: "Our AI analyses your behavior, patterns and emotional triggers.", icon: BrainCircuit, step: "analysis" },
   { number: "03", title: "Learn & Improve", description: "Get personalized insights to build better habits and consistency.", icon: TrendingUp, step: "improve" },
@@ -63,14 +68,24 @@ function StepArt({ step }: { step: (typeof steps)[number]["step"] }) {
  */
 export function HowItWorks() {
   return (
-    <section id="how-it-works" className={css("hiw")} aria-labelledby="how-it-works-heading">
+    <section id="how-it-works" className={css("hiw")} data-sequence aria-labelledby="how-it-works-heading">
       <div className={css("hiwFrame")}>
         <header className={css("hiwHeader")}>
           <h2 id="how-it-works-heading" data-reveal>How <span>It Works</span></h2>
           <p data-reveal style={vars({ "--mo-delay": ".12s" })}>A simple process. A powerful shift.</p>
         </header>
 
-        <div className={css("hiwConnector")} data-connector aria-hidden="true"><span /></div>
+        {/* The process rail: a dashed line with one node per step and a light
+            that walks 01 -> 02 -> 03 along it. It sits above the cards in
+            normal flow, so it cannot drift — the previous version was pinned
+            at 62% of the section's height, which only meant anything while
+            that height was a fixed viewport. */}
+        <div className={css("hiwRail")} data-connector aria-hidden="true">
+          <span />
+          <i />
+          <i />
+          <i />
+        </div>
 
         <ol className={css("hiwSteps")}>
           {steps.map(({ number, title, description, icon: Icon, step }, index) => (

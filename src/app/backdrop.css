@@ -7,9 +7,15 @@
    over it, and the seams between them were papered over with inset
    box-shadows. Scrolling crossed nine visible rectangular boundaries.
 
-   This file replaces all of it with the hero's own background, promoted to a
-   single fixed layer that sits behind the whole document — hero through
-   footer — and rendered by components/PageSky.tsx.
+   Then it was one fixed layer carrying the hero's landscape photograph, with
+   a second photograph per section cross-faded over it. One background, but
+   still nine pictures, still a landscape aesthetic, and still nine image
+   downloads below the fold.
+
+   This is an environment instead of a picture: a deep navy field, a faint
+   data grid, and two auras of brand light that drift as the page is scrolled.
+   All gradients — nothing to download, nothing to decode, and the whole
+   background is a few compositor layers.
 
    Two halves:
 
@@ -22,8 +28,6 @@
    `.page-sky` rule, so the other routes keep their own backgrounds, and the
    scoping also raises specificity above the single-class rules it overrides —
    which means this file wins regardless of import order.
-
-   Imported last in app/layout.tsx.
    ========================================================================== */
 
 /* `inherits: true` is load-bearing: PageSky writes --sky-p on `.page-sky`,
@@ -40,17 +44,15 @@
 
 /* Fixed, and a sibling of `.site-shell` rather than a child, so no clip,
    containment or stacking context inside the page can cut into it. The
-   document itself keeps scrolling normally — nothing here is fixed except this
-   decoration. */
+   document itself keeps scrolling normally — nothing here is fixed except
+   this decoration. */
 .page-sky {
   position: fixed;
   z-index: 0;
   inset: 0;
   overflow: hidden;
   pointer-events: none;
-  background: var(--ink);
-  /* The deep ink field `.site-shell` used to carry. */
-  background-image: radial-gradient(ellipse at 55% 20%, #06242a 0%, #020b10 58%, #01080c 100%);
+  background: var(--bg);
 }
 
 .page-sky > * {
@@ -59,109 +61,90 @@
   pointer-events: none;
 }
 
-/* The hero's landscape, unchanged in colour, framing and crop. Overscanned 8%
-   vertically and scaled 1.06, so the drift below can never bring an edge into
-   frame. */
-.page-sky-land {
-  inset: -8% -3%;
-  background: #031118 url('/hero/landscape.webp') center 52% / cover no-repeat;
-  transform: translate3d(0, calc(var(--sky-p, 0) * 54px * var(--mo-parallax, 1)), 0) scale(1.06);
-  animation: mo-hero-sky var(--mo-dur-slow) var(--mo-ease-out) both;
-}
-
-/* The hero's own two decorative layers, verbatim: `.hero::before`'s aura and
-   `.hero::after`'s left-to-right legibility scrim. They used to stop at the
-   hero's bottom edge; now they run the length of the page. */
-.page-sky-air {
+/* The navy field. Lit from above and to the right, which is where the hero's
+   neural focal point sits, so the page has one light source. */
+.page-sky-field {
   background:
-    radial-gradient(ellipse at 64% 40%, rgba(0, 239, 179, .1), transparent 28%),
-    radial-gradient(ellipse at 90% 66%, rgba(49, 230, 241, .08), transparent 30%),
-    linear-gradient(90deg, rgba(2, 13, 18, .82) 0%, rgba(2, 13, 18, .36) 42%, rgba(2, 13, 18, .06) 72%),
-    linear-gradient(0deg, rgba(2, 13, 18, .15), transparent 45%);
+    radial-gradient(120% 80% at 72% -10%, #0d1730 0%, #070d1d 46%, var(--bg) 100%),
+    linear-gradient(180deg, #060b18, var(--bg));
 }
 
-/* The sections below the hero put copy on both sides of the frame, so they
-   need more than the hero's left-weighted scrim. This is that extra depth,
-   faded in across the first viewport of travel: the hero keeps exactly the
-   rendering it has today, and by the time the Emotional Loop is in frame the
-   landscape has settled into a backdrop. A single eased opacity, so there is
-   no boundary anywhere. */
-.page-sky-shade {
-  background: linear-gradient(180deg, rgba(2, 11, 17, .58), rgba(1, 8, 12, .8));
-  opacity: clamp(0, calc((var(--sky-p, 0) - .02) * 11), 1);
+/*
+ * The data grid.
+ *
+ * Two repeating gradients rather than an image, masked so it is only visible
+ * in the upper middle of the frame and fades out completely towards the
+ * edges — a full-screen grid at even strength reads as graph paper, which is
+ * not the same thing as depth. It drifts upward with the scroll, well inside
+ * its own overscan, so no edge is ever exposed.
+ */
+.page-sky-grid {
+  inset: -10% -6%;
+  opacity: .5;
+  background-image:
+    repeating-linear-gradient(90deg, rgba(56, 189, 248, .055) 0 1px, transparent 1px 72px),
+    repeating-linear-gradient(0deg, rgba(56, 189, 248, .045) 0 1px, transparent 1px 72px);
+  -webkit-mask-image: radial-gradient(70% 55% at 62% 26%, #000 0%, transparent 78%);
+  mask-image: radial-gradient(70% 55% at 62% 26%, #000 0%, transparent 78%);
+  transform: translate3d(0, calc(var(--sky-p, 0) * -70px * var(--mo-parallax, 1)), 0);
 }
 
-@media (max-width: 1100px) {
-  /* The sidebar is gone at this width, so the scrim no longer has a 250px
-     gutter to allow for. */
-  .page-sky-air {
-    background:
-      radial-gradient(ellipse at 64% 40%, rgba(0, 239, 179, .1), transparent 30%),
-      linear-gradient(90deg, rgba(2, 13, 18, .76) 0%, rgba(2, 13, 18, .3) 46%, rgba(2, 13, 18, .06) 76%),
-      linear-gradient(0deg, rgba(2, 13, 18, .15), transparent 45%);
-  }
+/*
+ * The brand light.
+ *
+ * Green and blue, placed by `--stage-p` so they travel across the frame as
+ * the page moves through its eleven sections: the environment changes with
+ * the content, but there is no boundary anywhere and no section owns a
+ * background. Translating the layer rather than animating the gradient stops
+ * is deliberate — a moving gradient stop repaints, a translate composites.
+ */
+.page-sky-aura {
+  inset: -14% -10%;
+  background:
+    radial-gradient(42% 38% at 74% 30%, rgba(57, 255, 136, .13), transparent 72%),
+    radial-gradient(46% 40% at 24% 72%, rgba(56, 189, 248, .11), transparent 74%);
+  transform: translate3d(
+    calc(var(--stage-p, 0) * -6vw * var(--mo-parallax, 1)),
+    calc(var(--stage-p, 0) * 7vh * var(--mo-parallax, 1)),
+    0
+  );
 }
 
-@media (max-width: 767px) {
-  /* Phones get the same crop the hero used to pick for itself, and a stronger
-     top-down scrim because the copy sits over the artwork rather than beside
-     it. */
-  .page-sky-land { background-position: 57% center; }
-
-  .page-sky-air {
-    background:
-      linear-gradient(180deg, rgba(2, 13, 18, .72) 0%, rgba(2, 13, 18, .84) 46%, rgba(2, 13, 18, .3) 100%),
-      linear-gradient(90deg, rgba(2, 13, 18, .5), transparent);
-  }
-
-  .page-sky-shade { background: linear-gradient(180deg, rgba(2, 11, 17, .5), rgba(1, 8, 12, .74)); }
-}
-
-
-/* ---- The sections' own backdrops ---------------------------------------
-   The photographs each section used to paint for itself are layers of this
-   one background now, not nine opaque panels. StageMotion publishes
-   `--stage-p` here as well as on the stage, and each scene dissolves in as
-   its section takes the frame and out again behind the next one, so the
-   artwork changes with the content while the background itself never cuts.
-
-   They are capped well below full opacity on purpose: the hero's landscape
-   and the ink field stay the page's identity, and the scene is a change of
-   weather over it rather than a new picture.
-   ----------------------------------------------------------------------- */
-
-.page-sky {
-  /* Written by StageMotion; mirrors the stage's own mapping. */
-  --stage-count: 11;
-  --stage-t: calc(var(--stage-p, 0) * (var(--stage-count) - 1));
-  --scene-span: 1.25;
-  --scene-max: .62;
-}
-
-.page-sky-scene {
-  position: absolute;
-  inset: -5% -2%;
-  --scene-d: calc(var(--stage-t) - var(--i, 0));
-  --scene-in: clamp(0, calc((var(--scene-d) + var(--scene-span)) / var(--scene-span)), 1);
-  --scene-out: clamp(0, calc((var(--scene-span) - var(--scene-d)) / var(--scene-span)), 1);
-  --scene-l: calc(var(--scene-in) * var(--scene-out));
-  opacity: calc(var(--scene-l) * var(--scene-l) * (2 - var(--scene-l)) * var(--scene-max));
-  /* Drifts with the landscape, at the same rate, so the two never separate. */
-  transform: translate3d(0, calc(var(--sky-p, 0) * 54px * var(--mo-parallax, 1)), 0) scale(1.04);
-}
-
-.page-sky-scene img {
-  object-fit: cover;
+/* Edge falloff, plus the extra depth the sections below the hero need. The
+   hero keeps the lightest rendering; by the time the Emotional Loop is on
+   screen the field has settled into a backdrop. A single eased opacity, so
+   there is no boundary. */
+.page-sky-vignette {
+  background:
+    radial-gradient(110% 80% at 50% 40%, transparent 42%, rgba(2, 4, 10, .72) 100%),
+    linear-gradient(180deg, transparent, rgba(2, 4, 10, .5));
+  opacity: calc(.55 + clamp(0, calc((var(--sky-p, 0) - .02) * 11), 1) * .45);
 }
 
 @media (max-width: 767px) {
-  /* Phone GPUs: a weaker scene over a stronger scrim keeps the copy legible
-     without compositing two near-opaque full-screen images. */
-  .page-sky { --scene-max: .42; }
+  /* A denser grid at phone width would alias into a moire pattern, and the
+     copy sits over the field rather than beside it, so the whole environment
+     is quieter. */
+  .page-sky-grid {
+    opacity: .3;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(56, 189, 248, .05) 0 1px, transparent 1px 56px),
+      repeating-linear-gradient(0deg, rgba(56, 189, 248, .04) 0 1px, transparent 1px 56px);
+  }
+
+  .page-sky-vignette {
+    background:
+      radial-gradient(130% 70% at 50% 34%, transparent 36%, rgba(2, 4, 10, .78) 100%),
+      linear-gradient(180deg, rgba(2, 4, 10, .25), rgba(2, 4, 10, .55));
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .page-sky-scene { transform: none; }
+  /* The drift is parallax, which is exactly what a reduced-motion preference
+     is asking to be spared. The composition is unchanged; it simply holds
+     still. */
+  .page-sky-grid,
+  .page-sky-aura { transform: none; }
 }
 
 /* --------------------------------------------------------------------------
@@ -170,7 +153,7 @@
 
 /* The shell stops painting: it is a transparent column of content over the
    layer. `z-index` puts it above the layer without a transform, so the
-   sidebar, the drawer and every link stay clickable. */
+   navbar, the sheet and every link stay clickable. */
 .site-shell {
   position: relative;
   z-index: 1;
@@ -179,39 +162,24 @@
 
 /* Every section: no colour of its own, and none of the inset box-shadows that
    were there to disguise the seams between them. */
+.site-shell > .stage > main,
+.site-shell > .stage > section,
 .site-shell > main,
 .site-shell > section {
   background: transparent;
   box-shadow: none;
 }
 
-/* The hero's two decorative pseudo-elements now live on `.page-sky-air`;
-   leaving them here as well would darken the hero twice. */
-.site-shell .hero::before,
-.site-shell .hero::after {
-  background: none;
-}
-
 /* Per-section veils, shades and glows. Their photographs are gone from the
    markup, so the contrast they were buying is now bought once, page-wide, by
-   `.page-sky-shade` — and a veil is exactly the full-bleed rectangle this
+   `.page-sky-vignette` — and a veil is exactly the full-bleed rectangle this
    whole change is about removing. */
-.site-shell .loop-backdrop,
 .site-shell .dnaVeil,
 .site-shell .wrVeil,
 .site-shell .jyVeil,
 .site-shell .prVeil,
 .site-shell .ctaVeil,
 .site-shell .faqGlow,
-.site-shell .emotional-loop::after,
-.site-shell .chart-story::after,
-.site-shell .built-traders::before,
-.site-shell .chart-mountain {
+.site-shell .built-traders::before {
   background: none;
 }
-
-/* The hero handed over to the Emotional Loop by fading into a flat
-   `#020c11` — a cut to black, which is the one thing a continuous background
-   must not do. There is nothing to hand over to any more. */
-.site-shell .hero-veil { display: none; }
-

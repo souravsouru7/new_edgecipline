@@ -1,81 +1,65 @@
 /* ==========================================================================
-   Section 09 — Frequently Asked Questions (layout only)
+   Section 10 — Frequently Asked Questions
+   --------------------------------------------------------------------------
+   Layout and skin only; the motion is in app/motion.css, and the shared
+   spine, type scale, rhythm and card surface are in app/sections.css.
+
    Class names are prefixed `faq`: CSS Modules are not scoped in this project.
+
+   What changed from the previous version:
+
+     * The questions were set at 12–15px with 9–14px of padding and a 40px
+       minimum row height. These are the three questions the page exists to
+       answer and they were the smallest interactive text on it, in rows too
+       short to be a comfortable target. Questions are on the shared scale in
+       56px rows now.
+     * The open/close control was two thin bars at the right-hand edge. It is
+       a bordered round button, so it reads as something to press, and it
+       turns and lights when its row is open — a second signal beyond the
+       panel sliding.
+     * The whole row is the button, so the target is the full width of the
+       card rather than the text.
+     * `min-height` and the section's own 1480px container were pinned-frame
+       furniture.
    ========================================================================== */
 
 .faq {
   position: relative;
-  min-height: clamp(300px, 24vw, 440px);
-  margin-left: clamp(210px, 13.3vw, 250px);
-  overflow: hidden;
   isolation: isolate;
-  /* No background and no edge-softening shadow: this section is transparent
-     over the page's one continuous background layer (app/backdrop.css). */
-}
-
-.faqGlow {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(ellipse at 50% 126%, rgba(0, 150, 160, .2), transparent 58%);
 }
 
 .faqInner {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
   align-items: start;
-  gap: clamp(22px, 3vw, 64px);
-  width: min(100%, 1480px);
-  min-height: inherit;
-  padding: clamp(40px, 3.8vw, 70px) clamp(28px, 3.6vw, 62px) clamp(44px, 4.2vw, 76px);
-  margin: 0 auto;
+  gap: clamp(26px, 4vw, 72px);
 }
 
-.faqHeader h2 {
-  margin: 0;
-  color: #f5faff;
-  font-size: clamp(28px, 2.7vw, 46px);
-  line-height: 1;
-  letter-spacing: -.05em;
-  font-weight: 850;
-}
+/* The heading column. The shared rule adds a bottom margin for sections whose
+   header sits above their content; here it sits beside it. */
+.faqHeader { margin-bottom: 0; }
 
-.faqHeader h2 span { color: #31e6f1; }
-.faqHeader h2 span + span { color: #00f5ac; }
+.faqRule { margin-top: clamp(16px, 2vh, 26px); }
 
-.faqHeader p {
-  margin: clamp(8px, .8vw, 13px) 0 0;
-  color: #a7b9c5;
-  font-size: clamp(13px, 1.05vw, 17px);
-  font-weight: 500;
-}
-
-.faqRule {
-  display: block;
-  width: clamp(48px, 5vw, 76px);
-  height: 2px;
-  margin-top: clamp(14px, 1.4vw, 22px);
-  background: linear-gradient(90deg, #00f5ac, transparent);
-}
-
-/* --- accordion --- */
+/* --------------------------------------------------------------------------
+   The accordion
+   -------------------------------------------------------------------------- */
 
 .faqList {
   display: grid;
-  gap: clamp(7px, .7vw, 11px);
+  gap: 10px;
 }
 
+/* Surface, border and radius come from the shared card definition. */
 .faqItem {
-  /* Bounds the layout an opening answer costs: this sits on a very long page,
-     and without it every frame of the height animation reflows the rest. */
   contain: layout style;
-  border: 1px solid rgba(0, 229, 229, .18);
-  border-radius: clamp(10px, .9vw, 14px);
-  background: rgba(3, 24, 34, .72);
+  overflow: hidden;
+  transition: border-color var(--mo-dur-fast, .45s) var(--mo-ease-soft, ease);
 }
+
+.faqItem[data-open] { border-color: rgba(56, 189, 248, .45); }
 
 .faqQuestion {
   margin: 0;
@@ -83,26 +67,71 @@
   font-weight: inherit;
 }
 
+/* The row is the control: full width, 56px tall, so there is no small target
+   anywhere in this section. */
 .faqQuestion button {
   display: flex;
   width: 100%;
-  min-height: clamp(40px, 3.3vw, 54px);
+  min-height: 56px;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  padding: clamp(9px, .8vw, 14px) clamp(13px, 1.2vw, 20px);
-  color: #e6f2f4;
+  gap: 18px;
+  padding: clamp(14px, 1.4vw, 20px) clamp(16px, 1.6vw, 24px);
+  color: var(--text);
   border: 0;
   border-radius: inherit;
   background: transparent;
   font: inherit;
-  font-size: clamp(12px, .95vw, 15px);
-  font-weight: 650;
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  font-weight: 500;
+  letter-spacing: -.02em;
   text-align: left;
   cursor: pointer;
 }
 
-.faqIcon { flex: none; color: #8fd7dd; }
+.faqQuestion button:hover { color: var(--blue); }
+
+/* The control. Two bars inside a bordered circle: the vertical one collapses
+   when the row opens, which turns the plus into a minus. The circle is what
+   makes it read as a button rather than as a decoration. */
+.faqIcon {
+  position: relative;
+  display: grid;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  color: var(--text-2);
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  transition:
+    color var(--mo-dur-fast, .45s) var(--mo-ease-soft, ease),
+    border-color var(--mo-dur-fast, .45s) var(--mo-ease-soft, ease),
+    background var(--mo-dur-fast, .45s) var(--mo-ease-soft, ease);
+}
+
+.faqIcon i {
+  position: absolute;
+  background: currentColor;
+  border-radius: 1px;
+}
+
+.faqIcon i:first-child { width: 12px; height: 2px; }
+.faqIcon i:last-child { width: 2px; height: 12px; }
+
+.faqItem[data-open] .faqIcon {
+  color: var(--blue);
+  border-color: var(--blue);
+  background: rgba(56, 189, 248, .1);
+}
+
+/* --------------------------------------------------------------------------
+   The answer
+   --------------------------------------------------------------------------
+   A `grid-template-rows` transition from 0fr to 1fr, so the height animates
+   without measuring anything and without clipping the text mid-transition.
+   -------------------------------------------------------------------------- */
 
 .faqPanel {
   display: grid;
@@ -113,32 +142,44 @@
 
 .faqPanelInner p {
   margin: 0;
-  padding: 0 clamp(13px, 1.2vw, 20px) clamp(12px, 1.1vw, 18px);
-  color: #a7b9c5;
-  font-size: clamp(12px, .92vw, 15px);
-  line-height: 1.5;
+  padding: 0 clamp(16px, 1.6vw, 24px) clamp(18px, 1.8vw, 24px);
+  max-width: 64ch;
+  color: var(--text-2);
+  font-size: var(--step-0);
+  line-height: 1.65;
 }
 
-/* --- tablet --- */
+/* --------------------------------------------------------------------------
+   Narrower viewports
+   -------------------------------------------------------------------------- */
 
-@media (max-width: 1100px) {
-  .faq { margin-left: 0; }
-}
-
-@media (max-width: 1023px) {
+@media (max-width: 960px) {
   .faqInner {
     grid-template-columns: minmax(0, 1fr);
-    gap: clamp(20px, 3vw, 32px);
+    gap: clamp(24px, 4vh, 36px);
   }
+
+  .faqHeader { margin-bottom: 0; }
 }
 
-/* --- mobile --- */
-
-@media (max-width: 767px) {
-  .faq { min-height: 0; }
-  .faqInner { padding: 58px 20px 54px; }
-  .faqHeader h2 { font-size: clamp(27px, 8.6vw, 38px); }
-  .faqHeader p { font-size: 15px; }
-  .faqQuestion button { font-size: 14px; }
-  .faqPanelInner p { font-size: 14px; }
+@media (prefers-reduced-motion: reduce) {
+  .faqItem,
+  .faqIcon { transition: none; }
 }
+
+/* The link to the canonical FAQ page. Centred under the accordion, in the
+   quiet register the section's supporting line already uses. */
+.faqMore {
+  margin: clamp(22px, 2.6vh, 34px) 0 0;
+  text-align: center;
+  font-size: var(--step-0);
+  color: var(--text-2);
+}
+
+.faqMore a {
+  color: var(--green);
+  border-bottom: 1px solid rgba(57, 255, 136, .3);
+  transition: border-color .2s;
+}
+
+.faqMore a:hover { border-bottom-color: currentColor; }

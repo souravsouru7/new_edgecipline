@@ -1,7 +1,9 @@
 "use client";
 
 import { useId, useState } from "react";
+import Link from "next/link";
 
+import { faqItems } from "@/data/faq";
 import { pricingFaqs } from "@/data/pricing";
 import styles from "./Pricing.module.css";
 
@@ -69,6 +71,14 @@ export function PricingFaq() {
             );
           })}
         </div>
+
+        {/* Six of these questions are about buying; the other twenty-one the
+            site answers are on /faq, which is the one page carrying FAQPage
+            schema. Linking rather than duplicating keeps a single canonical
+            answer per question. */}
+        <p className={css("ppFaqMore")}>
+          <Link href="/faq">All {faqItems.length} questions, answered in full</Link>
+        </p>
       </div>
     </section>
   );

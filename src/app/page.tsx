@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { EdgeciplineHero } from "@/components/EdgeciplineHero";
+import { steps } from "@/components/landing/HowItWorks";
 import {
   BRAND_ID,
   BRAND_NAME,
@@ -71,6 +72,34 @@ const homeGraph = {
         name: feature.title,
         description: feature.tagline,
         url: `${absoluteUrl("/features")}#${feature.id}`,
+      })),
+    },
+    /**
+     * The three-step process the page shows under "How It Works", in the
+     * machine-readable form.
+     *
+     * `HowTo` no longer produces a rich result in Google — that was retired in
+     * 2023 — so this is not here for a search appearance. It is here because
+     * "how does Edgecipline work" is one of the few questions an answer engine
+     * will actually be asked about a pre-launch product, and a `HowTo` with
+     * three named, ordered steps is the shape that answers it. Each step's
+     * text comes from the rendered component, so the two cannot diverge.
+     *
+     * No `totalTime`, no `estimatedCost`, no `supply`: the product is not
+     * launched and none of those are known.
+     */
+    {
+      "@type": "HowTo",
+      "@id": `${absoluteUrl("/")}#how-it-works`,
+      name: `How ${BRAND_NAME} works`,
+      description: "A simple process. A powerful shift.",
+      inLanguage: "en-IN",
+      step: steps.map((item, index) => ({
+        "@type": "HowToStep",
+        position: index + 1,
+        name: item.title,
+        text: item.description,
+        url: `${absoluteUrl("/")}#how-it-works`,
       })),
     },
   ],

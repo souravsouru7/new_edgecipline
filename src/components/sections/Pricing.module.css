@@ -1,132 +1,54 @@
 /* ==========================================================================
-   Section 08 — Pricing Plans (layout only)
+   Section 09 — Pricing Plans
+   --------------------------------------------------------------------------
+   Layout and skin only; the motion is in app/motion.css, and the shared
+   spine, type scale, rhythm and card surface are in app/sections.css.
+
    Class names are prefixed `pr`: CSS Modules are not scoped in this project.
+
+   What changed from the previous version:
+
+     * Everything in the card was set in viewport width and came out tiny: the
+       plan name at 12–15px, the feature rows at 11–15px, the CTA at 12–15px.
+       A price card is the densest reading on the page and had the smallest
+       type on it. All of it is on the shared scale now.
+     * The card had no internal structure — name, price, features and button
+       ran together in one column with the same spacing between each. There is
+       a rule under the price block now, so the card reads as "what it is,
+       what it costs" then "what you get" then "what to do".
+     * The CTA was an inline pill that stopped well short of the card's width.
+       It is the full width of the card, which is both a bigger target and the
+       obvious end of the card.
+     * At 1023px the featured plan became a full-width banner above the other
+       two, which made the comparison impossible to read. Three across, then
+       one down.
+     * Surface, border, radius and the featured card's green edge come from
+       the shared card definition, so the plans match the other card groups.
    ========================================================================== */
 
 .pr {
   position: relative;
-  min-height: clamp(460px, 34vw, 620px);
-  margin-left: clamp(210px, 13.3vw, 250px);
-  overflow: hidden;
   isolation: isolate;
-  /* No background and no edge-softening shadow: this section is transparent
-     over the page's one continuous background layer (app/backdrop.css). */
-}
-
-/* The landscape thins out here so the cards carry the section. */
-.prBackdrop {
-  position: absolute;
-  z-index: -2;
-  inset: -3%;
-  pointer-events: none;
-  opacity: .5;
-}
-
-.prBackdrop img {
-  object-fit: cover;
-  object-position: center 22%;
-}
-
-.prVeil {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse at 50% 42%, rgba(0, 245, 172, .07), transparent 54%),
-    linear-gradient(180deg, rgba(2, 11, 18, .78), rgba(2, 11, 18, .94) 42%, #020b12);
 }
 
 .prInner {
   position: relative;
   z-index: 1;
-  width: min(100%, 1480px);
-  min-height: inherit;
-  padding: clamp(42px, 4vw, 72px) clamp(28px, 3.6vw, 62px) clamp(46px, 4.4vw, 78px);
-  margin: 0 auto;
 }
 
-.prHeader {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: clamp(14px, 2vw, 30px);
-}
+.prHeader { max-width: 46ch; }
 
-.prHeader h2 {
-  margin: 0;
-  color: #f5faff;
-  font-size: clamp(28px, 2.7vw, 46px);
-  line-height: 1;
-  letter-spacing: -.05em;
-  font-weight: 850;
-}
-
-.prHeader h2 span { color: #31e6f1; }
-
-.prHeader p {
-  margin: clamp(8px, .8vw, 13px) 0 0;
-  color: #a7b9c5;
-  font-size: clamp(13px, 1.05vw, 17px);
-  font-weight: 500;
-}
-
-/* --- billing selector --- */
-
-.prBilling {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 4px;
-  border: 1px solid rgba(0, 229, 229, .2);
-  border-radius: 999px;
-  background: rgba(3, 24, 34, .8);
-}
-
-.prBillingOption {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  min-height: 34px;
-  padding: 0 16px;
-  color: #a7b9c5;
-  border: 0;
-  border-radius: 999px;
-  background: transparent;
-  font: inherit;
-  font-size: clamp(11px, .88vw, 14px);
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.prBillingOption[aria-disabled="true"] {
-  opacity: .45;
-  cursor: not-allowed;
-}
-
-.prBillingOption[data-active] {
-  color: #042018;
-  background: linear-gradient(180deg, #7cf7c4, #16d79a);
-  box-shadow: 0 0 18px rgba(0, 245, 172, .3);
-}
-
-.prBillingNote {
-  font-size: .86em;
-  font-weight: 800;
-  letter-spacing: .02em;
-  opacity: .9;
-}
-
-/* --- cards --- */
+/* --------------------------------------------------------------------------
+   The three plans
+   -------------------------------------------------------------------------- */
 
 .prCards {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   align-items: stretch;
-  gap: clamp(14px, 1.6vw, 28px);
+  gap: clamp(16px, 1.8vw, 26px);
   padding: 0;
-  margin: clamp(26px, 2.8vw, 46px) 0 0;
+  margin: 0;
   list-style: none;
 }
 
@@ -134,156 +56,179 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: clamp(20px, 1.9vw, 32px) clamp(18px, 1.7vw, 28px) clamp(18px, 1.7vw, 26px);
-  border: 1px solid rgba(0, 229, 229, .25);
-  border-radius: clamp(14px, 1.2vw, 20px);
-  background: rgba(3, 24, 34, .82);
-  box-shadow:
-    inset 0 1px 0 rgba(195, 255, 250, .07),
-    0 18px 44px rgba(0, 0, 0, .34);
+  padding: clamp(26px, 2.4vw, 36px) clamp(22px, 2vw, 30px) clamp(22px, 2vw, 30px);
 }
 
-.prCard[data-featured] {
-  border-color: rgba(0, 245, 172, .6);
-  background: linear-gradient(170deg, rgba(5, 42, 38, .88), rgba(3, 26, 30, .9));
-  box-shadow:
-    inset 0 1px 0 rgba(195, 255, 250, .1),
-    0 0 0 1px rgba(0, 245, 172, .12),
-    0 22px 54px rgba(0, 0, 0, .4);
-}
+/* The featured plan is lifted a little out of the row as well as outlined, so
+   the emphasis survives at a glance without a louder colour. */
+.prCard[data-featured] { margin-block: -8px; }
 
 .prBadge {
   position: absolute;
   top: 0;
   left: 50%;
-  padding: 4px 14px;
+  padding: 5px 15px;
   translate: -50% -50%;
-  color: #042018;
+  color: var(--on-green);
   border-radius: 999px;
-  background: linear-gradient(180deg, #8dffcd, #19dd9f);
-  box-shadow: 0 0 20px rgba(0, 245, 172, .4);
-  font-size: clamp(8px, .66vw, 11px);
-  font-weight: 850;
-  letter-spacing: .08em;
+  background: var(--green);
+  box-shadow: 0 0 20px rgba(57, 255, 136, calc(.35 * var(--mo-glow, 1)));
+  font-family: var(--font-mono);
+  font-size: .64rem;
+  font-weight: 500;
+  letter-spacing: .1em;
   text-transform: uppercase;
   white-space: nowrap;
 }
 
 .prName {
   margin: 0;
-  color: #d8e8ec;
-  font-size: clamp(12px, .95vw, 15px);
-  letter-spacing: .01em;
-  font-weight: 800;
+  color: var(--text-2);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
 }
 
-.prCard[data-featured] .prName { color: #9affd8; }
+.prCard[data-featured] .prName { color: var(--green); }
+
+/* --------------------------------------------------------------------------
+   The price block
+   --------------------------------------------------------------------------
+   Closed with a rule, which is what divides "what it costs" from "what you
+   get". The amount is the largest thing in the card; the term is a quiet mono
+   note beside it, because the three plans differ by term and that difference
+   has to be readable at a glance.
+   -------------------------------------------------------------------------- */
 
 .prPrice {
   display: flex;
   align-items: baseline;
-  gap: 7px;
-  margin: clamp(6px, .6vw, 11px) 0 0;
+  gap: 8px;
+  padding-bottom: clamp(16px, 1.8vw, 24px);
+  margin: clamp(10px, 1vw, 14px) 0 0;
+  border-bottom: 1px solid var(--border);
 }
 
 .prAmount {
-  color: #31e6f1;
-  font-size: clamp(26px, 2.3vw, 40px);
-  line-height: 1.05;
-  letter-spacing: -.045em;
-  font-weight: 850;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: var(--step-3);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -.04em;
+  font-variant-numeric: tabular-nums;
 }
 
-.prCard[data-featured] .prAmount { color: #00f5ac; }
+.prCard[data-featured] .prAmount { color: var(--green); }
 
 .prPeriod {
-  color: #a7b9c5;
-  font-size: clamp(12px, .95vw, 16px);
-  font-weight: 600;
+  color: var(--text-3);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: .04em;
 }
 
-/* One price per billing mode is rendered; the section's data-billing picks. */
-.prPriceFor { display: none; }
-.pr[data-billing="monthly"] .prPriceFor[data-mode="monthly"],
-.pr[data-billing="yearly"] .prPriceFor[data-mode="yearly"] { display: flex; }
+/* --------------------------------------------------------------------------
+   What you get
+   -------------------------------------------------------------------------- */
 
 .prFeatures {
   display: grid;
-  gap: clamp(5px, .5vw, 9px);
+  gap: clamp(9px, .9vw, 13px);
   padding: 0;
-  margin: clamp(14px, 1.4vw, 24px) 0 clamp(16px, 1.6vw, 26px);
+  margin: clamp(18px, 1.8vw, 26px) 0 clamp(24px, 2.4vw, 34px);
   list-style: none;
 }
 
 .prFeatures li {
   display: flex;
   align-items: flex-start;
-  gap: 9px;
-  color: #cfe0e4;
-  font-size: clamp(11px, .92vw, 15px);
-  line-height: 1.3;
+  gap: 10px;
+  color: var(--text-2);
+  font-size: var(--step-0);
+  line-height: 1.45;
 }
 
 .prFeatures svg {
   flex: none;
-  margin-top: .1em;
-  color: #00f5ac;
+  margin-top: .25em;
+  color: var(--green);
 }
+
+/* --------------------------------------------------------------------------
+   The action
+   --------------------------------------------------------------------------
+   Full width, bottom of the card, 48px tall. Every one of the three joins the
+   same waitlist; the featured plan's button is filled and the other two are
+   outlined, which is the same primary/secondary pair the rest of the site uses.
+   -------------------------------------------------------------------------- */
 
 .prCta {
   display: inline-flex;
-  min-height: clamp(38px, 3.1vw, 48px);
+  min-height: 48px;
   align-items: center;
   justify-content: center;
   gap: 10px;
+  width: 100%;
   margin-top: auto;
   padding: 0 18px;
-  color: #eafcff;
-  border: 1px solid rgba(0, 229, 229, .4);
-  border-radius: 10px;
-  background: rgba(2, 18, 26, .7);
-  font-size: clamp(12px, .95vw, 15px);
-  font-weight: 800;
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: rgba(5, 9, 20, .6);
+  font-family: var(--font-display);
+  font-size: var(--step-0);
+  font-weight: 700;
+  letter-spacing: -.01em;
 }
 
 .prCard[data-featured] .prCta {
-  color: #042018;
+  color: var(--on-green);
   border-color: transparent;
-  background: linear-gradient(180deg, #8dffcd, #16d79a);
-  box-shadow: 0 0 24px rgba(0, 245, 172, .3);
+  background: var(--green);
+  box-shadow: 0 6px 24px rgba(57, 255, 136, .24);
 }
 
-.prCta span { font-size: 1.15em; line-height: 0; }
-
-/* --- tablet --- */
-
-@media (max-width: 1100px) {
-  .pr { margin-left: 0; }
+.prCta span {
+  font-size: 1.2em;
+  line-height: 0;
 }
 
-@media (max-width: 1023px) {
-  .prCards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  /* The featured plan keeps the full row rather than being squeezed. */
-  .prCard[data-featured] { grid-column: 1 / -1; order: -1; }
+/* --------------------------------------------------------------------------
+   The note
+   --------------------------------------------------------------------------
+   The line that distinguishes a price list from a checkout: none of the three
+   buttons takes a payment. Mono and muted, like the rest of the page's
+   metadata — it is a fact about the buttons, not a disclaimer to hide.
+   -------------------------------------------------------------------------- */
+
+.prNote {
+  max-width: 70ch;
+  margin: clamp(22px, 2.4vw, 34px) auto 0;
+  color: var(--text-3);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  text-align: center;
 }
 
-/* --- mobile --- */
+/* --------------------------------------------------------------------------
+   Narrower viewports
+   -------------------------------------------------------------------------- */
 
-@media (max-width: 767px) {
-  .pr { min-height: 0; }
-  .prInner { padding: 62px 20px 56px; }
-  .prHeader { align-items: flex-start; }
-  .prHeader h2 { font-size: clamp(27px, 8.6vw, 38px); }
-  .prHeader p { font-size: 15px; }
-
+@media (max-width: 860px) {
   .prCards {
-    grid-template-columns: 1fr;
-    gap: 22px;
-    margin-top: 28px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 26px;
   }
-  .prCard,
-  .prCard[data-featured] { grid-column: auto; order: 0; }
-  .prCard[data-featured] { order: -1; }
-  .prBadge { font-size: 9px; }
-  .prAmount { font-size: 32px; }
+
+  /* Stacked, the recommended plan goes first — it is the one most people
+     should be looking at — and stops being inset, because there is no row for
+     it to stand out of. */
+  .prCard[data-featured] {
+    order: -1;
+    margin-block: 0;
+  }
 }

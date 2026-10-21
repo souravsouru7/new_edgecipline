@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ChevronRight, Sparkles } from "lucide-react";
 
-import { MobileNav } from "@/components/MobileNav";
-import { SidebarNav } from "@/components/SidebarNav";
+import { Navbar } from "@/components/nav/Navbar";
+import { SiteFooter } from "@/components/SiteFooter";
 import { RevealObserver } from "@/components/motion/RevealObserver";
 import { PlanCards } from "@/components/pricing/PlanCards";
 import { PlanCompare } from "@/components/pricing/PlanCompare";
 import { PricingFaq } from "@/components/pricing/PricingFaq";
 import { WAITLIST_HREF } from "@/data/features";
-import { BRAND_NAME, OG_IMAGE_PATH, OG_IMAGE_SIZE, SOFTWARE_ID, WEBSITE_ID, absoluteUrl, jsonLd } from "@/data/brand";
+import { BRAND_NAME, SOFTWARE_ID, WEBSITE_ID, absoluteUrl, jsonLd } from "@/data/brand";
 import styles from "@/components/pricing/Pricing.module.css";
 
 const css = (name: string) => styles[name] || name;
@@ -18,26 +18,29 @@ const title = "Pricing — Edgecipline Plans & Early Access";
 const description =
   "Edgecipline pricing: Standard ₹349/month, Professional ₹899 for 3 months (~₹9.99/day), Ultimate ₹1,499 for 6 months (~₹8.33/day). Trading DNA, missions & streaks, and AI coaching for Forex and Indian markets. Join the waitlist for founding-member pricing.";
 
+  /* No `images` here on purpose: `opengraph-image.tsx` in this segment
+     generates the card, and an explicit `images` in metadata would override
+     the file convention and put the generic sitewide card back. Twitter has
+     no separate `twitter-image` because the crop is identical — 1200x630,
+     summary_large_image — and X falls back to og:image, so a second file
+     would be the same picture generated twice. */
 export const metadata: Metadata = {
-  title,
+  title: { absolute: title },
   description,
   alternates: { canonical: absoluteUrl("/pricing") },
-  robots: { index: true, follow: true },
   openGraph: {
     siteName: BRAND_NAME,
     title,
     description:
-      "Three plans from ₹349/month. One bad trade costs more than a year of Edgecipline. Join the waitlist for founding pricing.",
+      "See Edgecipline's published launch plans, starting at ₹349/month. The waitlist is free and no payment is collected today.",
     type: "website",
-              url: absoluteUrl("/pricing"),
-          images: [{ url: OG_IMAGE_PATH, ...OG_IMAGE_SIZE }],
+    url: absoluteUrl("/pricing"),
   },
   twitter: {
     card: "summary_large_image",
     title: "Edgecipline Pricing — From ₹349/month",
     description:
       "Standard ₹349/mo · Professional ₹899/3mo · Ultimate ₹1,499/6mo. Join the waitlist for founding pricing.",
-    images: [OG_IMAGE_PATH],
   },
 };
 
@@ -96,8 +99,7 @@ export default function PricingPage() {
       </a>
 
       <RevealObserver />
-      <SidebarNav />
-      <MobileNav />
+      <Navbar />
 
       <section className={css("ppHero")} aria-labelledby="pricing-title">
         <div className={css("ppHeroGlow")} aria-hidden="true" />
@@ -130,8 +132,7 @@ export default function PricingPage() {
             </h1>
 
             <p className={css("ppLede")} data-reveal style={{ ["--mo-delay" as string]: ".18s" }}>
-              One bad trade costs more than a year of Edgecipline. Choose the timeframe that fits
-              your journey.
+              Every plan includes the same features. Choose the billing term that fits you.
             </p>
           </div>
         </div>
@@ -153,12 +154,11 @@ export default function PricingPage() {
             </p>
 
             <h2 id="pricing-cta-title" data-reveal>
-              Founding pricing — only for early members.
+              Join the free early-access waitlist.
             </h2>
 
             <p data-reveal style={{ ["--mo-delay" as string]: ".1s" }}>
-              Join the waitlist before public launch to lock in the best pricing. No credit card
-              required.
+              Get launch and plan updates before public release. No credit card required.
             </p>
 
             <div
@@ -177,6 +177,7 @@ export default function PricingPage() {
           </div>
         </div>
       </section>
+      <SiteFooter />
     </div>
   );
 }
