@@ -20,7 +20,6 @@ const vars = (value: Record<string, string | number>) => value as CSSProperties;
 
 export function ChartStorySection() {
   return <section id="chart-story" className="chart-story" aria-labelledby="chart-story-title">
-    <div className="chart-mountain" aria-hidden="true" />
     {/* The chart is drawn as real SVG from the supplied editable artwork, so the
         price line can be stroked on and the candles can arrive left to right.
         The fit box reproduces the framing the flattened art had. */}

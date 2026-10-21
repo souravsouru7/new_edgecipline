@@ -9,7 +9,6 @@ const vars = (value: Record<string, string | number>) => value as CSSProperties;
 export function Faq() {
   return (
     <section id="faq" className={css("faq")} data-sequence aria-labelledby="faq-title">
-      <div className={css("faqGlow")} aria-hidden="true" />
 
       <div className={css("faqInner")}>
         <header className={css("faqHeader")}>

@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import Image from "next/image";
 import { PlayCircle } from "lucide-react";
 
+import { WaitlistForm } from "@/components/waitlist/WaitlistForm";
 import styles from "./FinalCta.module.css";
 
 const css = (name: string) => styles[name] || name;
@@ -22,14 +23,10 @@ const MOTES = [
 export function FinalCta() {
   return (
     <section id="waitlist" className={css("cta")} data-sequence aria-labelledby="cta-title">
-      <div className={css("ctaBackdrop")} aria-hidden="true">
-        <Image src="/loop/mountains.webp" alt="" fill sizes="100vw" />
-      </div>
       <div className={css("ctaMoon")} aria-hidden="true" />
       <div className={css("ctaFigure")} aria-hidden="true">
         <Image src="/hero/trader.webp" alt="" width={900} height={1350} sizes="(max-width: 767px) 20vw, 150px" />
       </div>
-      <div className={css("ctaVeil")} aria-hidden="true" />
       <div className={css("ctaMotes")} aria-hidden="true">
         {MOTES.map((mote) => (
           <span
@@ -55,15 +52,14 @@ export function FinalCta() {
           <p data-reveal style={vars({ "--mo-delay": ".12s" })}>
             Same markets. A better you.
           </p>
-          <div
-            className={css("ctaActions")}
-            data-magnet-group
-            data-reveal
-            style={vars({ "--mo-delay": ".2s" })}
-          >
-            <a className="waitlist" href="#waitlist" data-magnetic>
-              Join Waitlist <span aria-hidden="true">→</span>
-            </a>
+          {/* The real form, not a button linking back to this same anchor.
+              Every "Join Waitlist" link on the site points at #waitlist, so
+              this is where they all land. */}
+          <div className={css("ctaForm")} data-reveal style={vars({ "--mo-delay": ".2s" })}>
+            <WaitlistForm />
+          </div>
+
+          <div className={css("ctaActions")} data-magnet-group data-reveal style={vars({ "--mo-delay": ".26s" })}>
             <a className="demo" href="#demo" data-magnetic>
               Watch Demo
               <PlayCircle aria-hidden="true" size={18} />
@@ -71,7 +67,7 @@ export function FinalCta() {
           </div>
         </div>
 
-        <div className={css("ctaBrand")} data-reveal style={vars({ "--mo-delay": ".26s" })}>
+        <div className={css("ctaBrand")} data-reveal style={vars({ "--mo-delay": ".32s" })}>
           <Image src="/hero/logo.webp" alt="Edgecipline" width={440} height={330} sizes="200px" />
           <p className={css("ctaTagline")}>
             Trade Disciplined <span aria-hidden="true">·</span> Live Freer

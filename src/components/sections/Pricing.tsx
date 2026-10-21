@@ -1,5 +1,4 @@
 import type { CSSProperties } from "react";
-import Image from "next/image";
 import { Check } from "lucide-react";
 
 import { BillingToggle } from "./BillingToggle";
@@ -18,10 +17,6 @@ export function Pricing() {
       data-billing={DEFAULT_BILLING}
       aria-labelledby="pricing-title"
     >
-      <div className={css("prBackdrop")} aria-hidden="true">
-        <Image src="/chart-story/mountains.webp" alt="" fill sizes="100vw" />
-      </div>
-      <div className={css("prVeil")} aria-hidden="true" />
 
       <div className={css("prInner")}>
         <header className={css("prHeader")}>

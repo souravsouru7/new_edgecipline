@@ -1,5 +1,4 @@
 import type { CSSProperties } from "react";
-import Image from "next/image";
 import { Flame } from "lucide-react";
 
 import styles from "./WeeklyReflection.module.css";
@@ -32,10 +31,6 @@ export function WeeklyReflection() {
       data-sequence
       aria-labelledby="reflection-title"
     >
-      <div className={css("wrBackdrop")} aria-hidden="true">
-        <Image src="/loop/mountains.webp" alt="" fill sizes="100vw" />
-      </div>
-      <div className={css("wrVeil")} aria-hidden="true" />
 
       <div className={css("wrInner")}>
         <header className={css("wrHeader")}>

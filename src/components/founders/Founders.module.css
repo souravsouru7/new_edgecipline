@@ -1,0 +1,462 @@
+/* ==========================================================================
+   /founders and /founders/[slug]
+
+   CSS Modules are NOT scoped in this project (next.config.ts routes every
+   *.css through the Tailwind turbopack loader), so these names land in the
+   global stylesheet as written. Prefix: `fd`.
+
+   Two real people, two clear jobs. The design leans on that symmetry: the
+   index is a matched pair, and "The Split" states the division as two halves
+   of one rule rather than a list of bullets.
+   ========================================================================== */
+
+.fdPage {
+  --fd-ink: #02080e;
+  --fd-ink-2: #061723;
+  --fd-mint: #00efb5;
+  --fd-cyan: #23d8ff;
+  --fd-violet: #a18bff;
+  --fd-text: #eef8fb;
+  --fd-muted: #a9c0c7;
+  --fd-dim: #7f979e;
+  --fd-line: rgba(120, 220, 232, .16);
+  --fd-gutter: clamp(20px, 4.4vw, 76px);
+  --fd-max: 1200px;
+
+  position: relative;
+  min-height: 100svh;
+  background:
+    radial-gradient(ellipse at 50% -10%, #07303a 0%, rgba(2, 11, 16, 0) 50%),
+    linear-gradient(180deg, var(--fd-ink) 0%, var(--fd-ink-2) 46%, var(--fd-ink) 100%);
+  color: var(--fd-text);
+}
+
+.fdHero,
+.fdBody,
+.fdCta { margin-left: clamp(210px, 13.3vw, 250px); }
+
+.fdInner {
+  width: min(100%, var(--fd-max));
+  padding-inline: var(--fd-gutter);
+  margin-inline: auto;
+}
+
+.fdSkip {
+  position: absolute;
+  z-index: 40;
+  top: 10px;
+  left: 50%;
+  padding: 11px 18px;
+  color: #00231c;
+  border-radius: 10px;
+  background: var(--fd-mint);
+  font-size: 14px;
+  font-weight: 800;
+  translate: -50% -180%;
+  transition: translate .18s var(--mo-ease-out, ease);
+}
+
+.fdSkip:focus-visible { translate: -50% 0; }
+
+/* --------------------------------------------------------------------------
+   Shared chrome
+   -------------------------------------------------------------------------- */
+
+.fdHero { position: relative; overflow: clip; isolation: isolate; contain: layout paint; }
+
+.fdHeroGlow {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 24% 2%, rgba(0, 239, 181, .13), transparent 44%),
+    radial-gradient(ellipse at 84% 66%, rgba(161, 139, 255, .1), transparent 44%);
+}
+
+.fdHeroRule {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(0, 239, 181, .5), rgba(35, 216, 255, .18) 34%, transparent 72%);
+}
+
+.fdCrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  margin: 0 0 22px;
+  color: var(--fd-muted);
+  font-size: 13px;
+  font-weight: 600;
+  list-style: none;
+}
+
+.fdCrumbs a { border-bottom: 1px solid transparent; transition: color .2s, border-color .2s; }
+.fdCrumbs a:hover { color: var(--fd-mint); border-bottom-color: currentColor; }
+.fdCrumbs li[aria-current] { color: var(--fd-text); }
+.fdCrumbs svg { flex: none; opacity: .5; }
+
+.fdLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 14px 7px 11px;
+  margin: 0 0 clamp(16px, 1.8vw, 24px);
+  color: #c8fff0;
+  border: 1px solid rgba(0, 239, 181, .4);
+  border-radius: 999px;
+  background: rgba(0, 239, 181, .07);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.fdLabel i { width: 7px; height: 7px; border-radius: 50%; background: var(--fd-mint); box-shadow: 0 0 10px var(--fd-mint); }
+
+.fdHeroInner { padding-block: clamp(92px, 9vw, 148px) clamp(32px, 3.6vw, 52px); }
+
+.fdTitle {
+  max-width: 26ch;
+  margin: 0;
+  font-size: clamp(32px, 4.4vw, 62px);
+  line-height: 1;
+  letter-spacing: -.05em;
+  font-weight: 850;
+}
+
+.fdTitle em { font-style: normal; color: var(--fd-mint); }
+
+.fdLede { max-width: 62ch; margin: clamp(18px, 2vw, 26px) 0 0; color: #dbeaee; font-size: clamp(16px, 1.25vw, 20px); line-height: 1.55; font-weight: 500; }
+
+.fdStatement {
+  max-width: 76ch;
+  margin: clamp(18px, 2vw, 24px) 0 0;
+  padding-left: clamp(14px, 1.3vw, 20px);
+  border-left: 2px solid rgba(0, 239, 181, .45);
+  color: #c9dde1;
+  font-size: clamp(14px, 1.1vw, 16px);
+  line-height: 1.75;
+}
+
+.fdSection { padding-block: clamp(44px, 5vw, 80px); border-top: 1px solid rgba(120, 220, 232, .07); }
+.fdSection:first-child { border-top: 0; }
+
+.fdSectionHead { margin-bottom: clamp(20px, 2.4vw, 32px); }
+
+.fdEyebrow {
+  margin: 0 0 12px;
+  color: var(--fd-dim);
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+.fdSectionHead h2 { margin: 0; color: #fff; font-size: clamp(22px, 2.4vw, 34px); line-height: 1.08; letter-spacing: -.04em; font-weight: 800; }
+.fdSectionHead p { max-width: 70ch; margin: 13px 0 0; color: var(--fd-muted); font-size: clamp(14px, 1.1vw, 16.5px); line-height: 1.8; }
+.fdSectionHead p + p { margin-top: 12px; }
+
+/* --------------------------------------------------------------------------
+   The matched pair
+   -------------------------------------------------------------------------- */
+
+.fdPair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2vw, 28px); padding: 0; margin: 0; list-style: none; }
+
+.fdCard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: clamp(20px, 2.2vw, 30px);
+  border: 1px solid var(--fd-line);
+  border-radius: 24px;
+  background: linear-gradient(164deg, rgba(10, 42, 54, .42), rgba(3, 15, 23, .62));
+  transition: border-color .26s var(--mo-ease-soft, ease), transform .26s var(--mo-ease-soft, ease);
+}
+
+.fdCard:hover { border-color: rgba(0, 239, 181, .4); transform: translateY(-3px); }
+
+.fdPortrait {
+  position: relative;
+  width: clamp(84px, 9vw, 112px);
+  aspect-ratio: 1;
+  margin-bottom: clamp(16px, 1.8vw, 22px);
+  overflow: hidden;
+  border: 1px solid rgba(0, 239, 181, .3);
+  border-radius: 20px;
+  background: rgba(0, 239, 181, .06);
+}
+
+.fdPortrait img { width: 100%; height: 100%; object-fit: cover; }
+
+.fdCard h3 { margin: 0; color: #fff; font-size: clamp(20px, 2vw, 27px); line-height: 1.08; letter-spacing: -.04em; font-weight: 800; }
+.fdCard h3 a { transition: color .2s; }
+.fdCard h3 a:hover { color: var(--fd-mint); }
+
+.fdRole { margin: 8px 0 0; color: var(--fd-mint); font-size: clamp(12.5px, 1.05vw, 14.5px); line-height: 1.4; font-weight: 750; }
+.fdBio { margin: 13px 0 0; color: var(--fd-muted); font-size: 13.5px; line-height: 1.7; }
+
+.fdOwns { margin: clamp(16px, 1.8vw, 22px) 0 0; }
+.fdOwnsTitle { margin: 0 0 10px; color: #8fa8af; font-size: 10px; font-weight: 850; letter-spacing: .13em; text-transform: uppercase; }
+
+.fdList { display: grid; gap: 8px; padding: 0; margin: 0; list-style: none; }
+
+.fdList li {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  color: #dbebee;
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: 550;
+}
+
+.fdList svg { margin-top: 3px; color: var(--fd-mint); }
+
+.fdCardFoot { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-top: auto; padding-top: clamp(16px, 1.8vw, 22px); }
+
+.fdCardLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 40px;
+  color: #c9fff1;
+  font-size: 12.5px;
+  font-weight: 800;
+  border-bottom: 1px solid rgba(0, 239, 181, .4);
+  transition: color .2s, border-color .2s, gap .2s;
+}
+
+.fdCardLink:hover { color: #fff; border-color: var(--fd-mint); gap: 11px; }
+
+.fdQuiet {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 40px;
+  color: var(--fd-muted);
+  font-size: 12.5px;
+  font-weight: 650;
+  word-break: break-all;
+  transition: color .2s;
+}
+
+.fdQuiet:hover { color: #fff; }
+.fdQuiet svg { flex: none; opacity: .75; }
+
+/* --------------------------------------------------------------------------
+   The Split — two halves of one rule
+   -------------------------------------------------------------------------- */
+
+.fdSplit {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border: 1px solid var(--fd-line);
+  border-radius: 24px;
+  overflow: hidden;
+  background: linear-gradient(164deg, rgba(10, 42, 54, .36), rgba(3, 15, 23, .58));
+}
+
+.fdSplitHalf { padding: clamp(20px, 2.4vw, 32px); }
+.fdSplitHalf + .fdSplitHalf { border-left: 1px solid var(--fd-line); }
+
+/* Each half takes its own accent, so the division is visible at a glance. */
+.fdSplitHalf:first-child { box-shadow: inset 3px 0 0 var(--fd-mint); }
+.fdSplitHalf:last-child { box-shadow: inset 3px 0 0 var(--fd-violet); }
+
+.fdSplitHalf b { display: block; color: #fff; font-size: clamp(17px, 1.7vw, 23px); letter-spacing: -.035em; font-weight: 800; }
+.fdSplitDomain { display: block; margin-top: 9px; color: var(--fd-mint); font-size: 13px; font-weight: 750; }
+.fdSplitHalf:last-child .fdSplitDomain { color: #cbbcff; }
+
+.fdSplitScope {
+  display: block;
+  margin-top: 14px;
+  color: var(--fd-muted);
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.fdSplitNote { max-width: 72ch; margin: clamp(18px, 2vw, 26px) 0 0; color: var(--fd-muted); font-size: clamp(14px, 1.1vw, 16px); line-height: 1.8; }
+
+/* --------------------------------------------------------------------------
+   Founder FAQ (visible only — the schema lives on /faq)
+   -------------------------------------------------------------------------- */
+
+.fdFaq { display: grid; gap: 10px; padding: 0; margin: 0; list-style: none; }
+
+.fdFaqItem {
+  padding: clamp(16px, 1.8vw, 22px);
+  border: 1px solid var(--fd-line);
+  border-radius: 16px;
+  background: rgba(4, 20, 27, .5);
+}
+
+.fdFaqItem h3 { margin: 0; color: #fff; font-size: clamp(15px, 1.25vw, 17.5px); line-height: 1.25; letter-spacing: -.025em; font-weight: 800; }
+.fdFaqItem p { max-width: 80ch; margin: 10px 0 0; color: #c6d9dd; font-size: 14px; line-height: 1.75; }
+
+/* --------------------------------------------------------------------------
+   Profile page
+   -------------------------------------------------------------------------- */
+
+.fdProfileHero { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(20px, 3vw, 44px); align-items: center; padding-block: clamp(88px, 8.4vw, 130px) clamp(30px, 3.4vw, 48px); }
+
+.fdProfilePortrait {
+  position: relative;
+  width: clamp(112px, 14vw, 180px);
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 1px solid rgba(0, 239, 181, .3);
+  border-radius: 28px;
+  background: rgba(0, 239, 181, .06);
+  box-shadow: 0 22px 54px rgba(0, 0, 0, .36);
+}
+
+.fdProfilePortrait img { width: 100%; height: 100%; object-fit: cover; }
+
+.fdProfileName {
+  margin: 0;
+  font-size: clamp(34px, 4.6vw, 64px);
+  line-height: .98;
+  letter-spacing: -.055em;
+  font-weight: 850;
+}
+
+.fdProfileRole { margin: 12px 0 0; color: var(--fd-mint); font-size: clamp(14px, 1.3vw, 18px); line-height: 1.35; font-weight: 750; }
+.fdProfileOneLine { max-width: 60ch; margin: 14px 0 0; color: #dbeaee; font-size: clamp(14.5px, 1.15vw, 17px); line-height: 1.6; }
+
+.fdProfileLayout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 300px); gap: clamp(24px, 3.6vw, 60px); align-items: start; }
+
+.fdProse { min-width: 0; max-width: 72ch; }
+.fdProse h2 { margin: clamp(28px, 3vw, 42px) 0 0; color: #fff; font-size: clamp(19px, 1.8vw, 26px); line-height: 1.14; letter-spacing: -.035em; font-weight: 800; }
+.fdProse > h2:first-child { margin-top: 0; }
+.fdProse p { max-width: 72ch; margin: clamp(12px, 1.3vw, 16px) 0 0; color: #d2e4e8; font-size: clamp(14.5px, 1.1vw, 16.5px); line-height: 1.85; }
+
+.fdSide { display: grid; gap: clamp(12px, 1.5vw, 18px); }
+
+.fdSideCard {
+  padding: clamp(16px, 1.8vw, 24px);
+  border: 1px solid var(--fd-line);
+  border-radius: 20px;
+  background: linear-gradient(164deg, rgba(10, 42, 54, .38), rgba(3, 15, 23, .58));
+}
+
+.fdChips { display: flex; flex-wrap: wrap; gap: 7px; padding: 0; margin: 0; list-style: none; }
+
+.fdChips li {
+  padding: 7px 11px;
+  color: #d7ecef;
+  border: 1px solid rgba(120, 220, 232, .2);
+  border-radius: 9px;
+  background: rgba(6, 26, 34, .6);
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.fdContactRows { display: grid; gap: 7px; }
+
+/* The "other co-founder" hand-off at the foot of a profile. */
+.fdOther {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: clamp(16px, 2vw, 26px);
+  align-items: center;
+  padding: clamp(18px, 2.2vw, 28px);
+  margin-top: clamp(34px, 4vw, 56px);
+  border: 1px solid rgba(0, 239, 181, .22);
+  border-radius: 22px;
+  background: linear-gradient(150deg, rgba(0, 239, 181, .08), rgba(3, 17, 24, .62));
+}
+
+.fdOtherPortrait {
+  width: clamp(60px, 6vw, 80px);
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 1px solid rgba(0, 239, 181, .28);
+  border-radius: 16px;
+}
+
+.fdOtherPortrait img { width: 100%; height: 100%; object-fit: cover; }
+.fdOther p { margin: 0; color: var(--fd-muted); font-size: 13.5px; line-height: 1.7; }
+.fdOther p strong { color: #fff; font-weight: 750; }
+.fdOtherLinks { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 12px; }
+
+/* --------------------------------------------------------------------------
+   Closing CTA
+   -------------------------------------------------------------------------- */
+
+.fdCta {
+  position: relative;
+  overflow: clip;
+  isolation: isolate;
+  margin-top: clamp(50px, 6vw, 92px);
+  border-top: 1px solid var(--fd-line);
+  contain: layout paint;
+}
+
+.fdCtaGlow {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 114%, rgba(0, 239, 181, .2), transparent 56%),
+    radial-gradient(ellipse at 14% 8%, rgba(161, 139, 255, .1), transparent 44%);
+}
+
+.fdCtaInner { display: grid; justify-items: center; padding-block: clamp(58px, 6.6vw, 104px); text-align: center; }
+
+.fdCtaInner h2 {
+  max-width: 24ch;
+  margin: clamp(14px, 1.6vw, 20px) 0 0;
+  font-size: clamp(30px, 4.2vw, 56px);
+  line-height: 1;
+  letter-spacing: -.055em;
+  font-weight: 850;
+}
+
+.fdCtaInner > p { max-width: 54ch; margin: clamp(16px, 1.8vw, 22px) 0 0; color: #d4e5e9; font-size: clamp(15px, 1.25vw, 19px); line-height: 1.5; }
+.fdCtaActions { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: clamp(24px, 2.6vw, 34px); }
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1100px) {
+  .fdHero, .fdBody, .fdCta { margin-left: 0; }
+}
+
+@media (max-width: 1023px) {
+  .fdProfileLayout { grid-template-columns: minmax(0, 1fr); }
+  .fdSide { order: 2; }
+  .fdProse { max-width: none; }
+}
+
+@media (max-width: 767px) {
+  .fdPair { grid-template-columns: minmax(0, 1fr); }
+  .fdSplit { grid-template-columns: minmax(0, 1fr); }
+  .fdSplitHalf + .fdSplitHalf { border-left: 0; border-top: 1px solid var(--fd-line); }
+  .fdProfileHero { grid-template-columns: minmax(0, 1fr); }
+  .fdOther { grid-template-columns: minmax(0, 1fr); }
+  .fdTitle { max-width: none; }
+}
+
+@media (max-width: 420px) {
+  .fdCtaActions { flex-direction: column; align-items: stretch; width: 100%; }
+  .fdCtaActions .waitlist, .fdCtaActions .demo { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fdCard, .fdCardLink { transition: none; }
+  .fdCard:hover { transform: none; }
+  .fdCardLink:hover { gap: 7px; }
+  .fdSkip { transition: none; }
+}

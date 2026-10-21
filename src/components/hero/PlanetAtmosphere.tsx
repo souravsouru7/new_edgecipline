@@ -3,13 +3,12 @@ import type { CSSProperties } from "react";
 /**
  * The living layer around the hero planet.
  *
- * `globe.webp` is a single flattened image, so nothing here claims to animate
- * the DNA spiral's individual strands. Instead:
+ * The planet itself is drawn on a canvas (GlobeCanvas); these are the CSS
+ * layers around it, kept in CSS because they composite and cost no frames:
  *
  *  - `.globe-aura` is a pulsing atmospheric glow behind the planet;
- *  - `.globe-sheen` is a slow cyan/purple light sweep that uses the artwork's
- *    own alpha channel as a CSS mask, so the light travels across exactly the
- *    planet and spiral shapes and nothing else;
+ *  - `.globe-sheen` is a slow cyan/purple light sweep, masked to a circle that
+ *    matches the drawn sphere so the light travels across the planet only;
  *  - `.globe-motes` are a fixed, deliberately small set of floating particles.
  *
  * Positions are hard-coded rather than random so the server and client markup

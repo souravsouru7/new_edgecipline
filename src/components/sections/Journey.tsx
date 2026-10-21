@@ -1,5 +1,4 @@
 import type { CSSProperties } from "react";
-import Image from "next/image";
 import { BarChart3, Eye, Flag, Sparkles, type LucideIcon } from "lucide-react";
 
 import {
@@ -36,10 +35,6 @@ const STEM_TOP = PIN_RISE - 24;
 export function Journey() {
   return (
     <section id="journey" className={css("jy")} data-sequence aria-labelledby="journey-title">
-      <div className={css("jyBackdrop")} aria-hidden="true">
-        <Image src="/images/how-it-works/background-scene.webp" alt="" fill sizes="100vw" />
-      </div>
-      <div className={css("jyVeil")} aria-hidden="true" />
 
       <div className={css("jyInner")}>
         <header className={css("jyHeader")}>

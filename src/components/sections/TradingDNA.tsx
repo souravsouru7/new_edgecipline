@@ -1,5 +1,4 @@
 import type { CSSProperties } from "react";
-import Image from "next/image";
 
 import { DnaFeatureIcon, type DnaIconName } from "./DnaFeatureIcon";
 import { DnaHelix } from "./DnaHelix";
@@ -31,16 +30,6 @@ export function TradingDNA() {
       data-sequence
       aria-labelledby="trading-dna-title"
     >
-      <div className={css("dnaBackdrop")} aria-hidden="true">
-        <Image
-          src="/images/trading-dna/particle-background.webp"
-          alt=""
-          fill
-          sizes="100vw"
-        />
-      </div>
-      <div className={css("dnaVeil")} aria-hidden="true" />
-
       <div className={css("dnaInner")}>
         <div className={css("dnaLead")}>
           <header className={css("dnaHeader")}>

@@ -12,10 +12,8 @@
   margin-left: clamp(210px, 13.3vw, 250px);
   overflow: hidden;
   isolation: isolate;
-  background: #020b12;
-  box-shadow:
-    inset 0 44px 72px -14px #020b10,
-    inset 0 -44px 72px -14px #020b10;
+  /* No background and no edge-softening shadow: this section is transparent
+     over the page's one continuous background layer (app/backdrop.css). */
 }
 
 .wrBackdrop {

@@ -1,0 +1,547 @@
+/* ==========================================================================
+   /about — the company story
+
+   CSS Modules are NOT scoped in this project (next.config.ts routes every
+   *.css through the Tailwind turbopack loader), so these names land in the
+   global stylesheet as written. Prefix: `ab`.
+
+   This page is deliberately the quietest of the three: no artwork, no demos,
+   one accent colour and a lot of measure. It is a reading page, so the design
+   work went into rhythm and type rather than surfaces.
+
+   Motion is the page-wide `data-reveal` system only. The page ships zero
+   client JavaScript of its own.
+   ========================================================================== */
+
+.abPage {
+  --ab-ink: #02080e;
+  --ab-ink-2: #061723;
+  --ab-mint: #00efb5;
+  --ab-cyan: #23d8ff;
+  --ab-text: #eef8fb;
+  --ab-muted: #a9c0c7;
+  --ab-dim: #7f979e;
+  --ab-line: rgba(120, 220, 232, .16);
+  --ab-gutter: clamp(20px, 4.4vw, 76px);
+  --ab-max: 1180px;
+
+  position: relative;
+  min-height: 100svh;
+  background:
+    radial-gradient(ellipse at 50% -10%, #07303a 0%, rgba(2, 11, 16, 0) 52%),
+    linear-gradient(180deg, var(--ab-ink) 0%, var(--ab-ink-2) 46%, var(--ab-ink) 100%);
+  color: var(--ab-text);
+}
+
+.abHero,
+.abBody,
+.abCta { margin-left: clamp(210px, 13.3vw, 250px); }
+
+.abInner {
+  width: min(100%, var(--ab-max));
+  padding-inline: var(--ab-gutter);
+  margin-inline: auto;
+}
+
+/** A narrower measure for the reading passages. */
+.abProse { width: min(100%, 760px); }
+
+.abSkip {
+  position: absolute;
+  z-index: 40;
+  top: 10px;
+  left: 50%;
+  padding: 11px 18px;
+  color: #00231c;
+  border-radius: 10px;
+  background: var(--ab-mint);
+  font-size: 14px;
+  font-weight: 800;
+  translate: -50% -180%;
+  transition: translate .18s var(--mo-ease-out, ease);
+}
+
+.abSkip:focus-visible { translate: -50% 0; }
+
+.abEyebrow {
+  margin: 0 0 14px;
+  color: var(--ab-dim);
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   Hero
+   -------------------------------------------------------------------------- */
+
+.abHero { position: relative; overflow: clip; isolation: isolate; contain: layout paint; }
+
+.abHeroGlow {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 24% 6%, rgba(0, 239, 181, .14), transparent 44%),
+    radial-gradient(ellipse at 86% 64%, rgba(35, 216, 255, .08), transparent 44%);
+}
+
+/* A single hairline that runs the width of the hero and stops — the page's
+   one piece of ornament. */
+.abHeroRule {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(0, 239, 181, .5), rgba(35, 216, 255, .18) 34%, transparent 72%);
+}
+
+.abHeroInner { padding-block: clamp(92px, 9vw, 150px) clamp(40px, 4.6vw, 70px); }
+
+.abCrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  margin: 0 0 22px;
+  color: var(--ab-muted);
+  font-size: 13px;
+  font-weight: 600;
+  list-style: none;
+}
+
+.abCrumbs a { border-bottom: 1px solid transparent; transition: color .2s, border-color .2s; }
+.abCrumbs a:hover { color: var(--ab-mint); border-bottom-color: currentColor; }
+.abCrumbs li[aria-current] { color: var(--ab-text); }
+.abCrumbs svg { flex: none; opacity: .5; }
+
+.abTitle {
+  max-width: 18ch;
+  margin: 0;
+  font-size: clamp(38px, 5.4vw, 76px);
+  line-height: .95;
+  letter-spacing: -.055em;
+  font-weight: 850;
+}
+
+.abTitle span { display: block; }
+
+.abLede {
+  max-width: 60ch;
+  margin: clamp(20px, 2.2vw, 28px) 0 0;
+  color: #dbeaee;
+  font-size: clamp(16px, 1.3vw, 21px);
+  line-height: 1.55;
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   Mission / Vision
+   -------------------------------------------------------------------------- */
+
+.abSection { padding-block: clamp(56px, 6.4vw, 104px); border-top: 1px solid rgba(120, 220, 232, .07); }
+.abSection:first-child { border-top: 0; }
+
+.abPillars { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(32px, 5vw, 76px); }
+
+.abPillar h2 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(24px, 2.6vw, 38px);
+  line-height: 1.08;
+  letter-spacing: -.045em;
+  font-weight: 800;
+}
+
+.abPillar h2 em { font-style: normal; color: var(--ab-mint); }
+
+.abPillar p {
+  max-width: 54ch;
+  margin: clamp(14px, 1.6vw, 20px) 0 0;
+  color: var(--ab-muted);
+  font-size: clamp(14px, 1.08vw, 16px);
+  line-height: 1.8;
+}
+
+/* --------------------------------------------------------------------------
+   The founder story
+   -------------------------------------------------------------------------- */
+
+.abStoryHead { display: grid; justify-items: center; text-align: center; }
+
+.abQuote {
+  position: relative;
+  padding: clamp(30px, 3.4vw, 54px) clamp(22px, 3vw, 54px);
+  margin: clamp(22px, 2.4vw, 34px) auto 0;
+  border: 1px solid var(--ab-line);
+  border-radius: 26px;
+  background: linear-gradient(166deg, rgba(10, 42, 54, .42), rgba(3, 15, 23, .62));
+  box-shadow: inset 0 1px 0 rgba(210, 255, 252, .06);
+}
+
+/* An oversized quote mark, set as a decorative glyph behind the text. */
+.abQuote::before {
+  content: "\201C";
+  position: absolute;
+  top: clamp(-6px, -0.4vw, 2px);
+  left: clamp(14px, 2vw, 34px);
+  color: rgba(0, 239, 181, .16);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(110px, 12vw, 190px);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.abQuote blockquote { position: relative; margin: 0; }
+
+.abQuote p {
+  max-width: 68ch;
+  margin: 0 0 clamp(16px, 1.8vw, 24px);
+  color: #dcecef;
+  font-size: clamp(15px, 1.2vw, 18px);
+  line-height: 1.85;
+}
+
+/* The last line is the turn in the story, so it is the one in full white. */
+.abQuote p:last-of-type { margin-bottom: 0; color: #f2fbfc; }
+
+.abAttribution {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding-top: clamp(22px, 2.4vw, 32px);
+  margin-top: clamp(22px, 2.4vw, 32px);
+  border-top: 1px solid rgba(120, 220, 232, .1);
+}
+
+.abAvatar {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  flex: none;
+  place-items: center;
+  color: var(--ab-mint);
+  border: 1px solid rgba(0, 239, 181, .32);
+  border-radius: 50%;
+  background: rgba(0, 239, 181, .08);
+  font-size: 15px;
+  font-weight: 850;
+}
+
+.abAttribution b { display: block; color: #fff; font-size: 13.5px; font-weight: 750; }
+
+.abAttribution span {
+  display: block;
+  margin-top: 3px;
+  color: var(--ab-dim);
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.abFounding {
+  max-width: 70ch;
+  margin: clamp(26px, 3vw, 40px) auto 0;
+  color: var(--ab-muted);
+  font-size: clamp(14px, 1.08vw, 16px);
+  line-height: 1.8;
+  text-align: center;
+}
+
+.abFoundingLink {
+  color: var(--ab-mint);
+  border-bottom: 1px solid transparent;
+  transition: border-color .2s ease;
+}
+
+.abFoundingLink:hover { border-bottom-color: currentColor; }
+
+.abMeet { margin: clamp(18px, 2vw, 26px) 0 0; text-align: center; }
+
+.abMeet a {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 46px;
+  padding: 0 20px;
+  color: #d7eef1;
+  border: 1px solid var(--ab-line);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 750;
+  transition: color .22s, border-color .22s, background .22s, gap .22s;
+}
+
+.abMeet a:hover {
+  color: #fff;
+  border-color: rgba(0, 239, 181, .5);
+  background: rgba(0, 239, 181, .07);
+  gap: 13px;
+}
+
+/* --------------------------------------------------------------------------
+   Timeline
+   -------------------------------------------------------------------------- */
+
+.abTimeline { position: relative; padding: 0; margin: clamp(22px, 2.6vw, 38px) 0 0; list-style: none; }
+
+/* The rail is drawn on the list, not per item, so it is one continuous line
+   that fades out at the end rather than stopping dead under the last node. */
+.abTimeline::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  bottom: 0;
+  left: 7px;
+  width: 1px;
+  background: linear-gradient(180deg, var(--ab-mint), rgba(35, 216, 255, .4) 42%, transparent);
+}
+
+.abMilestone {
+  position: relative;
+  padding: 0 0 clamp(26px, 3vw, 42px) clamp(28px, 3vw, 44px);
+}
+
+.abMilestone:last-child { padding-bottom: 0; }
+
+.abMilestone::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 0;
+  width: 15px;
+  height: 15px;
+  border: 1px solid rgba(0, 239, 181, .5);
+  border-radius: 50%;
+  background: #04131a;
+}
+
+.abMilestone::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 4px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: linear-gradient(140deg, var(--ab-mint), var(--ab-cyan));
+}
+
+/* The last node is the one that has not happened yet, so it reads as hollow. */
+.abMilestone:last-child::after { background: none; box-shadow: inset 0 0 0 1px rgba(0, 239, 181, .55); }
+
+.abMilestoneHead { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; margin: 0; }
+
+.abYear {
+  color: var(--ab-mint);
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  font-variant-numeric: tabular-nums;
+}
+
+.abMilestone h3 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(17px, 1.6vw, 23px);
+  line-height: 1.1;
+  letter-spacing: -.035em;
+  font-weight: 800;
+}
+
+.abMilestone p {
+  max-width: 62ch;
+  margin: 9px 0 0;
+  color: var(--ab-muted);
+  font-size: clamp(13.5px, 1.05vw, 15.5px);
+  line-height: 1.75;
+}
+
+/* --------------------------------------------------------------------------
+   Philosophy
+   -------------------------------------------------------------------------- */
+
+.abBeliefs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(12px, 1.4vw, 20px);
+  padding: 0;
+  margin: clamp(22px, 2.6vw, 36px) 0 0;
+  list-style: none;
+}
+
+.abBelief {
+  padding: clamp(18px, 2vw, 26px);
+  border: 1px solid var(--ab-line);
+  border-radius: 20px;
+  background: linear-gradient(162deg, rgba(10, 42, 54, .4), rgba(3, 15, 23, .6));
+  transition: border-color .26s var(--mo-ease-soft, ease), transform .26s var(--mo-ease-soft, ease);
+}
+
+.abBelief:hover { border-color: rgba(0, 239, 181, .4); transform: translateY(-3px); }
+
+.abBeliefIcon {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  margin-bottom: 15px;
+  color: var(--ab-mint);
+  border: 1px solid rgba(0, 239, 181, .28);
+  border-radius: 11px;
+  background: rgba(0, 239, 181, .07);
+}
+
+.abBelief h3 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(15px, 1.25vw, 17.5px);
+  line-height: 1.2;
+  letter-spacing: -.025em;
+  font-weight: 800;
+}
+
+.abBelief p { margin: 9px 0 0; color: var(--ab-muted); font-size: 13.5px; line-height: 1.7; }
+
+/* --------------------------------------------------------------------------
+   Launch status
+   -------------------------------------------------------------------------- */
+
+.abStatus {
+  display: grid;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+  gap: clamp(20px, 3vw, 52px);
+  align-items: center;
+  padding: clamp(24px, 2.8vw, 40px);
+  border: 1px solid rgba(0, 239, 181, .24);
+  border-radius: 24px;
+  background: linear-gradient(150deg, rgba(0, 239, 181, .09), rgba(3, 17, 24, .66));
+}
+
+.abStatusState { display: grid; gap: 10px; }
+
+.abLive {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #b9ffe9;
+  font-size: clamp(15px, 1.35vw, 19px);
+  font-weight: 800;
+  letter-spacing: -.02em;
+  white-space: nowrap;
+}
+
+.abLive i {
+  width: 9px;
+  height: 9px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--ab-mint);
+  animation: ab-live 2.8s ease-in-out infinite;
+}
+
+@keyframes ab-live {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 239, 181, .5); }
+  50% { box-shadow: 0 0 0 7px rgba(0, 239, 181, 0); }
+}
+
+.abStatus p { max-width: 62ch; margin: 0; color: #d4e5e9; font-size: clamp(14px, 1.1vw, 16.5px); line-height: 1.75; }
+
+/* --------------------------------------------------------------------------
+   Closing CTA
+   -------------------------------------------------------------------------- */
+
+.abCta {
+  position: relative;
+  overflow: clip;
+  isolation: isolate;
+  margin-top: clamp(50px, 6vw, 92px);
+  border-top: 1px solid var(--ab-line);
+  contain: layout paint;
+}
+
+.abCtaGlow {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 114%, rgba(0, 239, 181, .2), transparent 56%),
+    radial-gradient(ellipse at 14% 8%, rgba(161, 139, 255, .1), transparent 44%);
+}
+
+.abCtaInner { display: grid; justify-items: center; padding-block: clamp(62px, 7vw, 112px); text-align: center; }
+
+.abLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 14px 7px 11px;
+  margin: 0;
+  color: #c8fff0;
+  border: 1px solid rgba(0, 239, 181, .4);
+  border-radius: 999px;
+  background: rgba(0, 239, 181, .07);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.abLabel i { width: 7px; height: 7px; border-radius: 50%; background: var(--ab-mint); box-shadow: 0 0 10px var(--ab-mint); }
+
+.abCtaInner h2 {
+  max-width: 22ch;
+  margin: clamp(14px, 1.6vw, 20px) 0 0;
+  font-size: clamp(32px, 4.4vw, 60px);
+  line-height: .99;
+  letter-spacing: -.055em;
+  font-weight: 850;
+}
+
+.abCtaInner > p { max-width: 54ch; margin: clamp(16px, 1.8vw, 22px) 0 0; color: #d4e5e9; font-size: clamp(15px, 1.25vw, 19px); line-height: 1.5; }
+
+.abCtaActions { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: clamp(24px, 2.6vw, 34px); }
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1100px) {
+  .abHero, .abBody, .abCta { margin-left: 0; }
+}
+
+@media (max-width: 1023px) {
+  .abPillars { grid-template-columns: minmax(0, 1fr); gap: clamp(30px, 5vw, 48px); }
+  .abBeliefs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 767px) {
+  .abTitle { max-width: none; }
+  .abMeet { text-align: left; }
+  .abBeliefs { grid-template-columns: minmax(0, 1fr); }
+  .abStatus { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .abQuote { border-radius: 20px; }
+  .abFounding, .abStoryHead { text-align: left; justify-items: start; }
+}
+
+@media (max-width: 420px) {
+  .abCtaActions { flex-direction: column; align-items: stretch; width: 100%; }
+  .abCtaActions .waitlist, .abCtaActions .demo { width: 100%; }
+  .abLive { white-space: normal; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .abBelief, .abMeet a, .abFoundingLink { transition: none; }
+  .abBelief:hover { transform: none; }
+  .abLive i { animation: none; }
+  .abSkip { transition: none; }
+}

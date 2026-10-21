@@ -1,8 +1,105 @@
 # Edgecipline motion system
 
-The five existing sections keep their layout, copy, colours and imagery. This
-document describes the motion layer that was added on top: what each section
-does, where it lives, and which knob to turn to make it stronger or quieter.
+The sections keep their layout, copy and colours. This document describes the
+motion layer on top: how the page is assembled, what each section does, where
+it lives, and which knob to turn to make it stronger or quieter.
+
+## The stage
+
+The landing page is **one pinned frame**. `.stage-pin` is held still in the
+viewport while the document scrolls past `.stage`, and all eleven sections are
+panels of that frame: each one's content cross-fades in, holds, and
+cross-fades out again, so a section arrives and leaves rather than scrolling
+by.
+
+*Files: `src/components/landing/Stage.tsx`, `src/components/motion/StageMotion.tsx`,
+`src/app/stage.css`.*
+
+- **Nothing is timed.** Every value is a function of `--stage-p`, which
+  StageMotion publishes: 0 the instant the pin takes hold, 1 the instant
+  before it lets go. The sequence therefore reverses exactly on the way up and
+  cannot drift out of step with the scrollbar.
+- **No scroll hijacking.** There is no wheel handler, no scroll locking and no
+  snapping anywhere on the page. The only JavaScript that moves the document
+  is the two cases below, and both are responses to a deliberate action.
+- **The release is free.** The pinned child is exactly one viewport tall, so
+  the pin takes hold when the stage's top reaches the top of the viewport and
+  lets go when its bottom reaches the bottom — the same window `--stage-p`
+  measures. The last panel is still at full opacity when the sticky box runs
+  out of travel and simply scrolls away with the stage.
+- **The crossfade** is `--stage-reach` and `--stage-ramp`, and the pair is
+  worth understanding before changing either. A panel is fully opaque within
+  `reach - ramp` of the frame and gone beyond `reach`. Much above .5 and two
+  sections are legible at once, which reads as a double exposure; at or below
+  .5 they never overlap and the page dips to the bare background between every
+  section. The shipped values leave each at about a third of full opacity as
+  they pass, and give every section a stretch either side where it is the only
+  thing on screen.
+- **Per-panel progress.** StageMotion also writes each panel's own
+  `--mo-progress`, 0 one step before it reaches the frame, .5 in it, 1 one
+  step after. That is the same 0..1 a section used to get from `SceneMotion`
+  as it travelled up the page, so every section's existing motion works
+  unchanged. (The hero was written against the other mapping, where 0 is "at
+  rest, on screen", and re-derives its own `--mo-p` from this one.)
+- **Entrance replay.** `data-inview` is set once by RevealObserver, the first
+  time an element is seen — and in a pinned frame every panel is technically
+  on screen from the start. While pinned the stage owns that flag instead: a
+  panel's reveals are set when it takes the frame and cleared when it leaves,
+  so each section plays its own entrance every time it comes round, in both
+  directions.
+- **In-page links.** Inside the pin every panel sits at the same place, so
+  `#waitlist` has no scroll position of its own. A click on a link pointing
+  into a panel becomes a scroll to that panel's place on the stage.
+- **Focus.** Tabbing can reach a form or a link in a panel that is not in the
+  frame. Rather than making those panels `inert` — which would take their text
+  out of the accessibility tree, and the point is that every section stays
+  readable — the stage jumps to the panel that owns the focus.
+- **The progress rail** is a section index down the right-hand edge: a line at
+  `scaleY(--stage-p)`, so it tracks the scrollbar rather than approximating
+  it, and one number per section, the one in the frame lit. The links are
+  real, so it doubles as a way to jump straight to a section.
+- **Where it does not pin.** `(min-width: 1101px) and (min-height: 680px)`,
+  and never under `prefers-reduced-motion: reduce`. The width is the sidebar's
+  own breakpoint, not an arbitrary "desktop": below it the sidebar is replaced
+  by the mobile header, which is not part of the frame and would scroll out of
+  reach. Outside that the page is an ordinary scrolling column — but the
+  sections still arrive and leave, with the same fade tied to each section's
+  travel through the viewport instead of to a frame. With JavaScript off,
+  nothing applies at all and every word of every section is simply visible.
+
+## One continuous background
+
+The landing page has exactly one background, and no section paints its own.
+
+*Files: `src/components/PageSky.tsx`, `src/app/backdrop.css`.*
+
+`PageSky` renders a fixed layer behind the whole document, carrying what used
+to be the hero's background: the deep ink gradient, `/hero/landscape.webp`,
+the turquoise aura and the left-to-right legibility scrim. `backdrop.css`
+holds that layer plus the subtractions — every section is transparent now, and
+the section colours and the inset "scene fade" shadows that used to hide the
+seams between them are gone.
+
+The sections' own photographs are still here, but as **scenes of that one
+layer** rather than nine opaque panels: each dissolves in over the landscape
+as its section takes the frame and out again behind the next one, so the
+artwork changes with the content while the background itself never cuts,
+restarts or exposes an edge. `SCENES` in `PageSky.tsx` is the list, and its
+index order has to match the panels in `EdgeciplineHero`.
+
+Three things to know before editing it:
+
+- The layer is a **sibling of `.site-shell`**, not a child, so no clip,
+  containment or stacking context inside the page can cut into it. It is
+  `pointer-events: none` throughout and the document scrolls normally.
+- It reads two values, neither of which costs a React render: `--sky-p`
+  (document scroll, 0..1, written here) drives a slow drift of the landscape,
+  well inside the layer's own 8% overscan so no edge is ever exposed;
+  `--stage-p` (written by StageMotion, which publishes it to `.page-sky` as
+  well as to `.stage`) drives the scene crossfade.
+- Every rule in `backdrop.css` is scoped under `.site-shell` or `.page-sky`.
+  The other routes keep their own backgrounds, and the scoping also puts the
+  file above the single-class rules it overrides, whatever the import order.
 
 ## How it is built
 
@@ -10,14 +107,17 @@ does, where it lives, and which knob to turn to make it stronger or quieter.
 | --- | --- | --- |
 | Motion stylesheet | `src/app/motion.css` | Every keyframe, transition and tuning variable |
 | In-view signal | `src/components/motion/RevealObserver.tsx` | Adds `html.motion-ready`, then `data-inview` per element |
-| Scroll + pointer state | `src/components/motion/SceneMotion.tsx` | Publishes `--mo-progress`, `--mo-px`, `--mo-py`, `data-mo-live` on a section |
+| Scroll stage | `src/components/motion/StageMotion.tsx` | Publishes `--stage-p` and each panel's `--mo-progress`, `data-stage-active`, `data-mo-live` |
+| Page background | `src/components/PageSky.tsx`, `src/app/backdrop.css` | The one continuous background, and `--sky-p` |
+| Pointer state | `src/components/motion/SceneMotion.tsx` | Publishes `--mo-px` / `--mo-py` on the three sections that track the pointer |
 | Card spotlight | `src/components/motion/Spotlight.tsx` | Publishes `--mo-sx/--mo-sy/--mo-tx/--mo-ty` on the hovered step card |
 | CTA magnetism | `src/components/motion/Magnetic.tsx` | Publishes `--mo-mx/--mo-my` on the hero buttons |
-| Scroll spy | `src/components/nav/SideNavLinks.tsx` | Which sidebar link is current |
+| Route nav | `src/components/nav/SideNavLinks.tsx` | Which page is current, from the route (no scroll spy) |
 | Count up | `src/components/motion/CountUp.tsx` | Replays `[data-count]` numbers once, then restores the markup |
-| Scroll state | `src/components/motion/ScrollState.tsx` | Flags `html[data-scrolling]` so ambient loops stand down mid-scroll |
+| Frame driver | `src/components/motion/scroll-driver.ts` | The page's single `scroll`/`resize` listener and single rAF; also flags `html[data-scrolling]` |
+| Reduced motion | `src/components/motion/reduced-motion.ts` | `useReducedMotion`, so no animation library reaches the browser |
 
-The four islands render **no markup at all** — they only publish state, and
+The islands render **no markup at all** — they only publish state, and
 `motion.css` decides what that state looks like. Every section component
 therefore stays a Server Component, and the whole page still prerenders as
 static HTML.
@@ -95,18 +195,20 @@ particle and decorative-wave counts are reduced on phones.
   The sphere's circle was measured off the artwork (a circle fit to its limb:
   centre 840,835, radius 660 in the asset's 1600 box), and the mesh sits at 95.5%
   of that radius, inside the atmosphere ring.
-- **Three-level parallax**: landscape 42px, planet 86px, rock 120px, trader
-  104px across the hero's travel, all small enough that no background edge is
-  ever exposed (`.hero-sky` is inset past the section edges for that reason).
+- **Three-level parallax**: planet 86px, rock 120px, trader 104px across the
+  hero's travel, all small enough that no background edge is ever exposed. The
+  landscape is no longer one of these layers: it belongs to the page now and
+  drifts on `--sky-p` instead (see *One continuous background*).
 - **Trader figure**: a 3px vertical breath and a weak turquoise rim. No spin.
 - **CTAs**: neon border glow, the arrow slides, a pressed state, and a
   desktop-only magnetic pull capped at 7px. The links keep their real `href`,
   focus ring and keyboard behaviour.
-- **Hand-off**: `.hero-veil` fades a dark teal gradient in over the last third
-  of the hero's travel, so the Emotional Loop's mountains surface instead of a
-  black cut. (A stray `@@` in `globals.css` had been swallowing the hero's
-  bottom scene fade; that is fixed, so the two sections no longer meet on a
-  hard edge.)
+- **Hand-off**: there is nothing to hand over to any more — the background
+  behind the hero and behind the Emotional Loop is the same layer, so the veil
+  that used to fade the hero into a flat `#020c11` is gone. What replaced it
+  is `--hero-exit`, which eases the hero's own cast (planet, rock, figure,
+  keywords) back over the last third of its travel while the landscape carries
+  on. The copy is untouched, so nothing readable ever fades.
 
 The headline is split into two spans — one per line — and no further.
 
@@ -188,16 +290,22 @@ repository whenever you are ready.
 
 ## Section 05 — How It Works
 
-*Files: `src/components/landing/HowItWorks.tsx`, section 7 of `motion.css`.*
+*Files: `src/components/landing/HowItWorks.tsx`, `HowItWorks.module.css`,
+section 7 of `motion.css`.*
 
-- **Card entrance**: left to right, 24px rise, 120ms apart (`--step-stagger`).
+- **Card entrance**: left to right, 24px rise, 120ms apart (`--step-stagger`),
+  with a 22px scroll parallax (`--step-depth`) folded into the same transform
+  as the hover tilt so the two never overwrite each other.
 - **Spotlight hover** (desktop, fine pointer only): a radial highlight follows
   the pointer inside the card, the card tilts at most 3° (`--step-tilt`), the
   cyan border brightens and the icon lifts and glows. It is a gradient position,
   not an animated `backdrop-filter`.
 - **Step-specific effects**: 01 fills an upload progress line and pulses the
   cloud icon once; 02 sparks the brain icon while five data motes converge on
-  it; 03 grows four bars with a calm green glow.
+  it; 03 grows four bars with a calm green glow. These are keyed to
+  `data-stage-active` rather than `data-inview`, so each plays when the
+  section takes the frame — in both scroll directions — instead of all three
+  firing at once, off frame, and never again.
 - **Connector**: the existing dotted cyan rule now carries a light that walks
   01 → 02 → 03 and pauses briefly at each. It is hidden at the breakpoint where
   the cards stop being in one row.
@@ -276,23 +384,34 @@ them is real markup — no part of the screenshot is used as an image.
 
 ## Global behaviour
 
-- **Sidebar**: the active link is picked from scroll position against cached
-  section offsets, re-measured on resize. Only colour and the left rule
-  cross-fade — no box-model change, so highlighting can never shift the layout.
-  Links stay plain anchors, so click-to-scroll, focus and the URL hash all work
-  natively.
+- **Sidebar**: this is a multi-page site, so the current link comes from the
+  route — there is no scroll spy and nothing is measured. Only colour and the
+  left rule cross-fade, so highlighting can never shift the layout. The links
+  are `next/link`, so the next page is prefetched and keyboard, middle-click
+  and the URL all behave natively.
 - **Buttons, links, icons**: 180–250ms hover transitions, a pressed state, and
   scale/glow icon responses. Nothing spins continuously.
-- **Keeping the scroll smooth**: every continuous loop reads one switch,
-  `--mo-ambient-play`. Two things set it to `paused`: `SceneMotion` flags a
-  section `data-mo-live` while it is within 25% of the viewport and the section
-  idles outside that window, and `ScrollState` flags `html[data-scrolling]` so
-  that *nothing* ambient animates while the page is actually moving. The two
-  rules that run an entrance alongside a loop pass a list
-  (`animation-play-state: running, var(--mo-ambient-play)`) so a reveal is never
-  frozen by the pause.
+- **One listener, one frame**: every island subscribes to `scroll-driver.ts`
+  instead of owning a handler. The page has a single passive `scroll` listener,
+  a single `resize` listener and a single `requestAnimationFrame` per frame, in
+  which the ten scenes and the sidebar spy run back to back. Anything that
+  needs a layout box during a gesture — the magnetic buttons, the card
+  spotlight, the pointer depth — caches it and invalidates it from that same
+  frame, so no handler ever forces a synchronous layout.
+- **Standing the loops down**: ambient loops are paused by selector while the
+  page is scrolling (`html[data-scrolling]`) and while their own section is off
+  screen (`[data-mo-scene]:not([data-mo-live])`, published by `SceneMotion`).
+  This deliberately is *not* an inherited custom property, which is what it was
+  before: changing one on `<html>` invalidates the style of every element on
+  the page, and the flag flips twice per scroll gesture, which is where the
+  page caught. A selector only re-styles what it can match. The two rules that
+  run an entrance alongside a loop pass a list (`running, paused`) so a reveal
+  is never frozen by the pause.
+- **`@property`**: `--mo-progress`, `--mo-px` and `--mo-py` are registered as
+  `<number>`, so the value a scene writes every frame is parsed once into a
+  float rather than re-tokenised inside each `calc()` that reads it.
 
-  The same pass removed the things that cost the most per scrolled frame:
+  Earlier passes removed the things that cost the most per scrolled frame:
   `backdrop-filter` on the stat and step cards, the `feGaussianBlur` inside the
   chart SVG (which was re-rasterised on every frame of the wave drift), the
   `blur()` on the journey line, and `will-change` on ~50 pending reveals. The

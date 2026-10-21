@@ -1,0 +1,258 @@
+/* ==========================================================================
+   /privacy and /terms
+
+   CSS Modules are NOT scoped in this project (next.config.ts routes every
+   *.css through the Tailwind turbopack loader), so these names land in the
+   global stylesheet as written. Prefix: `lg`.
+
+   The body prose itself is styled by the `bl*` classes in Blog.module.css,
+   because `renderMarkdown` emits those and long-form legal text wants the
+   same reading treatment an article gets. Everything here is the chrome
+   around it: the title block, the contents rail and the sign-off.
+   ========================================================================== */
+
+.lgPage {
+  --lg-ink: #02080e;
+  --lg-ink-2: #061723;
+  --lg-mint: #00efb5;
+  --lg-text: #eef8fb;
+  --lg-muted: #a9c0c7;
+  --lg-dim: #7f979e;
+  --lg-line: rgba(120, 220, 232, .16);
+  --lg-gutter: clamp(20px, 4.4vw, 76px);
+  --lg-max: 1140px;
+
+  position: relative;
+  min-height: 100svh;
+  background:
+    radial-gradient(ellipse at 50% -12%, #06272f 0%, rgba(2, 11, 16, 0) 48%),
+    linear-gradient(180deg, var(--lg-ink) 0%, var(--lg-ink-2) 48%, var(--lg-ink) 100%);
+  color: var(--lg-text);
+}
+
+.lgHero,
+.lgBody { margin-left: clamp(210px, 13.3vw, 250px); }
+
+.lgInner {
+  width: min(100%, var(--lg-max));
+  padding-inline: var(--lg-gutter);
+  margin-inline: auto;
+}
+
+.lgSkip {
+  position: absolute;
+  z-index: 40;
+  top: 10px;
+  left: 50%;
+  padding: 11px 18px;
+  color: #00231c;
+  border-radius: 10px;
+  background: var(--lg-mint);
+  font-size: 14px;
+  font-weight: 800;
+  translate: -50% -180%;
+  transition: translate .18s var(--mo-ease-out, ease);
+}
+
+.lgSkip:focus-visible { translate: -50% 0; }
+
+/* --------------------------------------------------------------------------
+   Title block
+   -------------------------------------------------------------------------- */
+
+.lgHero { position: relative; overflow: clip; isolation: isolate; contain: layout paint; }
+
+.lgHeroGlow {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 22% 2%, rgba(0, 239, 181, .1), transparent 42%);
+}
+
+.lgHeroRule {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(0, 239, 181, .4), rgba(35, 216, 255, .14) 32%, transparent 68%);
+}
+
+.lgHeroInner { padding-block: clamp(90px, 8.6vw, 136px) clamp(26px, 3vw, 42px); }
+
+.lgCrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  margin: 0 0 22px;
+  color: var(--lg-muted);
+  font-size: 13px;
+  font-weight: 600;
+  list-style: none;
+}
+
+.lgCrumbs a { border-bottom: 1px solid transparent; transition: color .2s, border-color .2s; }
+.lgCrumbs a:hover { color: var(--lg-mint); border-bottom-color: currentColor; }
+.lgCrumbs li[aria-current] { color: var(--lg-text); }
+.lgCrumbs svg { flex: none; opacity: .5; }
+
+.lgEyebrow {
+  margin: 0 0 12px;
+  color: var(--lg-dim);
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+.lgTitle {
+  margin: 0;
+  font-size: clamp(34px, 4.4vw, 60px);
+  line-height: 1;
+  letter-spacing: -.055em;
+  font-weight: 850;
+}
+
+.lgUpdated {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: clamp(16px, 1.8vw, 22px) 0 0;
+  padding: 7px 13px;
+  color: var(--lg-muted);
+  border: 1px solid var(--lg-line);
+  border-radius: 999px;
+  background: rgba(4, 20, 27, .6);
+  font-size: 12.5px;
+  font-weight: 650;
+}
+
+.lgUpdated svg { color: var(--lg-mint); }
+
+/* --------------------------------------------------------------------------
+   Document + contents
+   -------------------------------------------------------------------------- */
+
+.lgBody { padding-bottom: clamp(50px, 6vw, 96px); }
+
+.lgLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
+  gap: clamp(24px, 3.6vw, 60px);
+  align-items: start;
+  padding-top: clamp(22px, 2.8vw, 40px);
+}
+
+.lgToc { position: sticky; top: 24px; }
+
+.lgTocTitle {
+  margin: 0 0 12px;
+  color: var(--lg-dim);
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+.lgTocList {
+  display: grid;
+  gap: 2px;
+  padding: 0 0 0 11px;
+  margin: 0;
+  border-left: 1px solid rgba(120, 220, 232, .18);
+  list-style: none;
+}
+
+.lgTocList a {
+  display: block;
+  padding: 6px 0;
+  color: #b8cdd2;
+  font-size: 12.5px;
+  line-height: 1.4;
+  font-weight: 600;
+  transition: color .2s;
+}
+
+.lgTocList a:hover { color: var(--lg-mint); }
+
+.lgTocFoot { margin: 16px 0 0; padding-top: 14px; border-top: 1px solid rgba(120, 220, 232, .14); }
+
+.lgTocFoot a {
+  display: inline-flex;
+  align-items: center;
+  color: #c9fff1;
+  font-size: 12.5px;
+  font-weight: 750;
+  border-bottom: 1px solid rgba(0, 239, 181, .4);
+  transition: color .2s, border-color .2s;
+}
+
+.lgTocFoot a:hover { color: #fff; border-color: var(--lg-mint); }
+
+/* The document column. The prose itself comes from the bl* classes. */
+.lgDoc { min-width: 0; max-width: 74ch; }
+
+/* Section headings in a legal document are numbered and frequent, so they get
+   a little more air above them than an article heading would. */
+.lgDoc .blH2 { margin-top: clamp(34px, 3.6vw, 52px); scroll-margin-top: 24px; }
+.lgDoc > .blH2:first-child { margin-top: 0; }
+
+.lgFoot {
+  display: grid;
+  gap: 10px;
+  padding: clamp(18px, 2.2vw, 26px);
+  margin-top: clamp(34px, 4vw, 56px);
+  border: 1px solid var(--lg-line);
+  border-radius: 20px;
+  background: linear-gradient(164deg, rgba(10, 42, 54, .34), rgba(3, 15, 23, .56));
+}
+
+.lgFootLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  justify-self: start;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  word-break: break-all;
+  border-bottom: 1px solid rgba(0, 239, 181, .4);
+  transition: color .2s, border-color .2s;
+}
+
+.lgFootLink:hover { color: var(--lg-mint); border-color: var(--lg-mint); }
+.lgFootLink svg { flex: none; color: var(--lg-mint); }
+
+.lgFoot p { margin: 0; color: var(--lg-muted); font-size: 13px; line-height: 1.6; }
+.lgFoot p a { color: #c9fff1; border-bottom: 1px solid rgba(0, 239, 181, .4); }
+.lgFoot p a:hover { color: #fff; border-color: var(--lg-mint); }
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1100px) {
+  .lgHero, .lgBody { margin-left: 0; }
+}
+
+@media (max-width: 1023px) {
+  .lgLayout { grid-template-columns: minmax(0, 1fr); }
+  .lgToc {
+    position: static;
+    padding: 16px 18px;
+    border: 1px solid var(--lg-line);
+    border-radius: 16px;
+    background: rgba(5, 24, 32, .5);
+  }
+  .lgDoc { max-width: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lgSkip, .lgTocList a, .lgFootLink { transition: none; }
+}

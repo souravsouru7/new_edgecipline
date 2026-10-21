@@ -1,0 +1,1591 @@
+/* ==========================================================================
+   /features — premium feature page
+
+   CSS Modules are NOT scoped in this project: next.config.ts routes every
+   *.css file through the Tailwind turbopack loader, so these class names land
+   in the global stylesheet exactly as written (see the note at the top of
+   TradingDNA.module.css). Every name here is therefore prefixed `ft`.
+
+   Motion: entrances come from the page-wide `data-reveal` system in
+   motion.css; ambient loops here are composited (transform/opacity) and stand
+   down for reduced motion at the bottom of this file. No second scroll engine
+   is introduced — the page reuses RevealObserver and nothing else.
+   ========================================================================== */
+
+.ftPage {
+  --ft-ink: #02080e;
+  --ft-ink-2: #061723;
+  --ft-mint: #00efb5;
+  --ft-cyan: #23d8ff;
+  --ft-violet: #a18bff;
+  --ft-text: #eef8fb;
+  --ft-muted: #a9c0c7;
+  --ft-line: rgba(120, 220, 232, .16);
+  --ft-surface: linear-gradient(152deg, rgba(10, 42, 54, .58), rgba(3, 15, 23, .72));
+  --ft-gutter: clamp(20px, 4.4vw, 76px);
+  --ft-max: 1400px;
+  --ft-radius: 24px;
+
+  position: relative;
+  min-height: 100svh;
+  background:
+    radial-gradient(ellipse at 52% -8%, #07303a 0%, rgba(2, 11, 16, 0) 52%),
+    linear-gradient(180deg, var(--ft-ink) 0%, var(--ft-ink-2) 46%, var(--ft-ink) 100%);
+  color: var(--ft-text);
+}
+
+/* The sidebar is fixed, so every band is inset by its width above 1100px —
+   the same offset the home page sections use. Named explicitly rather than as
+   `> *`, so the absolutely positioned skip link keeps its own centring. */
+.ftHero,
+.ftExplorer,
+.ftBody,
+.ftCta {
+  margin-left: clamp(210px, 13.3vw, 250px);
+}
+
+.ftInner {
+  width: min(100%, var(--ft-max));
+  padding-inline: var(--ft-gutter);
+  margin-inline: auto;
+}
+
+/* Skip link: visible only once focused. */
+.ftSkip {
+  position: absolute;
+  z-index: 40;
+  top: 10px;
+  left: 50%;
+  padding: 11px 18px;
+  color: #00231c;
+  border-radius: 10px;
+  background: var(--ft-mint);
+  font-size: 14px;
+  font-weight: 800;
+  translate: -50% -180%;
+  transition: translate .18s var(--mo-ease-out, ease);
+}
+
+.ftSkip:focus-visible { translate: -50% 0; }
+
+/* --------------------------------------------------------------------------
+   Hero
+   -------------------------------------------------------------------------- */
+
+.ftHero {
+  position: relative;
+  overflow: clip;
+  isolation: isolate;
+  contain: layout paint;
+}
+
+.ftHeroArt {
+  position: absolute;
+  z-index: -1;
+  inset: -12% -4% auto;
+  height: 132%;
+  pointer-events: none;
+  opacity: .5;
+  mask-image: radial-gradient(ellipse at 72% 44%, #000 12%, transparent 68%);
+}
+
+.ftHeroArt img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Two faint light pools and a fine grid, rather than one heavy glow. */
+.ftHeroGlow {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 18% 18%, rgba(0, 239, 181, .14), transparent 42%),
+    radial-gradient(ellipse at 78% 62%, rgba(161, 139, 255, .12), transparent 46%);
+}
+
+.ftGrid {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  pointer-events: none;
+  opacity: .5;
+  background-image:
+    linear-gradient(90deg, var(--ft-line) 1px, transparent 1px),
+    linear-gradient(180deg, var(--ft-line) 1px, transparent 1px);
+  background-size: 84px 84px;
+  mask-image: linear-gradient(180deg, #000, transparent 72%);
+}
+
+.ftHeroInner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr);
+  align-items: center;
+  gap: clamp(28px, 4vw, 72px);
+  padding-block: clamp(92px, 9vw, 150px) clamp(34px, 4vw, 60px);
+}
+
+.ftCrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  margin: 0 0 20px;
+  color: var(--ft-muted);
+  font-size: 13px;
+  font-weight: 600;
+  list-style: none;
+}
+
+.ftCrumbs a { border-bottom: 1px solid transparent; transition: color .2s, border-color .2s; }
+.ftCrumbs a:hover { color: var(--ft-mint); border-bottom-color: currentColor; }
+.ftCrumbs li[aria-current] { color: var(--ft-text); }
+.ftCrumbs svg { flex: none; opacity: .5; }
+
+.ftLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 14px 7px 11px;
+  margin: 0 0 clamp(16px, 1.8vw, 24px);
+  color: #c8fff0;
+  border: 1px solid rgba(0, 239, 181, .4);
+  border-radius: 999px;
+  background: rgba(0, 239, 181, .07);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.ftLabel i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ft-mint);
+  box-shadow: 0 0 10px var(--ft-mint);
+}
+
+.ftHeroTitle {
+  max-width: 15ch;
+  margin: 0;
+  font-size: clamp(38px, 5.2vw, 76px);
+  line-height: .96;
+  letter-spacing: -.055em;
+  font-weight: 850;
+}
+
+/* Three grouped lines, so the reveal reads as typesetting rather than a stunt. */
+.ftHeroTitle span { display: block; }
+.ftHeroTitle em { font-style: normal; color: var(--ft-mint); }
+
+.ftHeroSummary {
+  max-width: 56ch;
+  margin: clamp(18px, 2vw, 26px) 0 0;
+  color: #dbeaee;
+  font-size: clamp(16px, 1.3vw, 21px);
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.ftHeroActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-top: clamp(24px, 2.6vw, 34px);
+}
+
+.ftHeroNote {
+  margin: 0;
+  color: var(--ft-muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ftHeroFigure {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 8 / 5;
+}
+
+.ftHeroFigure img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* The four editorial pills: navigation into the four groups, not claims. */
+.ftPills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 0 0 clamp(40px, 5vw, 72px);
+  margin: 0;
+  list-style: none;
+}
+
+.ftPills a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 0 20px;
+  color: #e8f7f9;
+  border: 1px solid var(--ft-line);
+  border-radius: 999px;
+  background: rgba(5, 26, 34, .55);
+  font-size: 14px;
+  font-weight: 750;
+  letter-spacing: -.01em;
+  transition: color .22s, border-color .22s, background .22s, transform .22s;
+}
+
+.ftPills a:hover {
+  color: #fff;
+  border-color: rgba(0, 239, 181, .55);
+  background: rgba(0, 239, 181, .08);
+  transform: translateY(-2px);
+}
+
+.ftPills b {
+  color: var(--ft-mint);
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: .08em;
+}
+
+/* --------------------------------------------------------------------------
+   Feature explorer — sticky index of all fourteen
+   -------------------------------------------------------------------------- */
+
+.ftExplorer {
+  position: sticky;
+  z-index: 12;
+  top: 0;
+  border-block: 1px solid var(--ft-line);
+  background: rgba(2, 10, 15, .9);
+  /* No backdrop-filter: blurring a full-width bar on every scrolled frame is
+     the single most expensive thing this page could do. */
+}
+
+.ftExplorerInner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+  padding-block: 12px;
+}
+
+.ftExplorerHead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.ftSearch {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1 1 220px;
+  min-width: 0;
+  max-width: 320px;
+}
+
+.ftSearch svg {
+  position: absolute;
+  left: 12px;
+  color: var(--ft-muted);
+  pointer-events: none;
+}
+
+.ftSearch input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 14px 0 38px;
+  color: var(--ft-text);
+  border: 1px solid var(--ft-line);
+  border-radius: 12px;
+  background: rgba(4, 20, 27, .8);
+  font: inherit;
+  font-size: 14px;
+}
+
+.ftSearch input::placeholder { color: #7f979e; }
+.ftSearch input:focus-visible { border-color: var(--ft-mint); outline: none; }
+
+.ftCount {
+  flex: none;
+  color: var(--ft-muted);
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The index itself: a horizontal scroller on small screens, with fades. */
+.ftIndexWrap { position: relative; min-width: 0; }
+
+.ftIndexWrap::before,
+.ftIndexWrap::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  width: 28px;
+  pointer-events: none;
+}
+
+.ftIndexWrap::before { left: 0; background: linear-gradient(90deg, rgba(2, 10, 15, .95), transparent); }
+.ftIndexWrap::after { right: 0; background: linear-gradient(270deg, rgba(2, 10, 15, .95), transparent); }
+
+.ftIndex {
+  display: flex;
+  gap: 8px;
+  padding: 2px 0;
+  margin: 0;
+  overflow-x: auto;
+  list-style: none;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+
+.ftIndex::-webkit-scrollbar { display: none; }
+
+.ftIndex a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 14px;
+  color: #cfe3e7;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: rgba(7, 28, 36, .5);
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: color .2s, border-color .2s, background .2s;
+}
+
+.ftIndex a:hover { color: #fff; border-color: rgba(35, 216, 255, .45); }
+.ftIndex a b { color: var(--ft-cyan); font-size: 11px; font-weight: 850; font-variant-numeric: tabular-nums; }
+.ftIndex [aria-current] { color: #00231c; background: var(--ft-mint); }
+.ftIndex [aria-current] b { color: #00231c; opacity: .65; }
+.ftIndex li[hidden] { display: none; }
+
+.ftNoMatch {
+  padding: 6px 2px;
+  margin: 0;
+  color: var(--ft-muted);
+  font-size: 13px;
+}
+
+/* --------------------------------------------------------------------------
+   Groups and feature sections
+   -------------------------------------------------------------------------- */
+
+.ftGroup { position: relative; contain: layout paint style; }
+
+.ftGroupHead {
+  padding-block: clamp(56px, 6vw, 96px) clamp(18px, 2vw, 30px);
+}
+
+.ftGroupHead h2 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 16px;
+  margin: 0;
+  font-size: clamp(13px, 1.1vw, 15px);
+  font-weight: 850;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.ftGroupHead h2 b { color: var(--ft-mint); font-variant-numeric: tabular-nums; }
+
+.ftGroupHead p {
+  max-width: 62ch;
+  margin: 14px 0 0;
+  color: #cadde2;
+  font-size: clamp(19px, 2vw, 30px);
+  line-height: 1.26;
+  letter-spacing: -.035em;
+  font-weight: 600;
+}
+
+.ftGroupRule {
+  display: block;
+  height: 1px;
+  margin-top: clamp(22px, 2.4vw, 34px);
+  background: linear-gradient(90deg, rgba(0, 239, 181, .6), rgba(35, 216, 255, .18) 38%, transparent 76%);
+}
+
+/* One feature. Scroll margin clears the sticky explorer on anchor jumps. */
+.ftFeature {
+  --ft-span: 1fr;
+  position: relative;
+  padding-block: clamp(42px, 5vw, 78px);
+  border-top: 1px solid rgba(120, 220, 232, .09);
+  scroll-margin-top: 86px;
+}
+
+.ftGroup:first-of-type .ftFeature:first-of-type { border-top: 0; }
+
+.ftFeatureInner {
+  display: grid;
+  grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+  align-items: center;
+  gap: clamp(28px, 4vw, 68px);
+}
+
+/* Alternating dominant visual: every second feature leads with the artwork. */
+.ftFeature[data-flip] .ftFeatureCopy { order: 2; }
+
+/* Features whose visual carries the section get more room for it. */
+.ftFeature[data-wide] .ftFeatureInner { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); }
+
+/* And two of them read better as a full-width band with the copy on top. */
+.ftFeature[data-stack] .ftFeatureInner { grid-template-columns: minmax(0, 1fr); }
+.ftFeature[data-stack] .ftFeatureCopy { order: 0; max-width: 72ch; }
+
+.ftFeatureCopy { min-width: 0; }
+
+.ftFeatureNumber {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  color: var(--ft-cyan);
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+.ftFeatureNumber i {
+  width: 26px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--ft-cyan), transparent);
+}
+
+.ftFeature h3 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(27px, 2.9vw, 44px);
+  line-height: 1.02;
+  letter-spacing: -.05em;
+  font-weight: 850;
+}
+
+.ftTagline {
+  max-width: 40ch;
+  margin: 12px 0 0;
+  color: var(--ft-mint);
+  font-size: clamp(16px, 1.45vw, 23px);
+  line-height: 1.25;
+  letter-spacing: -.03em;
+  font-weight: 650;
+}
+
+.ftProse {
+  display: grid;
+  gap: clamp(16px, 1.6vw, 22px);
+  margin-top: clamp(20px, 2.2vw, 30px);
+}
+
+.ftProse > div { min-width: 0; }
+
+.ftProse dt {
+  margin-bottom: 7px;
+  color: #8fa8af;
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.ftProse dd {
+  max-width: 66ch;
+  margin: 0;
+  color: #d4e5e9;
+  font-size: clamp(14.5px, 1.1vw, 17px);
+  line-height: 1.58;
+}
+
+/* The solution paragraph is the one that sells, so it gets the accent rule. */
+.ftProse .ftSolution dt { color: var(--ft-mint); }
+.ftProse .ftSolution {
+  padding-left: clamp(14px, 1.2vw, 20px);
+  border-left: 2px solid rgba(0, 239, 181, .45);
+}
+
+.ftProse .ftSolution dd { color: #e7f4f6; }
+
+.ftBenefits {
+  display: grid;
+  gap: 10px;
+  padding: 0;
+  margin: clamp(22px, 2.4vw, 32px) 0 0;
+  list-style: none;
+}
+
+.ftBenefitsTitle {
+  margin: 0 0 12px;
+  color: #8fa8af;
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.ftBenefits li {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  gap: 11px;
+  align-items: start;
+  color: #dbebee;
+  font-size: clamp(14px, 1.05vw, 16px);
+  line-height: 1.45;
+  font-weight: 550;
+}
+
+.ftBenefits svg { margin-top: 1px; color: var(--ft-mint); }
+
+.ftFeatureCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  margin-top: clamp(22px, 2.2vw, 30px);
+  color: #c9fff1;
+  font-size: 14px;
+  font-weight: 800;
+  border-bottom: 1px solid rgba(0, 239, 181, .4);
+  transition: color .2s, border-color .2s, gap .2s;
+}
+
+.ftFeatureCta:hover { color: #fff; border-color: var(--ft-mint); gap: 14px; }
+
+/* --------------------------------------------------------------------------
+   Shared visual shell
+   -------------------------------------------------------------------------- */
+
+.ftVisual {
+  position: relative;
+  min-width: 0;
+  padding: clamp(14px, 1.5vw, 22px);
+  overflow: hidden;
+  border: 1px solid var(--ft-line);
+  border-radius: var(--ft-radius);
+  background: var(--ft-surface);
+  box-shadow: inset 0 1px 0 rgba(210, 255, 252, .07), 0 24px 60px rgba(0, 0, 0, .34);
+}
+
+.ftVisual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 76% -10%, rgba(35, 216, 255, .12), transparent 54%);
+}
+
+/* Everything in these panels is drawn, not captured. The badge says so. */
+.ftDemoBadge {
+  position: absolute;
+  z-index: 3;
+  top: 14px;
+  right: 14px;
+  padding: 5px 9px;
+  color: #b9d3d8;
+  border: 1px solid rgba(120, 220, 232, .28);
+  border-radius: 7px;
+  background: rgba(2, 12, 17, .82);
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.ftArt { position: relative; display: block; margin: 0; }
+
+.ftArt img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+}
+
+.ftVisualCaption {
+  margin: 12px 2px 0;
+  color: #8fa8af;
+  font-size: 11.5px;
+  line-height: 1.4;
+}
+
+/* A small reusable panel used inside several visuals. */
+.ftPanel {
+  padding: 14px;
+  border: 1px solid rgba(120, 220, 232, .14);
+  border-radius: 14px;
+  background: rgba(3, 17, 24, .66);
+}
+
+.ftPanelTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+  color: #9fd9e2;
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.ftChips { display: flex; flex-wrap: wrap; gap: 7px; padding: 0; margin: 0; list-style: none; }
+
+.ftChips li {
+  padding: 6px 10px;
+  color: #d7ecef;
+  border: 1px solid rgba(120, 220, 232, .2);
+  border-radius: 8px;
+  background: rgba(6, 26, 34, .7);
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.ftChips [data-accent="mint"] { color: #b9ffe9; border-color: rgba(0, 239, 181, .4); }
+.ftChips [data-accent="cyan"] { color: #c3f1ff; border-color: rgba(35, 216, 255, .4); }
+.ftChips [data-accent="violet"] { color: #ded3ff; border-color: rgba(161, 139, 255, .42); }
+
+/* --------------------------------------------------------------------------
+   01 — screenshot: a light pass that sweeps the capture into fields
+   -------------------------------------------------------------------------- */
+
+.ftScan { position: relative; overflow: hidden; border-radius: 14px; }
+
+.ftScanLine {
+  position: absolute;
+  z-index: 2;
+  inset: 0 auto 0 0;
+  width: 34%;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(0, 239, 181, .22) 55%, rgba(185, 255, 240, .5));
+  mask-image: linear-gradient(90deg, transparent, #000 70%);
+  opacity: 0;
+}
+
+.ftScan[data-inview] .ftScanLine {
+  animation: ft-scan 2.6s var(--mo-ease-in-out, ease-in-out) .25s 2 both;
+}
+
+@keyframes ft-scan {
+  0% { opacity: 0; translate: -40% 0; }
+  12%, 72% { opacity: 1; }
+  100% { opacity: 0; translate: 310% 0; }
+}
+
+.ftFields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(104px, 1fr));
+  gap: 8px;
+  padding: 0;
+  margin: 14px 0 0;
+  list-style: none;
+}
+
+.ftFields > div {
+  padding: 9px 11px;
+  border: 1px solid rgba(0, 239, 181, .22);
+  border-radius: 10px;
+  background: rgba(0, 239, 181, .05);
+  opacity: 0;
+}
+
+.ftScanBlock[data-inview] .ftFields > div {
+  animation: ft-field-in .5s var(--mo-ease-out, ease) calc(.5s + var(--i, 0) * .09s) both;
+}
+
+@keyframes ft-field-in {
+  from { opacity: 0; translate: 0 8px; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+.ftFields dt {
+  color: #8fa8af;
+  font-size: 9.5px;
+  font-weight: 850;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.ftFields dd {
+  margin: 4px 0 0;
+  color: #dff7f1;
+  font-size: 13px;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------------------------------------
+   02 — dual market: two accessible tab panels
+   -------------------------------------------------------------------------- */
+
+.ftTabs {
+  display: inline-flex;
+  gap: 5px;
+  padding: 5px;
+  border: 1px solid var(--ft-line);
+  border-radius: 12px;
+  background: rgba(2, 13, 19, .7);
+}
+
+.ftTabs button {
+  min-height: 42px;
+  padding: 0 16px;
+  color: #bdd6db;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: color .2s, background .2s;
+}
+
+.ftTabs [aria-selected="true"] { color: #00231c; background: var(--ft-mint); }
+
+.ftTabPanel { margin-top: 14px; }
+
+.ftRows { display: grid; gap: 8px; padding: 0; margin: 0; list-style: none; }
+
+.ftRows > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 11px 13px;
+  border: 1px solid rgba(120, 220, 232, .13);
+  border-radius: 11px;
+  background: rgba(4, 20, 27, .6);
+  font-size: 13px;
+}
+
+.ftRows dt { color: #9fb6bc; font-size: 11.5px; font-weight: 750; }
+.ftRows dd { margin: 0; color: #e4f4f6; font-weight: 750; font-variant-numeric: tabular-nums; }
+
+/* --------------------------------------------------------------------------
+   03 — journal: filter bar over illustrative rows
+   -------------------------------------------------------------------------- */
+
+.ftFilterBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.ftFakeField {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 0 12px;
+  color: #b6cfd4;
+  border: 1px solid rgba(120, 220, 232, .18);
+  border-radius: 9px;
+  background: rgba(3, 17, 23, .7);
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.ftFakeField svg { opacity: .7; }
+
+/* The panel clips its overflow, so a table that cannot fit must scroll rather
+   than be cut off. 420px keeps four columns legible on the narrowest phones. */
+.ftTableScroll {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+}
+
+.ftTableScroll::-webkit-scrollbar { height: 6px; }
+.ftTableScroll::-webkit-scrollbar-thumb { border-radius: 999px; background: rgba(120, 220, 232, .3); }
+
+.ftLedger { width: 100%; min-width: 420px; border-collapse: collapse; font-size: 12.5px; }
+
+.ftLedger caption {
+  padding-bottom: 10px;
+  color: #8fa8af;
+  font-size: 11px;
+  text-align: left;
+}
+
+.ftLedger th {
+  padding: 8px 10px;
+  color: #8fa8af;
+  border-bottom: 1px solid rgba(120, 220, 232, .16);
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: .09em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.ftLedger td {
+  padding: 11px 10px;
+  color: #dcecef;
+  border-bottom: 1px solid rgba(120, 220, 232, .07);
+  font-weight: 600;
+}
+
+.ftLedger tbody tr:last-child td { border-bottom: 0; }
+.ftLedger [data-tone="up"] { color: #52f5c0; font-variant-numeric: tabular-nums; }
+.ftLedger [data-tone="down"] { color: #ff8e7d; font-variant-numeric: tabular-nums; }
+
+.ftTag {
+  display: inline-block;
+  padding: 3px 8px;
+  color: #cfe6ea;
+  border: 1px solid rgba(120, 220, 232, .22);
+  border-radius: 6px;
+  font-size: 10.5px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   04 — trading DNA: artwork plus the combination chips
+   -------------------------------------------------------------------------- */
+
+.ftDnaCombo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.ftDnaCombo span {
+  padding: 8px 12px;
+  color: #e9fffa;
+  border: 1px solid rgba(0, 239, 181, .4);
+  border-radius: 9px;
+  background: linear-gradient(140deg, rgba(0, 239, 181, .14), rgba(35, 216, 255, .06));
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.ftDnaCombo i { color: var(--ft-cyan); font-style: normal; font-weight: 850; }
+
+/* --------------------------------------------------------------------------
+   05 — psychology cost: emotion legend and relative bars
+   -------------------------------------------------------------------------- */
+
+.ftBars { display: grid; gap: 11px; padding: 0; margin: 0; list-style: none; }
+
+.ftBars > div {
+  display: grid;
+  grid-template-columns: minmax(74px, auto) minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+}
+
+.ftBars dt { color: #cfe3e7; font-size: 11.5px; font-weight: 800; }
+
+.ftBars dd { margin: 0; }
+
+.ftBarTrack {
+  position: relative;
+  height: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(120, 220, 232, .1);
+}
+
+.ftBarTrack i {
+  display: block;
+  width: var(--ft-bar, 50%);
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--ft-bar-from, #00efb5), var(--ft-bar-to, #23d8ff));
+  transform-origin: left center;
+  scale: 0 1;
+}
+
+.ftBarsBlock[data-inview] .ftBarTrack i {
+  animation: ft-bar-grow .85s var(--mo-ease-out, ease) calc(.15s + var(--i, 0) * .08s) both;
+}
+
+@keyframes ft-bar-grow {
+  from { scale: 0 1; }
+  to { scale: 1 1; }
+}
+
+.ftLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  padding: 0;
+  margin: 14px 0 0;
+  list-style: none;
+}
+
+.ftLegend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #b9ced3;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.ftLegend i {
+  width: 10px;
+  height: 10px;
+  flex: none;
+  border-radius: 3px;
+  background: var(--ft-swatch, var(--ft-mint));
+}
+
+/* --------------------------------------------------------------------------
+   06 — risk patterns: alert cards with a suggested rule
+   -------------------------------------------------------------------------- */
+
+.ftAlerts { display: grid; gap: 11px; padding: 0; margin: 0; list-style: none; }
+
+.ftAlert {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 12px;
+  padding: 13px;
+  border: 1px solid rgba(255, 150, 118, .22);
+  border-radius: 13px;
+  background: linear-gradient(140deg, rgba(60, 22, 18, .5), rgba(3, 17, 24, .6));
+}
+
+.ftAlert[data-tone="warn"] { border-color: rgba(255, 199, 110, .24); }
+.ftAlert[data-tone="info"] { border-color: rgba(35, 216, 255, .24); }
+
+.ftAlertIcon {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  color: #ffb4a2;
+  border: 1px solid currentColor;
+  border-radius: 10px;
+}
+
+.ftAlert[data-tone="warn"] .ftAlertIcon { color: #ffd38a; }
+.ftAlert[data-tone="info"] .ftAlertIcon { color: #8ee6ff; }
+
+.ftAlert h4 {
+  margin: 0;
+  color: #fff;
+  font-size: 13.5px;
+  font-weight: 800;
+  letter-spacing: -.01em;
+}
+
+.ftAlert p { margin: 5px 0 0; color: #c6d9dd; font-size: 12px; line-height: 1.45; }
+
+.ftRule {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 9px;
+  padding: 6px 10px;
+  color: #c4ffee;
+  border: 1px dashed rgba(0, 239, 181, .4);
+  border-radius: 8px;
+  font-size: 11.5px;
+  font-weight: 750;
+}
+
+/* --------------------------------------------------------------------------
+   07 — self-awareness: the calibration matrix
+   -------------------------------------------------------------------------- */
+
+.ftMatrix { width: 100%; min-width: 360px; border-collapse: collapse; }
+
+.ftMatrix caption {
+  padding-bottom: 10px;
+  color: #8fa8af;
+  font-size: 11px;
+  text-align: left;
+}
+
+.ftMatrix th {
+  padding: 9px;
+  color: #9fb6bc;
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.ftMatrix thead th { border-bottom: 1px solid rgba(120, 220, 232, .16); }
+.ftMatrix tbody th { text-align: left; white-space: nowrap; }
+
+.ftMatrix td {
+  padding: 6px;
+  text-align: center;
+  vertical-align: top;
+}
+
+.ftCell {
+  display: grid;
+  gap: 4px;
+  min-height: 78px;
+  padding: 11px 9px;
+  align-content: center;
+  border: 1px solid rgba(120, 220, 232, .14);
+  border-radius: 12px;
+  background: rgba(5, 23, 30, .6);
+}
+
+.ftCell b { color: #e8f6f8; font-size: 12px; font-weight: 800; }
+.ftCell span { color: #a3bcc2; font-size: 10.5px; line-height: 1.35; }
+
+/* The dangerous quadrant is the whole point of the feature, so it is marked. */
+.ftCell[data-flag] {
+  color: #ffd9c9;
+  border-color: rgba(255, 143, 112, .5);
+  background: linear-gradient(140deg, rgba(90, 32, 22, .6), rgba(10, 20, 26, .6));
+  box-shadow: 0 0 0 1px rgba(255, 143, 112, .14), 0 0 24px rgba(255, 110, 80, .12);
+}
+
+.ftCell[data-flag] b { color: #ffcdb8; }
+.ftCell[data-flag] span { color: #e3bdb0; }
+
+/* --------------------------------------------------------------------------
+   08 / 14 — drawn charts
+   -------------------------------------------------------------------------- */
+
+.ftChart { display: block; width: 100%; height: auto; overflow: visible; }
+
+.ftChart .ftAxis { stroke: rgba(120, 220, 232, .18); stroke-width: 1; }
+.ftChart .ftGridLine { stroke: rgba(120, 220, 232, .09); stroke-width: 1; }
+
+.ftChart .ftLine {
+  fill: none;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* Every drawn path carries pathLength="1", so one dash length fits them all
+     and nothing has to be measured in the browser. */
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.ftChartBlock[data-inview] .ftLine {
+  animation: ft-draw 1.5s var(--mo-ease-soft, ease-out) calc(.2s + var(--i, 0) * .22s) both;
+}
+
+@keyframes ft-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+.ftChart .ftArea { stroke: none; opacity: 0; }
+.ftChartBlock[data-inview] .ftArea { animation: ft-fade-in 1.1s ease .5s both; }
+
+@keyframes ft-fade-in { to { opacity: 1; } }
+
+.ftChart .ftMarker { opacity: 0; }
+.ftChartBlock[data-inview] .ftMarker {
+  animation: ft-marker-in .5s var(--mo-ease-out, ease) calc(.9s + var(--i, 0) * .12s) both;
+}
+
+@keyframes ft-marker-in {
+  from { opacity: 0; scale: .4; }
+  to { opacity: 1; scale: 1; }
+}
+
+.ftChart text { fill: #8fa8af; font-size: 13px; font-weight: 700; }
+
+.ftMetrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
+  gap: 9px;
+  padding: 0;
+  margin: 14px 0 0;
+  list-style: none;
+}
+
+.ftMetrics > div {
+  padding: 11px;
+  border: 1px solid rgba(120, 220, 232, .14);
+  border-radius: 11px;
+  background: rgba(4, 20, 27, .6);
+}
+
+.ftMetrics dt { color: #8fa8af; font-size: 10px; font-weight: 850; letter-spacing: .09em; text-transform: uppercase; }
+.ftMetrics dd { margin: 6px 0 0; color: #e2f2f4; font-size: 12.5px; font-weight: 700; line-height: 1.35; }
+
+/* --------------------------------------------------------------------------
+   09 — missions and streaks
+   -------------------------------------------------------------------------- */
+
+.ftMissionGrid { display: grid; gap: 12px; }
+
+.ftMissions { display: grid; gap: 9px; padding: 0; margin: 0; list-style: none; }
+
+.ftMission {
+  padding: 12px 13px;
+  border: 1px solid rgba(120, 220, 232, .15);
+  border-radius: 12px;
+  background: rgba(4, 20, 27, .62);
+}
+
+.ftMissionHead {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.ftMissionHead b { color: #e9f7f9; font-size: 13px; font-weight: 780; }
+.ftMissionHead span { flex: none; color: var(--ft-mint); font-size: 11.5px; font-weight: 800; font-variant-numeric: tabular-nums; }
+
+.ftProgress {
+  height: 7px;
+  margin-top: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(120, 220, 232, .12);
+}
+
+.ftProgress i {
+  display: block;
+  width: var(--ft-progress, 0%);
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #00efb5, #23d8ff);
+  transition: width .6s var(--mo-ease-out, ease);
+}
+
+.ftStreak {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+  padding: 14px;
+  border: 1px solid rgba(0, 239, 181, .22);
+  border-radius: 13px;
+  background: linear-gradient(140deg, rgba(0, 239, 181, .1), rgba(3, 17, 24, .6));
+}
+
+.ftRing { position: relative; width: 74px; height: 74px; flex: none; }
+.ftRing svg { width: 100%; height: 100%; rotate: -90deg; }
+.ftRing circle { fill: none; stroke-width: 7; }
+.ftRing .ftRingTrack { stroke: rgba(120, 220, 232, .16); }
+
+.ftRing .ftRingValue {
+  stroke: url(#ft-ring-gradient);
+  stroke-linecap: round;
+  stroke-dasharray: var(--ft-ring-len);
+  stroke-dashoffset: var(--ft-ring-offset);
+  transition: stroke-dashoffset .7s var(--mo-ease-out, ease);
+}
+
+.ftRingLabel {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  text-align: center;
+}
+
+.ftRingLabel b { display: block; color: #fff; font-size: 19px; font-weight: 850; line-height: 1; font-variant-numeric: tabular-nums; }
+.ftRingLabel span { color: #8fa8af; font-size: 9px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
+
+.ftStreakBody p { margin: 0; color: #cfe3e7; font-size: 12.5px; line-height: 1.45; }
+
+.ftDemoButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  margin-top: 10px;
+  padding: 0 14px;
+  color: #00231c;
+  border: 0;
+  border-radius: 10px;
+  background: var(--ft-mint);
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform .2s, box-shadow .2s;
+}
+
+.ftDemoButton:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0, 239, 181, .25); }
+.ftDemoButton[disabled] { opacity: .55; cursor: default; transform: none; box-shadow: none; }
+
+.ftMilestone {
+  margin: 10px 0 0;
+  color: #b9ffe9;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+/* --------------------------------------------------------------------------
+   10 — AI coach: observation → evidence → action
+   -------------------------------------------------------------------------- */
+
+.ftCoach { display: grid; gap: 10px; padding: 0; margin: 0; list-style: none; counter-reset: ft-coach; }
+
+.ftCoach > div {
+  position: relative;
+  padding: 13px 14px 13px 46px;
+  border: 1px solid rgba(120, 220, 232, .16);
+  border-radius: 13px;
+  background: rgba(4, 20, 27, .66);
+  opacity: 0;
+}
+
+.ftCoachBlock[data-inview] .ftCoach > div {
+  animation: ft-field-in .6s var(--mo-ease-out, ease) calc(.2s + var(--i, 0) * .14s) both;
+}
+
+.ftCoach > div::before {
+  content: "";
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--ft-mint);
+  border-radius: 50%;
+  background: rgba(0, 239, 181, .14);
+}
+
+/* The connecting thread between the three steps. */
+.ftCoach > div:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 38px;
+  left: 23px;
+  bottom: -11px;
+  width: 1px;
+  background: linear-gradient(180deg, rgba(0, 239, 181, .5), transparent);
+}
+
+.ftCoach dt { color: var(--ft-mint); font-size: 10px; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; }
+.ftCoach dd { margin: 6px 0 0; color: #dbebee; font-size: 12.5px; line-height: 1.5; }
+
+.ftMorning {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  margin-top: 12px;
+  padding: 12px 14px;
+  border: 1px solid rgba(161, 139, 255, .28);
+  border-radius: 13px;
+  background: linear-gradient(140deg, rgba(60, 46, 110, .4), rgba(3, 17, 24, .6));
+}
+
+.ftMorning time { color: #ded3ff; font-size: 17px; font-weight: 850; font-variant-numeric: tabular-nums; }
+.ftMorning p { margin: 0; color: #cfd6ee; font-size: 12px; line-height: 1.45; }
+
+/* --------------------------------------------------------------------------
+   11 — weekly report preview
+   -------------------------------------------------------------------------- */
+
+.ftReport { display: grid; gap: 12px; }
+
+.ftReportHead {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-bottom: 11px;
+  border-bottom: 1px solid rgba(120, 220, 232, .16);
+}
+
+.ftReportHead b { color: #fff; font-size: 15px; font-weight: 850; letter-spacing: -.02em; }
+.ftReportHead span { color: #8fa8af; font-size: 11px; font-weight: 750; letter-spacing: .08em; text-transform: uppercase; }
+
+.ftFocus {
+  padding: 13px 14px;
+  border: 1px solid rgba(0, 239, 181, .32);
+  border-radius: 12px;
+  background: linear-gradient(140deg, rgba(0, 239, 181, .1), rgba(3, 17, 24, .55));
+}
+
+.ftFocus dt { color: var(--ft-mint); font-size: 10px; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; }
+.ftFocus dd { margin: 7px 0 0; color: #e9f7f9; font-size: 14px; line-height: 1.45; font-weight: 650; }
+
+.ftArchive { display: flex; gap: 7px; padding: 0; margin: 0; list-style: none; overflow-x: auto; scrollbar-width: none; }
+.ftArchive::-webkit-scrollbar { display: none; }
+
+.ftArchive li {
+  flex: none;
+  padding: 9px 11px;
+  color: #b6cfd4;
+  border: 1px solid rgba(120, 220, 232, .16);
+  border-radius: 9px;
+  background: rgba(4, 20, 27, .6);
+  font-size: 11px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.ftArchive li:first-child { color: #c9fff1; border-color: rgba(0, 239, 181, .4); }
+
+/* --------------------------------------------------------------------------
+   12 — checklist demo
+   -------------------------------------------------------------------------- */
+
+.ftChecklist { display: grid; gap: 7px; padding: 0; margin: 0; list-style: none; }
+
+.ftChecklist label {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  gap: 11px;
+  align-items: center;
+  min-height: 44px;
+  padding: 9px 12px;
+  color: #dbebee;
+  border: 1px solid rgba(120, 220, 232, .14);
+  border-radius: 11px;
+  background: rgba(4, 20, 27, .6);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color .2s, background .2s, color .2s;
+  /* Containing block for the visually hidden checkbox. */
+  position: relative;
+}
+
+.ftChecklist label:hover { border-color: rgba(0, 239, 181, .38); }
+.ftChecklist input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+
+.ftBox {
+  display: grid;
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  color: transparent;
+  border: 1px solid rgba(120, 220, 232, .4);
+  border-radius: 7px;
+  transition: color .18s, border-color .18s, background .18s, scale .18s;
+}
+
+.ftChecklist input:checked ~ .ftBox {
+  color: #00231c;
+  border-color: var(--ft-mint);
+  background: var(--ft-mint);
+  scale: 1.06;
+}
+
+.ftChecklist input:focus-visible ~ .ftBox { outline: 2px solid var(--ft-mint); outline-offset: 2px; }
+.ftChecklist input:checked ~ span { color: #fff; }
+
+.ftChecklistFoot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.ftChecklistFoot p { margin: 0; color: #9fb6bc; font-size: 11.5px; }
+.ftChecklistFoot b { color: var(--ft-mint); font-variant-numeric: tabular-nums; }
+
+/* --------------------------------------------------------------------------
+   13 — Android: a schematic phone, not a screenshot
+   -------------------------------------------------------------------------- */
+
+.ftPhoneRow { display: grid; grid-template-columns: minmax(0, 200px) minmax(0, 1fr); gap: clamp(14px, 1.8vw, 26px); align-items: center; }
+
+.ftPhone {
+  position: relative;
+  padding: 11px 9px;
+  border: 1px solid rgba(120, 220, 232, .28);
+  border-radius: 26px;
+  background: linear-gradient(170deg, rgba(10, 36, 46, .9), rgba(2, 12, 18, .95));
+  box-shadow: inset 0 1px 0 rgba(210, 255, 252, .1), 0 22px 48px rgba(0, 0, 0, .42);
+}
+
+.ftPhoneScreen {
+  display: grid;
+  gap: 8px;
+  padding: 12px 10px 10px;
+  border-radius: 18px;
+  background: rgba(1, 10, 15, .9);
+}
+
+.ftPhoneBar {
+  height: 4px;
+  width: 34%;
+  margin: 0 auto 4px;
+  border-radius: 999px;
+  background: rgba(120, 220, 232, .3);
+}
+
+.ftPhoneCard {
+  padding: 9px 10px;
+  border: 1px solid rgba(120, 220, 232, .16);
+  border-radius: 10px;
+  background: rgba(6, 26, 34, .8);
+}
+
+.ftPhoneCard b { display: block; color: #d7ecef; font-size: 9.5px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+.ftPhoneCard i { display: block; height: 4px; margin-top: 7px; border-radius: 999px; background: linear-gradient(90deg, rgba(0, 239, 181, .7), rgba(35, 216, 255, .2)); }
+.ftPhoneCard i + i { width: 62%; margin-top: 5px; }
+
+.ftPhoneNav {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  padding-top: 9px;
+  margin-top: 2px;
+  border-top: 1px solid rgba(120, 220, 232, .14);
+}
+
+.ftPhoneNav span { display: grid; place-items: center; color: #7f979e; }
+.ftPhoneNav span:first-child { color: var(--ft-mint); }
+
+.ftShade {
+  padding: 12px;
+  border: 1px solid rgba(161, 139, 255, .3);
+  border-radius: 14px;
+  background: linear-gradient(150deg, rgba(42, 36, 86, .55), rgba(3, 17, 24, .7));
+}
+
+.ftShadeHead { display: flex; align-items: center; gap: 8px; color: #ded3ff; font-size: 10px; font-weight: 850; letter-spacing: .1em; text-transform: uppercase; }
+.ftShade p { margin: 9px 0 0; color: #dbe3f6; font-size: 12.5px; line-height: 1.45; }
+
+.ftShadeActions { display: flex; gap: 7px; margin-top: 11px; }
+
+.ftShadeActions span {
+  padding: 7px 11px;
+  color: #cfd6ee;
+  border: 1px solid rgba(161, 139, 255, .32);
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 750;
+}
+
+/* --------------------------------------------------------------------------
+   Closing CTA
+   -------------------------------------------------------------------------- */
+
+.ftCta {
+  position: relative;
+  overflow: clip;
+  isolation: isolate;
+  margin-top: clamp(50px, 6vw, 92px);
+  border-top: 1px solid var(--ft-line);
+  contain: layout paint;
+}
+
+.ftCtaGlow {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 112%, rgba(0, 239, 181, .2), transparent 58%),
+    radial-gradient(ellipse at 14% 10%, rgba(161, 139, 255, .12), transparent 46%);
+}
+
+.ftCtaInner {
+  display: grid;
+  justify-items: center;
+  padding-block: clamp(62px, 7vw, 112px);
+  text-align: center;
+}
+
+.ftCtaInner h2 {
+  max-width: 22ch;
+  margin: clamp(14px, 1.6vw, 20px) 0 0;
+  font-size: clamp(34px, 4.6vw, 64px);
+  line-height: .98;
+  letter-spacing: -.055em;
+  font-weight: 850;
+}
+
+.ftCtaInner > p {
+  max-width: 58ch;
+  margin: clamp(16px, 1.8vw, 22px) 0 0;
+  color: #d4e5e9;
+  font-size: clamp(15px, 1.25vw, 19px);
+  line-height: 1.5;
+}
+
+.ftCtaActions { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: clamp(24px, 2.6vw, 34px); }
+
+.ftTrust { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 22px; padding: 0; margin: clamp(26px, 3vw, 40px) 0 0; list-style: none; }
+
+.ftTrust li { display: inline-flex; align-items: center; gap: 8px; color: #a9c0c7; font-size: 12.5px; font-weight: 650; }
+.ftTrust svg { color: var(--ft-mint); }
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1199px) {
+  .ftHeroInner { grid-template-columns: minmax(0, 1fr); }
+  .ftHeroFigure { order: -1; max-width: 520px; }
+  .ftFeature[data-wide] .ftFeatureInner,
+  .ftFeatureInner { grid-template-columns: minmax(0, 1fr); }
+  .ftFeature[data-flip] .ftFeatureCopy { order: 0; }
+  .ftExplorerInner { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* The sidebar is hidden below 1100px, so the gutter goes with it. */
+@media (max-width: 1100px) {
+  .ftHero,
+  .ftExplorer,
+  .ftBody,
+  .ftCta { margin-left: 0; }
+}
+
+@media (max-width: 767px) {
+  .ftPage { --ft-radius: 18px; }
+  .ftHeroInner { padding-block: 104px 28px; }
+  .ftHeroTitle { max-width: none; }
+  .ftFeature { scroll-margin-top: 150px; }
+  .ftPhoneRow { grid-template-columns: minmax(0, 1fr); }
+  .ftPhone { max-width: 230px; margin-inline: auto; }
+  .ftBars > div { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  .ftMatrix { font-size: 11px; }
+  .ftCell { min-height: 68px; padding: 9px 7px; }
+  .ftLedger { font-size: 11.5px; }
+  .ftLedger th, .ftLedger td { padding: 8px 6px; }
+}
+
+/* 320px still has to work: nothing may overflow the viewport. */
+@media (max-width: 420px) {
+  .ftHeroActions { flex-direction: column; align-items: stretch; }
+  .ftHeroActions .waitlist, .ftHeroActions .demo { width: 100%; }
+  .ftFields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ftScan[data-inview] .ftScanLine { animation: none; opacity: 0; }
+  .ftScanBlock[data-inview] .ftFields > div,
+  .ftCoachBlock[data-inview] .ftCoach > div { animation: none; opacity: 1; }
+  .ftBarsBlock[data-inview] .ftBarTrack i { animation: none; scale: 1 1; }
+  .ftChartBlock[data-inview] .ftLine { animation: none; stroke-dashoffset: 0; }
+  .ftChartBlock[data-inview] .ftArea,
+  .ftChartBlock[data-inview] .ftMarker { animation: none; opacity: 1; scale: 1; }
+  .ftProgress i, .ftRing .ftRingValue { transition: none; }
+  .ftSkip { transition: none; }
+}

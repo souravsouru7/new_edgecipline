@@ -1,0 +1,635 @@
+/* ==========================================================================
+   /pricing — plan page
+
+   CSS Modules are NOT scoped in this project (next.config.ts routes every
+   *.css through the Tailwind turbopack loader), so these names land in the
+   global stylesheet as written. The prefix here is `pp`: the home page's
+   pricing *section* already owns `pr` (Pricing.module.css in sections/), and
+   the two must not collide.
+
+   Motion is the page-wide `data-reveal` system only — no second scroll engine,
+   and every ambient effect is transform/opacity so it composites.
+   ========================================================================== */
+
+.ppPage {
+  --pp-ink: #02080e;
+  --pp-ink-2: #061723;
+  --pp-mint: #00efb5;
+  --pp-cyan: #23d8ff;
+  --pp-violet: #a18bff;
+  --pp-amber: #f5a623;
+  --pp-text: #eef8fb;
+  --pp-muted: #a9c0c7;
+  --pp-dim: #7f979e;
+  --pp-line: rgba(120, 220, 232, .16);
+  --pp-gutter: clamp(20px, 4.4vw, 76px);
+  --pp-max: 1240px;
+
+  position: relative;
+  min-height: 100svh;
+  background:
+    radial-gradient(ellipse at 50% -10%, #07303a 0%, rgba(2, 11, 16, 0) 54%),
+    linear-gradient(180deg, var(--pp-ink) 0%, var(--pp-ink-2) 44%, var(--pp-ink) 100%);
+  color: var(--pp-text);
+}
+
+.ppHero,
+.ppPlans,
+.ppCompare,
+.ppFaq,
+.ppCta { margin-left: clamp(210px, 13.3vw, 250px); }
+
+.ppInner {
+  width: min(100%, var(--pp-max));
+  padding-inline: var(--pp-gutter);
+  margin-inline: auto;
+}
+
+.ppSkip {
+  position: absolute;
+  z-index: 40;
+  top: 10px;
+  left: 50%;
+  padding: 11px 18px;
+  color: #00231c;
+  border-radius: 10px;
+  background: var(--pp-mint);
+  font-size: 14px;
+  font-weight: 800;
+  translate: -50% -180%;
+  transition: translate .18s var(--mo-ease-out, ease);
+}
+
+.ppSkip:focus-visible { translate: -50% 0; }
+
+/* --------------------------------------------------------------------------
+   Hero
+   -------------------------------------------------------------------------- */
+
+.ppHero { position: relative; overflow: clip; isolation: isolate; contain: layout paint; }
+
+.ppHeroGlow {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 2%, rgba(0, 239, 181, .15), transparent 46%),
+    radial-gradient(ellipse at 84% 72%, rgba(161, 139, 255, .1), transparent 44%);
+}
+
+.ppGrid {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  pointer-events: none;
+  opacity: .45;
+  background-image:
+    linear-gradient(90deg, var(--pp-line) 1px, transparent 1px),
+    linear-gradient(180deg, var(--pp-line) 1px, transparent 1px);
+  background-size: 76px 76px;
+  mask-image: radial-gradient(ellipse at 50% 0%, #000 8%, transparent 62%);
+}
+
+.ppHeroInner {
+  display: grid;
+  justify-items: center;
+  padding-block: clamp(92px, 9vw, 148px) clamp(30px, 3.4vw, 48px);
+  text-align: center;
+}
+
+.ppCrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0;
+  margin: 0 0 20px;
+  color: var(--pp-muted);
+  font-size: 13px;
+  font-weight: 600;
+  list-style: none;
+}
+
+.ppCrumbs a { border-bottom: 1px solid transparent; transition: color .2s, border-color .2s; }
+.ppCrumbs a:hover { color: var(--pp-mint); border-bottom-color: currentColor; }
+.ppCrumbs li[aria-current] { color: var(--pp-text); }
+.ppCrumbs svg { flex: none; opacity: .5; }
+
+.ppLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 14px 7px 11px;
+  margin: 0 0 clamp(16px, 1.8vw, 24px);
+  color: #c8fff0;
+  border: 1px solid rgba(0, 239, 181, .4);
+  border-radius: 999px;
+  background: rgba(0, 239, 181, .07);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.ppLabel i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--pp-mint);
+  box-shadow: 0 0 10px var(--pp-mint);
+}
+
+.ppTitle {
+  max-width: 16ch;
+  margin: 0;
+  font-size: clamp(38px, 5.4vw, 78px);
+  line-height: .95;
+  letter-spacing: -.055em;
+  font-weight: 850;
+}
+
+.ppTitle span { display: block; }
+.ppTitle em { font-style: normal; color: var(--pp-mint); }
+
+.ppLede {
+  max-width: 54ch;
+  margin: clamp(18px, 2vw, 26px) 0 0;
+  color: #dbeaee;
+  font-size: clamp(16px, 1.3vw, 21px);
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   Plan cards
+   -------------------------------------------------------------------------- */
+
+.ppPlans { position: relative; }
+
+.ppCards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: clamp(14px, 1.6vw, 22px);
+  padding: clamp(14px, 2vw, 28px) 0 0;
+  margin: 0;
+  list-style: none;
+}
+
+.ppCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(22px, 2.2vw, 32px);
+  border: 1px solid var(--pp-line);
+  border-radius: 24px;
+  background: linear-gradient(162deg, rgba(10, 42, 54, .5), rgba(3, 15, 23, .72));
+  box-shadow: inset 0 1px 0 rgba(210, 255, 252, .06);
+  transition: border-color .26s var(--mo-ease-soft, ease), transform .26s var(--mo-ease-soft, ease), box-shadow .26s var(--mo-ease-soft, ease);
+}
+
+.ppCard:hover {
+  border-color: rgba(120, 220, 232, .34);
+  transform: translateY(-3px);
+  box-shadow: inset 0 1px 0 rgba(210, 255, 252, .09), 0 22px 54px rgba(0, 0, 0, .34);
+}
+
+/* The featured plan: a gradient hairline, drawn as a border-box mask so the
+   card keeps its own background and nothing has to be double-painted. */
+.ppCard[data-featured] {
+  border-color: transparent;
+  background:
+    linear-gradient(162deg, rgba(0, 239, 181, .1), rgba(3, 17, 24, .78)) padding-box,
+    linear-gradient(150deg, var(--pp-mint), rgba(35, 216, 255, .5) 52%, rgba(161, 139, 255, .45)) border-box;
+  box-shadow: inset 0 1px 0 rgba(210, 255, 252, .12), 0 24px 60px rgba(0, 0, 0, .4), 0 0 40px rgba(0, 239, 181, .08);
+}
+
+.ppCard[data-featured]:hover { border-color: transparent; }
+
+.ppBadge {
+  position: absolute;
+  top: 0;
+  left: clamp(22px, 2.2vw, 32px);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px;
+  color: #00231c;
+  border-radius: 0 0 9px 9px;
+  background: linear-gradient(120deg, var(--pp-mint), var(--pp-cyan));
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.ppCard[data-plan="ultimate"] .ppBadge {
+  color: #2a1a02;
+  background: linear-gradient(120deg, var(--pp-amber), #ffd98a);
+}
+
+.ppPlanName {
+  margin: 10px 0 0;
+  color: #fff;
+  font-size: clamp(17px, 1.4vw, 21px);
+  font-weight: 800;
+  letter-spacing: -.02em;
+}
+
+.ppCard[data-badge] .ppPlanName { margin-top: 22px; }
+
+.ppPlanDesc {
+  min-height: 3.1em;
+  margin: 9px 0 0;
+  color: var(--pp-muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+/* Price block: the headline, the term, then the two derived figures. */
+.ppPrice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  margin: clamp(16px, 1.8vw, 24px) 0 0;
+}
+
+.ppPrice b {
+  color: #fff;
+  font-size: clamp(34px, 3.4vw, 48px);
+  line-height: 1;
+  letter-spacing: -.05em;
+  font-weight: 850;
+  font-variant-numeric: tabular-nums;
+}
+
+.ppPrice span { color: var(--pp-muted); font-size: 13px; font-weight: 650; }
+
+.ppMeta { display: grid; gap: 5px; margin: 12px 0 0; }
+
+.ppPerDay {
+  color: #c9fff1;
+  font-size: 12.5px;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+}
+
+.ppSaving {
+  display: inline-flex;
+  align-self: start;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 9px;
+  color: #bdf7d9;
+  border: 1px solid rgba(0, 239, 181, .3);
+  border-radius: 7px;
+  background: rgba(0, 239, 181, .07);
+  font-size: 11px;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+}
+
+.ppCardCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 50px;
+  margin: clamp(18px, 2vw, 26px) 0 0;
+  padding: 0 18px;
+  color: #d7eef1;
+  border: 1px solid rgba(120, 220, 232, .3);
+  border-radius: 12px;
+  background: rgba(4, 20, 27, .6);
+  font-size: 14px;
+  font-weight: 800;
+  transition: color .22s, border-color .22s, background .22s, transform .22s;
+}
+
+.ppCardCta:hover { color: #fff; border-color: rgba(0, 239, 181, .6); background: rgba(0, 239, 181, .09); transform: translateY(-2px); }
+
+.ppCard[data-featured] .ppCardCta {
+  color: #00231c;
+  border-color: transparent;
+  background: linear-gradient(120deg, var(--pp-mint), var(--pp-cyan));
+  box-shadow: 0 10px 26px rgba(0, 239, 181, .22);
+}
+
+.ppCard[data-featured] .ppCardCta:hover { color: #00231c; transform: translateY(-2px); box-shadow: 0 14px 32px rgba(0, 239, 181, .3); }
+
+.ppDivider {
+  height: 1px;
+  margin: clamp(18px, 2vw, 26px) 0 clamp(14px, 1.6vw, 20px);
+  background: linear-gradient(90deg, rgba(120, 220, 232, .28), transparent 82%);
+}
+
+.ppAllIn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 11px;
+  margin: 0 0 13px;
+  color: #c9fff1;
+  border: 1px solid rgba(0, 239, 181, .26);
+  border-radius: 10px;
+  background: rgba(0, 239, 181, .06);
+  font-size: 11.5px;
+  font-weight: 750;
+  line-height: 1.35;
+}
+
+.ppAllIn svg { flex: none; color: var(--pp-mint); }
+
+.ppIncludes { display: grid; gap: 9px; padding: 0; margin: 0; list-style: none; }
+
+.ppIncludes li {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  color: #dbebee;
+  font-size: 13px;
+  line-height: 1.45;
+  font-weight: 550;
+}
+
+.ppIncludes svg { margin-top: 2px; color: var(--pp-mint); }
+
+/* Not included: struck through and dimmed, as the old cards had it. */
+.ppIncludes li[data-off] { color: #6d848a; }
+.ppIncludes li[data-off] span { text-decoration: line-through; text-decoration-color: rgba(125, 150, 157, .6); }
+.ppIncludes li[data-off] svg { color: #4f666d; }
+
+.ppFootnote {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: clamp(22px, 2.6vw, 34px) 0 0;
+  margin: 0;
+  color: var(--pp-muted);
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.ppFootnote svg { flex: none; color: var(--pp-mint); }
+
+.ppDerived {
+  padding: 10px 0 0;
+  margin: 0;
+  color: #6d848a;
+  font-size: 11.5px;
+  text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   Comparison table
+   -------------------------------------------------------------------------- */
+
+.ppCompare { padding-top: clamp(56px, 6vw, 96px); }
+
+.ppSectionHead { display: grid; gap: 12px; margin-bottom: clamp(20px, 2.4vw, 32px); }
+
+.ppSectionHead h2 {
+  margin: 0;
+  font-size: clamp(26px, 3vw, 42px);
+  line-height: 1.02;
+  letter-spacing: -.05em;
+  font-weight: 850;
+}
+
+.ppSectionHead p { max-width: 58ch; margin: 0; color: var(--pp-muted); font-size: clamp(14px, 1.1vw, 17px); line-height: 1.55; }
+
+/* The mobile plan picker. Hidden on desktop, where all three columns fit. */
+.ppPicker { display: none; gap: 5px; padding: 5px; margin-bottom: 14px; border: 1px solid var(--pp-line); border-radius: 12px; background: rgba(2, 13, 19, .7); }
+
+.ppPicker button {
+  flex: 1;
+  min-height: 44px;
+  padding: 0 10px;
+  color: #bdd6db;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: color .2s, background .2s;
+}
+
+.ppPicker [aria-pressed="true"] { color: #00231c; background: var(--pp-mint); }
+
+.ppTableWrap {
+  overflow: hidden;
+  border: 1px solid var(--pp-line);
+  border-radius: 20px;
+  background: linear-gradient(170deg, rgba(8, 34, 44, .4), rgba(3, 15, 23, .6));
+}
+
+.ppTable { width: 100%; border-collapse: collapse; }
+
+.ppTable caption { padding: 14px 16px 0; color: var(--pp-dim); font-size: 11.5px; text-align: left; }
+
+.ppTable thead th {
+  padding: 14px 12px;
+  color: #cfe3e7;
+  border-bottom: 1px solid var(--pp-line);
+  background: rgba(2, 12, 17, .72);
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: .04em;
+  text-align: center;
+}
+
+.ppTable thead th:first-child { text-align: left; }
+.ppTable thead th[data-featured] { color: #c9fff1; }
+
+.ppTable thead th small { display: block; margin-top: 4px; color: var(--pp-dim); font-size: 10.5px; font-weight: 650; letter-spacing: 0; }
+
+/* Group heading row: one idea per band, so seventeen rows stay readable. */
+.ppGroupRow th {
+  padding: 13px 16px 7px;
+  color: var(--pp-mint);
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: .14em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.ppTable tbody th {
+  padding: 11px 16px;
+  color: #dbebee;
+  border-top: 1px solid rgba(120, 220, 232, .07);
+  font-size: 13px;
+  font-weight: 550;
+  text-align: left;
+}
+
+.ppTable tbody td {
+  padding: 11px 12px;
+  border-top: 1px solid rgba(120, 220, 232, .07);
+  color: #dbebee;
+  font-size: 12.5px;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* The featured column reads as one continuous band down the table. */
+.ppTable [data-featured] { background: rgba(0, 239, 181, .045); }
+
+.ppYes { display: inline-grid; width: 22px; height: 22px; place-items: center; color: #00231c; border-radius: 50%; background: linear-gradient(140deg, var(--pp-mint), var(--pp-cyan)); }
+.ppNo { color: #4f666d; }
+
+/* --------------------------------------------------------------------------
+   FAQ
+   -------------------------------------------------------------------------- */
+
+.ppFaq { padding-top: clamp(56px, 6vw, 96px); }
+
+.ppFaqList {
+  display: grid;
+  gap: 8px;
+  border: 1px solid var(--pp-line);
+  border-radius: 20px;
+  padding: 10px;
+  background: linear-gradient(170deg, rgba(8, 34, 44, .34), rgba(3, 15, 23, .56));
+}
+
+/* `contain` bounds the layout an opening answer costs to this card, rather
+   than letting it re-run through the list and the page below it. */
+.ppFaqItem { contain: layout style; border-radius: 14px; background: rgba(4, 20, 27, .5); transition: background .22s; }
+.ppFaqItem[data-open] { background: rgba(0, 239, 181, .06); }
+
+.ppFaqItem h3 { margin: 0; }
+
+.ppFaqItem button {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 24px;
+  gap: 14px;
+  align-items: center;
+  width: 100%;
+  min-height: 60px;
+  padding: 14px 16px;
+  color: #eaf6f8;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  font: inherit;
+  font-size: clamp(14px, 1.1vw, 16.5px);
+  font-weight: 700;
+  letter-spacing: -.015em;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ppFaqItem button:hover { color: #fff; }
+
+/* Two bars, so the plus can collapse into a real minus. */
+.ppFaqIcon { position: relative; display: block; width: 24px; height: 24px; }
+
+.ppFaqIcon i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 13px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--pp-mint);
+  translate: -50% -50%;
+  transition: rotate .26s var(--mo-ease-soft, ease), opacity .26s var(--mo-ease-soft, ease);
+}
+
+.ppFaqIcon i:last-child { rotate: 90deg; }
+.ppFaqItem[data-open] .ppFaqIcon i:last-child { rotate: 0deg; opacity: 0; }
+
+/* 0fr → 1fr animates the height without measuring anything and without
+   clipping the text mid-transition. */
+.ppFaqPanel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .24s var(--mo-ease-soft, ease); }
+.ppFaqItem[data-open] .ppFaqPanel { grid-template-rows: 1fr; }
+.ppFaqPanel > div { overflow: hidden; }
+.ppFaqPanel p { margin: 0; padding: 0 16px 16px; color: #c6d9dd; font-size: 14px; line-height: 1.65; }
+
+/* Opacity composites, so the answer reads as open on the first frame. */
+.ppFaqPanel p { opacity: 0; transition: opacity .2s ease .04s; }
+.ppFaqItem[data-open] .ppFaqPanel p { opacity: 1; }
+
+/* --------------------------------------------------------------------------
+   Closing CTA
+   -------------------------------------------------------------------------- */
+
+.ppCta {
+  position: relative;
+  overflow: clip;
+  isolation: isolate;
+  margin-top: clamp(56px, 6vw, 96px);
+  border-top: 1px solid var(--pp-line);
+  contain: layout paint;
+}
+
+.ppCtaGlow {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 112%, rgba(0, 239, 181, .2), transparent 56%),
+    radial-gradient(ellipse at 16% 8%, rgba(161, 139, 255, .12), transparent 44%);
+}
+
+.ppCtaInner { display: grid; justify-items: center; padding-block: clamp(62px, 7vw, 112px); text-align: center; }
+
+.ppCtaInner h2 {
+  max-width: 24ch;
+  margin: clamp(14px, 1.6vw, 20px) 0 0;
+  font-size: clamp(30px, 4.2vw, 58px);
+  line-height: 1;
+  letter-spacing: -.055em;
+  font-weight: 850;
+}
+
+.ppCtaInner > p { max-width: 56ch; margin: clamp(16px, 1.8vw, 22px) 0 0; color: #d4e5e9; font-size: clamp(15px, 1.25vw, 19px); line-height: 1.5; }
+
+.ppCtaActions { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: clamp(24px, 2.6vw, 34px); }
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1100px) {
+  .ppHero, .ppPlans, .ppCompare, .ppFaq, .ppCta { margin-left: 0; }
+}
+
+@media (max-width: 1023px) {
+  .ppCards { grid-template-columns: minmax(0, 1fr); max-width: 520px; margin-inline: auto; }
+  .ppPlanDesc { min-height: 0; }
+  /* Featured first on a single column: it is the recommendation. */
+  .ppCard[data-featured] { order: -1; }
+}
+
+/* Below this the table shows one plan at a time, chosen by the picker. */
+@media (max-width: 767px) {
+  .ppPicker { display: flex; }
+  .ppTable [data-col]:not([data-col="var"]) { display: none; }
+  .ppTable [data-col][data-active] { display: table-cell; }
+  .ppTable tbody th, .ppTable thead th:first-child { padding-inline: 13px; }
+  .ppTable tbody th { font-size: 12.5px; }
+}
+
+@media (max-width: 420px) {
+  .ppCtaActions { flex-direction: column; align-items: stretch; width: 100%; }
+  .ppCtaActions .waitlist, .ppCtaActions .demo { width: 100%; }
+  .ppPrice b { font-size: 34px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ppCard, .ppCardCta, .ppFaqIcon i, .ppFaqPanel { transition: none; }
+  .ppFaqPanel p { opacity: 1; transition: none; }
+  .ppCard:hover, .ppCardCta:hover { transform: none; }
+  .ppSkip { transition: none; }
+}

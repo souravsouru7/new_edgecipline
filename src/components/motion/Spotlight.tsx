@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import { useReducedMotion } from "motion/react";
+import { useReducedMotion } from "./reduced-motion";
+import { onScrollFrame, onViewportResize } from "./scroll-driver";
 
 /**
  * Pointer spotlight + tilt for the step cards.
@@ -28,9 +29,12 @@ export function Spotlight({
 
     const fine = window.matchMedia("(pointer: fine) and (min-width: 1024px)");
     let active: HTMLElement | null = null;
+    // Box of the hovered card, re-read only when it can actually have moved.
+    let box: DOMRect | null = null;
     let detach: (() => void) | undefined;
 
     const clear = () => {
+      box = null;
       if (!active) return;
       active.removeAttribute("data-hover");
       active.style.removeProperty("--mo-sx");
@@ -54,7 +58,7 @@ export function Spotlight({
           card?.setAttribute("data-hover", "");
         }
         if (!card) return;
-        const rect = card.getBoundingClientRect();
+        const rect = (box ??= card.getBoundingClientRect());
         const x = (event.clientX - rect.left) / rect.width;
         const y = (event.clientY - rect.top) / rect.height;
         card.style.setProperty("--mo-sx", `${(x * 100).toFixed(2)}%`);
@@ -63,11 +67,19 @@ export function Spotlight({
         card.style.setProperty("--mo-ty", (y * 2 - 1).toFixed(3));
       };
 
+      const invalidate = () => {
+        box = null;
+      };
+
       root.addEventListener("pointermove", onMove, { passive: true });
       root.addEventListener("pointerleave", clear);
+      const offScroll = onScrollFrame(invalidate);
+      const offResize = onViewportResize(invalidate);
       detach = () => {
         root.removeEventListener("pointermove", onMove);
         root.removeEventListener("pointerleave", clear);
+        offScroll();
+        offResize();
       };
     };
 

@@ -1,17 +1,176 @@
-.section { position: relative; min-height: 540px; margin-left: clamp(210px, 13.3vw, 250px); overflow: hidden; isolation: isolate; background: #020e14; }
-.backgroundMotion { position: absolute; z-index: 0; inset: 0; }
-.background { z-index: 0; object-fit: cover; object-position: center 72%; }
-.shade { position: absolute; z-index: 1; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(2, 14, 20, .55), rgba(2, 14, 20, .18) 32%, rgba(2, 14, 20, .78)), radial-gradient(circle at 46% 70%, rgba(0, 213, 246, .11), transparent 27%); }
-.inner { position: relative; z-index: 2; width: min(100%, 1480px); min-height: inherit; padding: clamp(48px, 4.2vw, 72px) clamp(34px, 5.2vw, 88px) 62px; margin: 0 auto; }
-.header { position: relative; z-index: 2; }
-.header h2 { margin: 0; color: #fff; font-size: clamp(40px, 3.25vw, 56px); line-height: 1; letter-spacing: -.055em; font-weight: 850; }
-.header h2 span { color: #01edce; }.header p { margin: 10px 0 0; color: #e9f7fb; font-size: clamp(15px, 1.35vw, 21px); font-weight: 600; }
-.connector { position: absolute; z-index: 0; top: 56%; right: 11%; left: 11%; height: 1px; overflow: hidden; border-top: 1px dashed rgba(2, 213, 246, .45); }.connector span { display: block; width: 35%; height: 3px; background: linear-gradient(90deg, transparent, #02d5f6, transparent); box-shadow: 0 0 12px #02d5f6; }
-.steps { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 2.8vw, 40px); padding: 38px 0 0; margin: 0; list-style: none; }
-.steps li { position: relative; min-height: 248px; padding: 20px 24px 24px; overflow: hidden; text-align: center; border: 1px solid rgba(1, 237, 206, .42); border-radius: 16px; background: linear-gradient(145deg, rgba(3, 31, 41, .82), rgba(1, 15, 23, .75)); box-shadow: inset 0 1px 0 rgba(195, 255, 250, .08), 0 14px 35px rgba(0, 0, 0, .22); }
-.steps li::before { content: ""; position: absolute; inset: -28% 5% auto; height: 55%; background: radial-gradient(ellipse, rgba(0, 237, 206, .15), transparent 65%); pointer-events: none; }
-.number { position: absolute; top: 19px; left: 21px; color: #01edce; font-size: 28px; line-height: 1; font-weight: 850; letter-spacing: -.06em; }.icon { position: relative; z-index: 1; display: grid; width: 68px; height: 68px; place-items: center; margin: 18px auto 15px; color: #00f7d3; border: 1px solid rgba(0, 247, 211, .7); border-radius: 50%; background: rgba(1, 40, 48, .58); box-shadow: 0 0 0 6px rgba(1, 237, 206, .05), 0 0 22px rgba(0, 247, 211, .23); }
-.steps h3 { position: relative; margin: 0; color: #fff; font-size: clamp(19px, 1.6vw, 25px); line-height: 1.08; letter-spacing: -.04em; }.steps p { position: relative; max-width: 300px; margin: 11px auto 0; color: #c7d9dc; font-size: clamp(14px, 1.04vw, 16px); line-height: 1.38; }
-@media (max-width: 1199px) { .section { min-height: 720px; }.steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }.steps li:last-child { grid-column: 1 / -1; width: calc(50% - clamp(12px, 1.4vw, 20px)); }.connector { display: none; } }
-@media (max-width: 1100px) { .section { margin-left: 0; } }
-@media (max-width: 767px) { .section { min-height: 0; }.background { object-position: 62% 68%; }.shade { background: linear-gradient(180deg, rgba(2, 14, 20, .82), rgba(2, 14, 20, .48) 32%, rgba(2, 14, 20, .85)); }.inner { padding: 100px 20px 48px; }.header h2 { font-size: clamp(30px, 10vw, 40px); }.header p { margin-top: 9px; font-size: 16px; }.steps { grid-template-columns: 1fr; gap: 20px; padding-top: 28px; }.steps li, .steps li:last-child { width: auto; min-height: 250px; grid-column: auto; }.number { font-size: 25px; }.icon { width: 68px; height: 68px; margin-top: 23px; }.steps h3 { font-size: 22px; }.steps p { max-width: 290px; font-size: 15px; }}
+/* ==========================================================================
+   Section 05 — How it works (layout and skin only; motion is in motion.css)
+
+   CSS Modules are NOT scoped in this project — next.config.ts routes every
+   *.css file through the Tailwind turbopack loader, so these names land in the
+   global stylesheet exactly as written. Hence the `hiw` prefix and the `css()`
+   fallback helper in the component.
+
+   The section carries no background of its own: it is transparent over the
+   page's one continuous background layer (app/backdrop.css).
+   ========================================================================== */
+
+.hiw {
+  position: relative;
+  min-height: 540px;
+  margin-left: clamp(210px, 13.3vw, 250px);
+  isolation: isolate;
+}
+
+.hiwFrame {
+  position: relative;
+  display: grid;
+  align-content: center;
+  width: min(100%, 1480px);
+  gap: clamp(20px, 2.4vw, 34px);
+  padding: clamp(48px, 4.2vw, 72px) clamp(34px, 5.2vw, 88px) clamp(52px, 4.6vw, 76px);
+  margin: 0 auto;
+}
+
+/* ---- Heading ------------------------------------------------------------ */
+
+.hiwHeader h2 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(40px, 3.25vw, 56px);
+  line-height: 1;
+  letter-spacing: -.055em;
+  font-weight: 850;
+}
+
+.hiwHeader h2 span { color: #01edce; }
+
+.hiwHeader p {
+  margin: 10px 0 0;
+  color: #e9f7fb;
+  font-size: clamp(15px, 1.35vw, 21px);
+  font-weight: 600;
+}
+
+/* ---- The connector that runs behind the three cards --------------------- */
+
+.hiwConnector {
+  position: absolute;
+  z-index: 0;
+  top: 62%;
+  right: 13%;
+  left: 13%;
+  height: 1px;
+  overflow: hidden;
+  border-top: 1px dashed rgba(2, 213, 246, .4);
+}
+
+.hiwConnector span {
+  display: block;
+  width: 35%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #02d5f6, transparent);
+  box-shadow: 0 0 12px #02d5f6;
+}
+
+/* ---- The three steps ---------------------------------------------------- */
+
+.hiwSteps {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(22px, 2.6vw, 40px);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.hiwStep {
+  position: relative;
+  min-height: clamp(230px, 26svh, 290px);
+  padding: clamp(18px, 2.4svh, 26px) clamp(18px, 1.7vw, 28px);
+  overflow: hidden;
+  text-align: center;
+  border: 1px solid rgba(1, 237, 206, .42);
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(3, 31, 41, .8), rgba(1, 15, 23, .72));
+  box-shadow:
+    inset 0 1px 0 rgba(195, 255, 250, .09),
+    0 18px 46px rgba(0, 0, 0, .3);
+}
+
+.hiwStep::before {
+  content: "";
+  position: absolute;
+  inset: -28% 5% auto;
+  height: 55%;
+  pointer-events: none;
+  background: radial-gradient(ellipse, rgba(0, 237, 206, .15), transparent 65%);
+}
+
+.hiwNumber {
+  position: absolute;
+  top: 17px;
+  left: 20px;
+  color: #01edce;
+  font-size: 26px;
+  line-height: 1;
+  font-weight: 850;
+  letter-spacing: -.06em;
+}
+
+.hiwIcon {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: clamp(60px, 6.4svh, 72px);
+  height: clamp(60px, 6.4svh, 72px);
+  place-items: center;
+  margin: clamp(10px, 1.8svh, 20px) auto clamp(10px, 1.6svh, 16px);
+  color: #00f7d3;
+  border: 1px solid rgba(0, 247, 211, .7);
+  border-radius: 50%;
+  background: rgba(1, 40, 48, .6);
+  box-shadow:
+    0 0 0 6px rgba(1, 237, 206, .05),
+    0 0 22px rgba(0, 247, 211, .23);
+}
+
+.hiwStep h3 {
+  position: relative;
+  margin: 0;
+  color: #fff;
+  font-size: clamp(19px, 1.6vw, 25px);
+  line-height: 1.08;
+  letter-spacing: -.04em;
+}
+
+.hiwStep p {
+  position: relative;
+  max-width: 300px;
+  margin: 11px auto 0;
+  color: #c7d9dc;
+  font-size: clamp(14px, 1.04vw, 16px);
+  line-height: 1.38;
+}
+
+/* ---- Responsive --------------------------------------------------------- */
+
+@media (max-width: 1199px) {
+  .hiwSteps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hiwStep:last-child { grid-column: 1 / -1; width: calc(50% - clamp(11px, 1.3vw, 20px)); }
+  .hiwConnector { display: none; }
+}
+
+@media (max-width: 1100px) {
+  .hiw { margin-left: 0; }
+}
+
+@media (max-width: 767px) {
+  .hiw { min-height: 0; }
+  .hiwFrame { gap: 18px; padding: 100px 20px 48px; }
+  .hiwHeader h2 { font-size: clamp(30px, 10vw, 40px); }
+  .hiwHeader p { margin-top: 9px; font-size: 16px; }
+  .hiwSteps { grid-template-columns: 1fr; gap: 20px; }
+  .hiwStep, .hiwStep:last-child { width: auto; min-height: 240px; grid-column: auto; }
+  .hiwNumber { font-size: 24px; }
+  .hiwIcon { width: 66px; height: 66px; margin-top: 20px; }
+  .hiwStep h3 { font-size: 22px; }
+  .hiwStep p { max-width: 290px; font-size: 15px; }
+}

@@ -1,7 +1,9 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { useMotionValueEvent, useReducedMotion, useSpring } from "motion/react";
+import { useEffect } from "react";
+
+import { useReducedMotion } from "./reduced-motion";
+import { addTicker, onScrollFrame, onViewportResize, requestScrollFrame } from "./scroll-driver";
 
 /**
  * Behaviour island for one scene.
@@ -11,11 +13,15 @@ import { useMotionValueEvent, useReducedMotion, useSpring } from "motion/react";
  *
  *   --mo-progress  how far the section has travelled through the viewport, 0..1
  *                  (see `mode` for the two mappings)
- *   --mo-px/--mo-py  spring-smoothed pointer offset from the section centre, -1..1
+ *   --mo-px/--mo-py  smoothed pointer offset from the section centre, -1..1
  *
  * Keeping the maths here and the displacement in CSS means every layer's depth
  * stays tunable in one stylesheet, and nothing in the markup has to become a
  * Client Component.
+ *
+ * All ten scenes share the page's single scroll listener and single frame
+ * callback (see scroll-driver.ts), and only the ones actually on screen do any
+ * work in it.
  */
 type SceneMotionProps = {
   /** id of the section to drive, without the `#`. */
@@ -38,7 +44,15 @@ type SceneMotionProps = {
   pointerMinWidth?: number;
 };
 
-const POINTER_SPRING = { stiffness: 70, damping: 20, mass: 0.6 } as const;
+/**
+ * Writing a custom property re-styles the section's whole subtree, so a step
+ * smaller than this is spent for nothing: at 1/1000 of the travel no layer on
+ * the page moves even a visible fraction of a pixel.
+ */
+const PROGRESS_EPSILON = 0.001;
+
+/** Time constant of the pointer follow, in seconds. Lower = snappier. */
+const POINTER_TAU = 0.085;
 
 export function SceneMotion({
   target,
@@ -48,18 +62,6 @@ export function SceneMotion({
   pointerMinWidth = 1024,
 }: SceneMotionProps) {
   const reduced = useReducedMotion();
-  const section = useRef<HTMLElement | null>(null);
-  const px = useSpring(0, POINTER_SPRING);
-  const py = useSpring(0, POINTER_SPRING);
-
-  // The springs emit once per frame while the pointer is moving, so the element
-  // is looked up once and kept rather than queried on every tick.
-  useMotionValueEvent(px, "change", (value) => {
-    section.current?.style.setProperty("--mo-px", value.toFixed(4));
-  });
-  useMotionValueEvent(py, "change", (value) => {
-    section.current?.style.setProperty("--mo-py", value.toFixed(4));
-  });
 
   // --- scroll progress -------------------------------------------------------
   useEffect(() => {
@@ -67,13 +69,17 @@ export function SceneMotion({
     const el = document.getElementById(target);
     if (!el) return;
 
+    // Marks the section as a motion scene. motion.css pairs this with
+    // `data-mo-live` below to stand every ambient loop in the section down
+    // while it is off screen, which is most of the page most of the time.
+    el.setAttribute("data-mo-scene", "");
+
     // Geometry is cached and only re-measured on resize or when the section's own
     // box changes (late-loading imagery, breakpoint switches), so the scroll
     // handler never reads layout and never thrashes.
     let top = 0;
     let height = 1;
     let visible = true;
-    let frame = 0;
     let last = -1;
 
     const measure = () => {
@@ -83,7 +89,7 @@ export function SceneMotion({
     };
 
     const write = () => {
-      frame = 0;
+      if (!visible) return;
       const travel = mode === "exit" ? height : height + window.innerHeight;
       const reach =
         mode === "exit"
@@ -91,51 +97,52 @@ export function SceneMotion({
           : window.scrollY + window.innerHeight - top;
       const raw = reach / travel;
       const progress = raw < 0 ? 0 : raw > 1 ? 1 : raw;
-      if (Math.abs(progress - last) < 0.0005) return;
+      if (Math.abs(progress - last) < PROGRESS_EPSILON) return;
       last = progress;
-      el.style.setProperty("--mo-progress", progress.toFixed(4));
-    };
-
-    const schedule = () => {
-      if (!visible || frame) return;
-      frame = requestAnimationFrame(write);
-    };
-
-    const onResize = () => {
-      measure();
-      last = -1;
-      schedule();
+      el.style.setProperty("--mo-progress", progress.toFixed(3));
     };
 
     measure();
     write();
 
-    // Pause the work entirely while the section is far from the viewport.
+    // Pause the work entirely while the section is off screen. The margin is
+    // kept tight on purpose: every extra scene left live is another subtree
+    // re-styled on every frame of the scroll.
     const io = new IntersectionObserver(
       ([entry]) => {
         visible = entry.isIntersecting;
         el.toggleAttribute("data-mo-live", visible);
-        if (visible) {
-          measure();
-          schedule();
-        }
+        if (!visible) return;
+        measure();
+        last = -1;
+        write();
       },
-      { rootMargin: "25% 0px" },
+      { rootMargin: "10% 0px" },
     );
     io.observe(el);
 
-    const ro = new ResizeObserver(onResize);
+    const remeasure = () => {
+      measure();
+      last = -1;
+    };
+
+    const ro = new ResizeObserver(() => {
+      remeasure();
+      requestScrollFrame();
+    });
     ro.observe(el);
 
-    window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", onResize);
+    const offScroll = onScrollFrame(write);
+    const offResize = onViewportResize(remeasure);
 
     return () => {
       io.disconnect();
       ro.disconnect();
-      window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", onResize);
-      if (frame) cancelAnimationFrame(frame);
+      offScroll();
+      offResize();
+      el.removeAttribute("data-mo-scene");
+      el.removeAttribute("data-mo-live");
+      el.style.removeProperty("--mo-progress");
     };
   }, [mode, scroll, target]);
 
@@ -145,18 +152,45 @@ export function SceneMotion({
     const el = document.getElementById(target);
     if (!el) return;
 
-    section.current = el;
     const fine = window.matchMedia(`(pointer: fine) and (min-width: ${pointerMinWidth}px)`);
     let detach: (() => void) | undefined;
 
     const attach = () => {
       detach?.();
       detach = undefined;
-      if (!fine.matches) {
-        px.jump(0);
-        py.jump(0);
-        return;
-      }
+      el.style.removeProperty("--mo-px");
+      el.style.removeProperty("--mo-py");
+      if (!fine.matches) return;
+
+      // The follow is an exponential ease towards the pointer, run from the
+      // page's shared frame loop. It only ticks while there is distance left
+      // to cover, so a still pointer costs nothing at all.
+      let targetX = 0;
+      let targetY = 0;
+      let x = 0;
+      let y = 0;
+      let stop: (() => void) | undefined;
+
+      const tick = (dt: number) => {
+        const k = 1 - Math.exp(-dt / POINTER_TAU);
+        x += (targetX - x) * k;
+        y += (targetY - y) * k;
+        const done = Math.abs(targetX - x) < 0.002 && Math.abs(targetY - y) < 0.002;
+        if (done) {
+          x = targetX;
+          y = targetY;
+        }
+        el.style.setProperty("--mo-px", x.toFixed(3));
+        el.style.setProperty("--mo-py", y.toFixed(3));
+        if (done) {
+          stop?.();
+          stop = undefined;
+        }
+      };
+
+      const start = () => {
+        if (!stop) stop = addTicker(tick);
+      };
 
       // Pointer events can outpace the frame rate, so the section box is read
       // at most once per scroll or resize rather than once per move.
@@ -167,23 +201,26 @@ export function SceneMotion({
 
       const onMove = (event: PointerEvent) => {
         box ??= el.getBoundingClientRect();
-        px.set(((event.clientX - box.left) / box.width) * 2 - 1);
-        py.set(((event.clientY - box.top) / box.height) * 2 - 1);
+        targetX = ((event.clientX - box.left) / box.width) * 2 - 1;
+        targetY = ((event.clientY - box.top) / box.height) * 2 - 1;
+        start();
       };
       const onLeave = () => {
-        px.set(0);
-        py.set(0);
+        targetX = 0;
+        targetY = 0;
+        start();
       };
 
       el.addEventListener("pointermove", onMove, { passive: true });
       el.addEventListener("pointerleave", onLeave);
-      window.addEventListener("scroll", invalidate, { passive: true });
-      window.addEventListener("resize", invalidate);
+      const offScroll = onScrollFrame(invalidate);
+      const offResize = onViewportResize(invalidate);
       detach = () => {
         el.removeEventListener("pointermove", onMove);
         el.removeEventListener("pointerleave", onLeave);
-        window.removeEventListener("scroll", invalidate);
-        window.removeEventListener("resize", invalidate);
+        offScroll();
+        offResize();
+        stop?.();
       };
     };
 
@@ -192,11 +229,10 @@ export function SceneMotion({
     return () => {
       fine.removeEventListener("change", attach);
       detach?.();
-      section.current = null;
       el.style.removeProperty("--mo-px");
       el.style.removeProperty("--mo-py");
     };
-  }, [pointer, pointerMinWidth, px, py, reduced, target]);
+  }, [pointer, pointerMinWidth, reduced, target]);
 
   return null;
 }

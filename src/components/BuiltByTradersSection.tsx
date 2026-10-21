@@ -14,7 +14,6 @@ const vars = (value: Record<string, string | number>) => value as CSSProperties;
 
 export function BuiltByTradersSection() {
   return <section id="story" className="built-traders" data-sequence aria-labelledby="story-heading">
-    <div className="story-background" aria-hidden="true" />
     <div className="story-ribbons" aria-hidden="true"><Image src="/built-by-traders/ribbons.webp" alt="" fill sizes="(max-width: 767px) 100vw, 87vw" /></div>
     <NeuralOverlay />
     <div className="story-copy"><h2 id="story-heading" data-reveal>Built by <span>traders,</span><br /><span>for traders.</span></h2><p data-reveal style={vars({ "--mo-delay": ".14s" })}>Edgecipline was born from real trading struggles — the overtrading, the impulsive decisions, the frustration. We built it to help traders like us gain self-awareness, understand behavior, and trade with a calmer, clearer mind.</p></div>

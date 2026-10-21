@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useReducedMotion } from "motion/react";
+import { useReducedMotion } from "./reduced-motion";
 
 /**
  * Counts `[data-count]` elements up to their value the first time they are

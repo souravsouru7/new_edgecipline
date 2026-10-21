@@ -1,29 +1,27 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
-import { type LucideIcon, Flame, GitFork, RotateCcw, Target } from "lucide-react";
 
 type EmotionStage = {
   title: string;
   detail: string;
   tone: "rush" | "rule" | "regret" | "repeat";
-  icon: LucideIcon;
+  icon: string;
 };
 
 export const emotionStages: EmotionStage[] = [
-  { title: "Rush", detail: "FOMO kicks in", tone: "rush", icon: Flame },
-  { title: "Rule Break", detail: "Ignore your plan", tone: "rule", icon: GitFork },
-  { title: "Regret", detail: "Look at the results", tone: "regret", icon: Target },
-  { title: "Repeat", detail: "Same patterns", tone: "repeat", icon: RotateCcw },
+  { title: "Rush", detail: "FOMO kicks in", tone: "rush", icon: "/images/emotional-loop/rush.webp" },
+  { title: "Rule Break", detail: "Ignore your plan", tone: "rule", icon: "/images/emotional-loop/rule-break.webp" },
+  { title: "Regret", detail: "Look at the results", tone: "regret", icon: "/images/emotional-loop/regret.webp" },
+  { title: "Repeat", detail: "Same patterns", tone: "repeat", icon: "/images/emotional-loop/repeat.webp" },
 ];
 
 const vars = (value: Record<string, string | number>) => value as CSSProperties;
 
 function EmotionNode({ stage, index }: { stage: EmotionStage; index: number }) {
-  const Icon = stage.icon;
   // --i places the node in the four-beat cycle, so brightness hands over from
   // one stage to the next in the same order as the travelling light.
   return <button type="button" className={`emotion-node ${stage.tone}`} style={vars({ "--i": index })} aria-describedby={`stage-${stage.tone}`}>
-    <Icon aria-hidden="true" size={23} strokeWidth={2.5} />
+    <Image className="emotion-icon" src={stage.icon} alt="" width={320} height={320} aria-hidden="true" />
     <strong>{stage.title}</strong><span>{stage.detail}</span><span className="node-tooltip" role="tooltip">{stage.title}: {stage.detail}</span>
   </button>;
 }
@@ -32,7 +30,6 @@ const loopPaths = ["M244 79 C301 90 333 126 343 171", "M345 229 C332 286 293 321
 
 export function EmotionalLoopSection() {
   return <section id="emotional-loop" className="emotional-loop" aria-labelledby="emotional-loop-title">
-    <div className="loop-scene-image" aria-hidden="true"><Image src="/loop/mountains.webp" alt="" fill sizes="(max-width: 767px) 100vw, 87vw" /></div>
     <div className="loop-backdrop" aria-hidden="true" />
     <div className="loop-inner">
       <header className="loop-copy" data-reveal>

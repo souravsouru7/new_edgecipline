@@ -6,6 +6,9 @@
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
+    // scripts/*.mts run under `node --experimental-strip-types`, which resolves
+    // the real `.ts` path rather than a build output.
+    "allowImportingTsExtensions": true,
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "bundler",
@@ -30,5 +33,9 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    "edgeclipine",
+    "Edgecipline_Premium_Features_Page_Prompt_Assets"
+  ]
 }

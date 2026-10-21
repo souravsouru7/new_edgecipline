@@ -1,0 +1,430 @@
+/* ==========================================================================
+   /faq — questions and answers
+
+   CSS Modules are NOT scoped in this project (next.config.ts routes every
+   *.css through the Tailwind turbopack loader), so these names land in the
+   global stylesheet as written. Prefix: `fq` — the home page's FAQ section
+   already owns `faq`, and the two must not collide.
+
+   Twenty-five questions is too many to scroll blindly, so the page is built
+   around finding rather than reading: a search field, a category rail that
+   counts what it holds, and answers that stay closed until asked for.
+   ========================================================================== */
+
+.fqPage {
+  --fq-ink: #02080e;
+  --fq-ink-2: #061723;
+  --fq-mint: #00efb5;
+  --fq-cyan: #23d8ff;
+  --fq-text: #eef8fb;
+  --fq-muted: #a9c0c7;
+  --fq-dim: #7f979e;
+  --fq-line: rgba(120, 220, 232, .16);
+  --fq-gutter: clamp(20px, 4.4vw, 76px);
+  --fq-max: 1240px;
+
+  position: relative;
+  min-height: 100svh;
+  background:
+    radial-gradient(ellipse at 50% -10%, #07303a 0%, rgba(2, 11, 16, 0) 50%),
+    linear-gradient(180deg, var(--fq-ink) 0%, var(--fq-ink-2) 46%, var(--fq-ink) 100%);
+  color: var(--fq-text);
+}
+
+.fqHero,
+.fqBody,
+.fqCta { margin-left: clamp(210px, 13.3vw, 250px); }
+
+.fqInner {
+  width: min(100%, var(--fq-max));
+  padding-inline: var(--fq-gutter);
+  margin-inline: auto;
+}
+
+.fqSkip {
+  position: absolute;
+  z-index: 40;
+  top: 10px;
+  left: 50%;
+  padding: 11px 18px;
+  color: #00231c;
+  border-radius: 10px;
+  background: var(--fq-mint);
+  font-size: 14px;
+  font-weight: 800;
+  translate: -50% -180%;
+  transition: translate .18s var(--mo-ease-out, ease);
+}
+
+.fqSkip:focus-visible { translate: -50% 0; }
+
+/* --------------------------------------------------------------------------
+   Hero
+   -------------------------------------------------------------------------- */
+
+.fqHero { position: relative; overflow: clip; isolation: isolate; contain: layout paint; }
+
+.fqHeroGlow {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(0, 239, 181, .14), transparent 44%),
+    radial-gradient(ellipse at 88% 70%, rgba(35, 216, 255, .08), transparent 44%);
+}
+
+/* A field of faint question marks, set as a repeating text-free pattern: two
+   diagonal hairlines, so the hero has texture without an image request. */
+.fqHeroWeave {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  pointer-events: none;
+  opacity: .5;
+  background-image:
+    repeating-linear-gradient(62deg, var(--fq-line) 0 1px, transparent 1px 58px),
+    repeating-linear-gradient(-62deg, rgba(120, 220, 232, .09) 0 1px, transparent 1px 58px);
+  mask-image: radial-gradient(ellipse at 50% 10%, #000 6%, transparent 64%);
+}
+
+.fqHeroInner { display: grid; justify-items: center; padding-block: clamp(92px, 9vw, 148px) clamp(28px, 3.2vw, 44px); text-align: center; }
+
+.fqCrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0;
+  margin: 0 0 20px;
+  color: var(--fq-muted);
+  font-size: 13px;
+  font-weight: 600;
+  list-style: none;
+}
+
+.fqCrumbs a { border-bottom: 1px solid transparent; transition: color .2s, border-color .2s; }
+.fqCrumbs a:hover { color: var(--fq-mint); border-bottom-color: currentColor; }
+.fqCrumbs li[aria-current] { color: var(--fq-text); }
+.fqCrumbs svg { flex: none; opacity: .5; }
+
+.fqLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 14px 7px 11px;
+  margin: 0 0 clamp(16px, 1.8vw, 24px);
+  color: #c8fff0;
+  border: 1px solid rgba(0, 239, 181, .4);
+  border-radius: 999px;
+  background: rgba(0, 239, 181, .07);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.fqLabel i { width: 7px; height: 7px; border-radius: 50%; background: var(--fq-mint); box-shadow: 0 0 10px var(--fq-mint); }
+
+.fqTitle {
+  max-width: 20ch;
+  margin: 0;
+  font-size: clamp(36px, 5vw, 70px);
+  line-height: .97;
+  letter-spacing: -.055em;
+  font-weight: 850;
+}
+
+.fqLede { max-width: 62ch; margin: clamp(18px, 2vw, 26px) 0 0; color: #dbeaee; font-size: clamp(16px, 1.25vw, 20px); line-height: 1.55; font-weight: 500; }
+
+/* --------------------------------------------------------------------------
+   Browser: search, rail, list
+   -------------------------------------------------------------------------- */
+
+.fqBody { padding-bottom: clamp(20px, 2.4vw, 32px); }
+
+.fqSearchRow { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; align-items: center; padding-block: clamp(14px, 1.8vw, 24px); }
+
+.fqSearch { position: relative; display: flex; align-items: center; }
+
+.fqSearch > svg { position: absolute; left: 15px; color: var(--fq-dim); pointer-events: none; }
+
+.fqSearch input {
+  width: 100%;
+  min-height: 54px;
+  padding: 0 46px;
+  color: var(--fq-text);
+  border: 1px solid var(--fq-line);
+  border-radius: 14px;
+  background: rgba(4, 20, 27, .72);
+  font: inherit;
+  font-size: 15px;
+}
+
+.fqSearch input::placeholder { color: #6f888f; }
+.fqSearch input:focus-visible { border-color: var(--fq-mint); outline: none; }
+.fqSearch input::-webkit-search-cancel-button { display: none; }
+
+.fqClear {
+  position: absolute;
+  right: 10px;
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  color: var(--fq-dim);
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  cursor: pointer;
+  transition: color .2s, background .2s;
+}
+
+.fqClear:hover { color: #fff; background: rgba(120, 220, 232, .12); }
+
+.fqCount { flex: none; color: var(--fq-muted); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.fqLayout { display: grid; grid-template-columns: minmax(0, 250px) minmax(0, 1fr); gap: clamp(22px, 3vw, 56px); align-items: start; }
+
+/* The rail sticks while the answers scroll past it. */
+.fqRail { position: sticky; top: 24px; }
+
+.fqRailTitle { margin: 0 0 12px; color: var(--fq-dim); font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+
+.fqRailList { display: grid; gap: 3px; padding: 0; margin: 0; list-style: none; }
+
+.fqRailList a {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 12px;
+  color: #c2d6da;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 650;
+  transition: color .2s, border-color .2s, background .2s;
+}
+
+.fqRailList a:hover { color: #fff; border-color: rgba(0, 239, 181, .32); background: rgba(0, 239, 181, .06); }
+.fqRailList a[aria-current] { color: #c9fff1; border-color: rgba(0, 239, 181, .4); background: rgba(0, 239, 181, .09); }
+
+.fqRailList b { color: var(--fq-mint); font-size: 11px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.fqRailList li[hidden] { display: none; }
+
+/* Deliberately block, not grid: an open answer animates its height, and a
+   grid would re-resolve all of its auto tracks on every frame of that. */
+.fqGroups { min-width: 0; }
+.fqGroup + .fqGroup { margin-top: clamp(24px, 3vw, 42px); }
+
+.fqGroup { scroll-margin-top: 24px; }
+.fqGroup[hidden] { display: none; }
+
+.fqGroupHead { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; padding-bottom: 12px; margin-bottom: 14px; border-bottom: 1px solid rgba(120, 220, 232, .12); }
+
+.fqGroupHead h2 { margin: 0; color: #fff; font-size: clamp(18px, 1.7vw, 25px); line-height: 1.1; letter-spacing: -.035em; font-weight: 800; }
+.fqGroupHead span { color: var(--fq-dim); font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 10.5px; letter-spacing: .12em; font-variant-numeric: tabular-nums; }
+
+.fqList { padding: 0; margin: 0; list-style: none; }
+.fqList li + li { margin-top: 8px; }
+.fqList li[hidden] { display: none; }
+
+.fqItem {
+  /* Bounds the per-frame layout of an opening answer to this card. */
+  contain: layout style;
+  border: 1px solid var(--fq-line);
+  border-radius: 14px;
+  background: linear-gradient(166deg, rgba(10, 42, 54, .34), rgba(3, 15, 23, .56));
+  transition: border-color .22s, background .22s;
+}
+
+.fqItem:hover { border-color: rgba(120, 220, 232, .3); }
+.fqItem[data-open] { border-color: rgba(0, 239, 181, .34); background: linear-gradient(166deg, rgba(0, 239, 181, .08), rgba(3, 17, 24, .6)); }
+
+.fqItem h3 { margin: 0; }
+
+.fqItem button {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 22px;
+  gap: 14px;
+  align-items: center;
+  width: 100%;
+  min-height: 60px;
+  padding: 15px 17px;
+  color: #eaf6f8;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  font: inherit;
+  font-size: clamp(14px, 1.1vw, 16.5px);
+  font-weight: 700;
+  letter-spacing: -.015em;
+  text-align: left;
+  cursor: pointer;
+}
+
+.fqItem button:hover { color: #fff; }
+
+.fqChevron { display: grid; place-items: center; color: var(--fq-mint); transition: rotate .28s var(--mo-ease-soft, ease); }
+.fqItem[data-open] .fqChevron { rotate: 180deg; }
+
+/* 0fr → 1fr animates the height without measuring anything and without
+   clipping the answer mid-transition. */
+.fqPanel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows .24s var(--mo-ease-soft, ease);
+}
+
+.fqItem[data-open] .fqPanel { grid-template-rows: 1fr; }
+
+.fqPanel > div { overflow: hidden; }
+
+/* Opacity composites, so the answer is legible from the first frame rather
+   than appearing to crawl open with the height. */
+.fqPanel p { opacity: 0; transition: opacity .2s ease .04s; }
+.fqItem[data-open] .fqPanel p { opacity: 1; }
+.fqPanel p { max-width: 74ch; margin: 0; padding: 0 17px 17px; color: #c6d9dd; font-size: 14.5px; line-height: 1.75; }
+
+/* Search miss */
+.fqEmpty { padding: 34px 18px; border: 1px dashed rgba(120, 220, 232, .22); border-radius: 16px; text-align: center; }
+.fqEmpty p { margin: 0; color: var(--fq-muted); font-size: 14.5px; }
+.fqEmpty b { color: #fff; }
+
+/* --------------------------------------------------------------------------
+   Still have questions?
+   -------------------------------------------------------------------------- */
+
+.fqHelp {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(16px, 2.4vw, 34px);
+  align-items: center;
+  padding: clamp(22px, 2.6vw, 34px);
+  margin-top: clamp(30px, 3.4vw, 50px);
+  border: 1px solid rgba(0, 239, 181, .24);
+  border-radius: 22px;
+  background: linear-gradient(150deg, rgba(0, 239, 181, .09), rgba(3, 17, 24, .66));
+}
+
+.fqHelp h2 { margin: 0; color: #fff; font-size: clamp(19px, 1.9vw, 27px); line-height: 1.1; letter-spacing: -.035em; font-weight: 800; }
+.fqHelp p { margin: 9px 0 0; color: var(--fq-muted); font-size: 14.5px; line-height: 1.6; }
+
+.fqHelpAction {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  flex: none;
+  padding: 0 22px;
+  color: #00231c;
+  border-radius: 13px;
+  background: linear-gradient(120deg, var(--fq-mint), var(--fq-cyan));
+  font-size: 14.5px;
+  font-weight: 800;
+  transition: transform .22s, box-shadow .22s;
+}
+
+.fqHelpAction:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(0, 239, 181, .26); }
+
+.fqHelpActions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+
+.fqHelpAlt {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  color: #c2d6da;
+  font-size: 13px;
+  font-weight: 700;
+  border-bottom: 1px solid rgba(120, 220, 232, .28);
+  transition: color .2s, border-color .2s;
+}
+
+.fqHelpAlt:hover { color: #fff; border-color: var(--fq-mint); }
+.fqHelpAlt svg { color: var(--fq-mint); }
+
+/* --------------------------------------------------------------------------
+   Closing CTA
+   -------------------------------------------------------------------------- */
+
+.fqCta {
+  position: relative;
+  overflow: clip;
+  isolation: isolate;
+  margin-top: clamp(50px, 6vw, 92px);
+  border-top: 1px solid var(--fq-line);
+  contain: layout paint;
+}
+
+.fqCtaGlow {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 114%, rgba(0, 239, 181, .2), transparent 56%),
+    radial-gradient(ellipse at 14% 8%, rgba(161, 139, 255, .1), transparent 44%);
+}
+
+.fqCtaInner { display: grid; justify-items: center; padding-block: clamp(62px, 7vw, 112px); text-align: center; }
+
+.fqCtaInner h2 {
+  max-width: 22ch;
+  margin: clamp(14px, 1.6vw, 20px) 0 0;
+  font-size: clamp(32px, 4.4vw, 60px);
+  line-height: .99;
+  letter-spacing: -.055em;
+  font-weight: 850;
+}
+
+.fqCtaInner > p { max-width: 54ch; margin: clamp(16px, 1.8vw, 22px) 0 0; color: #d4e5e9; font-size: clamp(15px, 1.25vw, 19px); line-height: 1.5; }
+
+.fqCtaActions { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: clamp(24px, 2.6vw, 34px); }
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1100px) {
+  .fqHero, .fqBody, .fqCta { margin-left: 0; }
+}
+
+/* The rail becomes a horizontal chip scroller above the answers. */
+@media (max-width: 1023px) {
+  .fqLayout { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .fqRail { position: static; }
+  .fqRailTitle { display: none; }
+  .fqRailList {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+  }
+  .fqRailList::-webkit-scrollbar { display: none; }
+  .fqRailList a { white-space: nowrap; border-color: var(--fq-line); background: rgba(5, 24, 32, .6); }
+}
+
+@media (max-width: 767px) {
+  .fqSearchRow { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .fqCount { order: 2; }
+  .fqHelp { grid-template-columns: minmax(0, 1fr); }
+  .fqHelpAction { justify-content: center; }
+}
+
+@media (max-width: 420px) {
+  .fqCtaActions { flex-direction: column; align-items: stretch; width: 100%; }
+  .fqCtaActions .waitlist, .fqCtaActions .demo { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fqChevron, .fqPanel, .fqItem, .fqHelpAction { transition: none; }
+  .fqPanel p { opacity: 1; transition: none; }
+  .fqHelpAction:hover { transform: none; }
+  .fqSkip { transition: none; }
+}

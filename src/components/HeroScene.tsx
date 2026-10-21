@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
 
-import { GlobeMesh } from "./hero/GlobeMesh";
+import { GlobeCanvas } from "./hero/GlobeCanvas";
 import { PlanetAtmosphere } from "./hero/PlanetAtmosphere";
 
 const keywords = ["Awareness", "Clarity", "Better habits", "Discipline", "Consistency"];
@@ -11,23 +11,18 @@ const vars = (value: Record<string, string | number>) => value as CSSProperties;
 export function HeroScene() {
   return (
     <>
-      {/* The landscape is its own layer now, so it can take the slowest
-          parallax without repainting a background-position every frame. */}
-      <div className="hero-sky" aria-hidden="true" />
+      {/* No landscape layer here any more: the hero's background — ink
+          gradient, landscape, aura and scrim — is the whole page's background
+          now, rendered once by components/PageSky.tsx. */}
       <div className="scene" aria-hidden="true">
         <div className="scene-overlay" />
+        {/* The planet is drawn, not photographed: GlobeCanvas renders the
+            point cloud, graticule and orbit rings on one canvas, so it
+            actually turns. That replaced a 541KB still plus an SVG mesh
+            animated on top of it. PlanetAtmosphere keeps the surrounding
+            glow and motes, which stay in CSS. */}
         <div className="globe">
-          <Image
-            src="/hero/globe.webp"
-            alt=""
-            width={1600}
-            height={1600}
-            priority
-            sizes="(max-width: 767px) 86vw, (max-width: 1200px) 52vw, 720px"
-          />
-          {/* Sits over the artwork and under the light sweep, so the sweep
-              passes across the mesh as well. */}
-          <GlobeMesh />
+          <GlobeCanvas />
           <PlanetAtmosphere />
         </div>
         <div className="keyword-list">
@@ -58,8 +53,6 @@ export function HeroScene() {
           />
         </div>
       </div>
-      {/* Hands the scene over to the Emotional Loop instead of cutting to black. */}
-      <div className="hero-veil" aria-hidden="true" />
     </>
   );
 }
