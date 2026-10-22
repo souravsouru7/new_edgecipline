@@ -1,0 +1,706 @@
+/* Universal paper re-skin for every non-landing route (features, pricing,
+   about, faq, contact, blog, founders, legal). The modules of these pages
+   ship with a dark navy palette; this layer overrides their design tokens
+   to the paper + green landing palette and forces the base canvas to match,
+   so the whole site reads as one visual system. */
+
+/* ─── Universal foundation: these variables are the sitewide design system.
+      Set on :root so EVERY page (landing, features, pricing, …) inherits
+      the same paper palette and the same font stack. The old global design
+      tokens (--font-display, --font-text, --font-mono, --bg, --text) are
+      remapped here too so any legacy module that reads them automatically
+      picks up the landing's typography. */
+:root {
+  --edg-paper: #efeee8;
+  --edg-ink: #171c19;
+  --edg-ink-soft: #2a332d;
+  --edg-muted: #4a5248;
+  --edg-dim: #6b716b;
+  --edg-line: #d5d8d0;
+  --edg-line-soft: #e3e5de;
+  --edg-green: #27865b;
+  --edg-green-soft: rgba(39, 134, 91, .12);
+  --edg-surface: linear-gradient(145deg, rgba(255,255,255,.78), rgba(255,255,255,.32));
+  --edg-surface-soft: rgba(255, 255, 255, .5);
+
+  /* Remap the sitewide font tokens (defined in globals.css for the old
+     landing) to the Edgecipline font stack: Doto for display, Inter for
+     everything else. */
+  --font-display: var(--font-doto), monospace;
+  --font-text: var(--font-inter), Arial, sans-serif;
+  --font-mono: var(--font-inter), Arial, sans-serif;
+
+  /* The old dark navy canvas tokens → paper + ink, so any `background: var(--bg)`
+     or `color: var(--text)` still in a module file reads correctly. */
+  --bg: var(--edg-paper);
+  --bg-2: var(--edg-paper);
+  --surface: rgba(255,255,255,.5);
+  --text: var(--edg-ink);
+  --text-muted: var(--edg-muted);
+  --text-dim: var(--edg-dim);
+  --ink: var(--edg-paper);
+  --border: var(--edg-line);
+  --border-soft: var(--edg-line-soft);
+  --border-strong: var(--edg-line);
+  --green: #101613;
+  --on-green: #ffffff;
+  --blue: var(--edg-green);
+}
+
+/* Universal font-family at the body root — Inter everywhere by default. */
+html, body {
+  font-family: var(--font-inter), Arial, sans-serif;
+}
+html { background: var(--edg-paper); color-scheme: light; }
+body { background: var(--edg-paper); color: var(--edg-ink); }
+
+/* The HTML + body canvas on every non-landing route */
+html:has(.ftPage), body:has(.ftPage),
+html:has(.ppPage), body:has(.ppPage),
+html:has(.abPage), body:has(.abPage),
+html:has(.fqPage), body:has(.fqPage),
+html:has(.ctPage), body:has(.ctPage),
+html:has(.blPage), body:has(.blPage),
+html:has(.fdPage), body:has(.fdPage),
+html:has(.lgPage), body:has(.lgPage) {
+  background: var(--edg-paper) !important;
+  color: var(--edg-ink);
+  color-scheme: light;
+}
+
+/* ──────────── Token overrides, per-page prefix ──────────── */
+.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage {
+  --ft-ink: var(--edg-paper); --ft-ink-2: var(--edg-paper);
+  --ft-text: var(--edg-ink); --ft-muted: var(--edg-muted);
+  --ft-mint: var(--edg-green); --ft-cyan: var(--edg-green); --ft-violet: var(--edg-green);
+  --ft-line: var(--edg-line);
+  --ft-surface: var(--edg-surface);
+
+  --pp-ink: var(--edg-paper); --pp-ink-2: var(--edg-paper);
+  --pp-text: var(--edg-ink); --pp-muted: var(--edg-muted); --pp-dim: var(--edg-dim);
+  --pp-mint: var(--edg-green); --pp-cyan: var(--edg-green);
+  --pp-violet: var(--edg-green); --pp-amber: var(--edg-green);
+  --pp-line: var(--edg-line);
+
+  --ab-ink: var(--edg-paper); --ab-ink-2: var(--edg-paper);
+  --ab-text: var(--edg-ink); --ab-muted: var(--edg-muted); --ab-dim: var(--edg-dim);
+  --ab-mint: var(--edg-green); --ab-cyan: var(--edg-green);
+  --ab-line: var(--edg-line);
+
+  --fq-ink: var(--edg-paper); --fq-ink-2: var(--edg-paper);
+  --fq-text: var(--edg-ink); --fq-muted: var(--edg-muted); --fq-dim: var(--edg-dim);
+  --fq-mint: var(--edg-green); --fq-cyan: var(--edg-green);
+  --fq-line: var(--edg-line);
+
+  --ct-ink: var(--edg-paper); --ct-ink-2: var(--edg-paper);
+  --ct-text: var(--edg-ink); --ct-muted: var(--edg-muted); --ct-dim: var(--edg-dim);
+  --ct-mint: var(--edg-green); --ct-cyan: var(--edg-green);
+  --ct-line: var(--edg-line);
+
+  --bl-ink: var(--edg-paper); --bl-ink-2: var(--edg-paper);
+  --bl-text: var(--edg-ink); --bl-muted: var(--edg-muted); --bl-dim: var(--edg-dim);
+  --bl-mint: var(--edg-green); --bl-cyan: var(--edg-green);
+  --bl-line: var(--edg-line);
+
+  --fd-ink: var(--edg-paper); --fd-ink-2: var(--edg-paper);
+  --fd-text: var(--edg-ink); --fd-muted: var(--edg-muted); --fd-dim: var(--edg-dim);
+  --fd-mint: var(--edg-green); --fd-cyan: var(--edg-green); --fd-violet: var(--edg-green);
+  --fd-line: var(--edg-line);
+
+  --lg-ink: var(--edg-paper); --lg-ink-2: var(--edg-paper);
+  --lg-text: var(--edg-ink); --lg-muted: var(--edg-muted); --lg-dim: var(--edg-dim);
+  --lg-mint: var(--edg-green);
+  --lg-line: var(--edg-line);
+}
+
+/* ──────────── The page canvas: paper + landing dotted pattern ──────────── */
+.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage {
+  background:
+    radial-gradient(rgba(25, 42, 30, .035) .6px, transparent .8px),
+    var(--edg-paper) !important;
+  background-size: 6px 6px !important;
+  color: var(--edg-ink) !important;
+  font-family: var(--font-inter), Arial, sans-serif;
+}
+
+/* The NeuralLoader is retired from the layout. If any stale instance still
+   paints during HMR, hide it everywhere. */
+.nl, [class*="nl-"], [class*="neuralLoader"], [class*="NeuralLoader"] { display: none !important; }
+
+/* Global waitlist + demo pill buttons (shell.css) default to bright mint on
+   dark navy. Re-skin them to the landing's dark-ink pill wherever they
+   appear on a paper page (so they match .edg-button). */
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) :is(a, button).waitlist,
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) :is(a, button).demo {
+  min-height: 45px !important;
+  padding: 0 25px !important;
+  color: #fff !important;
+  background: #101613 !important;
+  border: 1px solid #101613 !important;
+  border-radius: 999px !important;
+  box-shadow: 0 2px 2px rgba(0,0,0,.06) !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+}
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) :is(a, button).waitlist:hover,
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) :is(a, button).demo:hover {
+  transform: translateY(-2px);
+  background: #203b2c !important;
+}
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) :is(a, button).waitlist svg,
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) :is(a, button).waitlist span,
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) :is(a, button).demo svg {
+  color: #4eb37d !important;
+}
+/* The secondary "demo" variant — paper + hairline when it's the ghost action */
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) :is(a, button).demo[href="/"],
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) :is(a, button).demo[class*="ghost"],
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) :is(a, button).demo[data-variant="ghost"] {
+  background: transparent !important;
+  color: var(--edg-ink) !important;
+  border: 1px solid var(--edg-line) !important;
+}
+
+/* ──────────── Universal hardcoded-color overrides ──────────── */
+/* Any descendant that explicitly inherits the dark navy canvas backgrounds
+   or the pale-text colors is reset to the paper palette. These selectors cast
+   a wide net on purpose so the hundred-or-so hardcoded hex values across the
+   module files flip to paper + ink without touching each module directly. */
+
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  :is([class*="Hero"], [class*="Band"], [class*="Section"], [class*="Group"],
+      [class*="Panel"], [class*="Wrap"], [class*="Inner"], [class*="Head"],
+      [class*="Body"], [class*="Row"], [class*="Grid"], [class*="Rail"],
+      [class*="Bar"],  [class*="Sidebar"], [class*="Explorer"], [class*="Filter"],
+      [class*="Tabs"], [class*="Index"],  [class*="Matrix"], [class*="Compare"],
+      [class*="Table"], [class*="Final"], [class*="Content"], [class*="Column"],
+      [class*="Cell"],  [class*="Stack"], [class*="Shell"], [class*="Container"],
+      [class*="Picker"],
+      [class*="Cta"]:is(section, div, article, aside, nav, header, footer, main, figure, li, ul, ol, p)) {
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+/* Belt-and-braces: force every direct section child of a page container to
+   paper-transparent, so no stray dark background oval slips past the pattern-
+   based overrides above. */
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) > *,
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) section,
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) main,
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) aside,
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) footer:not(.edg-chrome *),
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) header:not(.edg-chrome *) {
+  background: transparent !important;
+  background-image: none !important;
+  color: var(--edg-ink);
+}
+
+/* Table primitives: hairline rows on paper */
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) :is(table, thead, tbody, tfoot, tr) {
+  background: transparent !important;
+}
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) :is(th, td) {
+  background: transparent !important;
+  color: var(--edg-ink) !important;
+  border-color: var(--edg-line) !important;
+}
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) thead :is(th, td) {
+  background: rgba(255,255,255,.5) !important;
+  color: var(--edg-ink) !important;
+  font-weight: 700;
+}
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) :is(th, td)[data-featured],
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) :is(th, td)[aria-selected="true"] {
+  background: rgba(39,134,91,.08) !important;
+  color: var(--edg-green) !important;
+}
+
+/* Cards + feature tiles — translucent paper surface, hairline border */
+.ftPage [class*="Card"], .ppPage [class*="Card"], .abPage [class*="Card"],
+.fqPage [class*="Card"], .ctPage [class*="Card"], .blPage [class*="Card"],
+.fdPage [class*="Card"], .lgPage [class*="Card"],
+.ftPage [class*="Tile"], .ppPage [class*="Tile"], .abPage [class*="Tile"],
+.fqPage [class*="Tile"], .ctPage [class*="Tile"], .blPage [class*="Tile"],
+.fdPage [class*="Tile"], .lgPage [class*="Tile"],
+.ftPage article, .ppPage article, .abPage article, .fqPage article,
+.ctPage article, .blPage article, .fdPage article, .lgPage article {
+  background: var(--edg-surface) !important;
+  border-color: var(--edg-line) !important;
+  color: var(--edg-ink);
+  box-shadow: 0 10px 28px -24px rgba(20, 30, 21, .35);
+  backdrop-filter: blur(10px);
+}
+
+/* Any element whose own styles painted a dark navy background → paper */
+.ftPage *, .ppPage *, .abPage *, .fqPage *, .ctPage *,
+.blPage *, .fdPage *, .lgPage * {
+  border-color: var(--edg-line);
+}
+
+/* Font variable overrides at the page root. The whole site uses `--font-text`,
+   `--font-display`, `--font-mono` (defined in globals.css to Inter / Space
+   Grotesk / Geist Mono). On a paper page we redefine them so every module
+   rule that reads these variables automatically picks up the landing's stack
+   — Doto for display, Inter for text, Inter for mono labels too. */
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) {
+  --font-display: var(--font-doto), monospace;
+  --font-text: var(--font-inter), Arial, sans-serif;
+  --font-mono: var(--font-inter), Arial, sans-serif;
+  font-family: var(--font-inter), Arial, sans-serif;
+}
+
+/* Baseline font-family: force every element on a paper page to the landing's
+   Inter stack, so the Geist Mono labels, Georgia pull-quotes and other stray
+   faces in the module files all match the hero's small-copy font. Headings
+   and stat numbers reclaim the Doto display face in the rules below. */
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) *:not(.edg-chrome *) {
+  font-family: var(--font-inter), Arial, sans-serif !important;
+}
+
+/* ──────────── Typography — the sitewide Edgecipline hierarchy ────────────
+   Hero headline:            Doto SemiBold (600)
+   Section headings:         Doto Medium / SemiBold (500 / 600)
+   Descriptions / body:      Inter Regular (400)
+   Buttons / navigation:     Inter Medium (500)
+   Statistics / numbers:     Doto Medium (500)
+   The landing already uses this stack; these rules apply it everywhere else
+   with !important so each page module's hardcoded fonts step aside. */
+
+/* ALL headings use Doto — matches the landing's h1/h2/h3 treatment. The two
+   rules below (element itself + its descendants) use HIGHER specificity than
+   the universal `* → Inter` rule above, so <span>/<em>/<b> inside <h1>/<h2>
+   do NOT get flipped back to sans-serif. */
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  :is(h1, h2, h3, h4, h5, h6):not(.edg-chrome *) {
+  color: var(--edg-ink) !important;
+  font-family: var(--font-doto), monospace !important;
+  font-weight: 600 !important;
+  letter-spacing: -.045em !important;
+  line-height: .98 !important;
+}
+/* Descendants of a heading inherit Doto with equal/greater specificity than
+   the universal small-text and *-selector rules. */
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  :is(h1, h2, h3, h4, h5, h6) *:not(.edg-chrome *) {
+  font-family: var(--font-doto), monospace !important;
+  font-weight: inherit !important;
+  letter-spacing: inherit !important;
+  line-height: inherit !important;
+  color: inherit !important;
+}
+/* H3 / H4 / H5 / H6 get a slightly tighter line-height for shorter titles */
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  :is(h3, h4, h5, h6):not(.edg-chrome *) {
+  font-weight: 500 !important;
+  letter-spacing: -.03em !important;
+  line-height: 1.02 !important;
+}
+/* <em> inside any heading is the brand-green accent */
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  :is(h1, h2, h3, h4, h5, h6) em:not(.edg-chrome *) {
+  color: var(--edg-green) !important;
+  font-style: normal !important;
+}
+/* ─── Universal small-copy sizing — matches the landing site-wide ───
+   Body copy (p / li / dd / blockquote / figcaption / cite / address):
+     landing uses 13-14px / line-height 1.55 — enforced everywhere.
+   Section-eyebrow <dt>: landing style — 11px uppercase, letter-spacing .16em.
+   Chips / tags / pills / crumbs / badges / meta / notes: 11px.
+   `<small>`: 10px.
+   The `.edg-chrome` header/footer keep their own tuned sizes. */
+
+body :is(p, li, dd, blockquote, figcaption, cite, address):not(.edg-chrome *):not(.edg-page *) {
+  font-family: var(--font-inter), Arial, sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 14px !important;
+  line-height: 1.55 !important;
+  color: var(--edg-ink) !important;
+}
+body dt:not(.edg-chrome *):not(.edg-page *) {
+  font-family: var(--font-inter), Arial, sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 11px !important;
+  letter-spacing: .16em !important;
+  text-transform: uppercase !important;
+  color: var(--edg-muted) !important;
+}
+body :is([class*="Eyebrow"], [class*="SectionLabel"], [class*="Crumb"],
+         [class*="Kicker"], [class*="Tag"], [class*="Chip"], [class*="Pill"],
+         [class*="Badge"], [class*="Caption"], [class*="Note"], [class*="Meta"],
+         [class*="Trust"], [class*="Hint"], [class*="Detail"]):not(.edg-chrome *):not(.edg-page *) {
+  font-size: 11px !important;
+}
+body small:not(.edg-chrome *):not(.edg-page *) {
+  font-family: var(--font-inter), Arial, sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 10px !important;
+  line-height: 1.4 !important;
+  letter-spacing: .02em !important;
+}
+
+/* Small-text pattern classes (eyebrow, chip, pill, tag, badge, meta, caption,
+   kicker, tooltip, note, trust, legend, pin, status, toast, help, detail, hint)
+   plus form controls → Inter. `span` is deliberately EXCLUDED here so that a
+   span inside <h1>/<h2> can inherit Doto from the heading parent instead of
+   being forced back to Inter. Spans elsewhere already inherit Inter from the
+   page body. */
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  :is(small, label, legend, summary, time, kbd, cite, code, pre,
+      input, textarea, select, option,
+      [class*="Eyebrow"], [class*="Label"], [class*="Crumb"], [class*="Chip"],
+      [class*="Pill"], [class*="Tag"], [class*="Badge"], [class*="Meta"],
+      [class*="Kicker"], [class*="Caption"], [class*="Tooltip"], [class*="Note"],
+      [class*="Trust"], [class*="Help"], [class*="Detail"], [class*="Hint"],
+      [class*="Legend"], [class*="Pin"], [class*="Status"], [class*="Toast"]):not(.edg-chrome *):not(:is(h1, h2, h3, h4, h5, h6) *) {
+  font-family: var(--font-inter), Arial, sans-serif !important;
+}
+/* Button + nav text — Inter Medium, matching the landing's `.edg-button` /
+   `.edg-nav a`. */
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  :is(button, nav a, [class*="Nav"] a, [class*="Button"], [class*="Cta"] a,
+      .waitlist, .demo, [role="button"]):not(.edg-chrome *) {
+  font-family: var(--font-inter), Arial, sans-serif !important;
+  font-weight: 500 !important;
+}
+/* Stats + numbers — Doto Medium. Descendants included so inline spans/sup
+   inside a stat strong keep the display face. */
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  :is([class*="Stat"] strong, [class*="Stats"] strong, [class*="Metric"] strong,
+      [class*="Number"], [class*="Numbers"], [class*="Count"] strong,
+      [class*="KPI"] strong, [class*="Score"] strong, [class*="Figure"] strong,
+      [class*="Price"], [class*="Amount"],
+      [class*="Stat"] strong *, [class*="Metric"] strong *, [class*="Number"] *,
+      [class*="Count"] strong *, [class*="Price"] *, [class*="Amount"] *):not(.edg-chrome *) {
+  font-family: var(--font-doto), monospace !important;
+  font-weight: 500 !important;
+  letter-spacing: -.02em !important;
+  color: var(--edg-ink) !important;
+}
+.ftPage h1 em, .ppPage h1 em, .abPage h1 em, .fqPage h1 em,
+.ctPage h1 em, .blPage h1 em, .fdPage h1 em, .lgPage h1 em,
+.ftPage h2 em, .ppPage h2 em, .abPage h2 em, .fqPage h2 em,
+.ctPage h2 em, .blPage h2 em, .fdPage h2 em, .lgPage h2 em,
+.ftPage h3 em, .ppPage h3 em, .abPage h3 em, .fqPage h3 em,
+.ctPage h3 em, .blPage h3 em, .fdPage h3 em, .lgPage h3 em {
+  color: var(--edg-green) !important;
+  font-style: normal;
+}
+
+/* Force body copy to the paper palette ink. The module files sprinkle light
+   near-white colours (`#eaeef3`, `#d3e3ea`, `#dbe8ee`, etc.) that read on
+   their original dark navy canvas but go invisible on paper — these rules
+   beat them with !important. The `:not(.edg-chrome *)` guard (no leading
+   space, so it filters the element itself, not its descendants) keeps the
+   chrome's own tuned colours alone. */
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  :is(p, li, dd, blockquote, figcaption, small, summary, label, legend,
+      span, a, em, i, u, cite, time, address):not(.edg-chrome *) {
+  color: var(--edg-ink) !important;
+}
+/* Headings in dark ink, their <em> accents in brand green */
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  :is(h1, h2, h3, h4, h5, h6, dt, strong, b):not(.edg-chrome *) {
+  color: var(--edg-ink) !important;
+}
+/* Keep brand green on explicit label dots, em accents, success ticks and the
+   WHAT YOU GET / THE SOLUTION dt labels. */
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) em,
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) [class*="Mint"],
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) [class*="Green"],
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) [class*="Solution"] dt,
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) [class*="Success"],
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) [class*="Check"] svg,
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) [class*="Tick"] svg {
+  color: var(--edg-green) !important;
+}
+/* Section eyebrows (THE PROBLEM / WHAT YOU GET headers) — kept distinct from
+   body copy with the brand green uppercase style. */
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  :is([class*="Problem"] > :first-child, [class*="Wyg"] > :first-child, [class*="WhatYouGet"] > :first-child) {
+  color: var(--edg-green) !important;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+/* And darken the token so even the rules we didn't catch read on paper. */
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) {
+  --ft-muted: #4a5248; --pp-muted: #4a5248; --ab-muted: #4a5248;
+  --fq-muted: #4a5248; --ct-muted: #4a5248; --bl-muted: #4a5248;
+  --fd-muted: #4a5248; --lg-muted: #4a5248;
+  --ft-dim: #6b716b; --pp-dim: #6b716b; --ab-dim: #6b716b;
+  --fq-dim: #6b716b; --ct-dim: #6b716b; --bl-dim: #6b716b;
+  --fd-dim: #6b716b; --lg-dim: #6b716b;
+}
+
+/* Links default to green on hover */
+.ftPage a, .ppPage a, .abPage a, .fqPage a,
+.ctPage a, .blPage a, .fdPage a, .lgPage a { color: var(--edg-ink); }
+.ftPage a:hover, .ppPage a:hover, .abPage a:hover, .fqPage a:hover,
+.ctPage a:hover, .blPage a:hover, .fdPage a:hover, .lgPage a:hover { color: var(--edg-green); }
+
+/* Primary demo CTA → dark ink pill like the landing's edg-button */
+.ftPage a.demo, .ppPage a.demo, .abPage a.demo, .fqPage a.demo,
+.ctPage a.demo, .blPage a.demo, .fdPage a.demo, .lgPage a.demo,
+.ftPage [class*="demo"], .ppPage [class*="demo"], .abPage [class*="demo"],
+.fqPage [class*="demo"], .ctPage [class*="demo"], .blPage [class*="demo"],
+.fdPage [class*="demo"], .lgPage [class*="demo"] {
+  background: #101613 !important;
+  color: #fff !important;
+  border-color: #101613 !important;
+}
+
+/* Common accent colored overrides — convert mint / cyan / violet highlights
+   that were used on dark surfaces to green on paper. */
+.ftPage [class*="Mint"], .ppPage [class*="Mint"], .abPage [class*="Mint"],
+.fqPage [class*="Mint"], .ctPage [class*="Mint"], .blPage [class*="Mint"],
+.fdPage [class*="Mint"], .lgPage [class*="Mint"] { color: var(--edg-green) !important; }
+
+/* Eyebrow / label / badge / chip / pill / tag — the pill-shaped bits that
+   module files colour-code against a dark navy canvas. On paper they become
+   subtle hairline pills with the brand green dot. */
+.ftPage [class*="Label"], .ftPage [class*="Eyebrow"], .ftPage [class*="Badge"],
+.ftPage [class*="Chip"],  .ftPage [class*="Pill"],    .ftPage [class*="Tag"],
+.ppPage [class*="Label"], .ppPage [class*="Eyebrow"], .ppPage [class*="Badge"],
+.ppPage [class*="Chip"],  .ppPage [class*="Pill"],    .ppPage [class*="Tag"],
+.abPage [class*="Label"], .abPage [class*="Eyebrow"], .abPage [class*="Badge"],
+.abPage [class*="Chip"],  .abPage [class*="Pill"],    .abPage [class*="Tag"],
+.fqPage [class*="Label"], .fqPage [class*="Eyebrow"], .fqPage [class*="Badge"],
+.fqPage [class*="Chip"],  .fqPage [class*="Pill"],    .fqPage [class*="Tag"],
+.ctPage [class*="Label"], .ctPage [class*="Eyebrow"], .ctPage [class*="Badge"],
+.ctPage [class*="Chip"],  .ctPage [class*="Pill"],    .ctPage [class*="Tag"],
+.blPage [class*="Label"], .blPage [class*="Eyebrow"], .blPage [class*="Badge"],
+.blPage [class*="Chip"],  .blPage [class*="Pill"],    .blPage [class*="Tag"],
+.fdPage [class*="Label"], .fdPage [class*="Eyebrow"], .fdPage [class*="Badge"],
+.fdPage [class*="Chip"],  .fdPage [class*="Pill"],    .fdPage [class*="Tag"],
+.lgPage [class*="Label"], .lgPage [class*="Eyebrow"], .lgPage [class*="Badge"],
+.lgPage [class*="Chip"],  .lgPage [class*="Pill"],    .lgPage [class*="Tag"] {
+  background: rgba(255,255,255,.55) !important;
+  color: var(--edg-ink) !important;
+  border-color: var(--edg-line) !important;
+  box-shadow: none !important;
+}
+/* The dot/marker inside eyebrow labels */
+.ftPage [class*="Label"] i, .ppPage [class*="Label"] i, .abPage [class*="Label"] i,
+.fqPage [class*="Label"] i, .ctPage [class*="Label"] i, .blPage [class*="Label"] i,
+.fdPage [class*="Label"] i, .lgPage [class*="Label"] i {
+  background: var(--edg-green) !important;
+  box-shadow: 0 0 10px rgba(39,134,91,.5) !important;
+}
+
+/* The <li> children of pill/chip/tag lists carry no class, so target them via
+   their list parent instead. */
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  :is([class*="Chips"], [class*="Pills"], [class*="Tags"], [class*="Badges"], [class*="Labels"]) > li,
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  :is([class*="Chips"], [class*="Pills"], [class*="Tags"], [class*="Badges"], [class*="Labels"]) > a,
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  :is([class*="Chips"], [class*="Pills"], [class*="Tags"], [class*="Badges"], [class*="Labels"]) > span {
+  background: rgba(255,255,255,.55) !important;
+  color: var(--edg-ink) !important;
+  border-color: var(--edg-line) !important;
+}
+
+/* Mint / cyan / violet data-accents inside chips → unified brand green */
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  [data-accent="mint"],
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  [data-accent="cyan"],
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  [data-accent="violet"] {
+  color: var(--edg-green) !important;
+  border-color: rgba(39,134,91,.4) !important;
+  background: rgba(39,134,91,.08) !important;
+}
+
+/* Any currently-selected pill (explorer tabs, filter chips, pricing tier, etc.)
+   — green ink pill on paper, matching the landing's active-tab treatment.
+   The nav underline on `.edg-chrome` nav links is excluded. */
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  :is([aria-current]:not(a[href]), [aria-selected="true"], [aria-pressed="true"], .active):not(.edg-chrome *) {
+  background: #27865b !important;
+  color: #fff !important;
+  border-color: #27865b !important;
+}
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  :is([aria-current]:not(a[href]), [aria-selected="true"], [aria-pressed="true"], .active):not(.edg-chrome *)
+  :is(b, strong, span, small) {
+  color: #fff !important;
+}
+
+/* Decorative dark navy illustration backdrops (hero DNA, gradient waves) are
+   faded to a quiet whisper so the paper canvas stays dominant. */
+.ftPage [class*="HeroArt"], .ftPage [class*="HeroGlow"],
+.ftPage [class*="Illus"],   .ftPage [class*="Grid"],
+.ppPage [class*="HeroArt"], .ppPage [class*="HeroGlow"],
+.ppPage [class*="Illus"],   .ppPage [class*="Grid"],
+.abPage [class*="HeroArt"], .abPage [class*="HeroGlow"], .abPage [class*="Illus"],
+.fqPage [class*="HeroArt"], .fqPage [class*="HeroGlow"], .fqPage [class*="Illus"],
+.ctPage [class*="HeroArt"], .ctPage [class*="HeroGlow"], .ctPage [class*="Illus"],
+.blPage [class*="HeroArt"], .blPage [class*="HeroGlow"], .blPage [class*="Illus"],
+.fdPage [class*="HeroArt"], .fdPage [class*="HeroGlow"], .fdPage [class*="Illus"],
+.lgPage [class*="HeroArt"], .lgPage [class*="HeroGlow"], .lgPage [class*="Illus"] {
+  opacity: .18 !important;
+  mix-blend-mode: multiply !important;
+}
+
+/* Decorative dark-navy flourishes — glows, blobs, meshes, grids, ambient
+   layers. The paper palette has its own quiet dotted texture; everything else
+   is noise and gets hidden. */
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  :is([class*="Backdrop"], [class*="Blob"], [class*="Wave"], [class*="Mesh"],
+      [class*="Field"], [class*="Ambient"], [class*="Scrim"], [class*="Overlay"],
+      [class*="Glow"],  [class*="Shade"],   [class*="Gradient"], [class*="Rays"],
+      [class*="Noise"], [class*="Shine"],   [class*="Spark"],    [class*="Lines"],
+      [class*="Trail"], [class*="Halo"],    [class*="Aurora"],   [class*="Fog"]) {
+  display: none !important;
+}
+
+/* Interactive demo cards and screenshot panels — the dark navy "TRADE
+   SCREENSHOT / EXTRACTED DATA / MARKET MODES" illustrations don't belong on
+   paper. Hide the entire figure/visual block (including the illustration
+   badge, caption and surrounding wrapper) so the copy sits alone, as it
+   does on the landing. */
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  :is([class*="Visual"], [class*="Figure"], [class*="Demo"],
+      [class*="Screenshot"], [class*="Illustration"], [class*="Mockup"],
+      [class*="Preview"], [class*="Device"], [class*="Phone"], [class*="Mobile"],
+      [class*="Chart"]:not([class*="ChartMetrics"]):not([class*="ChartStory"])) {
+  display: none !important;
+}
+/* Any <figure> with no additional class is likely a decorative illustration too. */
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) figure {
+  display: none !important;
+}
+
+/* Primary CTA — give every button whose source class suggests "button" the
+   landing's dark ink pill treatment, mirroring .edg-button.
+   Scoped to :not(.edg-chrome *) so the shared header/footer buttons keep
+   their own existing landing-style treatment. */
+/* Only truly interactive elements get the dark ink pill. The old rule also
+   matched any `[class*="Cta"]` — which caught whole CTA sections (`.fqCta`,
+   `.ftCta`) and painted them as giant dark ovals. Buttons, [role=button] and
+   `a.*Cta*` only. */
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  :is(button, a[class*="Button"], a[class*="Cta"], a.waitlist, a.demo,
+      [role="button"]):not(.edg-chrome *) {
+  background: #101613 !important;
+  color: #fff !important;
+  border: 1px solid #101613 !important;
+  border-radius: 999px !important;
+  box-shadow: 0 2px 2px rgba(0,0,0,.06) !important;
+  transition: transform .2s, background .2s;
+}
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  :is(button, a[class*="Button"], a[class*="Cta"], a.waitlist, a.demo,
+      [role="button"]):not(.edg-chrome *):hover {
+  transform: translateY(-2px);
+  background: #203b2c !important;
+}
+/* Icon colour inside those styled buttons */
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  :is(button, a[class*="Button"], a[class*="Cta"], a.waitlist, a.demo,
+      [role="button"]):not(.edg-chrome *) svg {
+  color: #4eb37d;
+}
+
+/* Secondary / ghost / outline-style actions keep paper + ink */
+.ftPage [class*="Ghost"], .ppPage [class*="Ghost"], .abPage [class*="Ghost"],
+.fqPage [class*="Ghost"], .ctPage [class*="Ghost"], .blPage [class*="Ghost"],
+.fdPage [class*="Ghost"], .lgPage [class*="Ghost"],
+.ftPage [class*="Outline"], .ppPage [class*="Outline"], .abPage [class*="Outline"],
+.fqPage [class*="Outline"], .ctPage [class*="Outline"], .blPage [class*="Outline"],
+.fdPage [class*="Outline"], .lgPage [class*="Outline"] {
+  background: transparent !important;
+  color: var(--edg-ink) !important;
+  border: 1px solid var(--edg-line) !important;
+}
+
+/* Links coloured as the former mint/cyan accents — bring them back to ink */
+.ftPage a[class*="Mint"], .ftPage a[class*="Cyan"], .ftPage a[class*="Accent"],
+.ppPage a[class*="Mint"], .ppPage a[class*="Cyan"], .ppPage a[class*="Accent"],
+.abPage a[class*="Mint"], .abPage a[class*="Cyan"], .abPage a[class*="Accent"],
+.fqPage a[class*="Mint"], .fqPage a[class*="Cyan"], .fqPage a[class*="Accent"],
+.ctPage a[class*="Mint"], .ctPage a[class*="Cyan"], .ctPage a[class*="Accent"],
+.blPage a[class*="Mint"], .blPage a[class*="Cyan"], .blPage a[class*="Accent"],
+.fdPage a[class*="Mint"], .fdPage a[class*="Cyan"], .fdPage a[class*="Accent"],
+.lgPage a[class*="Mint"], .lgPage a[class*="Cyan"], .lgPage a[class*="Accent"] {
+  color: var(--edg-green) !important;
+}
+
+/* SVG gradient fills in the hero illustrations use mint/cyan/violet stops. We
+   can't rewrite inline <stop> colours from CSS, but we can tint the whole SVG
+   towards the brand green via a hue-rotate and desaturation. */
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  :is(svg[class*="dna"], svg[class*="Dna"], [class*="HeroArt"] svg, [class*="HeroArt"] img,
+      [class*="HeroFigure"] svg, [class*="HeroFigure"] img, [class*="Illus"] svg, [class*="Illus"] img) {
+  filter: hue-rotate(90deg) saturate(.5) brightness(.92);
+}
+
+/* Current-page breadcrumb colour */
+.ftPage [class*="Crumbs"], .ppPage [class*="Crumbs"], .abPage [class*="Crumbs"],
+.fqPage [class*="Crumbs"], .ctPage [class*="Crumbs"], .blPage [class*="Crumbs"],
+.fdPage [class*="Crumbs"], .lgPage [class*="Crumbs"] { color: var(--edg-muted) !important; }
+.ftPage [class*="Crumbs"] [aria-current], .ppPage [class*="Crumbs"] [aria-current],
+.abPage [class*="Crumbs"] [aria-current], .fqPage [class*="Crumbs"] [aria-current],
+.ctPage [class*="Crumbs"] [aria-current], .blPage [class*="Crumbs"] [aria-current],
+.fdPage [class*="Crumbs"] [aria-current], .lgPage [class*="Crumbs"] [aria-current] { color: var(--edg-ink) !important; }
+
+/* Any element whose background was navy (#03060d, #050914, #080f21 and
+   similar) collapses to transparent so the paper shows through. */
+.ftPage [style*="background"],
+.ppPage [style*="background"] { background-color: transparent !important; }
+
+/* Inputs match the landing's hairline-on-paper style */
+.ftPage input, .ftPage textarea, .ftPage select,
+.ppPage input, .ppPage textarea, .ppPage select,
+.abPage input, .abPage textarea, .abPage select,
+.fqPage input, .fqPage textarea, .fqPage select,
+.ctPage input, .ctPage textarea, .ctPage select,
+.blPage input, .blPage textarea, .blPage select,
+.fdPage input, .fdPage textarea, .fdPage select,
+.lgPage input, .lgPage textarea, .lgPage select {
+  background: rgba(255,255,255,.6) !important;
+  color: var(--edg-ink) !important;
+  border-color: var(--edg-line) !important;
+}
+.ftPage input::placeholder, .ftPage textarea::placeholder,
+.ppPage input::placeholder, .ppPage textarea::placeholder,
+.abPage input::placeholder, .abPage textarea::placeholder,
+.fqPage input::placeholder, .fqPage textarea::placeholder,
+.ctPage input::placeholder, .ctPage textarea::placeholder,
+.blPage input::placeholder, .blPage textarea::placeholder,
+.fdPage input::placeholder, .fdPage textarea::placeholder,
+.lgPage input::placeholder, .lgPage textarea::placeholder { color: var(--edg-dim) !important; }
+
+/* The .edg-chrome header / footer should blend with the paper page without a
+   drop-shadow line separating them. */
+body:has(.ftPage) .edg-chrome,
+body:has(.ppPage) .edg-chrome,
+body:has(.abPage) .edg-chrome,
+body:has(.fqPage) .edg-chrome,
+body:has(.ctPage) .edg-chrome,
+body:has(.blPage) .edg-chrome,
+body:has(.fdPage) .edg-chrome,
+body:has(.lgPage) .edg-chrome { background: transparent; }
+
+/* ──────────── Dark theme variant ──────────── */
+html[data-edg-theme="dark"] :is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) {
+  --edg-paper: #0d1411;
+  --edg-ink: #eef2ee;
+  --edg-ink-soft: #d6ddd7;
+  --edg-muted: #a7b1a7;
+  --edg-dim: #889188;
+  --edg-line: rgba(239, 242, 238, .14);
+  --edg-surface: linear-gradient(145deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+  --edg-surface-soft: rgba(255,255,255,.04);
+  background:
+    radial-gradient(rgba(239, 242, 238, .035) .6px, transparent .8px),
+    var(--edg-paper) !important;
+  color: var(--edg-ink) !important;
+}
+html[data-edg-theme="dark"] :is(html:has(.ftPage), html:has(.ppPage), html:has(.abPage), html:has(.fqPage), html:has(.ctPage), html:has(.blPage), html:has(.fdPage), html:has(.lgPage)),
+html[data-edg-theme="dark"] :is(body:has(.ftPage), body:has(.ppPage), body:has(.abPage), body:has(.fqPage), body:has(.ctPage), body:has(.blPage), body:has(.fdPage), body:has(.lgPage)) {
+  background: #0d1411 !important;
+  color-scheme: dark;
+}

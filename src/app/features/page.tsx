@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/nav/Navbar";
 import { SiteFooter } from "@/components/SiteFooter";
 import { RevealObserver } from "@/components/motion/RevealObserver";
-import { FeatureExplorer } from "@/components/features/FeatureExplorer";
 import { FeatureSection } from "@/components/features/FeatureSection";
 import { FeaturesCta } from "@/components/features/FeaturesCta";
 import { FeaturesHero } from "@/components/features/FeaturesHero";
@@ -151,29 +150,12 @@ export default function FeaturesPage() {
       <Navbar />
 
       <FeaturesHero />
-      <FeatureExplorer />
 
       <main className={css("ftBody")} id="features">
-        {groups.map((group, groupIndex) => {
+        {groups.map((group) => {
           const inGroup = featuresInGroup(group.id);
           return (
-            <section
-              key={group.id}
-              className={css("ftGroup")}
-              id={`group-${group.id}`}
-              aria-labelledby={`group-${group.id}-title`}
-            >
-              <header className={css("ftGroupHead")}>
-                <div className={css("ftInner")}>
-                  <h2 id={`group-${group.id}-title`} data-reveal="fade">
-                    <b aria-hidden="true">{String(groupIndex + 1).padStart(2, "0")}</b>
-                    {group.title}
-                  </h2>
-                  <p data-reveal>{group.intro}</p>
-                  <i className={css("ftGroupRule")} data-reveal="from-left" aria-hidden="true" />
-                </div>
-              </header>
-
+            <section key={group.id} className={css("ftGroup")} id={`group-${group.id}`}>
               {inGroup.map((feature, index) => (
                 <FeatureSection
                   key={feature.id}

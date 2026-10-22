@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 540" fill="none">
+  <defs>
+    <linearGradient id="mist" x1="380" y1="40" x2="410" y2="420" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#208863" stop-opacity=".62"/>
+      <stop offset=".55" stop-color="#539a78" stop-opacity=".25"/>
+      <stop offset="1" stop-color="#e9e8e2" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="rear" x1="250" y1="190" x2="395" y2="510" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#181f1c" stop-opacity=".82"/>
+      <stop offset=".55" stop-color="#59645b" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#e9e8e2" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="front" x1="455" y1="255" x2="558" y2="530" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#104b37"/>
+      <stop offset=".45" stop-color="#1e3028" stop-opacity=".93"/>
+      <stop offset="1" stop-color="#e9e8e2" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="1.4" cy="1.4" r="1.05" fill="#12251d" opacity=".62"/></pattern>
+    <filter id="blur"><feGaussianBlur stdDeviation="18"/></filter>
+    <mask id="soft"><rect width="760" height="540" fill="white"/><rect y="460" width="760" height="80" fill="url(#fade)"/></mask>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1"><stop stop-color="white"/><stop offset="1" stop-color="black"/></linearGradient>
+  </defs>
+  <g filter="url(#blur)" opacity=".9">
+    <path d="M248 347c34-102 42-191 66-263 29 46 48 133 69 226 30-48 40-97 65-137 31 73 38 161 70 220L248 347Z" fill="url(#mist)"/>
+    <path d="M390 325c23-97 31-144 51-203 23 44 38 89 54 167 16-37 26-58 40-75 27 63 33 104 44 140L390 325Z" fill="#237455" opacity=".35"/>
+  </g>
+  <path d="M50 455c52-43 83-118 135-151 36-22 53-6 74 14 21 19 34 31 51 29 31-3 34-37 67-46 34-10 59 27 84 51 31 29 61 24 92 23 45-2 99 34 142 69l39 96H50V455Z" fill="url(#rear)"/>
+  <path d="M50 455c52-43 83-118 135-151 36-22 53-6 74 14 21 19 34 31 51 29 31-3 34-37 67-46 34-10 59 27 84 51 31 29 61 24 92 23 45-2 99 34 142 69l39 96H50V455Z" fill="url(#dots)" opacity=".9"/>
+  <path d="M257 540c78-70 118-104 183-165 35-34 57-68 91-86 20-11 41 6 66 28 26 22 37 35 65 29 39-7 66 28 98 49v145H257Z" fill="url(#front)"/>
+  <path d="M257 540c78-70 118-104 183-165 35-34 57-68 91-86 20-11 41 6 66 28 26 22 37 35 65 29 39-7 66 28 98 49v145H257Z" fill="url(#dots)" opacity=".72"/>
+</svg>

@@ -87,6 +87,10 @@ const nextConfig: NextConfig = {
       },
     },
   },
+
+  // Hide the Next.js dev build-activity badge (the "N" circle at the bottom-left
+  // in development) so it does not sit over the paper landing surface.
+  devIndicators: false,
 };
 
 export default nextConfig;

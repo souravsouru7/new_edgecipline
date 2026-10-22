@@ -1,0 +1,227 @@
+/* Animation-polish layer for the homepage. Purely additive on top of
+   reference-motion.css: every rule is gated on [data-edg-motion="ready"], so
+   the static markup is untouched until the motion island confirms JS and full
+   motion, and the blanket prefers-reduced-motion rule at the end of
+   reference-motion.css disables every animation defined here.
+
+   Design rule that keeps the scroll reveals intact: the reveal in
+   reference-motion.css animates `transform`/`opacity` on the section's cards,
+   so NOTHING here puts an always-on transform animation on those same cards.
+   Continuous life is carried by children (icons, accent labels, badges),
+   pseudo-elements, and non-transform properties (box-shadow, filter,
+   background-position) instead. Only the hero parallax touches a transform,
+   and it has its own motion-safe guard.
+
+   Palette: ink #171c19, green #27865b, paper #efeee8 (see reference-landing.css). */
+
+/* ══ Shared keyframes ════════════════════════════════════════════════════ */
+@keyframes edg-float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -5px, 0); }
+}
+@keyframes edg-float-soft {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -3px, 0); }
+}
+@keyframes edg-pulse {
+  0%, 100% { opacity: .82; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.015); }
+}
+@keyframes edg-dot-pulse {
+  0%, 100% { transform: scale(1); opacity: .85; }
+  50% { transform: scale(1.5); opacity: 1; }
+}
+@keyframes edg-text-flow {
+  from { background-position: 180% 0; }
+  to { background-position: -80% 0; }
+}
+@keyframes edg-bar-flow {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.14); }
+}
+@keyframes edg-glow-soft {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(39,134,91,0); }
+  50% { box-shadow: 0 0 24px -2px rgba(39,134,91,.22); }
+}
+
+/* ══ Live motion: always running, independent of scroll ══════════════════ */
+
+/* Every section that has an icon gets gentle, out-of-sync breathing on it —
+   the simplest way to make the whole page feel alive without ever touching a
+   card's reveal transform. */
+.edg-page[data-edg-motion="ready"] :is(
+  .edg-step-cards, .edg-coach-messages, .edg-dna-traits, .edg-feature-grid, .edg-journey-list
+) .edg-icon {
+  animation: edg-float 5.6s ease-in-out infinite;
+}
+.edg-page[data-edg-motion="ready"] :is(.edg-step-cards, .edg-coach-messages, .edg-dna-traits, .edg-feature-grid, .edg-journey-list) > *:nth-child(2) .edg-icon { animation-delay: -1.4s; }
+.edg-page[data-edg-motion="ready"] :is(.edg-step-cards, .edg-coach-messages, .edg-dna-traits, .edg-feature-grid, .edg-journey-list) > *:nth-child(3) .edg-icon { animation-delay: -2.8s; }
+.edg-page[data-edg-motion="ready"] :is(.edg-step-cards, .edg-coach-messages, .edg-dna-traits, .edg-feature-grid, .edg-journey-list) > *:nth-child(4) .edg-icon { animation-delay: -4.1s; }
+
+/* The green accent labels that lead each restored-section card flow a soft
+   highlight across themselves. They are already green, so this only adds
+   motion — no colour change. */
+.edg-page[data-edg-motion="ready"] :is(
+  .edg-loop-grid li > span, .edg-moment-list > div > span,
+  .edg-dna-traits span, .edg-journey-list li > span, .edg-story-values span
+) {
+  background: linear-gradient(100deg, var(--edg-green) 0 38%, #7fe0ac 50%, var(--edg-green) 62% 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: edg-text-flow 6s linear infinite;
+}
+
+/* Stat numbers breathe (no colour change, so the ink reading stays). */
+.edg-page[data-edg-motion="ready"] .edg-stats strong { animation: edg-pulse 4.5s ease-in-out infinite; }
+.edg-page[data-edg-motion="ready"] .edg-stats > div:nth-child(2) strong { animation-delay: -1.1s; }
+.edg-page[data-edg-motion="ready"] .edg-stats > div:nth-child(3) strong { animation-delay: -2.2s; }
+.edg-page[data-edg-motion="ready"] .edg-stats > div:nth-child(4) strong { animation-delay: -3.3s; }
+
+/* The little green dots — section labels, nav current marker, hero awareness
+   ticks — pulse so the eye catches them. */
+.edg-page[data-edg-motion="ready"] .edg-label-line::before,
+.edg-page[data-edg-motion="ready"] .edg-awareness span::after {
+  animation: edg-dot-pulse 3.4s ease-in-out infinite;
+}
+.edg-page[data-edg-motion="ready"] .edg-awareness span:nth-child(2)::after { animation-delay: -.7s; }
+.edg-page[data-edg-motion="ready"] .edg-awareness span:nth-child(3)::after { animation-delay: -1.4s; }
+.edg-page[data-edg-motion="ready"] .edg-awareness span:nth-child(4)::after { animation-delay: -2.1s; }
+.edg-page[data-edg-motion="ready"] .edg-awareness span:nth-child(5)::after { animation-delay: -2.8s; }
+
+/* Hero: floating labels and caption drift on slow, offset cycles. */
+.edg-page[data-edg-motion="ready"] .edg-awareness span { animation: edg-float 6.5s ease-in-out infinite; }
+.edg-page[data-edg-motion="ready"] .edg-awareness span:nth-child(2) { animation-delay: -1.3s; }
+.edg-page[data-edg-motion="ready"] .edg-awareness span:nth-child(3) { animation-delay: -2.6s; }
+.edg-page[data-edg-motion="ready"] .edg-awareness span:nth-child(4) { animation-delay: -3.9s; }
+.edg-page[data-edg-motion="ready"] .edg-awareness span:nth-child(5) { animation-delay: -5.2s; }
+.edg-page[data-edg-motion="ready"] .edg-hero-art > p { animation: edg-float 8s ease-in-out infinite; }
+
+/* The CTA breathes a slow brand-green glow. The base box-shadow from
+   reference-landing.css is kept as the resting frame. */
+.edg-page[data-edg-motion="ready"] .edg-button {
+  animation: edg-cta-glow 4.6s ease-in-out infinite;
+}
+@keyframes edg-cta-glow {
+  0%, 100% { box-shadow: 0 2px 2px rgba(0,0,0,.06), 0 0 0 0 rgba(39,134,91,0); }
+  50% { box-shadow: 0 2px 2px rgba(0,0,0,.06), 0 0 22px 1px rgba(39,134,91,.26); }
+}
+@media (hover: hover) {
+  .edg-page[data-edg-motion="ready"] .edg-button:hover { animation-play-state: paused; }
+}
+
+/* The "MOST POPULAR" badge gets a slow light sheen; the popular plan itself
+   carries an always-on soft glow via a pseudo-element, so it never collides
+   with the hover shadow on the card. */
+.edg-page[data-edg-motion="ready"] .edg-popular {
+  background-image: linear-gradient(100deg, #209554 0 40%, #5fcf90 50%, #209554 60% 100%);
+  background-size: 260% 100%;
+  animation: edg-sheen 6s linear infinite;
+}
+@keyframes edg-sheen {
+  from { background-position: 160% 0; }
+  to { background-position: -60% 0; }
+}
+.edg-page[data-edg-motion="ready"] .edg-plan.popular::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  animation: edg-glow-soft 4.8s ease-in-out infinite;
+}
+
+/* The performance panel reads as live: a faint green band drifts behind the
+   chart (its own background, so it stays behind the SVG and callout), the
+   callout floats, and the bars in the weekly panel shimmer. */
+.edg-page[data-edg-motion="ready"] .edg-insights[data-edg-inview] .edg-chart-area {
+  background: linear-gradient(90deg, transparent 0, rgba(39,134,91,.14) 49%, rgba(39,134,91,.22) 50%, rgba(39,134,91,.14) 51%, transparent 100%) no-repeat;
+  background-size: 26% 100%;
+  animation: edg-scan 5s ease-in-out 1.6s infinite;
+}
+@keyframes edg-scan {
+  0% { background-position: -30% 50%; }
+  55%, 100% { background-position: 130% 50%; }
+}
+.edg-page[data-edg-motion="ready"] .edg-chart-callout { animation: edg-float-soft 6s ease-in-out infinite; }
+.edg-page[data-edg-motion="ready"] .edg-weekly-bars i { animation: edg-bar-flow 3.6s ease-in-out infinite; }
+.edg-page[data-edg-motion="ready"] .edg-weekly-bars > div > span:nth-child(2) i { animation-delay: -.5s; }
+.edg-page[data-edg-motion="ready"] .edg-weekly-bars > div > span:nth-child(3) i { animation-delay: -1s; }
+.edg-page[data-edg-motion="ready"] .edg-weekly-bars > div > span:nth-child(4) i { animation-delay: -1.5s; }
+.edg-page[data-edg-motion="ready"] .edg-weekly-bars > div > span:nth-child(5) i { animation-delay: -2s; }
+.edg-page[data-edg-motion="ready"] .edg-weekly-bars > div > span:nth-child(6) i { animation-delay: -2.5s; }
+.edg-page[data-edg-motion="ready"] .edg-weekly-bars > div > span:nth-child(7) i { animation-delay: -3s; }
+
+/* The final CTA panel glows softly, and its footer social dots float. */
+.edg-page[data-edg-motion="ready"] .edg-final { animation: edg-glow-soft 5.5s ease-in-out infinite; }
+.edg-page[data-edg-motion="ready"] .edg-footer-social a { animation: edg-float-soft 5s ease-in-out infinite; }
+.edg-page[data-edg-motion="ready"] .edg-footer-social a:nth-child(2) { animation-delay: -1.6s; }
+.edg-page[data-edg-motion="ready"] .edg-footer-social a:nth-child(3) { animation-delay: -3.2s; }
+
+/* ══ 3D depth across the card sections ══════════════════════════════════ */
+/* Desktop + motion-safe. reference-motion.css already tilts the step/loop/
+   dna/feature cards; this adds the same pointer tilt to the remaining card
+   sections, a real perspective on every card grid (so the tilt and the icon
+   Z-lift foreshorten properly), a depth shadow on hover, and the icon raising
+   toward the viewer. The JS that feeds --edg-tilt-x/y is widened to match in
+   HomepageMotion.tsx. */
+@media (min-width: 801px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .edg-page[data-edg-motion="ready"] :is(
+    .edg-step-cards, .edg-feature-grid, .edg-dna-traits, .edg-loop-grid,
+    .edg-coach-messages, .edg-journey-list, .edg-moment-list, .edg-story-values, .edg-plan-grid
+  ) { perspective: 1100px; }
+
+  /* Tilt for the sections reference-motion.css does not already cover. */
+  .edg-page[data-edg-motion="ready"] .edg-section[data-edg-inview] :is(
+    .edg-coach-messages article, .edg-journey-list li, .edg-moment-list > div, .edg-story-values > div
+  ),
+  .edg-page[data-edg-motion="ready"] .edg-plan {
+    transform: perspective(900px) rotateX(var(--edg-tilt-x, 0deg)) rotateY(var(--edg-tilt-y, 0deg));
+    transform-style: preserve-3d;
+    transition: opacity .68s ease, transform .32s cubic-bezier(.2,.7,.2,1), box-shadow .32s ease;
+  }
+
+  /* Pointer glow + depth shadow on every tactile card. */
+  .edg-page[data-edg-motion="ready"] .edg-section :is(
+    .edg-coach-messages article, .edg-journey-list li, .edg-moment-list > div, .edg-story-values > div
+  ),
+  .edg-page[data-edg-motion="ready"] .edg-plan { position: relative; }
+
+  .edg-page[data-edg-motion="ready"] .edg-section[data-edg-inview] :is(
+    .edg-step-cards article, .edg-feature-grid > div, .edg-dna-traits > div, .edg-loop-grid li,
+    .edg-coach-messages article, .edg-journey-list li, .edg-moment-list > div, .edg-story-values > div
+  ):hover,
+  .edg-page[data-edg-motion="ready"] .edg-plan:hover {
+    box-shadow: 0 22px 46px -22px rgba(28,73,42,.4);
+  }
+
+  /* Icons and plan prices lift toward the viewer on hover. */
+  .edg-page[data-edg-motion="ready"] .edg-section :is(
+    .edg-step-cards article, .edg-feature-grid > div, .edg-dna-traits > div, .edg-coach-messages article, .edg-journey-list li
+  ) .edg-icon {
+    transition: transform .34s cubic-bezier(.2,.7,.2,1), box-shadow .34s ease;
+  }
+  .edg-page[data-edg-motion="ready"] .edg-section :is(
+    .edg-step-cards article, .edg-feature-grid > div, .edg-dna-traits > div, .edg-coach-messages article, .edg-journey-list li
+  ):hover .edg-icon {
+    transform: translateZ(26px) scale(1.06);
+    box-shadow: 0 12px 22px -8px rgba(28,73,42,.42);
+  }
+  .edg-page[data-edg-motion="ready"] .edg-plan:hover .edg-plan-price { transform: translateZ(22px); }
+}
+
+/* ══ Hero scroll parallax ═══════════════════════════════════════════════ */
+/* Desktop + motion-safe only. Driven by --edg-hero-scroll (set in
+   HomepageMotion); this is a static transform, not an animation, so it needs
+   its own guard rather than relying on the reduced-motion blanket. Matches the
+   existing choice to disable the hero drift below 800px. */
+@media (min-width: 801px) and (prefers-reduced-motion: no-preference) {
+  .edg-page[data-edg-motion="ready"] .edg-hero-copy {
+    transform: translate3d(0, calc(var(--edg-hero-scroll, 0) * -26px), 0);
+  }
+  .edg-page[data-edg-motion="ready"] .edg-awareness {
+    transform: translate3d(0, calc(var(--edg-hero-scroll, 0) * 20px), 0);
+  }
+}

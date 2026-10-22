@@ -1,9 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import { Geist_Mono, Inter, Space_Grotesk } from "next/font/google";
+import { Doto, Geist_Mono, Inter, Space_Grotesk } from "next/font/google";
 
-import { LoaderDone } from "@/components/loader/LoaderDone";
 import { WebVitals } from "@/components/WebVitals";
-import { NeuralLoader } from "@/components/loader/NeuralLoader";
 import {
   AREA_SERVED,
   BRAND_ALTERNATE_NAMES,
@@ -31,24 +29,21 @@ import {
   jsonLd,
 } from "@/data/brand";
 import "./globals.css";
-// After globals.css on purpose: the shell owns the navbar, the footer, the two
-// button styles and the hero composition, and supersedes what globals.css used
-// to say about them.
+// The shell still owns the global .waitlist / .demo button classes and the
+// data-reveal motion helpers used by the other routes.
 import "./shell.css";
-// Then the motion layer, which refines both.
 import "./motion.css";
-// Last on purpose, in this order: the landing page's one continuous
-// background layer and the section-level backgrounds it replaces, then the
-// scroll stage that turns those sections into panels of one pinned frame.
-import "./backdrop.css";
-import "./stage.css";
-// Last of all: the shared section system — one spine, one vertical rhythm, one
-// type scale and one card language across all eleven sections. It is last
-// because each section's own stylesheet is imported by its component, which
-// is below the layout in the tree.
-import "./sections.css";
-// The intro overlay. Last, so it sits above everything the other layers set.
-import "./loader.css";
+// The landing page's design system: paper + green palette, Doto + Inter type,
+// and the dark theme toggle layer.
+import "./reference-landing.css";
+import "./reference-motion.css";
+import "./reference-polish.css";
+import "./reference-theme.css";
+import "./reference-loader.css";
+// Shared chrome (header + footer) and the sitewide paper re-skin, applied to
+// every non-landing route so the whole site reads as one visual system.
+import "./edg-chrome.css";
+import "./edg-reskin.css";
 
 /**
  * The hybrid type system: a geometric display face for headings, a highly
@@ -75,6 +70,13 @@ const mono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
   weight: ["500", "700"],
+  display: "swap",
+});
+
+const doto = Doto({
+  variable: "--font-doto",
+  subsets: ["latin"],
+  weight: ["500", "600"],
   display: "swap",
 });
 
@@ -281,19 +283,31 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en-IN"
-      className={`${display.variable} ${text.variable} ${mono.variable} h-full antialiased`}
+      className={`${display.variable} ${text.variable} ${mono.variable} ${doto.variable} h-full antialiased`}
+      // The pre-paint script below sets data-edg-theme on <html> before React
+      // hydrates, so the server markup (no attribute) and the client (attribute
+      // present) differ on this one element by design. Scope the suppression to
+      // <html>; it does not extend to children.
+      suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
+        {/* Resolve the homepage's light/dark choice before first paint so the
+            theme never flashes. Reads the saved preference, else the OS one,
+            and sets it on <html>; the dark palette in reference-theme.css is
+            keyed off this attribute. Only the homepage (.edg-page) reacts to
+            it, so it is a no-op on every other route. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{var t=localStorage.getItem('edg-theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.dataset.edgTheme=t;}catch(e){}",
+          }}
+        />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(siteGraph) }} />
         {children}
-        {/* The intro overlay, last in the body so it paints over the page
-            without needing a stacking context of its own. It is server
-            rendered, so it is on screen from the first frame rather than
-            dropping in after hydration, and it is an overlay on top of the
-            complete document — the page's headings, copy and links are all
-            present and crawlable underneath it the whole time. */}
-        <NeuralLoader />
-        <LoaderDone />
+        {/* The dark-navy NeuralLoader was retired: every route now uses the
+            paper landing palette, so a navy intro overlay no longer fits.
+            The landing has its own LandingLoader; other routes load straight
+            into the paper chrome. */}
         {/* Renders nothing; subscribes to the Core Web Vitals the browser
             reports, so the loader's real-world cost is measurable rather than
             argued about. */}

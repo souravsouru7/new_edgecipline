@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { EdgeciplineHero } from "@/components/EdgeciplineHero";
+import { ReferenceLanding } from "@/components/landing/ReferenceLanding";
 import { steps } from "@/components/landing/HowItWorks";
 import {
   BRAND_ID,
@@ -109,7 +109,7 @@ export default function Home() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(homeGraph) }} />
-      <EdgeciplineHero />
+      <ReferenceLanding />
     </>
   );
 }

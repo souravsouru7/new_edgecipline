@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" fill="none">
+  <defs>
+    <linearGradient id="mountain" x1="0" y1="0" x2="0" y2="360" gradientUnits="userSpaceOnUse"><stop stop-color="#16834A" stop-opacity=".12"/><stop offset="1" stop-color="#16834A" stop-opacity=".85"/></linearGradient>
+    <pattern id="dots" width="9" height="9" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.4" fill="url(#mountain)"/></pattern>
+    <clipPath id="land"><path d="M0 290C110 275 130 210 230 220S350 140 445 170 555 250 660 180 800 60 900 130 1040 245 1200 160V360H0Z"/></clipPath>
+  </defs>
+  <g clip-path="url(#land)"><rect width="1200" height="360" fill="url(#dots)"/></g>
+  <path d="M0 290C110 275 130 210 230 220S350 140 445 170 555 250 660 180 800 60 900 130 1040 245 1200 160" stroke="#16834A" stroke-opacity=".38" stroke-width="1.4"/>
+</svg>

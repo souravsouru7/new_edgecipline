@@ -1,0 +1,167 @@
+/* Dark theme + theme-toggle control for the homepage.
+
+   Everything here is additive. Light mode is the default and is left exactly
+   as reference-landing.css defines it; the dark palette only applies under
+   html[data-edg-theme="dark"], which the toggle (ThemeToggle.tsx) and the
+   pre-paint script in layout.tsx set. Because reference-landing.css already
+   drives most surfaces through the --edg-* tokens, re-pointing those tokens
+   does most of the work; the blocks below cover the places that hard-code a
+   colour (buttons, card surfaces, the chart, the dialog, copy greys). */
+
+/* ── The toggle button ──────────────────────────────────────────────────── */
+.edg-theme-toggle {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  flex: none;
+  border: 1px solid var(--edg-line);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--edg-ink);
+  transition: background .2s, border-color .2s, transform .2s;
+}
+.edg-theme-toggle:hover { background: #e3e8df; transform: translateY(-1px); }
+/* The two icons share one grid cell and cross-fade with a quarter-turn, driven
+   by the active theme — so the control animates and can never show the wrong
+   icon for the current palette. */
+.edg-theme-toggle svg {
+  grid-area: 1 / 1;
+  transition: opacity .3s ease, transform .45s cubic-bezier(.2, .7, .2, 1);
+}
+.edg-theme-toggle .edg-theme-sun { opacity: 1; transform: rotate(0) scale(1); }
+.edg-theme-toggle .edg-theme-moon { opacity: 0; transform: rotate(90deg) scale(.4); }
+html[data-edg-theme="dark"] .edg-theme-toggle .edg-theme-sun { opacity: 0; transform: rotate(-90deg) scale(.4); }
+html[data-edg-theme="dark"] .edg-theme-toggle .edg-theme-moon { opacity: 1; transform: rotate(0) scale(1); }
+
+/* Soften the whole-page View Transition the toggle triggers (ThemeToggle.tsx). */
+::view-transition-old(root),
+::view-transition-new(root) { animation-duration: .38s; }
+
+/* ── Dark palette ───────────────────────────────────────────────────────── */
+html[data-edg-theme="dark"]:has(.edg-page),
+html[data-edg-theme="dark"] body:has(.edg-page) {
+  background: #0d1411;
+  color-scheme: dark;
+}
+html[data-edg-theme="dark"] .edg-page {
+  --edg-ink: #eef2ee;
+  --edg-green: #45d391;
+  --edg-muted: #9aa49c;
+  --edg-line: rgba(255, 255, 255, .13);
+  --edg-paper: #0d1411;
+  background-color: #0d1411;
+  background-image: radial-gradient(rgba(120, 200, 150, .05) .6px, transparent .8px);
+}
+
+/* Surfaces: every card / panel that hard-codes a translucent-white fill. */
+html[data-edg-theme="dark"] .edg-page :is(
+  .edg-stats, .edg-step-cards article, .edg-performance-card, .edg-coach-messages article,
+  .edg-loop-grid li, .edg-moment-list > div, .edg-dna-traits > div, .edg-weekly-panel,
+  .edg-journey-list li, .edg-plan, .edg-yearly-message, .edg-faq-list details,
+  .edg-cycle-node, .edg-story-moment, .edg-story-chart
+) {
+  background: rgba(255, 255, 255, .035);
+  border-color: var(--edg-line);
+}
+html[data-edg-theme="dark"] .edg-page .edg-cycle-core {
+  background: radial-gradient(circle at 30% 25%, rgba(255,255,255,.08), rgba(13,20,17,.6));
+  border-color: var(--edg-line);
+  box-shadow: 0 14px 30px -22px rgba(0,0,0,.6), inset 0 0 0 2px rgba(255,255,255,.05);
+}
+html[data-edg-theme="dark"] .edg-page .edg-cycle-ring { background: rgba(69,211,145,.1); border-color: rgba(69,211,145,.3); color: #8fe9bb; }
+html[data-edg-theme="dark"] .edg-page .edg-story-moment-icon { background: rgba(69,211,145,.1); color: #8fe9bb; }
+html[data-edg-theme="dark"] .edg-page .edg-story-moment-down .edg-story-moment-icon { background: rgba(219,81,74,.18); color: #ef7a73; }
+html[data-edg-theme="dark"] .edg-page .edg-story-moment-tag { background: rgba(219,81,74,.18); color: #ef7a73; }
+html[data-edg-theme="dark"] .edg-page .edg-story-moment-up .edg-story-moment-tag { background: rgba(69,211,145,.18); color: #8fe9bb; }
+html[data-edg-theme="dark"] .edg-page .edg-story-grid { stroke: var(--edg-line); }
+html[data-edg-theme="dark"] .edg-page .edg-plan.popular { background: rgba(69, 211, 145, .07); border-color: rgba(69, 211, 145, .3); }
+
+/* The dotted field + logo need lightening. */
+html[data-edg-theme="dark"] .edg-page .edg-logo img { filter: brightness(0) invert(1) opacity(.92); }
+html[data-edg-theme="dark"] .edg-page .edg-nav a[aria-current]::after { background: var(--edg-green); }
+html[data-edg-theme="dark"] .edg-page .edg-awareness span::after,
+html[data-edg-theme="dark"] .edg-page .edg-awareness { border-color: var(--edg-line); }
+html[data-edg-theme="dark"] .edg-page .edg-awareness span::after { background: var(--edg-green); }
+
+/* Buttons: the near-black primary would vanish on a dark canvas, so it becomes
+   the brand green with dark ink. */
+html[data-edg-theme="dark"] .edg-page .edg-button {
+  background: var(--edg-green);
+  border-color: var(--edg-green);
+  color: #06160e !important;
+}
+html[data-edg-theme="dark"] .edg-page .edg-button svg { color: #06160e; }
+html[data-edg-theme="dark"] .edg-page .edg-button:hover { background: #5fe0a4; }
+html[data-edg-theme="dark"] .edg-page :is(.edg-login, .edg-outline-button, .edg-theme-toggle):hover { background: rgba(255, 255, 255, .06); }
+html[data-edg-theme="dark"] .edg-page .edg-billing button.active { background: var(--edg-green); border-color: var(--edg-green); color: #06160e; }
+
+/* Header + mobile sheet. */
+html[data-edg-theme="dark"] .edg-page .edg-header { background: rgba(13, 20, 17, .82); }
+html[data-edg-theme="dark"] .edg-page .edg-mobile-nav { background: #0d1411; }
+html[data-edg-theme="dark"] .edg-page .edg-mobile-nav a,
+html[data-edg-theme="dark"] .edg-page .edg-mobile-nav button { color: var(--edg-ink); }
+
+/* Icon chips. */
+html[data-edg-theme="dark"] .edg-page .edg-icon { background: rgba(69, 211, 145, .15); color: #8fe9bb; }
+
+/* Chart internals. */
+html[data-edg-theme="dark"] .edg-page .edg-chart-tabs span { background: rgba(255, 255, 255, .06); color: var(--edg-muted); }
+html[data-edg-theme="dark"] .edg-page .edg-chart-tabs .active { background: rgba(69, 211, 145, .22); color: #bdf3d6; }
+html[data-edg-theme="dark"] .edg-page .edg-chart-callout { background: #122019; border-color: var(--edg-line); }
+html[data-edg-theme="dark"] .edg-page .edg-chart-metrics .edg-negative { color: #e7ebe7; }
+html[data-edg-theme="dark"] .edg-page .edg-weekly-bars > div { border-bottom-color: var(--edg-line); }
+html[data-edg-theme="dark"] .edg-page .edg-weekly-bars i { background: linear-gradient(#45d391, #1d6b49); }
+html[data-edg-theme="dark"] .edg-page .edg-weekly-panel > p { background: rgba(255, 255, 255, .05); color: var(--edg-muted); }
+html[data-edg-theme="dark"] .edg-page .edg-weekly-panel > p strong { color: var(--edg-ink); }
+
+/* Copy greys that are hard-coded light-mode values → readable on dark. */
+html[data-edg-theme="dark"] .edg-page :is(
+  .edg-section-intro > p, .edg-step-cards p, .edg-loop-grid p, .edg-moment-list > div p,
+  .edg-story-values p, .edg-dna-traits small, .edg-journey-list small, .edg-feature-grid small,
+  .edg-plan li, .edg-plan > small, .edg-faq-list details p, .edg-faq-list summary,
+  .edg-coach-messages small, .edg-weekly-head span, .edg-weekly-bars small, .edg-weekly-stats span,
+  .edg-chart-metrics small, .edg-months, .edg-chart-filter, .edg-eyebrow, .edg-hero-art > p,
+  .edg-step-cards article > small, .edg-section-label, .edg-step-number, .edg-story-badges span,
+  .edg-final-kicker, .edg-footer > p, .edg-footer nav a, .edg-social-proof > small,
+  .edg-cycle-node p, .edg-cycle-core small, .edg-story-moment-body p, .edg-story-chart figcaption, .edg-story-note
+) { color: var(--edg-muted); }
+
+/* Borders / dividers that hard-code a light grey. */
+html[data-edg-theme="dark"] .edg-page :is(
+  .edg-section, .edg-chart-metrics, .edg-story-values > div, .edg-weekly-head, .edg-final,
+  .edg-footer-social a, .edg-step-cards article > a, .edg-login, .edg-billing button, .edg-play-button > span
+) { border-color: var(--edg-line); }
+
+/* Avatar chips + progress-trace colour read fine, but the paper-coloured avatar
+   ring needs to match the new canvas. */
+html[data-edg-theme="dark"] .edg-page .edg-avatars > * { border-color: var(--edg-paper); }
+
+/* The scroll-progress bar + section-label tick stay green (they use literals in
+   reference-motion.css); nudge the progress bar brighter for the dark canvas. */
+html[data-edg-theme="dark"] .edg-page .edg-scroll-progress { background: var(--edg-green); }
+
+/* Dialog. */
+html[data-edg-theme="dark"] .edg-page ~ .edg-dialog,
+html[data-edg-theme="dark"] .edg-dialog {
+  background: #111a16;
+  border-color: var(--edg-line, rgba(255,255,255,.13));
+  color: #eef2ee;
+}
+html[data-edg-theme="dark"] .edg-dialog .wlForm { background: rgba(255, 255, 255, .04); border-color: rgba(255, 255, 255, .13); }
+html[data-edg-theme="dark"] .edg-dialog .wlField input,
+html[data-edg-theme="dark"] .edg-dialog .wlField select { background-color: #0d1411; border-color: rgba(255, 255, 255, .16); color: #eef2ee; }
+html[data-edg-theme="dark"] .edg-dialog .wlSubmit { background: #45d391; color: #06160e; }
+html[data-edg-theme="dark"] .edg-dialog .edg-dialog-close { border-color: rgba(255, 255, 255, .16); color: #eef2ee; }
+
+/* Colour changes animate rather than snap when the toggle is flipped. */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-edg-theme] .edg-page,
+  html[data-edg-theme] .edg-page :is(
+    .edg-header, .edg-stats, .edg-step-cards article, .edg-performance-card, .edg-coach-messages article,
+    .edg-loop-grid li, .edg-moment-list > div, .edg-dna-traits > div, .edg-weekly-panel, .edg-journey-list li,
+    .edg-plan, .edg-yearly-message, .edg-faq-list details, .edg-button, .edg-icon, .edg-chart-callout
+  ) {
+    transition: background-color .3s ease, border-color .3s ease, color .3s ease;
+  }
+}

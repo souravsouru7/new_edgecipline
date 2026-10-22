@@ -1,0 +1,63 @@
+/* Shared chrome (edg-header + edg-footer) used on every route outside the
+   landing. The landing itself still wraps in .edg-page; the other routes use
+   this .edg-chrome wrapper so the landing-style header and footer render with
+   their design tokens applied without pulling in the landing's full body reset. */
+
+.edg-chrome {
+  --edg-ink: #171c19;
+  --edg-green: #27865b;
+  --edg-muted: #717670;
+  --edg-line: #d5d8d0;
+  --edg-paper: #efeee8;
+  --edg-doto: var(--font-doto), monospace;
+  position: relative;
+  z-index: 20;
+  background: var(--edg-paper);
+  color: var(--edg-ink);
+  font-family: var(--font-inter), Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.edg-chrome *, .edg-chrome *::before, .edg-chrome *::after { box-sizing: border-box; }
+.edg-chrome a { color: inherit; text-decoration: none; }
+.edg-chrome button { font: inherit; cursor: pointer; }
+.edg-chrome h1, .edg-chrome h2, .edg-chrome h3, .edg-chrome p { margin: 0; }
+.edg-chrome em { color: var(--edg-green); font-style: normal; }
+.edg-chrome :focus-visible { outline: 2px solid var(--edg-green); outline-offset: 4px; }
+
+.edg-chrome .edg-header { background: rgba(239, 238, 232, .94); backdrop-filter: blur(12px); }
+.edg-chrome .edg-nav a { transition: color .22s ease; }
+
+/* Current-route underline in the header */
+.edg-chrome .edg-nav a[aria-current="page"] { color: var(--edg-ink); font-weight: 700; }
+.edg-chrome .edg-nav a[aria-current="page"]::after {
+  content: ''; position: absolute; left: 50%; bottom: -9px;
+  width: 3px; height: 3px; background: #121b15; border-radius: 50%; transform: translateX(-50%);
+}
+
+.edg-chrome-footer { background: var(--edg-paper); border-top: 1px solid var(--edg-line); }
+.edg-chrome-footer .edg-footer { flex-wrap: wrap; }
+
+/* Dark palette for the chrome, matching the landing dark theme */
+html[data-edg-theme="dark"] .edg-chrome {
+  --edg-ink: #eef2ee;
+  --edg-muted: #a7b1a7;
+  --edg-line: rgba(239, 242, 238, .14);
+  --edg-paper: #0d1411;
+  background: var(--edg-paper);
+}
+html[data-edg-theme="dark"] .edg-chrome .edg-header { background: rgba(13, 20, 17, .82); }
+html[data-edg-theme="dark"] .edg-chrome .edg-logo img { filter: brightness(0) invert(1) opacity(.92); }
+html[data-edg-theme="dark"] .edg-chrome .edg-nav a[aria-current="page"]::after { background: var(--edg-green); }
+html[data-edg-theme="dark"] .edg-chrome .edg-button {
+  background: var(--edg-green);
+  border-color: var(--edg-green);
+  color: #06160e !important;
+}
+html[data-edg-theme="dark"] .edg-chrome .edg-button svg { color: #06160e; }
+html[data-edg-theme="dark"] .edg-chrome .edg-button:hover { background: #5fe0a4; }
+html[data-edg-theme="dark"] .edg-chrome .edg-login:hover,
+html[data-edg-theme="dark"] .edg-chrome .edg-theme-toggle:hover { background: rgba(255, 255, 255, .06); }
+html[data-edg-theme="dark"] .edg-chrome .edg-mobile-nav { background: #0d1411; }
+html[data-edg-theme="dark"] .edg-chrome .edg-mobile-nav a,
+html[data-edg-theme="dark"] .edg-chrome .edg-mobile-nav button { color: var(--edg-ink); }
