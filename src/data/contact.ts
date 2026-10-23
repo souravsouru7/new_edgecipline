@@ -25,6 +25,8 @@
  * would need.
  */
 
+import { FOUNDING_YEAR, LEGAL_NAME } from "./brand";
+
 export const CONTACT_EMAIL = "support@edgecipline.com";
 export const RESPONSE_TIME = "We respond within 24–48 hours on business days.";
 
@@ -56,7 +58,7 @@ export const socials: readonly { id: SocialId; label: string; handle: string; hr
 ] as const;
 
 export const company = {
-  name: "Edgecipline Technologies",
+  name: LEGAL_NAME,
   country: "India",
-  note: "Founded 2024 · Building in public",
+  note: `Founded ${FOUNDING_YEAR} · Building in public`,
 } as const;

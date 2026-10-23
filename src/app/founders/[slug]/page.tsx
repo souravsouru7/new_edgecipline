@@ -15,7 +15,7 @@ import {
   otherFounder,
 } from "@/data/founders";
 import { WAITLIST_HREF } from "@/data/features";
-import { BRAND_NAME, absoluteUrl } from "@/data/brand";
+import { BRAND_NAME, LEGAL_NAME, absoluteUrl } from "@/data/brand";
 import styles from "@/components/founders/Founders.module.css";
 
 const css = (name: string) => styles[name] || name;
@@ -108,7 +108,7 @@ export default async function FounderProfilePage({ params }: Props) {
               worksFor: {
                 "@type": "Organization",
                 "@id": `${url("/")}#organization`,
-                name: "Edgecipline Technologies",
+                name: LEGAL_NAME,
                 url: url("/"),
               },
             }

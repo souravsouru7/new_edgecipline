@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { LegalPage } from "@/components/legal/LegalPage";
 import { legalDateModified, privacyPolicy } from "@/data/legal";
-import { BRAND_NAME, OG_IMAGE_PATH, OG_IMAGE_SIZE, absoluteUrl } from "@/data/brand";
+import { BRAND_NAME, LEGAL_NAME, OG_IMAGE_PATH, OG_IMAGE_SIZE, absoluteUrl } from "@/data/brand";
 
 const url = absoluteUrl;
 
@@ -42,7 +42,7 @@ export default function PrivacyPage() {
     // From the document's own "Last updated" line, never today's date.
     dateModified: legalDateModified(privacyPolicy.updated),
     ...(url("/")
-      ? { publisher: { "@type": "Organization", name: "Edgecipline Technologies", url: url("/") } }
+      ? { publisher: { "@type": "Organization", name: LEGAL_NAME, url: url("/") } }
       : {}),
     breadcrumb: {
       "@type": "BreadcrumbList",

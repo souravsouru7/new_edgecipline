@@ -6,6 +6,7 @@ import { RevealObserver } from "@/components/motion/RevealObserver";
 import { FeatureSection } from "@/components/features/FeatureSection";
 import { FeaturesCta } from "@/components/features/FeaturesCta";
 import { FeaturesHero } from "@/components/features/FeaturesHero";
+import { StageHeader } from "@/components/features/StageHeader";
 import { features, featuresInGroup, groups } from "@/data/features";
 import { BRAND_NAME, SOFTWARE_ID, WEBSITE_ID, absoluteUrl, jsonLd } from "@/data/brand";
 import styles from "@/components/features/Features.module.css";
@@ -136,13 +137,13 @@ const featuresGraph = {
  */
 export default function FeaturesPage() {
   return (
-    <div className={css("ftPage")}>
+    <div className={css("ftxPage")}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLd(featuresGraph) }}
       />
 
-      <a className={css("ftSkip")} href="#features">
+      <a className={css("ftxSkip")} href="#features">
         Skip to features
       </a>
 
@@ -151,15 +152,17 @@ export default function FeaturesPage() {
 
       <FeaturesHero />
 
-      <main className={css("ftBody")} id="features">
-        {groups.map((group) => {
+      <main className={css("ftxBody")} id="features">
+        {groups.map((group, groupIndex) => {
           const inGroup = featuresInGroup(group.id);
           return (
-            <section key={group.id} className={css("ftGroup")} id={`group-${group.id}`}>
+            <section key={group.id} className={css("ftxStageGroup")} aria-labelledby={`group-${group.id}-title`}>
+              <StageHeader group={group} index={groupIndex} total={groups.length} />
               {inGroup.map((feature, index) => (
                 <FeatureSection
                   key={feature.id}
                   feature={feature}
+                  stage={group.title}
                   // One waitlist link per stage rather than fourteen.
                   cta={index === inGroup.length - 1}
                 />

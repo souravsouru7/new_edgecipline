@@ -45,13 +45,13 @@ html[data-edg-theme="dark"] body:has(.edg-page) {
   color-scheme: dark;
 }
 html[data-edg-theme="dark"] .edg-page {
-  --edg-ink: #eef2ee;
-  --edg-green: #45d391;
-  --edg-muted: #9aa49c;
-  --edg-line: rgba(255, 255, 255, .13);
+  --edg-ink: #f0f5f1;
+  --edg-green: #4ddd9a;
+  --edg-muted: #b8c4bb;
+  --edg-line: rgba(255, 255, 255, .15);
   --edg-paper: #0d1411;
   background-color: #0d1411;
-  background-image: radial-gradient(rgba(120, 200, 150, .05) .6px, transparent .8px);
+  background-image: radial-gradient(rgba(120, 200, 150, .06) .6px, transparent .8px);
 }
 
 /* Surfaces: every card / panel that hard-codes a translucent-white fill. */
@@ -78,7 +78,7 @@ html[data-edg-theme="dark"] .edg-page .edg-story-grid { stroke: var(--edg-line);
 html[data-edg-theme="dark"] .edg-page .edg-plan.popular { background: rgba(69, 211, 145, .07); border-color: rgba(69, 211, 145, .3); }
 
 /* The dotted field + logo need lightening. */
-html[data-edg-theme="dark"] .edg-page .edg-logo img { filter: brightness(0) invert(1) opacity(.92); }
+html[data-edg-theme="dark"] .edg-page .edg-logo img { filter: none; }
 html[data-edg-theme="dark"] .edg-page .edg-nav a[aria-current]::after { background: var(--edg-green); }
 html[data-edg-theme="dark"] .edg-page .edg-awareness span::after,
 html[data-edg-theme="dark"] .edg-page .edg-awareness { border-color: var(--edg-line); }
@@ -126,6 +126,43 @@ html[data-edg-theme="dark"] .edg-page :is(
   .edg-final-kicker, .edg-footer > p, .edg-footer nav a, .edg-social-proof > small,
   .edg-cycle-node p, .edg-cycle-core small, .edg-story-moment-body p, .edg-story-chart figcaption, .edg-story-note
 ) { color: var(--edg-muted); }
+
+/* Hard-coded paragraph/body colors not caught by the token above. */
+html[data-edg-theme="dark"] .edg-page .edg-hero-description { color: var(--edg-muted); }
+html[data-edg-theme="dark"] .edg-page .edg-section-intro > p { color: var(--edg-muted) !important; }
+html[data-edg-theme="dark"] .edg-page .edg-step-cards p { color: var(--edg-muted) !important; }
+html[data-edg-theme="dark"] .edg-page .edg-coach-messages p { color: var(--edg-ink); }
+html[data-edg-theme="dark"] .edg-page .edg-story-badges span { color: var(--edg-muted); border-color: var(--edg-line); }
+html[data-edg-theme="dark"] .edg-page .edg-chart-metrics .edg-negative { color: var(--edg-ink); }
+html[data-edg-theme="dark"] .edg-page .edg-outline-button { color: var(--edg-ink); }
+html[data-edg-theme="dark"] .edg-page .edg-play-button { color: var(--edg-ink); }
+html[data-edg-theme="dark"] .edg-page .edg-social-proof > small { color: var(--edg-muted); }
+html[data-edg-theme="dark"] .edg-page .edg-footer > p { color: var(--edg-muted); }
+html[data-edg-theme="dark"] .edg-page .edg-footer nav a { color: var(--edg-muted); }
+html[data-edg-theme="dark"] .edg-page .edg-footer nav a:hover { color: var(--edg-green); }
+html[data-edg-theme="dark"] .edg-page .edg-footer-social a { border-color: var(--edg-line); color: var(--edg-muted); }
+html[data-edg-theme="dark"] .edg-page .edg-plan li { color: var(--edg-muted); }
+html[data-edg-theme="dark"] .edg-page .edg-plan li svg { color: var(--edg-green); }
+html[data-edg-theme="dark"] .edg-page .edg-dna-tags { color: var(--edg-muted); }
+html[data-edg-theme="dark"] .edg-page .edg-moment-note { color: var(--edg-muted); }
+html[data-edg-theme="dark"] .edg-page .edg-story-note { color: var(--edg-muted); }
+html[data-edg-theme="dark"] .edg-page .edg-weekly-panel > p { color: var(--edg-muted); background: rgba(255,255,255,.05); }
+html[data-edg-theme="dark"] .edg-page .edg-weekly-panel > p strong { color: var(--edg-ink); }
+
+/* Headings: Doto renders thin on dark — add a subtle text-shadow for weight. */
+html[data-edg-theme="dark"] .edg-page h1,
+html[data-edg-theme="dark"] .edg-page h2 {
+  color: var(--edg-ink);
+  text-shadow: 0 0 1px rgba(240, 245, 241, .4);
+}
+html[data-edg-theme="dark"] .edg-page em {
+  color: var(--edg-green);
+  text-shadow: 0 0 12px rgba(77, 221, 154, .35);
+}
+
+html[data-edg-theme="dark"] .edg-page .edg-faq-list details p {
+  color: var(--edg-green);
+}
 
 /* Borders / dividers that hard-code a light grey. */
 html[data-edg-theme="dark"] .edg-page :is(

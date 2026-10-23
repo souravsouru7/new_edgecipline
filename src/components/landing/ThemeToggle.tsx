@@ -14,13 +14,21 @@ type Theme = "light" | "dark";
  * palette itself lives in reference-theme.css, keyed off that attribute. The
  * sun/moon icons are shown/hidden from the attribute too, so the control can
  * never disagree with what is on screen.
+ *
+ * suppressHydrationWarning is required on the button: the server always renders
+ * the "light" initial state, but the client reads the real preference from
+ * data-edg-theme (set before paint by the inline script in layout.tsx) and
+ * may immediately differ. This is intentional — the mismatch is cosmetic and
+ * the CSS transition handles the visual state, not React.
  */
 export function ThemeToggle() {
   const [theme, setTheme] = useState<Theme>("light");
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const current = (document.documentElement.dataset.edgTheme as Theme) || "light";
     setTheme(current);
+    setMounted(true);
   }, []);
 
   const toggle = () => {
@@ -57,8 +65,12 @@ export function ThemeToggle() {
       type="button"
       className="edg-theme-toggle"
       onClick={toggle}
-      aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-      aria-pressed={theme === "dark"}
+      // These attributes depend on client-only state (localStorage / data-edg-theme).
+      // suppressHydrationWarning silences the inevitable server/client mismatch;
+      // the real value is set synchronously in useEffect before the user can interact.
+      aria-label={mounted && theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+      aria-pressed={mounted ? theme === "dark" : false}
+      suppressHydrationWarning
     >
       <Sun size={16} strokeWidth={1.8} className="edg-theme-sun" aria-hidden="true" />
       <Moon size={16} strokeWidth={1.8} className="edg-theme-moon" aria-hidden="true" />

@@ -18,7 +18,7 @@ import {
   founders,
 } from "@/data/founders";
 import { WAITLIST_HREF } from "@/data/features";
-import { BRAND_NAME, OG_IMAGE_PATH, OG_IMAGE_SIZE, absoluteUrl } from "@/data/brand";
+import { BRAND_NAME, LEGAL_NAME, OG_IMAGE_PATH, OG_IMAGE_SIZE, absoluteUrl } from "@/data/brand";
 import styles from "@/components/founders/Founders.module.css";
 
 const css = (name: string) => styles[name] || name;
@@ -95,7 +95,7 @@ export default function FoundersPage() {
       {
         "@type": "Organization",
         "@id": `${url("/")}#organization`, url: url("/"),
-        name: "Edgecipline Technologies",
+        name: LEGAL_NAME,
         numberOfEmployees: founders.length,
         founder: people.map((person) =>
           person["@id"] ? { "@id": person["@id"] } : { "@type": "Person", name: person.name },

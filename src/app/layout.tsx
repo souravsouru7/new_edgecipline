@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Doto, Geist_Mono, Inter, Space_Grotesk } from "next/font/google";
 
 import { WebVitals } from "@/components/WebVitals";
+import { WaitlistDialog } from "@/components/waitlist/WaitlistDialog";
 import {
   AREA_SERVED,
   BRAND_ALTERNATE_NAMES,
@@ -10,6 +11,7 @@ import {
   BRAND_NAME,
   BRAND_SLOGAN,
   CONTACT_EMAIL,
+  FOUNDING_YEAR,
   LEGAL_NAME,
   IS_PREVIEW_DEPLOYMENT,
   LOGO_PATH,
@@ -205,7 +207,7 @@ const siteGraph = {
       email: CONTACT_EMAIL,
       slogan: BRAND_SLOGAN,
       description: SITE_DESCRIPTION,
-      foundingDate: "2024",
+      foundingDate: FOUNDING_YEAR,
       address: { "@type": "PostalAddress", addressCountry: "IN" },
       areaServed: [...AREA_SERVED],
       logo: {
@@ -299,11 +301,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "try{var t=localStorage.getItem('edg-theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.dataset.edgTheme=t;}catch(e){}",
+              "try{var t=localStorage.getItem('edg-theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.dataset.edgTheme=t;}catch(e){}" +
+              // Lock scroll immediately on the homepage so there is no layout
+              // shift or white-flash between the server HTML arriving and the
+              // LandingLoader useEffect running. Keyed off window.location.pathname
+              // so every other route stays unaffected.
+              "if(window.location.pathname==='/'){document.body.style.overflow='hidden';}",
           }}
         />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(siteGraph) }} />
         {children}
+        <WaitlistDialog />
         {/* The dark-navy NeuralLoader was retired: every route now uses the
             paper landing palette, so a navy intro overlay no longer fits.
             The landing has its own LandingLoader; other routes load straight

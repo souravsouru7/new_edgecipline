@@ -61,3 +61,26 @@ html[data-edg-theme="dark"] .edg-chrome .edg-theme-toggle:hover { background: rg
 html[data-edg-theme="dark"] .edg-chrome .edg-mobile-nav { background: #0d1411; }
 html[data-edg-theme="dark"] .edg-chrome .edg-mobile-nav a,
 html[data-edg-theme="dark"] .edg-chrome .edg-mobile-nav button { color: var(--edg-ink); }
+
+/* ──────────── Sticky header on mobile ────────────
+   At phone width the navigation collapses behind the menu button, so the bar
+   has to follow the reader rather than scroll away with the hero.
+
+   The rule is on the wrapper, not on `.edg-header`: the wrapper is the only
+   child of the page container, so sticking the header inside it would pin it
+   to a box its own height and do nothing. `.edg-header` keeps
+   `position: relative`, which is what `.edg-mobile-nav` is positioned
+   against, so the open menu travels with the bar.
+
+   The landing's header is not inside `.edg-chrome` and is already sticky at
+   every width — see `reference-motion.css`.
+
+   z-index 30 matches the landing's and sits above the page content but below
+   the skip links, so "Skip to content" is still reachable on the first Tab. */
+@media (max-width: 800px) {
+  .edg-chrome:not(.edg-chrome-footer) {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+  }
+}

@@ -117,7 +117,7 @@ We may update this Privacy Policy from time to time. When we do, we will update 
 
 If you have questions or concerns about this Privacy Policy or our data practices, please contact us:
 
-Edgecipline Technologies
+Edgecipline Private Limited
 
 Email: support@edgecipline.com
 
@@ -187,9 +187,9 @@ When using the Service, you agree NOT to:
 
 ## 6. Intellectual Property
 
-All content on the Edgecipline website, including text, graphics, logos, and software, is the intellectual property of Edgecipline Technologies and is protected by applicable copyright, trademark, and other intellectual property laws.
+All content on the Edgecipline website, including text, graphics, logos, and software, is the intellectual property of Edgecipline Private Limited and is protected by applicable copyright, trademark, and other intellectual property laws.
 
-The Edgecipline name and logo are trademarks of Edgecipline Technologies. You may not use our trademarks without prior written permission.
+The Edgecipline name and logo are trademarks of Edgecipline Private Limited. You may not use our trademarks without prior written permission.
 
 ## 7. Subscriptions & Refunds
 
@@ -199,7 +199,7 @@ When subscriptions launch, we will publish a clear refund policy. Our goal is fo
 
 ## 8. Limitation of Liability
 
-To the maximum extent permitted by applicable law, Edgecipline Technologies and its founders, employees, and affiliates shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to:
+To the maximum extent permitted by applicable law, Edgecipline Private Limited and its founders, employees, and affiliates shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to:
 
 - Trading losses incurred while using or after using the Service
 - Loss of profits, revenue, or data
@@ -214,7 +214,7 @@ These Terms are governed by the laws of India. Any disputes arising from these T
 
 If you have questions about these Terms, please contact us:
 
-Edgecipline Technologies
+Edgecipline Private Limited
 
 Email: support@edgecipline.com`,
 };

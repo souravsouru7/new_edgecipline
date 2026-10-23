@@ -1,5 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" fill="none">
-  <defs><linearGradient id="sweep" x1="0" y1="0" x2="1200" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#16834A" stop-opacity="0"/><stop offset=".48" stop-color="#16834A"/><stop offset=".55" stop-color="#7AE7A9"/><stop offset="1" stop-color="#16834A" stop-opacity="0"/></linearGradient></defs>
-  <path d="M0 60H1200" stroke="url(#sweep)" stroke-width="2"/>
-  <circle cx="600" cy="60" r="5" fill="#8AF0B3"/>
-</svg>

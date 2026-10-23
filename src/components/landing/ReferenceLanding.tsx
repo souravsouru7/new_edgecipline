@@ -47,7 +47,10 @@ function Logo() {
   return (
     <Link href="#home" className="edg-logo" aria-label="Edgecipline home">
       <Image src="/brand/mark.webp" alt="" width={36} height={45} priority />
-      <span><strong>EDGECIPLINE</strong><small>TRADE. DISCIPLINE. GROW.</small></span>
+      <span>
+        <strong><span className="edg-logo-edge">EDGE</span><span className="edg-logo-cipline">CIPLINE</span></strong>
+        <small>DISCIPLINE OVER EMOTION</small>
+      </span>
     </Link>
   );
 }

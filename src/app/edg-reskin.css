@@ -175,7 +175,7 @@ html:has(.lgPage), body:has(.lgPage) {
       [class*="Tabs"], [class*="Index"],  [class*="Matrix"], [class*="Compare"],
       [class*="Table"], [class*="Final"], [class*="Content"], [class*="Column"],
       [class*="Cell"],  [class*="Stack"], [class*="Shell"], [class*="Container"],
-      [class*="Picker"],
+      [class*="Picker"], [class*="List"],
       [class*="Cta"]:is(section, div, article, aside, nav, header, footer, main, figure, li, ul, ol, p)) {
   background: transparent !important;
   background-image: none !important;
@@ -222,6 +222,9 @@ html:has(.lgPage), body:has(.lgPage) {
 .ftPage [class*="Tile"], .ppPage [class*="Tile"], .abPage [class*="Tile"],
 .fqPage [class*="Tile"], .ctPage [class*="Tile"], .blPage [class*="Tile"],
 .fdPage [class*="Tile"], .lgPage [class*="Tile"],
+.ftPage [class*="Item"], .ppPage [class*="Item"], .abPage [class*="Item"],
+.fqPage [class*="Item"], .ctPage [class*="Item"], .blPage [class*="Item"],
+.fdPage [class*="Item"], .lgPage [class*="Item"],
 .ftPage article, .ppPage article, .abPage article, .fqPage article,
 .ctPage article, .blPage article, .fdPage article, .lgPage article {
   background: var(--edg-surface) !important;
@@ -229,6 +232,14 @@ html:has(.lgPage), body:has(.lgPage) {
   color: var(--edg-ink);
   box-shadow: 0 10px 28px -24px rgba(20, 30, 21, .35);
   backdrop-filter: blur(10px);
+}
+
+/* An expanded accordion row, or any open/selected card, reads as active in
+   brand green rather than keeping the plain paper surface. */
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  :is([class*="Item"], [class*="Card"], [class*="Tile"])[data-open] {
+  background: var(--edg-green-soft) !important;
+  border-color: rgba(39, 134, 91, .34) !important;
 }
 
 /* Any element whose own styles painted a dark navy background → paper */
@@ -309,14 +320,14 @@ html:has(.lgPage), body:has(.lgPage) {
    `<small>`: 10px.
    The `.edg-chrome` header/footer keep their own tuned sizes. */
 
-body :is(p, li, dd, blockquote, figcaption, cite, address):not(.edg-chrome *):not(.edg-page *) {
+body :is(p, li, dd, blockquote, figcaption, cite, address):not(.edg-chrome *):not(.edg-page *):not(.ftxPage *) {
   font-family: var(--font-inter), Arial, sans-serif !important;
   font-weight: 400 !important;
   font-size: 14px !important;
   line-height: 1.55 !important;
   color: var(--edg-ink) !important;
 }
-body dt:not(.edg-chrome *):not(.edg-page *) {
+body dt:not(.edg-chrome *):not(.edg-page *):not(.ftxPage *) {
   font-family: var(--font-inter), Arial, sans-serif !important;
   font-weight: 600 !important;
   font-size: 11px !important;
@@ -327,10 +338,10 @@ body dt:not(.edg-chrome *):not(.edg-page *) {
 body :is([class*="Eyebrow"], [class*="SectionLabel"], [class*="Crumb"],
          [class*="Kicker"], [class*="Tag"], [class*="Chip"], [class*="Pill"],
          [class*="Badge"], [class*="Caption"], [class*="Note"], [class*="Meta"],
-         [class*="Trust"], [class*="Hint"], [class*="Detail"]):not(.edg-chrome *):not(.edg-page *) {
+         [class*="Trust"], [class*="Hint"], [class*="Detail"]):not(.edg-chrome *):not(.edg-page *):not(.ftxPage *) {
   font-size: 11px !important;
 }
-body small:not(.edg-chrome *):not(.edg-page *) {
+body small:not(.edg-chrome *):not(.edg-page *):not(.ftxPage *) {
   font-family: var(--font-inter), Arial, sans-serif !important;
   font-weight: 400 !important;
   font-size: 10px !important;
@@ -583,7 +594,7 @@ body small:not(.edg-chrome *):not(.edg-page *) {
    `a.*Cta*` only. */
 :is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
   :is(button, a[class*="Button"], a[class*="Cta"], a.waitlist, a.demo,
-      [role="button"]):not(.edg-chrome *) {
+      [role="button"]):not(.edg-chrome *):not([aria-expanded]) {
   background: #101613 !important;
   color: #fff !important;
   border: 1px solid #101613 !important;
@@ -593,15 +604,36 @@ body small:not(.edg-chrome *):not(.edg-page *) {
 }
 :is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
   :is(button, a[class*="Button"], a[class*="Cta"], a.waitlist, a.demo,
-      [role="button"]):not(.edg-chrome *):hover {
+      [role="button"]):not(.edg-chrome *):not([aria-expanded]):hover {
   transform: translateY(-2px);
   background: #203b2c !important;
 }
 /* Icon colour inside those styled buttons */
 :is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
   :is(button, a[class*="Button"], a[class*="Cta"], a.waitlist, a.demo,
-      [role="button"]):not(.edg-chrome *) svg {
+      [role="button"]):not(.edg-chrome *):not([aria-expanded]) svg {
   color: #4eb37d;
+}
+
+/* Disclosure toggles — accordion and FAQ rows — are not calls to action, so
+   they are excluded from the pill above (`:not([aria-expanded])`). They sit on
+   their row's own paper surface and take the page's ink, with the brand green
+   kept for the open/close indicator. */
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  button[aria-expanded]:not(.edg-chrome *) {
+  color: var(--edg-ink);
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  button[aria-expanded]:not(.edg-chrome *) :is(svg, i) {
+  color: var(--edg-green);
+  background-color: var(--edg-green);
+}
+:is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  button[aria-expanded]:not(.edg-chrome *) svg {
+  background-color: transparent;
 }
 
 /* Secondary / ghost / outline-style actions keep paper + ink */
@@ -686,21 +718,74 @@ body:has(.lgPage) .edg-chrome { background: transparent; }
 
 /* ──────────── Dark theme variant ──────────── */
 html[data-edg-theme="dark"] :is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) {
-  --edg-paper: #0d1411;
-  --edg-ink: #eef2ee;
-  --edg-ink-soft: #d6ddd7;
-  --edg-muted: #a7b1a7;
-  --edg-dim: #889188;
-  --edg-line: rgba(239, 242, 238, .14);
-  --edg-surface: linear-gradient(145deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-  --edg-surface-soft: rgba(255,255,255,.04);
+  --edg-paper: #0c1210;
+  --edg-ink: #f0f5f1;
+  --edg-ink-soft: #dce5dd;
+  --edg-muted: #b8c4bb;
+  --edg-dim: #96a498;
+  --edg-green: #4ddd9a;
+  --edg-line: rgba(239, 242, 238, .17);
+  --edg-surface: linear-gradient(145deg, rgba(255,255,255,.06), rgba(255,255,255,.025));
+  --edg-surface-soft: rgba(255,255,255,.05);
   background:
-    radial-gradient(rgba(239, 242, 238, .035) .6px, transparent .8px),
+    radial-gradient(rgba(120, 200, 150, .055) .6px, transparent .8px),
     var(--edg-paper) !important;
+  background-size: 6px 6px !important;
   color: var(--edg-ink) !important;
 }
 html[data-edg-theme="dark"] :is(html:has(.ftPage), html:has(.ppPage), html:has(.abPage), html:has(.fqPage), html:has(.ctPage), html:has(.blPage), html:has(.fdPage), html:has(.lgPage)),
 html[data-edg-theme="dark"] :is(body:has(.ftPage), body:has(.ppPage), body:has(.abPage), body:has(.fqPage), body:has(.ctPage), body:has(.blPage), body:has(.fdPage), body:has(.lgPage)) {
-  background: #0d1411 !important;
+  background: #0c1210 !important;
   color-scheme: dark;
+}
+
+/* Dark mode: body copy on non-landing pages — override the light-mode !important rule. */
+html[data-edg-theme="dark"] :is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  :is(p, li, dd, blockquote, figcaption, small, summary, label, legend,
+      span, a, em, i, u, cite, time, address):not(.edg-chrome *) {
+  color: var(--edg-ink) !important;
+}
+
+/* Muted secondary copy — brighter on dark so it actually reads. */
+html[data-edg-theme="dark"] :is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  :is([class*="Muted"], [class*="muted"], [class*="Dim"], [class*="dim"],
+      [class*="Secondary"], [class*="secondary"], [class*="Sub"], [class*="sub"],
+      [class*="Description"], [class*="Eyebrow"], [class*="eyebrow"]):not(.edg-chrome *) {
+  color: var(--edg-muted) !important;
+}
+
+/* Headings: weight and clarity on dark backgrounds. */
+html[data-edg-theme="dark"] :is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  :is(h1, h2, h3, h4, h5, h6):not(.edg-chrome *) {
+  color: var(--edg-ink) !important;
+  text-shadow: 0 0 1px rgba(240, 245, 241, .35) !important;
+}
+/* Green <em> accents in headings get a subtle glow on dark. */
+html[data-edg-theme="dark"] :is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  :is(h1, h2, h3, h4, h5, h6) em:not(.edg-chrome *) {
+  color: var(--edg-green) !important;
+  text-shadow: 0 0 12px rgba(77, 221, 154, .4) !important;
+}
+
+/* Cards / panels on dark. */
+html[data-edg-theme="dark"] :is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) article,
+html[data-edg-theme="dark"] :is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) [class*="Card"],
+html[data-edg-theme="dark"] :is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) [class*="Tile"],
+html[data-edg-theme="dark"] :is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) [class*="Item"] {
+  background: var(--edg-surface) !important;
+  border-color: var(--edg-line) !important;
+}
+
+/* Buttons on dark inner pages. */
+html[data-edg-theme="dark"] :is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  :is(button, a[class*="Button"], a[class*="Cta"], a.waitlist, a.demo,
+      [role="button"]):not(.edg-chrome *):not([aria-expanded]) {
+  background: var(--edg-green) !important;
+  color: #06160e !important;
+  border-color: var(--edg-green) !important;
+}
+html[data-edg-theme="dark"] :is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage)
+  :is(button, a[class*="Button"], a[class*="Cta"], a.waitlist, a.demo,
+      [role="button"]):not(.edg-chrome *):not([aria-expanded]):hover {
+  background: #5fe0a4 !important;
 }

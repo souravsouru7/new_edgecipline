@@ -44,7 +44,14 @@ export function absoluteUrl(path = "/") {
 export const BRAND_NAME = "Edgecipline";
 
 /** The legal entity, as the contact and legal pages state it. */
-export const LEGAL_NAME = "Edgecipline Technologies";
+export const LEGAL_NAME = "Edgecipline Private Limited";
+
+/**
+ * The year the company was incorporated. It feeds the Organization node's
+ * `foundingDate` and the contact page's line, so the two can never disagree.
+ * Not the same thing as the product timeline on /about, which starts earlier.
+ */
+export const FOUNDING_YEAR = "2026";
 
 /** All-caps wordmark plus the product variants people actually type. */
 export const BRAND_ALTERNATE_NAMES = [
