@@ -14,6 +14,7 @@ import {
   jsonLd,
 } from "@/data/brand";
 import { features } from "@/data/features";
+import { homepageFaqItems } from "@/data/faq";
 
 export const metadata: Metadata = {
   // The home page is the one title that should not take the "| Edgecipline"
@@ -100,6 +101,20 @@ const homeGraph = {
         name: item.title,
         text: item.description,
         url: `${absoluteUrl("/")}#how-it-works`,
+      })),
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${absoluteUrl("/")}#faq`,
+      url: `${absoluteUrl("/")}#faq`,
+      name: `${BRAND_NAME} frequently asked questions`,
+      inLanguage: "en-IN",
+      isPartOf: { "@id": `${absoluteUrl("/")}#webpage` },
+      mainEntity: homepageFaqItems.map((item) => ({
+        "@type": "Question",
+        "@id": `${absoluteUrl("/")}#home-${item.id}`,
+        name: item.q,
+        acceptedAnswer: { "@type": "Answer", text: item.a },
       })),
     },
   ],

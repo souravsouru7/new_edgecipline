@@ -88,7 +88,7 @@ const faqSchema = {
  */
 export default function FaqPage() {
   return (
-    <div className={css("fqPage")}>
+    <div className={`${css("fqPage")} fqPage`}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema).replace(/</g, "\\u003c") }}

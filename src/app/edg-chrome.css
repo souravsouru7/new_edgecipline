@@ -40,9 +40,10 @@
 
 /* Dark palette for the chrome, matching the landing dark theme */
 html[data-edg-theme="dark"] .edg-chrome {
-  --edg-ink: #eef2ee;
-  --edg-muted: #a7b1a7;
-  --edg-line: rgba(239, 242, 238, .14);
+  --edg-ink: #f0f5f1;
+  --edg-green: #4ddd9a;
+  --edg-muted: #b8c4bb;
+  --edg-line: rgba(255, 255, 255, .15);
   --edg-paper: #0d1411;
   background: var(--edg-paper);
 }
@@ -62,7 +63,7 @@ html[data-edg-theme="dark"] .edg-chrome .edg-mobile-nav { background: #0d1411; }
 html[data-edg-theme="dark"] .edg-chrome .edg-mobile-nav a,
 html[data-edg-theme="dark"] .edg-chrome .edg-mobile-nav button { color: var(--edg-ink); }
 
-/* ──────────── Sticky header on mobile ────────────
+/* ──────────── Sticky header + mobile nav overlay ────────────
    At phone width the navigation collapses behind the menu button, so the bar
    has to follow the reader rather than scroll away with the hero.
 
@@ -82,5 +83,67 @@ html[data-edg-theme="dark"] .edg-chrome .edg-mobile-nav button { color: var(--ed
     position: sticky;
     top: 0;
     z-index: 30;
+  }
+
+  /* Match the homepage on mobile. A backdrop filter establishes a containing
+     block for fixed descendants in WebKit/Chromium, which made the drawer's
+     viewport inset resolve against the 65px header and collapse below it. */
+  .edg-chrome .edg-header {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  /* Mobile nav drawer — overlays the full page below the sticky bar */
+  .edg-chrome .edg-mobile-nav {
+    position: fixed;
+    inset: 65px 0 0 0;
+    z-index: 999;
+    display: grid;
+    align-content: start;
+    gap: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 10px 26px max(20px, env(safe-area-inset-bottom));
+    border-bottom: 1px solid var(--edg-line);
+    background: var(--edg-paper);
+    box-shadow: 0 15px 25px rgba(20, 30, 21, .12);
+  }
+
+  .edg-chrome .edg-mobile-nav a {
+    display: flex;
+    align-items: center;
+    min-height: 46px;
+    padding: 10px;
+    border: 0;
+    border-bottom: 1px solid var(--edg-line);
+    color: var(--edg-ink);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .edg-chrome .edg-mobile-nav a:hover { color: var(--edg-green); }
+
+  /* Join Waitlist CTA at bottom of mobile menu */
+  .edg-chrome .edg-mobile-nav .edg-mobile-nav-cta {
+    margin-top: 14px;
+    justify-content: center;
+    border: 1px solid var(--edg-green) !important;
+    border-radius: 99px;
+    background: var(--edg-green);
+    color: #fff !important;
+    font-weight: 700;
+  }
+
+  html[data-edg-theme="dark"] .edg-chrome .edg-mobile-nav {
+    background: #0d1411;
+  }
+
+  html[data-edg-theme="dark"] .edg-chrome .edg-mobile-nav a {
+    color: var(--edg-ink);
+  }
+
+  html[data-edg-theme="dark"] .edg-chrome .edg-mobile-nav .edg-mobile-nav-cta {
+    color: #06160e !important;
   }
 }

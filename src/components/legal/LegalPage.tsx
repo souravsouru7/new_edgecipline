@@ -33,7 +33,7 @@ export function LegalPage({ doc }: { doc: LegalDoc }) {
   const sibling = legalDocs.find((other) => other.slug !== doc.slug);
 
   return (
-    <div className={css("lgPage")}>
+    <div className={`${css("lgPage")} lgPage`}>
       <a className={css("lgSkip")} href="#document">
         Skip to the document
       </a>

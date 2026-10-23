@@ -123,7 +123,7 @@ export default function FoundersPage() {
   };
 
   return (
-    <div className={css("fdPage")}>
+    <div className={`${css("fdPage")} fdPage`}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(graph).replace(/</g, "\\u003c") }}

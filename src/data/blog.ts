@@ -31,7 +31,7 @@ export const CATEGORIES = [
   "NIFTY & Options",
 ];
 
-export const BLOG_POSTS: BlogPost[] = [] = [
+export const BLOG_POSTS: BlogPost[] = [
   {
     slug: "why-90-percent-traders-fail",
     title: "Why Many Retail F&O Traders Lose Money — And What Journaling Can Reveal",

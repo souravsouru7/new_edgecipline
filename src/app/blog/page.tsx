@@ -24,7 +24,10 @@ const description =
 export const metadata: Metadata = {
   title,
   description,
-  alternates: { canonical: url("/blog") },
+  alternates: {
+    canonical: url("/blog"),
+    types: { "application/rss+xml": url("/feed.xml") },
+  },
   openGraph: {
     siteName: BRAND_NAME,
     title,
@@ -93,7 +96,7 @@ export default function BlogPage() {
   };
 
   return (
-    <div className={css("blPage")}>
+    <div className={`${css("blPage")} blPage`}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(graph).replace(/</g, "\\u003c") }}

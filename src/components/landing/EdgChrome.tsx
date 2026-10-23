@@ -43,6 +43,7 @@ export function EdgHeader() {
   useEffect(() => {
     if (!menuOpen) return;
     const { body } = document;
+    const toggleButton = toggleRef.current;
     const previous = body.style.overflow;
     body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setMenuOpen(false); };
@@ -50,7 +51,7 @@ export function EdgHeader() {
     return () => {
       window.removeEventListener("keydown", onKey);
       body.style.overflow = previous;
-      toggleRef.current?.focus();
+      toggleButton?.focus();
     };
   }, [menuOpen]);
 
@@ -69,7 +70,6 @@ export function EdgHeader() {
           </nav>
           <div className="edg-header-actions">
             <ThemeToggle />
-            <Link className="edg-login" href="/#login">Log in</Link>
             <Link className="edg-button edg-button-small" href="/#waitlist">
               Join Waitlist <ArrowRight size={15} />
             </Link>
@@ -93,8 +93,7 @@ export function EdgHeader() {
             {routes.map(([label, href]) => (
               <Link key={label} href={href} onClick={() => setMenuOpen(false)}>{label}</Link>
             ))}
-            <Link href="/#login" onClick={() => setMenuOpen(false)}>Log in</Link>
-            <Link href="/#waitlist" onClick={() => setMenuOpen(false)}>Join Waitlist →</Link>
+            <Link href="/#waitlist" className="edg-mobile-nav-cta" onClick={() => setMenuOpen(false)}>Join Waitlist →</Link>
           </nav>
         )}
       </header>

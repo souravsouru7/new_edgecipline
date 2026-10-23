@@ -81,7 +81,10 @@ const nextConfig: NextConfig = {
 
   turbopack: {
     rules: {
-      "*.css": {
+      // Only the Tailwind entry file needs the Tailwind transform. Matching
+      // every CSS file also catches Next's virtual `next/font` stylesheets and
+      // breaks their internal font URLs during production builds.
+      "src/app/globals.css": {
         loaders: ["@tailwindcss/turbopack"],
         as: "*.css",
       },

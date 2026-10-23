@@ -102,7 +102,10 @@ export const metadata: Metadata = {
   },
   description: SITE_DESCRIPTION,
   applicationName: BRAND_NAME,
-  alternates: { canonical: absoluteUrl("/") },
+  alternates: {
+    canonical: absoluteUrl("/"),
+    types: { "application/rss+xml": absoluteUrl("/feed.xml") },
+  },
   robots: IS_PREVIEW_DEPLOYMENT
     ? { index: false, follow: false, googleBot: { index: false, follow: false } }
     : {
@@ -286,10 +289,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en-IN"
       className={`${display.variable} ${text.variable} ${mono.variable} ${doto.variable} h-full antialiased`}
-      // The pre-paint script below sets data-edg-theme on <html> before React
-      // hydrates, so the server markup (no attribute) and the client (attribute
-      // present) differ on this one element by design. Scope the suppression to
-      // <html>; it does not extend to children.
+      // The pre-paint script below sets the theme and homepage loading state on
+      // <html> before React hydrates. Both mutations are intentionally scoped
+      // to this suppressed element; descendants remain strict hydration checks.
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
@@ -302,13 +304,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           dangerouslySetInnerHTML={{
             __html:
               "try{var t=localStorage.getItem('edg-theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.dataset.edgTheme=t;}catch(e){}" +
-              // Lock scroll immediately on the homepage so there is no layout
-              // shift or white-flash between the server HTML arriving and the
-              // LandingLoader useEffect running. Keyed off window.location.pathname
-              // so every other route stays unaffected.
-              "if(window.location.pathname==='/'){document.body.style.overflow='hidden';}",
+              // CSS reads this attribute to lock the viewport. Mutating <html>
+              // is safe because that is the element whose hydration warning is
+              // suppressed; mutating <body style> caused a React mismatch.
+              "if(window.location.pathname==='/'){document.documentElement.dataset.edgLoading='';}",
           }}
         />
+        {/* rel=me links for entity verification */}
+        <link rel="me" href="https://twitter.com/edgecipline" />
+        <link rel="me" href="https://www.linkedin.com/company/edgecipline" />
+        <link rel="me" href="https://www.instagram.com/edgecipline" />
+        <link rel="me" href="https://www.youtube.com/@edgecipline" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(siteGraph) }} />
         {children}
         <WaitlistDialog />

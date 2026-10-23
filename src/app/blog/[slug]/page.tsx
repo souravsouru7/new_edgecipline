@@ -121,7 +121,7 @@ export default async function BlogPostPage({ params }: Props) {
   };
 
   return (
-    <div className={css("blPage")}>
+    <div className={`${css("blPage")} blPage`}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(graph).replace(/</g, "\\u003c") }}

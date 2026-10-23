@@ -121,7 +121,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className={css("ctPage")}>
+    <div className={`${css("ctPage")} ctPage`}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(graph).replace(/</g, "\\u003c") }}

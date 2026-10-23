@@ -212,6 +212,25 @@ export const faqItems: readonly FaqItem[] = [
 /** The real support address, from the old site's `lib/brand.ts`. */
 export const SUPPORT_EMAIL = "support@edgecipline.com";
 
+/**
+ * The short answer set shown on the homepage. Keeping these as references to
+ * the canonical FAQ collection prevents the visible answers and homepage
+ * FAQPage schema from drifting apart.
+ */
+const homepageFaqIds = [
+  "what-is-edgecipline",
+  "how-extraction-works",
+  "how-data-is-stored",
+  "who-is-it-for",
+  "when-will-it-launch",
+] as const;
+
+export const homepageFaqItems = homepageFaqIds.map((id) => {
+  const item = faqItems.find((candidate) => candidate.id === id);
+  if (!item) throw new Error(`Missing homepage FAQ item: ${id}`);
+  return item;
+});
+
 export function faqItemsIn(category: FaqCategory) {
   return faqItems.filter((item) => item.category === category);
 }

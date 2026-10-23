@@ -88,7 +88,7 @@ const pricingGraph = {
 
 export default function PricingPage() {
   return (
-    <div className={css("ppPage")}>
+    <div className={`${css("ppPage")} ppPage`}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLd(pricingGraph) }}

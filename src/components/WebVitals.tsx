@@ -6,7 +6,7 @@ import { useReportWebVitals } from "next/web-vitals";
  * Core Web Vitals reporting.
  *
  * This exists because of a specific open question: the intro loader runs for
- * four seconds, and the only way to settle whether that costs anything in the
+ * seven seconds, and the only way to settle whether that costs anything in the
  * field is to watch LCP from real devices rather than argue about it. Lab
  * numbers already say it does not — Chrome records the hero headline as the
  * LCP element at about 1.3s, while the overlay is still covering it, because

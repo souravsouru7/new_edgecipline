@@ -113,7 +113,7 @@ const aboutGraph = {
 
 export default function AboutPage() {
   return (
-    <div className={css("abPage")}>
+    <div className={`${css("abPage")} abPage`}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(aboutGraph) }} />
 
       <a className={css("abSkip")} href="#story">

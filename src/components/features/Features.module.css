@@ -27,8 +27,8 @@
   --ftx-raise-2: rgba(255, 255, 255, .86);
   --ftx-ink: #171c19;
   --ftx-ink-soft: #2a332d;
-  --ftx-muted: #4a5248;
-  --ftx-dim: #787e78;
+  --ftx-muted: #717670;
+  --ftx-dim: #717670;
   --ftx-line: #d5d8d0;
   --ftx-line-soft: #e3e5de;
   --ftx-green: #27865b;
@@ -65,16 +65,16 @@ html[data-edg-theme="dark"] .ftxPage {
   --ftx-paper: #0d1411;
   --ftx-raise: rgba(255, 255, 255, .035);
   --ftx-raise-2: rgba(255, 255, 255, .06);
-  --ftx-ink: #eef2ee;
+  --ftx-ink: #f0f5f1;
   --ftx-ink-soft: #d3dad3;
-  --ftx-muted: #9aa49c;
-  --ftx-dim: #7d867e;
-  --ftx-line: rgba(255, 255, 255, .13);
+  --ftx-muted: #b8c4bb;
+  --ftx-dim: #b8c4bb;
+  --ftx-line: rgba(255, 255, 255, .15);
   --ftx-line-soft: rgba(255, 255, 255, .06);
-  --ftx-green: #45d391;
+  --ftx-green: #4ddd9a;
   --ftx-green-soft: rgba(69, 211, 145, .12);
   --ftx-down: #ef7a73;
-  --ftx-wire: #45d391;
+  --ftx-wire: #4ddd9a;
   --ftx-wire-2: #eef2ee;
   background-image:
     linear-gradient(var(--ftx-line-soft) 1px, transparent 1px),

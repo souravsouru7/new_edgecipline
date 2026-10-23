@@ -35,8 +35,18 @@ function legalModified(updated: string) {
 export default function sitemap(): MetadataRoute.Sitemap {
   const at = absoluteUrl;
   return [
-    { url: at("/"), priority: 1, changeFrequency: "weekly" },
-    { url: at("/features"), priority: 0.8, changeFrequency: "monthly" },
+    {
+      url: at("/"),
+      priority: 1,
+      changeFrequency: "weekly",
+      images: [at("/opengraph-image")],
+    },
+    {
+      url: at("/features"),
+      priority: 0.8,
+      changeFrequency: "monthly",
+      images: [at("/features/opengraph-image")],
+    },
     { url: at("/pricing"), priority: 0.8, changeFrequency: "monthly" },
     { url: at("/blog"), priority: 0.7, changeFrequency: "weekly" },
     { url: at("/about"), priority: 0.6, changeFrequency: "yearly" },

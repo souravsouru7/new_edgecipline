@@ -473,9 +473,9 @@ html:has(.edg-page) .nl { display: none; }
 .edg-plan { position: relative; display: flex; flex-direction: column; min-height: 300px; padding: 21px 18px 15px; border: 1px solid var(--edg-line); border-radius: 19px; background: rgba(255,255,255,.2); }
 .edg-plan.popular { border-color: #adbcad; background: rgba(255,255,255,.38); }
 .edg-popular { position: absolute; top: -12px; left: 50%; padding: 4px 14px; border-radius: 99px; background: #209554; color: white; font-size: 9px; font-weight: 700; white-space: nowrap; transform: translateX(-50%); }
-.edg-plan > small { color: #a1a69e; font-size: 10px; }
+.edg-plan > small { color: var(--edg-green); font-size: 10px; }
 .edg-plan-price { display: flex; align-items: end; gap: 3px; margin-top: 6px; white-space: nowrap; }
-.edg-plan-price strong { font-family: var(--edg-doto); font-size: clamp(25px, 2.5vw, 39px); font-weight: 600; line-height: 1; }
+.edg-plan-price strong { font-family: var(--edg-doto); font-size: clamp(25px, 2.5vw, 39px); font-weight: 600; line-height: 1; color: var(--edg-green); }
 .edg-plan-price span { padding-bottom: 4px; font-size: 10px; font-weight: 600; }
 .edg-plan ul { display: grid; gap: 7px; margin: 24px 0 16px; padding: 0; list-style: none; }
 .edg-plan li { display: flex; align-items: center; gap: 6px; color: #626b63; font-size: 10px; white-space: nowrap; }

@@ -14,8 +14,8 @@
   --edg-paper: #efeee8;
   --edg-ink: #171c19;
   --edg-ink-soft: #2a332d;
-  --edg-muted: #4a5248;
-  --edg-dim: #6b716b;
+  --edg-muted: #717670;
+  --edg-dim: #717670;
   --edg-line: #d5d8d0;
   --edg-line-soft: #e3e5de;
   --edg-green: #27865b;
@@ -53,6 +53,23 @@ html, body {
 }
 html { background: var(--edg-paper); color-scheme: light; }
 body { background: var(--edg-paper); color: var(--edg-ink); }
+
+/* Keep one palette source for the landing and every inner route. Individual
+   page modules can still name their own tokens, but they resolve to these
+   exact landing-page colours instead of reviving the legacy navy/neon set. */
+html[data-edg-theme="dark"] {
+  --edg-paper: #0d1411;
+  --edg-ink: #f0f5f1;
+  --edg-ink-soft: #dce5dd;
+  --edg-muted: #b8c4bb;
+  --edg-dim: #b8c4bb;
+  --edg-line: rgba(255, 255, 255, .15);
+  --edg-line-soft: rgba(255, 255, 255, .06);
+  --edg-green: #4ddd9a;
+  --edg-green-soft: rgba(69, 211, 145, .12);
+  --edg-surface: linear-gradient(145deg, rgba(255,255,255,.06), rgba(255,255,255,.025));
+  --edg-surface-soft: rgba(255,255,255,.05);
+}
 
 /* The HTML + body canvas on every non-landing route */
 html:has(.ftPage), body:has(.ftPage),
@@ -718,13 +735,13 @@ body:has(.lgPage) .edg-chrome { background: transparent; }
 
 /* ──────────── Dark theme variant ──────────── */
 html[data-edg-theme="dark"] :is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) {
-  --edg-paper: #0c1210;
+  --edg-paper: #0d1411;
   --edg-ink: #f0f5f1;
   --edg-ink-soft: #dce5dd;
   --edg-muted: #b8c4bb;
-  --edg-dim: #96a498;
+  --edg-dim: #b8c4bb;
   --edg-green: #4ddd9a;
-  --edg-line: rgba(239, 242, 238, .17);
+  --edg-line: rgba(255, 255, 255, .15);
   --edg-surface: linear-gradient(145deg, rgba(255,255,255,.06), rgba(255,255,255,.025));
   --edg-surface-soft: rgba(255,255,255,.05);
   background:
@@ -735,7 +752,7 @@ html[data-edg-theme="dark"] :is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .bl
 }
 html[data-edg-theme="dark"] :is(html:has(.ftPage), html:has(.ppPage), html:has(.abPage), html:has(.fqPage), html:has(.ctPage), html:has(.blPage), html:has(.fdPage), html:has(.lgPage)),
 html[data-edg-theme="dark"] :is(body:has(.ftPage), body:has(.ppPage), body:has(.abPage), body:has(.fqPage), body:has(.ctPage), body:has(.blPage), body:has(.fdPage), body:has(.lgPage)) {
-  background: #0c1210 !important;
+  background: #0d1411 !important;
   color-scheme: dark;
 }
 
@@ -788,4 +805,26 @@ html[data-edg-theme="dark"] :is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .bl
   :is(button, a[class*="Button"], a[class*="Cta"], a.waitlist, a.demo,
       [role="button"]):not(.edg-chrome *):not([aria-expanded]):hover {
   background: #5fe0a4 !important;
+}
+
+/* FAQ category chips are links rather than cards, so the generic surface
+   conversion above does not catch the module's old navy mobile fill. */
+.fqPage [class*="fqRailList"] a {
+  color: var(--edg-ink) !important;
+  background: rgba(255, 255, 255, .5) !important;
+  border-color: var(--edg-line) !important;
+}
+.fqPage [class*="fqRailList"] a:hover,
+.fqPage [class*="fqRailList"] a[aria-current] {
+  color: var(--edg-green) !important;
+  background: var(--edg-green-soft) !important;
+  border-color: rgba(39, 134, 91, .34) !important;
+}
+html[data-edg-theme="dark"] .fqPage [class*="fqRailList"] a {
+  background: var(--edg-surface-soft) !important;
+}
+html[data-edg-theme="dark"] .fqPage [class*="fqRailList"] a:hover,
+html[data-edg-theme="dark"] .fqPage [class*="fqRailList"] a[aria-current] {
+  background: var(--edg-green-soft) !important;
+  border-color: rgba(69, 211, 145, .34) !important;
 }

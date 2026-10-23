@@ -10,6 +10,9 @@ import {
 } from "lucide-react";
 
 import { WaitlistForm } from "@/components/waitlist/WaitlistForm";
+import { homepageFaqItems } from "@/data/faq";
+import { features } from "@/data/features";
+import { plans } from "@/data/pricing";
 import { HomepageMotion } from "./HomepageMotion";
 import { InteractiveTerrain } from "./InteractiveTerrain";
 import { ThemeToggle } from "./ThemeToggle";
@@ -27,20 +30,6 @@ import {
 const nav = [
   ["Home", "#home"], ["Features", "/features"], ["Pricing", "/pricing"],
   ["About", "/about"], ["Blog", "/blog"], ["FAQ", "/faq"], ["Contact", "/contact"],
-] as const;
-
-const plans: ReadonlyArray<{ name: string; price: string; period: string; popular?: boolean; features: readonly string[] }> = [
-  { name: "Starter", price: "₹349", period: "/ month", features: ["Trading Journal", "Basic AI Insights", "Weekly Reflections", "Community Access"] },
-  { name: "Pro", price: "₹899", period: "/ 3 months", popular: true, features: ["Advanced AI Analysis", "Trading DNA Report", "Personalized Coaching", "Priority Support"] },
-  { name: "Ultimate", price: "₹1,499", period: "/ 6 months", features: ["Full AI Coach Access", "Deep Behavior Analysis", "Advanced Analytics", "Early Access to New Features"] },
-];
-
-const faq = [
-  ["What is Edgecipline?", "Edgecipline is an AI trading journal and discipline coach that helps traders understand their behavior, break bad habits, and build lasting consistency."],
-  ["How does the AI analysis work?", "Edgecipline analyses your logged trades to help you spot behavior patterns and emotional triggers, then turns those patterns into practical insights."],
-  ["Is my trading data secure?", "The trading product is in pre-launch. Product trade-data storage details will be confirmed before launch. Our Privacy Policy explains how information submitted through this website is handled."],
-  ["Who is this for?", "It is built for traders who want to understand their decisions, build better habits, and approach the same markets with a calmer mind."],
-  ["When will it be available?", "Edgecipline is in private early access. Join the waitlist for availability updates and an invitation when access opens."],
 ] as const;
 
 function Logo() {
@@ -84,7 +73,7 @@ function PerformanceCard() {
 
 export function ReferenceLanding() {
   const dialog = useRef<HTMLDialogElement>(null);
-  const [dialogMode, setDialogMode] = useState<"waitlist" | "demo" | "login">("waitlist");
+  const [dialogMode, setDialogMode] = useState<"waitlist" | "demo">("waitlist");
   const [menuOpen, setMenuOpen] = useState(false);
   const [billing, setBilling] = useState<"monthly" | "yearly">("monthly");
   const pricingView = useRef<HTMLDivElement>(null);
@@ -110,7 +99,7 @@ export function ReferenceLanding() {
     return () => { cancelAnimationFrame(frame); window.clearTimeout(timer); };
   }, [billing]);
 
-  const showDialog = (mode: "waitlist" | "demo" | "login") => {
+  const showDialog = (mode: "waitlist" | "demo") => {
     setDialogMode(mode);
     setMenuOpen(false);
     if (!dialog.current?.open) dialog.current?.showModal();
@@ -127,10 +116,10 @@ export function ReferenceLanding() {
         <div className="edg-header-inner">
           <Logo />
           <nav className="edg-nav" aria-label="Main navigation">{nav.map(([label, href]) => <a key={label} href={href} aria-current={label === "Home" ? "page" : undefined}>{label}</a>)}</nav>
-          <div className="edg-header-actions"><ThemeToggle /><button className="edg-login" type="button" onClick={() => showDialog("login")}>Log in</button><button className="edg-button edg-button-small" type="button" onClick={() => showDialog("waitlist")}>Join Waitlist <ArrowRight size={15}/></button></div>
+          <div className="edg-header-actions"><ThemeToggle /><button className="edg-button edg-button-small" type="button" onClick={() => showDialog("waitlist")}>Join Waitlist <ArrowRight size={15}/></button></div>
           <div className="edg-header-mobile-actions"><ThemeToggle /><button className="edg-menu-toggle" type="button" aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X/> : <Menu/>}</button></div>
         </div>
-        {menuOpen && <nav className="edg-mobile-nav" aria-label="Mobile navigation">{nav.map(([label, href]) => <a key={label} href={href} onClick={() => setMenuOpen(false)}>{label}</a>)}<button type="button" onClick={() => showDialog("login")}>Log in</button><button type="button" onClick={() => showDialog("waitlist")}>Join Waitlist →</button></nav>}
+        {menuOpen && <nav className="edg-mobile-nav" aria-label="Mobile navigation">{nav.map(([label, href]) => <a key={label} href={href} onClick={() => setMenuOpen(false)}>{label}</a>)}<button type="button" onClick={() => showDialog("waitlist")}>Join Waitlist →</button></nav>}
       </header>
 
       <main id="main-content" className="edg-main">
@@ -146,7 +135,12 @@ export function ReferenceLanding() {
           <div className="edg-hero-art" aria-hidden="true"><span className="edg-hero-landscape"><Image src="/landing/halftone-landscape.svg" alt="" fill priority sizes="(max-width: 800px) 100vw, 55vw"/></span><InteractiveTerrain/><div className="edg-awareness"><span>AWARENESS</span><span>CLARITY</span><span>BETTER HABITS</span><span>DISCIPLINE</span><span>CONSISTENCY</span></div><p>SAME MARKETS.<br/>A <b>CALMER,<br/>STRONGER<br/>TRADER.</b></p></div>
         </section>
 
-        <section className="edg-stats" aria-label="Edgecipline in numbers"><div><strong data-edg-count="10" data-edg-format="thousands" data-edg-final="10K+" aria-label="10K+">10K+</strong><span>Active Traders</span></div><div><strong data-edg-count="500" data-edg-format="thousands" data-edg-final="500K+" aria-label="500K+">500K+</strong><span>Trades Journaled</span></div><div><strong data-edg-count="4.8" data-edg-format="rating" data-edg-final="4.8/5" aria-label="4.8 out of 5">4.8/5</strong><span>App Rating</span></div><div><strong data-edg-count="150" data-edg-format="integer" data-edg-final="150+" aria-label="150+">150+</strong><span>Countries</span></div></section>
+        <section className="edg-stats" aria-label="Edgecipline product facts">
+          <div><strong>2</strong><span>Market Modes</span></div>
+          <div><strong>{features.length}</strong><span>Planned Capabilities</span></div>
+          <div><strong>Free</strong><span>Waitlist Access</span></div>
+          <div><strong>Private</strong><span>Early Access</span></div>
+        </section>
 
         <EmotionalLoopContent />
         <ChartStoryContent />
@@ -177,7 +171,7 @@ export function ReferenceLanding() {
             <div className="edg-pricing-view" ref={pricingView}>
               {billing === "monthly" ? (
                 <div className="edg-plan-grid">
-                  {plans.map((plan) => <article key={plan.name} className={plan.popular ? "edg-plan popular" : "edg-plan"}>{plan.popular && <span className="edg-popular">MOST POPULAR</span>}<small>{plan.name}</small><div className="edg-plan-price"><strong>{plan.price}</strong><span>{plan.period}</span></div><ul>{plan.features.map((item) => <li key={item}><Check size={13}/>{item}</li>)}</ul><button type="button" className={plan.popular ? "edg-button" : "edg-outline-button"} onClick={() => showDialog("waitlist")}>Join Waitlist <ArrowRight size={15}/></button></article>)}
+                  {plans.map((plan) => <article key={plan.id} className={plan.featured ? "edg-plan popular" : "edg-plan"}>{plan.featured && <span className="edg-popular">MOST POPULAR</span>}<small>{plan.name}</small><div className="edg-plan-price"><strong>{plan.price}</strong><span>{plan.period}</span></div><ul>{plan.features.map((item) => <li key={item}><Check size={13}/>{item}</li>)}</ul><button type="button" className={plan.featured ? "edg-button" : "edg-outline-button"} onClick={() => showDialog("waitlist")}>Join Waitlist <ArrowRight size={15}/></button></article>)}
                 </div>
               ) : (
                 <div className="edg-yearly-message"><strong>Yearly plans are coming.</strong><p>Join the waitlist to get the confirmed annual options when early access opens.</p><button className="edg-button" type="button" onClick={() => showDialog("waitlist")}>Join Waitlist <ArrowRight size={16}/></button></div>
@@ -186,14 +180,14 @@ export function ReferenceLanding() {
           </div>
         </section>
 
-        <section className="edg-section edg-faq" id="faq" aria-labelledby="edg-faq-title"><div className="edg-section-intro"><SectionLabel number="12">FAQ</SectionLabel><h2 id="edg-faq-title">FREQUENTLY<br/>ASKED <em>QUESTIONS.</em></h2><p>Everything you need to know.</p></div><div className="edg-faq-list">{faq.map(([question, answer]) => <details key={question}><summary>{question}<span aria-hidden="true">+</span></summary><p>{answer}</p></details>)}</div></section>
+        <section className="edg-section edg-faq" id="faq" aria-labelledby="edg-faq-title"><div className="edg-section-intro"><SectionLabel number="12">FAQ</SectionLabel><h2 id="edg-faq-title">FREQUENTLY<br/>ASKED <em>QUESTIONS.</em></h2><p>Everything you need to know.</p></div><div className="edg-faq-list">{homepageFaqItems.map((item) => <details key={item.id} id={`home-${item.id}`}><summary>{item.q}<span aria-hidden="true">+</span></summary><p>{item.a}</p></details>)}</div></section>
 
         <section className="edg-final" id="waitlist" aria-labelledby="edg-final-title"><div className="edg-final-art" aria-hidden="true"/><span className="edg-final-kicker">JOIN THE MOVEMENT</span><h2 id="edg-final-title">A CALMER MIND.<br/>A <em>STRONGER TRADER.</em></h2><p>Same markets. A better you.</p><div><button className="edg-button" type="button" onClick={() => showDialog("waitlist")}>Join Waitlist <ArrowRight size={17}/></button><PlayButton onClick={() => showDialog("demo")}/></div></section>
       </main>
 
-      <footer className="edg-footer"><Logo/><nav aria-label="Footer navigation">{nav.map(([label, href]) => <a key={label} href={href}>{label}</a>)}</nav><div className="edg-footer-social"><a href="/contact" aria-label="Contact Edgecipline">✉</a><a href="/blog" aria-label="Edgecipline blog">◉</a><a href="/faq" aria-label="Help and FAQ">?</a></div><p>© 2026 Edgecipline. All rights reserved.<br/>Built for traders, worldwide.</p></footer>
+      <footer className="edg-footer"><Logo/><nav aria-label="Footer navigation">{nav.map(([label, href]) => <a key={label} href={href}>{label}</a>)}</nav><div className="edg-footer-social"><Link href="/contact" aria-label="Contact Edgecipline">✉</Link><Link href="/blog" aria-label="Edgecipline blog">◉</Link><Link href="/faq" aria-label="Help and FAQ">?</Link></div><p>© 2026 Edgecipline. All rights reserved.<br/>Built for traders, worldwide.</p></footer>
 
-      <dialog className="edg-dialog" ref={dialog} onClick={(event) => { if (event.target === dialog.current) dialog.current?.close(); }}><button type="button" className="edg-dialog-close" aria-label="Close dialog" onClick={() => dialog.current?.close()}><X size={19}/></button>{dialogMode === "waitlist" ? <><h2>Join the Edgecipline waitlist</h2><p>Get early access updates and an invitation when the product opens.</p><WaitlistForm/></> : dialogMode === "demo" ? <><span className="edg-dialog-icon"><CirclePlay size={29}/></span><h2>Watch the Edgecipline demo</h2><p>The walkthrough is being recorded. Join the waitlist and we’ll let you know when it is ready.</p><button className="edg-button" type="button" onClick={() => showDialog("waitlist")}>Join Waitlist <ArrowRight size={16}/></button></> : <><h2>Log in</h2><p>Accounts open with early access. Join the waitlist to get your invitation.</p><button className="edg-button" type="button" onClick={() => showDialog("waitlist")}>Join Waitlist <ArrowRight size={16}/></button></>}</dialog>
+      <dialog className="edg-dialog" ref={dialog} onClick={(event) => { if (event.target === dialog.current) dialog.current?.close(); }}><button type="button" className="edg-dialog-close" aria-label="Close dialog" onClick={() => dialog.current?.close()}><X size={19}/></button>{dialogMode === "waitlist" ? <><h2>Join the Edgecipline waitlist</h2><p>Get early access updates and an invitation when the product opens.</p><WaitlistForm/></> : <><span className="edg-dialog-icon"><CirclePlay size={29}/></span><h2>Watch the Edgecipline demo</h2><p>The walkthrough is being recorded. Join the waitlist and we’ll let you know when it is ready.</p><button className="edg-button" type="button" onClick={() => showDialog("waitlist")}>Join Waitlist <ArrowRight size={16}/></button></>}</dialog>
       </div>
     </>
   );
