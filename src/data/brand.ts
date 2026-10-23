@@ -68,11 +68,11 @@ export const SITE_ALTERNATE_NAMES = ["EDGECIPLINE", "edgecipline.com"];
  * it reads as a proper noun rather than a query to spell-correct.
  */
 export const SITE_TITLE =
-  "Edgecipline | AI Trading Journal & Discipline Coach";
+  "Edgecipline | AI Trading Journal";
 
 /** Shown on the home page, in OG tags and as the WebSite description. */
 export const SITE_DESCRIPTION =
-  "Edgecipline is an AI trading journal for Forex and Indian market traders, built to reveal behavior patterns and strengthen trading discipline. Registration is open and product access is invite-only.";
+  "Edgecipline is an AI trading journal for Forex and Indian market traders, revealing behavior patterns and building discipline. Invite-only access is open.";
 
 /**
  * The brand slogan, as it appears in the footer and on the Open Graph card.

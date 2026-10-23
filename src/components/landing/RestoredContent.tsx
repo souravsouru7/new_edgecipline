@@ -102,7 +102,7 @@ export function ChartStoryContent() {
       </div>
       <div className="edg-story-stage" aria-label="Four trading decisions behind the chart">
         <figure className="edg-story-chart" aria-hidden="true">
-          <svg viewBox="0 0 260 130" preserveAspectRatio="none">
+          <svg viewBox="0 0 260 130" preserveAspectRatio="none" aria-hidden="true">
             <defs>
               <linearGradient id="edg-story-trend" x1="0" x2="1" y1="0" y2="0">
                 <stop offset="0" stopColor="#db514a" />

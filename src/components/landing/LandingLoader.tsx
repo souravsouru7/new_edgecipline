@@ -75,7 +75,7 @@ export function LandingLoader() {
         <span className="edg-cinema__orbit edg-cinema__orbit--three" />
         <span className="edg-cinema__crosshair" />
         <span className="edg-cinema__core" />
-        <svg className="edg-cinema__signal" viewBox="0 0 800 260" preserveAspectRatio="none">
+        <svg className="edg-cinema__signal" viewBox="0 0 800 260" preserveAspectRatio="none" aria-hidden="true">
           <path className="edg-cinema__signal-ghost" d="M0 139 L55 136 L82 66 L113 210 L148 98 L186 173 L222 48 L260 199 L301 82 L340 151 L374 119 L410 142 L449 111 L488 132 L530 116 L574 129 L618 113 L663 122 L709 109 L754 116 L800 101" />
           <path className="edg-cinema__signal-hot" d="M0 139 L55 136 L82 66 L113 210 L148 98 L186 173 L222 48 L260 199 L301 82 L340 151 L374 119 L410 142 L449 111 L488 132 L530 116 L574 129 L618 113 L663 122 L709 109 L754 116 L800 101" />
           <path className="edg-cinema__signal-calm" d="M0 156 C90 151 132 166 206 148 S330 139 401 132 S512 128 588 112 S704 103 800 77" />
