@@ -31,7 +31,7 @@ const MODES: readonly Mode[] = [
   {
     id: "forex",
     label: "Forex",
-    platforms: "MT4 / MT5 / cTrader",
+    platforms: "MT5 now · MT4 and cTrader planned",
     currency: "Pips · lots",
     rows: [
       ["Pair", "EUR/USD"],
@@ -40,7 +40,7 @@ const MODES: readonly Mode[] = [
       ["Entry / exit", "1.0824 → 1.0851"],
       ["Result", "+27 pips"],
     ],
-    brokers: ["MT4", "MT5", "cTrader"],
+    brokers: ["MT5"],
   },
   {
     id: "india",

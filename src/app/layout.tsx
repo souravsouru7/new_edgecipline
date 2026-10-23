@@ -12,6 +12,7 @@ import {
   BRAND_SLOGAN,
   CONTACT_EMAIL,
   FOUNDING_YEAR,
+  HEADQUARTERS,
   LEGAL_NAME,
   IS_PREVIEW_DEPLOYMENT,
   LOGO_PATH,
@@ -194,7 +195,7 @@ export const viewport: Viewport = {
  *   SoftwareApplication  the product
  *
  * Deliberately absent: `aggregateRating`, `review` and `offers`. There are no
- * ratings to report and no checkout, and inventing either is both a policy
+ * ratings to report and no public checkout on this site, and inventing either is both a policy
  * violation and a misrepresentation. Pricing lives in the visible copy on
  * /pricing instead.
  */
@@ -211,7 +212,7 @@ const siteGraph = {
       slogan: BRAND_SLOGAN,
       description: SITE_DESCRIPTION,
       foundingDate: FOUNDING_YEAR,
-      address: { "@type": "PostalAddress", addressCountry: "IN" },
+      address: { "@type": "PostalAddress", ...HEADQUARTERS },
       areaServed: [...AREA_SERVED],
       logo: {
         "@type": "ImageObject",
@@ -259,6 +260,7 @@ const siteGraph = {
       name: BRAND_NAME,
       applicationCategory: "FinanceApplication",
       applicationSubCategory: "Trading journal",
+      operatingSystem: ["Web", "Android"],
       description: SITE_DESCRIPTION,
       url: absoluteUrl("/"),
       inLanguage: "en-IN",

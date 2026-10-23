@@ -83,8 +83,8 @@ export const milestones: readonly Milestone[] = [
   },
   {
     year: "2026",
-    label: "Public Launch",
-    text: "Preparing for public launch on web and Android. AI screenshot extraction, Trading DNA, gamified missions & streaks, and daily AI coaching — for both Forex and Indian market traders.",
+    label: "Product Complete",
+    text: "Completed the web and Android product with AI screenshot extraction, Trading DNA, gamified missions & streaks, and daily AI coaching. Access remains invite-only while iOS is prepared for a future release.",
   },
 ] as const;
 
@@ -122,7 +122,7 @@ export const beliefs: readonly Belief[] = [
 ] as const;
 
 export const launchStatus = {
-  eyebrow: "Building in Public — 2026",
-  state: "Currently in private early access",
-  body: "The waitlist is open for an AI trading journal, discipline coach, and gamified improvement system built for Forex and Indian market traders. Join the list to get priority access and founding-member pricing.",
+  eyebrow: "Invite-Only Access — 2026",
+  state: "Product complete — access by invitation",
+  body: "Registration is open for the completed web and Android product. Join the waitlist to request invite-only access and founding-member pricing. An iOS release is planned for the future.",
 } as const;

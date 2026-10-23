@@ -82,12 +82,12 @@ const homeGraph = {
      * `HowTo` no longer produces a rich result in Google — that was retired in
      * 2023 — so this is not here for a search appearance. It is here because
      * "how does Edgecipline work" is one of the few questions an answer engine
-     * will actually be asked about a pre-launch product, and a `HowTo` with
+     * will actually be asked about the product, and a `HowTo` with
      * three named, ordered steps is the shape that answers it. Each step's
      * text comes from the rendered component, so the two cannot diverge.
      *
-     * No `totalTime`, no `estimatedCost`, no `supply`: the product is not
-     * launched and none of those are known.
+     * No `totalTime`, no `estimatedCost`, no `supply`: those values are not
+     * defined for this workflow.
      */
     {
       "@type": "HowTo",

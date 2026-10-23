@@ -13,8 +13,8 @@ import { BRAND_NAME, BRAND_SLOGAN, SITE_DESCRIPTION } from "@/data/brand";
  * out again.
  *
  * `display: "browser"` rather than `"standalone"`: this is a website, not an
- * installable app, and the real product is a native Android app that is not
- * launched yet. Claiming standalone display would invite an install prompt for
+ * installable app, and the product's Android app is distributed separately.
+ * Claiming standalone display would invite an install prompt for
  * something that is a set of marketing pages.
  *
  * Only the two genuinely square icons are listed. The brand artwork in

@@ -92,7 +92,7 @@ export function LandingLoader() {
 
       <div className="edg-cinema__brand" aria-hidden="true">
         <Image src="/brand/mark.webp" alt="" width={62} height={78} priority />
-        <div><strong>EDGECIPLINE</strong><span>TRADE. DISCIPLINE. GROW.</span></div>
+        <div><strong>EDGECIPLINE</strong><span>DISCIPLINE OVER EMOTION</span></div>
       </div>
 
       <footer className="edg-cinema__footer" aria-hidden="true"><span>EMOTION</span><i><b /></i><span>DISCIPLINE</span></footer>

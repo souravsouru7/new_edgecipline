@@ -72,14 +72,14 @@ export const SITE_TITLE =
 
 /** Shown on the home page, in OG tags and as the WebSite description. */
 export const SITE_DESCRIPTION =
-  "Edgecipline is a pre-launch AI trading journal for Forex and Indian market traders, built to reveal behavior patterns and strengthen trading discipline.";
+  "Edgecipline is an AI trading journal for Forex and Indian market traders, built to reveal behavior patterns and strengthen trading discipline. Registration is open and product access is invite-only.";
 
 /**
  * The brand slogan, as it appears in the footer and on the Open Graph card.
  * This is the approved wording; BRAND_PROMISE below is the longer positioning
  * line, which is a description rather than a slogan.
  */
-export const BRAND_SLOGAN = "Trade Disciplined · Live Freer";
+export const BRAND_SLOGAN = "Discipline Over Emotion";
 
 export const BRAND_PROMISE = "Not just a journal — a discipline coach.";
 
@@ -88,6 +88,13 @@ export const BRAND_ETYMOLOGY =
 
 export const CONTACT_EMAIL = "support@edgecipline.com";
 export const TWITTER_HANDLE = "@edgecipline";
+
+export const HEADQUARTERS = {
+  addressLocality: "Kozhikode",
+  addressRegion: "Kerala",
+  addressCountry: "IN",
+} as const;
+export const HEADQUARTERS_DISPLAY = "Kozhikode, Kerala, India";
 
 /**
  * The brand mark the Organization node points at.

@@ -16,7 +16,7 @@ const css = (name: string) => styles[name] || name;
 
 const title = "Pricing — Edgecipline Plans & Early Access";
 const description =
-  "Edgecipline pricing: Standard ₹349/month, Professional ₹899 for 3 months (~₹9.99/day), Ultimate ₹1,499 for 6 months (~₹8.33/day). Trading DNA, missions & streaks, and AI coaching for Forex and Indian markets. Join the waitlist for founding-member pricing.";
+  "Edgecipline pricing: Standard ₹349/month, Professional ₹899 for 3 months (~₹9.99/day), Ultimate ₹1,499 for 6 months (~₹8.33/day). Start with a 7-day trial; free accounts can save up to 2 trades. Access is currently invite-only.";
 
   /* No `images` here on purpose: `opengraph-image.tsx` in this segment
      generates the card, and an explicit `images` in metadata would override
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     siteName: BRAND_NAME,
     title,
     description:
-      "See Edgecipline's published launch plans, starting at ₹349/month. The waitlist is free and no payment is collected today.",
+      "See Edgecipline plans from ₹349/month. Start with a 7-day trial; free accounts can save up to 2 trades. Access is currently invite-only.",
     type: "website",
     url: absoluteUrl("/pricing"),
   },
@@ -40,27 +40,26 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Edgecipline Pricing — From ₹349/month",
     description:
-      "Standard ₹349/mo · Professional ₹899/3mo · Ultimate ₹1,499/6mo. Join the waitlist for founding pricing.",
+      "Standard ₹349/mo · Professional ₹899/3mo · Ultimate ₹1,499/6mo. Request invite-only access.",
   },
 };
 
 /**
  * /pricing
  *
- * No Product / Offer / AggregateOffer markup, carried over deliberately from
- * the previous site: Edgecipline is waitlist-only today, with no checkout and
- * no payment route anywhere in the project. Offer markup carries an implicit
+ * No Product / Offer / AggregateOffer markup: this marketing site has no
+ * public checkout or payment route. Offer markup carries an implicit
  * claim that the product can be bought, so emitting it would misrepresent the
  * real business state. The prices in the visible copy are accurate; re-add
  * Offer nodes (with a real `availability` and `priceValidUntil`) only once a
- * genuine purchase or preorder flow ships.
+ * genuine public purchase flow ships.
  *
  * Everything that carries content is a Server Component. The only client code
  * is the comparison table's plan picker and the FAQ accordion.
  */
 /**
- * Still no Product / Offer / AggregateOffer, for the reason documented below:
- * there is no checkout. This is a WebPage plus a breadcrumb, nothing that
+ * Still no Product / Offer / AggregateOffer, for the reason documented above:
+ * there is no public checkout here. This is a WebPage plus a breadcrumb, nothing that
  * implies the product can be bought today.
  */
 const pricingGraph = {
@@ -158,7 +157,7 @@ export default function PricingPage() {
             </h2>
 
             <p data-reveal style={{ ["--mo-delay" as string]: ".1s" }}>
-              Get launch and plan updates before public release. No credit card required.
+              Request invite-only access and receive product and plan updates. No credit card required.
             </p>
 
             <div

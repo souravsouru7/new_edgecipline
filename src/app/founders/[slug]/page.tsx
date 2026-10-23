@@ -300,8 +300,8 @@ export default async function FounderProfilePage({ params }: Props) {
             </h2>
 
             <p data-reveal style={vars({ "--mo-delay": ".1s" })}>
-              Be among the first traders to access Edgecipline when we launch. Priority access for
-              early members.
+              Request an invitation to the completed web and Android product. Priority access is
+              offered to early members.
             </p>
 
             <div className={css("fdCtaActions")} data-reveal style={vars({ "--mo-delay": ".18s" })}>

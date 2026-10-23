@@ -101,8 +101,8 @@ export function WaitlistForm() {
           <b>{state === "duplicate" ? "You’re already on the list." : "You’re on the list."}</b>
           <p>
             {state === "duplicate"
-              ? "That email is already registered — nothing more to do. We’ll be in touch before launch."
-              : "We’ll email you when early access opens. Priority goes to the people who joined first."}
+              ? "That email is already registered — nothing more to do. We’ll be in touch when an invitation is available."
+              : "We’ll email you when an invitation is available. Priority goes to the people who joined first."}
           </p>
         </div>
       </div>
@@ -185,7 +185,7 @@ export function WaitlistForm() {
 
       <p className={css("wlNote")}>
         <Mail aria-hidden="true" size={13} />
-        Free to join, no card required. We email you about launch and early access — nothing else.
+        Free to join, no card required. We email you about invitations and access updates — nothing else.
       </p>
     </form>
   );

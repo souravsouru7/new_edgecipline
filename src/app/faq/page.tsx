@@ -173,8 +173,7 @@ export default function FaqPage() {
             </h2>
 
             <p data-reveal style={vars({ "--mo-delay": ".1s" })}>
-              Join the waitlist. Get priority access. Lock in founding pricing before public
-              launch.
+              Join the waitlist to request invite-only access and receive product and plan updates.
             </p>
 
             <div className={css("fqCtaActions")} data-reveal style={vars({ "--mo-delay": ".18s" })}>

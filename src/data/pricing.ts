@@ -201,8 +201,8 @@ export const compareGroups = [...new Set(compareRows.map((row) => row.group))];
 
 export const pricingFaqs = [
   {
-    q: "When will Edgecipline launch?",
-    a: "We’re currently in private early access. Join the waitlist to get priority access when we launch publicly. Early access members get discounted founding pricing.",
+    q: "How do I access Edgecipline?",
+    a: "Registration is open, while product access is currently invite-only. Join the waitlist to request access and founding-member pricing.",
   },
   {
     q: "Can I switch plans after subscribing?",
@@ -210,22 +210,22 @@ export const pricingFaqs = [
   },
   {
     q: "Is there a free trial?",
-    a: "Early access members will receive an extended trial period. Join the waitlist to be first in line when we launch.",
+    a: "Yes. New accounts receive a 7-day premium trial. After the trial, the free account is limited to two saved trades.",
   },
   {
     q: "What currencies do you support?",
-    a: "Edgecipline is priced in Indian Rupees (INR) and is optimized for Indian market traders. We plan to add international pricing at public launch.",
+    a: "Edgecipline is priced in Indian Rupees (INR) and is optimized for Indian market traders. International pricing is planned for a future update.",
   },
   {
     q: "Do I need a credit card to join the waitlist?",
-    a: "No. The waitlist is completely free to join. You only pay when you subscribe after we launch.",
+    a: "No. The waitlist is free, and no card is required to request an invitation. Payment is required only when you choose a paid subscription.",
   },
   {
     q: "What’s your refund policy?",
-    a: "We’ll publish a detailed refund policy at launch. Our goal is for you to see behavioral insights within the first week — if you don’t find value, we want to make it right.",
+    a: "For current cancellation and refund terms, review the information shown during checkout or contact support@edgecipline.com before subscribing.",
   },
 ] as const;
 
 /** The reassurance line that sat under the plan cards. */
 export const PRICING_FOOTNOTE =
-  "All prices in INR. Waitlist is free — you only pay when we launch.";
+  "All prices in INR. The waitlist is free; payment is required only when you choose a paid subscription.";

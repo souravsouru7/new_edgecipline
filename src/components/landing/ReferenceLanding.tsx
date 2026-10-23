@@ -137,7 +137,7 @@ export function ReferenceLanding() {
 
         <section className="edg-stats" aria-label="Edgecipline product facts">
           <div><strong>2</strong><span>Market Modes</span></div>
-          <div><strong>{features.length}</strong><span>Planned Capabilities</span></div>
+          <div><strong>{features.length}</strong><span>Product Capabilities</span></div>
           <div><strong>Free</strong><span>Waitlist Access</span></div>
           <div><strong>Private</strong><span>Early Access</span></div>
         </section>
@@ -174,7 +174,7 @@ export function ReferenceLanding() {
                   {plans.map((plan) => <article key={plan.id} className={plan.featured ? "edg-plan popular" : "edg-plan"}>{plan.featured && <span className="edg-popular">MOST POPULAR</span>}<small>{plan.name}</small><div className="edg-plan-price"><strong>{plan.price}</strong><span>{plan.period}</span></div><ul>{plan.features.map((item) => <li key={item}><Check size={13}/>{item}</li>)}</ul><button type="button" className={plan.featured ? "edg-button" : "edg-outline-button"} onClick={() => showDialog("waitlist")}>Join Waitlist <ArrowRight size={15}/></button></article>)}
                 </div>
               ) : (
-                <div className="edg-yearly-message"><strong>Yearly plans are coming.</strong><p>Join the waitlist to get the confirmed annual options when early access opens.</p><button className="edg-button" type="button" onClick={() => showDialog("waitlist")}>Join Waitlist <ArrowRight size={16}/></button></div>
+                <div className="edg-yearly-message"><strong>Yearly plans are coming.</strong><p>Join the waitlist to receive confirmed annual-plan updates.</p><button className="edg-button" type="button" onClick={() => showDialog("waitlist")}>Join Waitlist <ArrowRight size={16}/></button></div>
               )}
             </div>
           </div>

@@ -2,10 +2,7 @@
  * /privacy and /terms, taken verbatim from the previous site's copy deck:
  * `edgeclipine/site-content.md` -> "# Privacy Policy" and "# Terms of Service".
  *
- * Both were extracted programmatically rather than retyped. Legal text is the
- * one place on a site where a paraphrase is a liability, so not a word of it
- * is rewritten - only the page chrome (the "Legal" eyebrow, the title and the
- * "Last updated" line) is lifted out of the body and rendered around it.
+ * These policies describe the current product and its confirmed data flow.
  *
  * The bodies are markdown in the same small subset the blog posts use -
  * `##` headings, `- ` lists, paragraphs and `**bold**` - so they render through
@@ -16,11 +13,8 @@
  *   * `updated` is the date shown on the page and used as `dateModified` in
  *     the schema. It is the deck's own date, not today's - moving it is an
  *     editorial act, so it is not derived automatically.
- *   * The privacy policy names Firebase Firestore, Google Analytics and Google
- *     Tag Manager as processors. That described the previous deployment. If
- *     this site ships without them - or with something else - the policy has to
- *     be corrected before launch, because a privacy policy that misdescribes
- *     the actual data flow is worse than none.
+ *   * Processor, retention, subscription, and access facts must be updated
+ *     here whenever the implementation changes.
  */
 
 export type LegalDoc = {
@@ -40,56 +34,70 @@ export const privacyPolicy: LegalDoc = {
   slug: "privacy",
   title: "Privacy Policy",
   eyebrow: "Legal",
-  updated: "January 2026",
+  updated: "October 2026",
   description:
-    "How Edgecipline collects, uses and safeguards your information - waitlist and contact form data, analytics, cookies, retention, third-party processors and your rights.",
+    "How Edgecipline collects, uses and safeguards account, trade, screenshot, waitlist and contact data, including retention, deletion, service providers and your rights.",
   body: `## 1. Introduction
 
-Welcome to Edgecipline ("Edgecipline", "we", "our", or "us"). We are committed to protecting your personal information and your right to privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website at https://www.edgecipline.com and join our waitlist.
+Welcome to Edgecipline ("Edgecipline", "we", "our", or "us"). We are committed to protecting your personal information and your right to privacy. This Privacy Policy explains how we collect, use, retain, and delete information when you visit https://www.edgecipline.com, request an invitation, register, or use the Edgecipline web or Android product.
 
-Edgecipline is currently in pre-launch mode. The primary data collection on this site is for our waitlist program. This policy governs that pre-launch data collection and will be updated when the full product launches.
+Registration is open, while product access is currently invite-only.
 
 ## 2. Information We Collect
 
-**Waitlist registration data:** When you join our waitlist, we collect your email address, phone number, and trading experience level. This information is required to add you to the waitlist and notify you when we launch.
+**Invitation and waitlist data:** When you request access, we collect your name, email address, optional phone number, and trading experience level so we can manage your request and contact you about access.
+
+**Account data:** When you register, we collect information needed to authenticate and manage your account, such as your email address, profile preferences, market mode, trial status, and subscription status.
+
+**Trade and product data:** When you use Edgecipline, we process the trade details, journal entries, setup rules, checklist responses, psychology tags, reflections, reports, coaching history, and related analytics you choose to provide or generate.
+
+**Screenshots and OCR data:** Uploaded trade screenshots are stored in Cloudinary. Extracted text and structured trade data are processed to create and maintain your journal. Screenshots and raw OCR data remain associated with your active account until you delete the account.
 
 **Contact form data:** If you contact us via our contact form, we collect your name, email address, the subject of your message, and the message content.
 
-**Analytics data:** We use Google Analytics to understand how visitors interact with our website. This may include your IP address, browser type, device type, pages visited, and time spent on pages. This data is aggregated and anonymized.
+**Technical data:** The product may process device, diagnostic, notification-delivery, security, and error information required to operate, protect, and troubleshoot the service.
 
-**Cookies:** We use essential cookies to ensure our website functions correctly (e.g., remembering if you've already joined the waitlist). Analytics cookies are set by Google Analytics. You can opt out of analytics cookies through your browser settings or by using Google's opt-out tools.
+**Cookies:** We use essential cookies and similar storage needed for authentication, security, preferences, and core product functionality. We do not currently use Google Analytics or Google Tag Manager.
 
 ## 3. How We Use Your Information
 
 We use the information we collect to:
 
-- Send you notifications when Edgecipline launches or early access becomes available
+- Process registration and invitation requests
+- Provide and secure your Edgecipline account
+- Extract trade information from screenshots and maintain your journal
+- Generate your requested analytics, reports, coaching, missions, and Trading DNA
+- Process trials, subscriptions, and payments
+- Deliver service notifications according to your preferences
 - Respond to your contact form inquiries
-- Understand our user base and improve our product planning
-- Analyze website traffic and user behavior to improve the website
+- Diagnose errors and improve product reliability
 - Comply with legal obligations
 
 We will never sell your personal information to third parties or use it for purposes not described in this policy without your consent.
 
 ## 4. Data Storage & Security
 
-Your waitlist and contact data is stored in Firebase Firestore, a Google Cloud service with enterprise-grade security. All data is encrypted in transit (TLS/SSL) and at rest.
+Waitlist and contact-form submissions are stored in Firebase Firestore. Account, trade, journal, analytics, and related product data is stored in MongoDB Atlas. Uploaded screenshots are stored in Cloudinary. We use encrypted network connections when data is transmitted between your device and our services.
 
-We retain waitlist data until you request deletion or until 12 months after our product launches, whichever comes first. Contact form data is retained for 6 months for customer service purposes.
+Screenshots and raw OCR text remain associated with an active account. When you delete your account, Edgecipline permanently deletes the associated account information, trades, screenshots, OCR data, analytics, reports, and coaching history. You may also request deletion by emailing support@edgecipline.com. Contact form data is retained for up to 6 months for customer service purposes.
 
 ## 5. Third-Party Services
 
 We use the following third-party services that may process your data:
 
-- Google Analytics — Website analytics and usage statistics
-- Firebase / Google Cloud — Data storage and hosting
-- Google Tag Manager — Tag management for analytics
+- MongoDB Atlas — Account, trade, journal, and product data storage
+- Cloudinary — Uploaded screenshot storage and delivery
+- Firebase — Waitlist and contact-form storage, authentication, and Android push notifications
+- Google Gemini and Google Cloud Vision — Screenshot extraction and requested AI features
+- Razorpay — Subscription payment processing
+- Resend — Transactional email delivery
+- Sentry — Product error monitoring and diagnostics
 
 Each of these services has their own privacy policies. We recommend reviewing them if you have concerns about how they process your data.
 
 ## 6. Email Communications
 
-By joining the waitlist, you consent to receive emails from Edgecipline regarding product launch updates, early access invitations, and related announcements. You can unsubscribe at any time by clicking the unsubscribe link in any email or by contacting us at support@edgecipline.com.
+By joining the waitlist, you consent to receive emails from Edgecipline regarding invitations, access updates, and related announcements. You can unsubscribe at any time by clicking the unsubscribe link in any email or by contacting us at support@edgecipline.com.
 
 We do not send marketing emails to contact form submitters unless they separately join the waitlist.
 
@@ -128,7 +136,7 @@ export const termsOfService: LegalDoc = {
   slug: "terms",
   title: "Terms of Service",
   eyebrow: "Legal",
-  updated: "January 2026",
+  updated: "October 2026",
   description:
     "The terms governing use of Edgecipline, including the trading risk disclaimer, waitlist terms, acceptable use, intellectual property and limitation of liability.",
   body: `## Important Risk Disclaimer
@@ -139,22 +147,22 @@ export const termsOfService: LegalDoc = {
 
 By accessing or using the Edgecipline website at edgecipline.com and any related services (collectively, the "Service"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, please do not use the Service.
 
-These Terms apply to all visitors, waitlist members, and any future users of the Service. Edgecipline reserves the right to update these Terms at any time. Continued use of the Service after changes constitutes acceptance of the updated Terms.
+These Terms apply to all visitors, waitlist members, registered users, and subscribers of the Service. Edgecipline reserves the right to update these Terms at any time. Continued use of the Service after changes constitutes acceptance of the updated Terms.
 
 ## 2. Description of Service
 
-Edgecipline is an AI-powered trading journal and behavioral analytics platform (currently in pre-launch). The Service allows users to:
+Edgecipline is an AI-powered trading journal and behavioral analytics platform. Registration is open, while product access is currently invite-only. The Service allows users to:
 
-- Join a waitlist for early access to the Edgecipline platform
-- Upload screenshots of trades for AI-powered data extraction (at launch)
-- Track trading history, behavioral patterns, and performance analytics (at launch)
-- Receive personalized AI coaching reports (at launch)
+- Request an invitation and register for the Edgecipline platform
+- Upload screenshots of trades for AI-powered data extraction
+- Track trading history, behavioral patterns, and performance analytics
+- Receive personalized AI coaching reports
 
-The Service is currently a pre-launch marketing website. Features described on this site are planned for future release and may change before launch.
+The product is complete on web and Android. An iOS release is planned for the future. Access, features, and availability may still change as the invite-only product is improved.
 
 ## 3. Financial & Trading Disclaimer
 
-**Edgecipline is NOT a financial advisor, investment advisor, or broker.** Nothing on this website or in the Edgecipline platform (when launched) constitutes financial advice, investment recommendations, or trading signals.
+**Edgecipline is NOT a financial advisor, investment advisor, or broker.** Nothing on this website or in the Edgecipline platform constitutes financial advice, investment recommendations, or trading signals.
 
 The behavioral analytics, AI coaching reports, and pattern detection features are educational tools to help traders understand their own behavior. They are not recommendations to buy, sell, or hold any financial instrument.
 
@@ -167,9 +175,9 @@ Past performance data shown in any Edgecipline analytics does not guarantee futu
 By joining the Edgecipline waitlist, you agree to:
 
 - Provide accurate contact information
-- Receive email communications from Edgecipline regarding launch updates and early access
+- Receive email communications from Edgecipline regarding invitations and access updates
 - Acknowledge that joining the waitlist does not guarantee access to the Service
-- Acknowledge that pricing and features are subject to change before launch
+- Acknowledge that pricing, invitations, and features may change during invite-only access
 
 Joining the waitlist is free and does not create any financial obligation. You may remove yourself from the waitlist at any time by contacting us at support@edgecipline.com.
 
@@ -193,9 +201,9 @@ The Edgecipline name and logo are trademarks of Edgecipline Private Limited. You
 
 ## 7. Subscriptions & Refunds
 
-**Pre-launch note:** Edgecipline has not yet launched subscriptions. This section will be updated with full subscription terms before launch.
+New accounts receive a 7-day premium trial. After the trial, a free account is limited to two saved trades. Paid plans, prices, billing periods, and included features are shown on the Pricing page and during checkout. Payments are processed through Razorpay.
 
-When subscriptions launch, we will publish a clear refund policy. Our goal is for every subscriber to find value within the first 30 days. If not, we will work to make it right.
+For current cancellation and refund terms, review the information shown during checkout or contact support@edgecipline.com before subscribing.
 
 ## 8. Limitation of Liability
 

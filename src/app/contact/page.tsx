@@ -16,7 +16,7 @@ import {
   type SocialId,
 } from "@/data/contact";
 import { WAITLIST_HREF } from "@/data/features";
-import { BRAND_NAME, OG_IMAGE_PATH, OG_IMAGE_SIZE, absoluteUrl } from "@/data/brand";
+import { BRAND_NAME, HEADQUARTERS, OG_IMAGE_PATH, OG_IMAGE_SIZE, absoluteUrl } from "@/data/brand";
 import styles from "@/components/contact/Contact.module.css";
 
 const css = (name: string) => styles[name] || name;
@@ -93,7 +93,7 @@ export default function ContactPage() {
         "@id": `${url("/")}#organization`, url: url("/"),
         name: company.name,
         email: CONTACT_EMAIL,
-        address: { "@type": "PostalAddress", addressCountry: "IN" },
+        address: { "@type": "PostalAddress", ...HEADQUARTERS },
         sameAs: socials.map((social) => social.href),
         contactPoint: [
           {
@@ -243,8 +243,8 @@ export default function ContactPage() {
             </h2>
 
             <p data-reveal style={vars({ "--mo-delay": ".1s" })}>
-              The waitlist is free, and early members get priority access and founding pricing when
-              Edgecipline launches.
+              The waitlist is free. Join to request invite-only access and receive product and plan
+              updates.
             </p>
 
             <div className={css("ctCtaActions")} data-reveal style={vars({ "--mo-delay": ".18s" })}>

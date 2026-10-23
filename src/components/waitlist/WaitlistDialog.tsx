@@ -76,7 +76,7 @@ export function WaitlistDialog() {
         <X size={19} />
       </button>
       <h2 id="global-waitlist-title">Join the Edgecipline waitlist</h2>
-      <p>Get early access updates and an invitation when the product opens.</p>
+      <p>Request invite-only access and receive product and plan updates.</p>
       <WaitlistForm />
     </dialog>
   );

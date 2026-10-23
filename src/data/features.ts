@@ -97,7 +97,7 @@ export const features: readonly Feature[] = [
     benefits: [
       "Works with 20+ Forex and Indian broker platforms",
       "Extracts single or multiple trades from one screenshot",
-      "Supports MT4, MT5, cTrader, NIFTY, BANKNIFTY, options, futures, and equity",
+      "Supports MT5, NIFTY, BANKNIFTY, options, futures, and equity",
       "No manual data entry — ever",
     ],
     group: "capture",
@@ -111,7 +111,7 @@ export const features: readonly Feature[] = [
     problem:
       "Most journals are built for one market and bolt everything else on as an afterthought. Forex pip math and Indian F&O fields like strike price, expiry, and lot size need completely different handling.",
     solution:
-      "Edgecipline runs two dedicated modes — Forex (MT4/MT5/cTrader) and Indian Market (NIFTY, BANKNIFTY, options, intraday equity) — each with its own journal, analytics, currency labels, and screenshot extraction tuned to that market’s brokers.",
+      "Edgecipline runs two dedicated modes — Forex (MT5, with MT4 and cTrader planned) and Indian Market (NIFTY, BANKNIFTY, options, intraday equity) — each with its own journal, analytics, currency labels, and screenshot extraction tuned to that market’s brokers.",
     benefits: [
       "Separate Forex and Indian market journals and analytics",
       "Broker auto-detection from your screenshot",

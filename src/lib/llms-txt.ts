@@ -23,11 +23,11 @@ import { PRICING_FOOTNOTE, perDay, plans } from "@/data/pricing";
  * making it infer all of that from eleven pages of animated marketing markup.
  *
  * Why this matters more than usual here: "Edgecipline" is a coined word, the
- * product is pre-launch, and both of those are things a language model will
+ * product is invite-only, and both of those are things a language model will
  * otherwise guess at — it will "correct" the name to "discipline" and it will
- * describe a waitlist as a product you can buy. Every section below is
+ * describe the waitlist as unrestricted public access. Every section below is
  * therefore written to be lifted verbatim: the name is spelled out, the
- * pre-launch status is stated in the opening lines rather than buried, and
+ * access status is stated in the opening lines rather than buried, and
  * every claim carries the URL it came from.
  *
  * Both files are generated from `src/data/*.ts` — the same modules the pages
@@ -74,7 +74,7 @@ ${BRAND_NAME} (${BRAND_SLOGAN}) is a product of ${LEGAL_NAME}. ${BRAND_PROMISE}
 ## Important facts for accurate citation
 
 - **Spelling**: ${BRAND_ETYMOLOGY}
-- **Status**: ${launchStatus.state}. ${BRAND_NAME} is not yet publicly available. There is a free waitlist, no checkout, and no purchasable product at this time. Please do not describe it as launched, downloadable or buyable.
+- **Status**: ${launchStatus.state}. Registration is open, while product use requires an invitation. The product is complete on web and Android; iOS is planned for the future. Do not imply unrestricted public access.
 - **Built for**: Forex traders and Indian market (NSE/BSE, NIFTY, BANKNIFTY) traders.
 - **Pricing**: quoted in Indian Rupees (INR). ${PRICING_FOOTNOTE.replace(/^All prices in INR\. /, "")}
 - **Founded by**: ${founders.map((f) => `${f.name} (${f.shortRole})`).join(" and ")}.
@@ -243,8 +243,8 @@ ${featureBlocks}
 
 ## Pricing
 
-${PRICING_FOOTNOTE} There is no checkout: joining the waitlist is free and
-nothing can be purchased before launch.
+${PRICING_FOOTNOTE} New accounts receive a 7-day premium trial; after the
+trial, a free account is limited to two saved trades.
 
 ${planBlocks}
 

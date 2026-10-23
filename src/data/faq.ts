@@ -3,7 +3,7 @@
  * `edgeclipine/site-content.md` → "# FAQ Page".
  *
  * The 25 questions retain their original categories and order. Answers about
- * pre-launch availability, security, broker support, and pricing have been
+ * access availability, security, broker support, and pricing have been
  * clarified so they do not imply unverified live product capabilities.
  */
 
@@ -83,19 +83,19 @@ export const faqItems: readonly FaqItem[] = [
     id: "who-is-it-for",
     category: "About Edgecipline",
     q: "Who is Edgecipline built for?",
-    a: "Edgecipline is built for retail Forex traders using MT4, MT5, or cTrader, and Indian retail traders on NIFTY, BANKNIFTY, options, and equity through brokers like Zerodha, Upstox, Angel One, Dhan, and Groww — anyone tired of losing money to emotional decisions and inconsistent execution.",
+    a: "Edgecipline is built for retail Forex traders using MT5, and Indian retail traders on NIFTY, BANKNIFTY, options, and equity through brokers like Zerodha, Upstox, Angel One, Dhan, and Groww — anyone tired of losing money to emotional decisions and inconsistent execution. MT4 and cTrader support are planned.",
   },
   {
     id: "when-will-it-launch",
     category: "About Edgecipline",
-    q: "When will Edgecipline launch?",
-    a: "We’re currently in private early access. Join the waitlist to get priority access when we launch publicly and to lock in early access pricing.",
+    q: "Is Edgecipline available?",
+    a: "The Edgecipline product is complete on web and Android. Registration is open, while product access is currently invite-only. Join the waitlist to request access and founding-member pricing.",
   },
   {
     id: "is-there-a-mobile-app",
     category: "About Edgecipline",
     q: "Is there a mobile app?",
-    a: "A native Android app is planned for launch. Edgecipline is currently in pre-launch early access; join the waitlist for availability updates.",
+    a: "Yes. The Android app is available through Google Play, although product access is currently invite-only. An iOS release is planned for the future.",
   },
 
   // ── AI & Features ─────────────────────────────────────────────────────────
@@ -109,7 +109,7 @@ export const faqItems: readonly FaqItem[] = [
     id: "supported-brokers",
     category: "AI & Features",
     q: "What brokers and platforms does Edgecipline support?",
-    a: "Edgecipline is being built for Forex platforms such as MT4, MT5 and cTrader, and Indian brokers such as Zerodha, Upstox, Angel One, Dhan and Groww. Confirmed support for each screenshot format will be published as the product becomes available.",
+    a: "Edgecipline currently supports MT5 and major Indian brokers such as Zerodha, Upstox, Angel One, Dhan and Groww. MT4 and cTrader support are planned for a future update.",
   },
   {
     id: "what-is-trading-dna",
@@ -146,8 +146,8 @@ export const faqItems: readonly FaqItem[] = [
   {
     id: "forex-support",
     category: "Forex & Indian Markets",
-    q: "Does Edgecipline support Forex trading (MT4/MT5/cTrader)?",
-    a: "Yes. Edgecipline has a dedicated Forex mode built for MT4, MT5, cTrader, and similar platforms, with its own journal, analytics, and screenshot extraction tuned for pip-based currency pairs.",
+    q: "Does Edgecipline support Forex trading on MT5?",
+    a: "Yes. Edgecipline has a dedicated Forex mode for MT5, with its own journal, analytics, and screenshot extraction tuned for pip-based currency pairs. MT4 and cTrader support are planned for a future update.",
   },
   {
     id: "nifty-banknifty",
@@ -167,13 +167,13 @@ export const faqItems: readonly FaqItem[] = [
     id: "how-much-does-it-cost",
     category: "Pricing & Access",
     q: "How much does Edgecipline cost?",
-    a: "The published launch plans are Standard at ₹349/month, Professional at ₹899 for 3 months, and Ultimate at ₹1,499 for 6 months. Joining the waitlist is free, and no payment is collected today.",
+    a: "The paid plans are Standard at ₹349/month, Professional at ₹899 for 3 months, and Ultimate at ₹1,499 for 6 months. A 7-day trial is available, and free accounts can save up to 2 trades. Joining the waitlist is free; payment is only required when you choose a paid subscription.",
   },
   {
     id: "is-the-waitlist-free",
     category: "Pricing & Access",
     q: "Is the waitlist free?",
-    a: "Yes, completely free. You join, you wait, you get priority access when we launch. No credit card required.",
+    a: "Yes, completely free. Joining requests an invitation and does not require a credit card.",
   },
   {
     id: "waitlist-member-benefits",
@@ -185,7 +185,7 @@ export const faqItems: readonly FaqItem[] = [
     id: "free-trial",
     category: "Pricing & Access",
     q: "Is there a free trial?",
-    a: "Early access members will receive an extended trial period when we launch. Join the waitlist to be first in line.",
+    a: "New accounts receive a 7-day premium trial. After the trial, the free account is limited to two saved trades.",
   },
 
   // ── Privacy & Data ────────────────────────────────────────────────────────
@@ -193,19 +193,19 @@ export const faqItems: readonly FaqItem[] = [
     id: "how-data-is-stored",
     category: "Privacy & Data",
     q: "How is my trade data stored?",
-    a: "The full trading product has not launched. The current Privacy Policy describes data collected through this website; product trade-data storage details need to be confirmed before launch.",
+    a: "Account and trade data is stored in MongoDB Atlas, while uploaded screenshots are stored in Cloudinary. Screenshots and raw OCR data remain associated with an active account. Deleting the account permanently deletes its associated account data, trades, screenshots, OCR data, analytics, reports, and coaching history.",
   },
   {
     id: "broker-account-access",
     category: "Privacy & Data",
     q: "Does Edgecipline have access to my broker account?",
-    a: "The planned screenshot workflow does not require broker login credentials or a direct broker connection. Never share broker credentials through a screenshot or message.",
+    a: "The screenshot workflow does not require broker login credentials or a direct broker connection. Never share broker credentials through a screenshot or message.",
   },
   {
     id: "waitlist-data-collected",
     category: "Privacy & Data",
     q: "What data is collected when I join the waitlist?",
-    a: "When you join the waitlist, we collect your email, phone number, and trading experience level — only to notify you when we launch. See our Privacy Policy for full details.",
+    a: "When you join the waitlist, we collect your name, email address, optional phone number, and trading experience level so we can manage invitation requests. See our Privacy Policy for full details.",
   },
 ] as const;
 
