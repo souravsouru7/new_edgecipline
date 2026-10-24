@@ -242,7 +242,7 @@ html:has(.lgPage), body:has(.lgPage) {
 .ftPage [class*="Item"], .ppPage [class*="Item"], .abPage [class*="Item"],
 .fqPage [class*="Item"], .ctPage [class*="Item"], .blPage [class*="Item"],
 .fdPage [class*="Item"], .lgPage [class*="Item"],
-.ftPage article, .ppPage article, .abPage article, .fqPage article,
+.ftPage article, .ppPage article, .fqPage article,
 .ctPage article, .blPage article, .fdPage article, .lgPage article {
   background: var(--edg-surface) !important;
   border-color: var(--edg-line) !important;
@@ -353,7 +353,7 @@ body dt:not(.edg-chrome *):not(.edg-page *):not(.ftxPage *) {
   color: var(--edg-muted) !important;
 }
 body :is([class*="Eyebrow"], [class*="SectionLabel"], [class*="Crumb"],
-         [class*="Kicker"], [class*="Tag"], [class*="Chip"], [class*="Pill"],
+         [class*="Kicker"], [class*="Tag"], [class*="Chip"], [class*="Pill"]:not([class*="Pillar"]),
          [class*="Badge"], [class*="Caption"], [class*="Note"], [class*="Meta"],
          [class*="Trust"], [class*="Hint"], [class*="Detail"]):not(.edg-chrome *):not(.edg-page *):not(.ftxPage *) {
   font-size: 11px !important;
@@ -376,7 +376,7 @@ body small:not(.edg-chrome *):not(.edg-page *):not(.ftxPage *) {
   :is(small, label, legend, summary, time, kbd, cite, code, pre,
       input, textarea, select, option,
       [class*="Eyebrow"], [class*="Label"], [class*="Crumb"], [class*="Chip"],
-      [class*="Pill"], [class*="Tag"], [class*="Badge"], [class*="Meta"],
+      [class*="Pill"]:not([class*="Pillar"]), [class*="Tag"], [class*="Badge"], [class*="Meta"],
       [class*="Kicker"], [class*="Caption"], [class*="Tooltip"], [class*="Note"],
       [class*="Trust"], [class*="Help"], [class*="Detail"], [class*="Hint"],
       [class*="Legend"], [class*="Pin"], [class*="Status"], [class*="Toast"]):not(.edg-chrome *):not(:is(h1, h2, h3, h4, h5, h6) *) {
@@ -492,7 +492,7 @@ body small:not(.edg-chrome *):not(.edg-page *):not(.ftxPage *) {
 .ppPage [class*="Label"], .ppPage [class*="Eyebrow"], .ppPage [class*="Badge"],
 .ppPage [class*="Chip"],  .ppPage [class*="Pill"],    .ppPage [class*="Tag"],
 .abPage [class*="Label"], .abPage [class*="Eyebrow"], .abPage [class*="Badge"],
-.abPage [class*="Chip"],  .abPage [class*="Pill"],    .abPage [class*="Tag"],
+.abPage [class*="Chip"],  .abPage [class*="Pill"]:not([class*="Pillar"]), .abPage [class*="Tag"],
 .fqPage [class*="Label"], .fqPage [class*="Eyebrow"], .fqPage [class*="Badge"],
 .fqPage [class*="Chip"],  .fqPage [class*="Pill"],    .fqPage [class*="Tag"],
 .ctPage [class*="Label"], .ctPage [class*="Eyebrow"], .ctPage [class*="Badge"],
@@ -785,7 +785,7 @@ html[data-edg-theme="dark"] :is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .bl
 }
 
 /* Cards / panels on dark. */
-html[data-edg-theme="dark"] :is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) article,
+html[data-edg-theme="dark"] :is(.ftPage, .ppPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) article,
 html[data-edg-theme="dark"] :is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) [class*="Card"],
 html[data-edg-theme="dark"] :is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) [class*="Tile"],
 html[data-edg-theme="dark"] :is(.ftPage, .ppPage, .abPage, .fqPage, .ctPage, .blPage, .fdPage, .lgPage) [class*="Item"] {
