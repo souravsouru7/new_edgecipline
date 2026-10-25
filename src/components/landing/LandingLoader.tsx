@@ -1,10 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useRef } from "react";
 
-const STORY_DURATION = 7200;
-const EXIT_DURATION = 650;
+const STORY_DURATION = 5000;
+const EXIT_DURATION = 900;
 
 export function LandingLoader() {
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -38,11 +37,9 @@ export function LandingLoader() {
 
     skip.addEventListener("click", onSkip);
     if (reducedMotion) {
-      overlay.classList.add("is-reduced");
-      timers.push(window.setTimeout(exit, 900));
+      timers.push(window.setTimeout(exit, 50));
     } else {
-      // The story is intentionally unskippable for its first six seconds.
-      timers.push(window.setTimeout(() => skip.classList.add("is-visible"), 6000));
+      timers.push(window.setTimeout(() => skip.classList.add("is-visible"), 4200));
       timers.push(window.setTimeout(exit, STORY_DURATION));
     }
 
@@ -88,11 +85,6 @@ export function LandingLoader() {
         <section className="edg-cinema__chapter edg-cinema__chapter--two"><small>02 / EMOTION</small><div>YOUR MIND MOVES FASTER.</div></section>
         <section className="edg-cinema__chapter edg-cinema__chapter--three"><small>03 / AWARENESS</small><div>THE PATTERN BECOMES VISIBLE.</div></section>
         <section className="edg-cinema__chapter edg-cinema__chapter--four"><small>04 / DISCIPLINE</small><div>CHANGE THE NEXT DECISION.</div></section>
-      </div>
-
-      <div className="edg-cinema__brand" aria-hidden="true">
-        <Image src="/brand/mark.webp" alt="" width={62} height={78} priority />
-        <div><strong>EDGECIPLINE</strong><span>DISCIPLINE OVER EMOTION</span></div>
       </div>
 
       <footer className="edg-cinema__footer" aria-hidden="true"><span>EMOTION</span><i><b /></i><span>DISCIPLINE</span></footer>

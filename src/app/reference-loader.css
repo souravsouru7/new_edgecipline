@@ -14,23 +14,12 @@ html[data-edg-loading] { overflow: hidden; }
   font-family: var(--font-inter), Arial, sans-serif;
   isolation: isolate;
   contain: strict;
-  transition: opacity 650ms cubic-bezier(.65, 0, .35, 1);
+  will-change: opacity;
+  transition: opacity 900ms cubic-bezier(.45, 0, .55, 1);
 }
 .edg-cinema[hidden] { display: none; }
 .edg-cinema.is-out { opacity: 0; pointer-events: none; }
 .edg-cinema *, .edg-cinema *::before, .edg-cinema *::after { box-sizing: border-box; }
-.edg-cinema::after {
-  content: "";
-  position: absolute;
-  z-index: 3;
-  inset: 0;
-  background: var(--cinema-paper);
-  transform: scaleY(0);
-  transform-origin: center;
-  will-change: transform;
-  animation: cinema-paper-reveal 7.2s ease both;
-}
-
 .edg-cinema__wash {
   position: absolute;
   z-index: -1;
@@ -183,23 +172,6 @@ html[data-edg-loading] { overflow: hidden; }
 .edg-cinema__chapter--three { animation: cinema-chapter-three 7.2s ease both; }
 .edg-cinema__chapter--four { animation: cinema-chapter-four 7.2s ease both; }
 
-.edg-cinema__brand {
-  position: absolute;
-  z-index: 4;
-  top: 50%;
-  left: 50%;
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  color: #171c19;
-  opacity: 0;
-  transform: translate(-50%, -44%) scale(.94);
-  animation: cinema-brand 7.2s cubic-bezier(.2,.75,.2,1) both;
-}
-.edg-cinema__brand img { width: clamp(48px, 7vw, 70px); height: auto; }
-.edg-cinema__brand div { display: grid; gap: 3px; }
-.edg-cinema__brand strong { font-size: clamp(22px, 4vw, 44px); line-height: 1; letter-spacing: -.06em; }
-.edg-cinema__brand span { color: #27865b; font-size: 8px; font-weight: 800; letter-spacing: .12em; }
 
 .edg-cinema__footer {
   position: absolute;
@@ -239,7 +211,6 @@ html[data-edg-loading] { overflow: hidden; }
 .edg-cinema__skip:focus-visible { outline: 2px solid #27865b; outline-offset: 3px; }
 
 @keyframes cinema-breathe { 0% { transform: scale(.9) rotate(-3deg); } 70% { transform: scale(1.08) rotate(2deg); } 100% { transform: scale(1.1); } }
-@keyframes cinema-paper-reveal { 0%, 77% { transform: scaleY(0); } 88%, 100% { transform: scaleY(1); } }
 @keyframes cinema-grid { 0% { opacity: 0; transform: perspective(600px) rotateX(30deg) scale(1.3); } 12%, 70% { opacity: .22; transform: none; } 78%, 100% { opacity: .05; } }
 @keyframes cinema-hud { 0%, 5% { opacity: 0; transform: translateY(-8px); } 10%, 72% { opacity: 1; transform: none; } 78%, 100% { opacity: 0; } }
 @keyframes cinema-orbit { 0%, 12% { opacity: 0; transform: rotate(-70deg) scale(.5); } 28%, 70% { opacity: 1; transform: rotate(120deg) scale(1); } 78%, 100% { opacity: 0; transform: rotate(190deg) scale(1.3); } }
@@ -252,13 +223,8 @@ html[data-edg-loading] { overflow: hidden; }
 @keyframes cinema-chapter-one { 0%, 5% { opacity: 0; transform: translateY(18px); } 10%, 19% { opacity: 1; transform: none; } 24%, 100% { opacity: 0; transform: translateY(-15px); } }
 @keyframes cinema-chapter-two { 0%, 23% { opacity: 0; transform: translateY(18px); } 28%, 39% { opacity: 1; transform: none; } 44%, 100% { opacity: 0; transform: translateY(-15px); } }
 @keyframes cinema-chapter-three { 0%, 43% { opacity: 0; transform: translateY(18px); } 48%, 59% { opacity: 1; transform: none; } 64%, 100% { opacity: 0; transform: translateY(-15px); } }
-@keyframes cinema-chapter-four { 0%, 62% { opacity: 0; transform: translateY(18px); } 67%, 75% { opacity: 1; transform: none; } 79%, 100% { opacity: 0; transform: translateY(-15px); } }
-@keyframes cinema-brand { 0%, 78% { opacity: 0; transform: translate(-50%,-44%) scale(.94); } 87%, 100% { opacity: 1; transform: translate(-50%,-50%) scale(1); } }
+@keyframes cinema-chapter-four { 0%, 62% { opacity: 0; transform: translateY(18px); } 67%, 100% { opacity: 1; transform: none; } }
 @keyframes cinema-progress { to { transform: translateX(0); } }
-
-.edg-cinema.is-reduced { background: var(--cinema-paper); color: #171c19; }
-.edg-cinema.is-reduced :is(.edg-cinema__wash, .edg-cinema__grid, .edg-cinema__scope, .edg-cinema__story, .edg-cinema__hud, .edg-cinema__footer) { display: none; }
-.edg-cinema.is-reduced .edg-cinema__brand { opacity: 1; animation: none; transform: translate(-50%,-50%); }
 
 @media (max-width: 640px) {
   .edg-cinema__hud { grid-template-columns: 1fr auto; }
@@ -267,8 +233,6 @@ html[data-edg-loading] { overflow: hidden; }
   .edg-cinema__chapter { top: 40%; }
   .edg-cinema__chapter > div { font-size: clamp(28px, 9vw, 40px) !important; line-height: 1 !important; }
   .edg-cinema__chapter small { font-size: 8px; }
-  .edg-cinema__brand { gap: 12px; }
-  .edg-cinema__brand span { font-size: 6px; }
   .edg-cinema__footer { gap: 9px; font-size: 7px; }
 }
 
