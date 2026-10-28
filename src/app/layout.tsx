@@ -313,10 +313,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           }}
         />
         {/* rel=me links for entity verification */}
-        <link rel="me" href="https://twitter.com/edgecipline" />
-        <link rel="me" href="https://www.linkedin.com/company/edgecipline" />
-        <link rel="me" href="https://www.instagram.com/edgecipline" />
-        <link rel="me" href="https://www.youtube.com/@edgecipline" />
+        {SOCIAL_PROFILES.map((href) => (
+          <link key={href} rel="me" href={href} />
+        ))}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(siteGraph) }} />
         {children}
         <WaitlistDialog />

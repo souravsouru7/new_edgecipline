@@ -219,6 +219,7 @@ export const SUPPORT_EMAIL = "support@edgecipline.com";
  */
 const homepageFaqIds = [
   "what-is-edgecipline",
+  "how-is-it-spelled",
   "how-extraction-works",
   "how-data-is-stored",
   "who-is-it-for",

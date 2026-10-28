@@ -80,7 +80,7 @@ export function TypedHeadline() {
   return (
     <>
       {LINES.map((line, i) => (
-        <span key={i} className="edg-hero-line edg-hero-line-typed">
+        <span key={i} className="edg-hero-line edg-hero-line-typed" aria-hidden="true">
           <span className="edg-type-live">
             {parts[i].length === 0 ? " " : renderText(i, parts[i])}
           </span>

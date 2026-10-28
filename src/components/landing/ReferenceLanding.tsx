@@ -129,7 +129,7 @@ export function ReferenceLanding() {
             <h1 id="edg-hero-title">
               <TypedHeadline />
             </h1>
-            <p className="edg-hero-description">Journal, analyze, and build better habits with AI-powered insights. Turn your trading data into real progress.</p>
+            <p className="edg-hero-description">Edgecipline is an AI trading journal that helps you journal, analyze, and build better habits. Turn your trading data into real progress.</p>
             <div className="edg-hero-actions"><button className="edg-button" type="button" onClick={() => showDialog("waitlist")}>Join Waitlist <ArrowRight size={18}/></button><PlayButton onClick={() => showDialog("demo")}/></div>
           </div>
           <div className="edg-hero-art" aria-hidden="true"><span className="edg-hero-landscape"><Image src="/landing/halftone-landscape.svg" alt="" fill priority sizes="(max-width: 800px) 100vw, 55vw"/></span><InteractiveTerrain/><div className="edg-awareness"><span>AWARENESS</span><span>CLARITY</span><span>BETTER HABITS</span><span>DISCIPLINE</span><span>CONSISTENCY</span></div><p>SAME MARKETS.<br/>A <b>CALMER,<br/>STRONGER<br/>TRADER.</b></p></div>
