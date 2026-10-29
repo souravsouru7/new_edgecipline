@@ -13,6 +13,7 @@ import { WaitlistForm } from "@/components/waitlist/WaitlistForm";
 import { homepageFaqItems } from "@/data/faq";
 import { features } from "@/data/features";
 import { plans } from "@/data/pricing";
+import { FooterSocial, metaFooterLinks } from "./EdgChrome";
 import { HomepageMotion } from "./HomepageMotion";
 import { InteractiveTerrain } from "./InteractiveTerrain";
 import { ThemeToggle } from "./ThemeToggle";
@@ -35,7 +36,7 @@ const nav = [
 function Logo() {
   return (
     <Link href="#home" className="edg-logo" aria-label="Edgecipline home">
-      <Image src="/brand/mark.webp" alt="" width={36} height={45} priority />
+      <Image src="/brand/mark.webp" alt="Edgecipline logo" width={36} height={45} priority />
       <span>
         <strong><span className="edg-logo-edge">EDGE</span><span className="edg-logo-cipline">CIPLINE</span></strong>
         <small>DISCIPLINE OVER EMOTION</small>
@@ -125,9 +126,12 @@ export function ReferenceLanding() {
       <main id="main-content" className="edg-main">
         <section className="edg-hero" aria-labelledby="edg-hero-title">
           <div className="edg-hero-copy">
-            <p className="edg-eyebrow">AI TRADING JOURNAL &amp; DISCIPLINE COACH</p>
+            {/* The brand line sits inside the h1 so the page's main heading
+                names Edgecipline as text, not only the typed slogan. */}
             <h1 id="edg-hero-title">
-              <TypedHeadline />
+              <span className="edg-eyebrow">EDGECIPLINE — AI TRADING JOURNAL &amp; DISCIPLINE COACH</span>
+              {/* Own wrapper so the typed lines keep their :nth-child motion indices. */}
+              <span className="edg-hero-lines"><TypedHeadline /></span>
             </h1>
             <p className="edg-hero-description">Edgecipline is an AI trading journal that helps you journal, analyze, and build better habits. Turn your trading data into real progress.</p>
             <div className="edg-hero-actions"><button className="edg-button" type="button" onClick={() => showDialog("waitlist")}>Join Waitlist <ArrowRight size={18}/></button><PlayButton onClick={() => showDialog("demo")}/></div>
@@ -185,7 +189,7 @@ export function ReferenceLanding() {
         <section className="edg-final" id="waitlist" aria-labelledby="edg-final-title"><div className="edg-final-art" aria-hidden="true"/><span className="edg-final-kicker">JOIN THE MOVEMENT</span><h2 id="edg-final-title">A CALMER MIND.<br/>A <em>STRONGER TRADER.</em></h2><p>Same markets. A better you.</p><div><button className="edg-button" type="button" onClick={() => showDialog("waitlist")}>Join Waitlist <ArrowRight size={17}/></button><PlayButton onClick={() => showDialog("demo")}/></div></section>
       </main>
 
-      <footer className="edg-footer"><Logo/><nav aria-label="Footer navigation">{nav.map(([label, href]) => <a key={label} href={href}>{label}</a>)}</nav><div className="edg-footer-social"><Link href="/contact" aria-label="Contact Edgecipline">✉</Link><Link href="/blog" aria-label="Edgecipline blog">◉</Link><Link href="/faq" aria-label="Help and FAQ">?</Link></div><p>© 2026 Edgecipline. All rights reserved.<br/>Built for traders, worldwide.</p></footer>
+      <footer className="edg-footer"><Logo/><nav aria-label="Footer navigation">{nav.map(([label, href]) => <a key={label} href={href}>{label}</a>)}{metaFooterLinks.map(([label, href]) => <Link key={label} href={href}>{label}</Link>)}</nav><FooterSocial/><p>© 2026 Edgecipline. All rights reserved.<br/>Built for traders, worldwide.</p></footer>
 
       <dialog className="edg-dialog" ref={dialog} onClick={(event) => { if (event.target === dialog.current) dialog.current?.close(); }}><button type="button" className="edg-dialog-close" aria-label="Close dialog" onClick={() => dialog.current?.close()}><X size={19}/></button>{dialogMode === "waitlist" ? <><h2>Join the Edgecipline waitlist</h2><p>Get early access updates and an invitation when the product opens.</p><WaitlistForm/></> : <><span className="edg-dialog-icon"><CirclePlay size={29}/></span><h2>Watch the Edgecipline demo</h2><p>The walkthrough is being recorded. Join the waitlist and we’ll let you know when it is ready.</p><button className="edg-button" type="button" onClick={() => showDialog("waitlist")}>Join Waitlist <ArrowRight size={16}/></button></>}</dialog>
       </div>

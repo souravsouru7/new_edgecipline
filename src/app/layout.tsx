@@ -205,8 +205,11 @@ const siteGraph = {
     {
       "@type": "Organization",
       "@id": ORGANIZATION_ID,
-      name: LEGAL_NAME,
-      alternateName: [BRAND_NAME, ...BRAND_ALTERNATE_NAMES],
+      // `name` is the entity name Google shows and matches on, so it is the
+      // brand; the registered company name goes in `legalName`.
+      name: BRAND_NAME,
+      legalName: LEGAL_NAME,
+      alternateName: BRAND_ALTERNATE_NAMES,
       url: absoluteUrl("/"),
       email: CONTACT_EMAIL,
       slogan: BRAND_SLOGAN,
@@ -266,6 +269,8 @@ const siteGraph = {
       inLanguage: "en-IN",
       publisher: { "@id": ORGANIZATION_ID },
       brand: { "@id": BRAND_ID },
+      // Uncomment once the Android app is public on Google Play.
+      // sameAs: ["PLAY_STORE_URL_HERE"],
       featureList: [
         "AI Screenshot Extraction",
         "Forex & Indian Market Modes",

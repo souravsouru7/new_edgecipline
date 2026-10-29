@@ -4,8 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowRight, Menu, X } from "lucide-react";
+import { ArrowRight, Briefcase, Camera, Menu, SquarePlay, X } from "lucide-react";
 
+import { socials, type SocialId } from "@/data/contact";
 import { ThemeToggle } from "./ThemeToggle";
 
 const routes = [
@@ -18,7 +19,7 @@ const routes = [
   ["Contact", "/contact"],
 ] as const;
 
-const metaFooterLinks = [
+export const metaFooterLinks = [
   ["Privacy", "/privacy"],
   ["Terms", "/terms"],
   ["Founders", "/founders"],
@@ -27,9 +28,36 @@ const metaFooterLinks = [
 function Logo() {
   return (
     <Link href="/" className="edg-logo" aria-label="Edgecipline home">
-      <Image src="/brand/mark.webp" alt="" width={36} height={45} priority />
+      <Image src="/brand/mark.webp" alt="Edgecipline logo" width={36} height={45} priority />
       <span><strong>EDGECIPLINE</strong><small>DISCIPLINE OVER EMOTION</small></span>
     </Link>
+  );
+}
+
+/** Same generic marks as the contact page — lucide v1 has no brand icons. */
+const SOCIAL_ICONS: Record<SocialId, typeof X> = {
+  x: X,
+  linkedin: Briefcase,
+  instagram: Camera,
+  youtube: SquarePlay,
+};
+
+/**
+ * The official profiles, linked from every footer. These are the same URLs as
+ * the Organization `sameAs`, and `rel="me"` lets each profile confirm it.
+ */
+export function FooterSocial() {
+  return (
+    <div className="edg-footer-social">
+      {socials.map((social) => {
+        const Icon = SOCIAL_ICONS[social.id];
+        return (
+          <a key={social.id} href={social.href} target="_blank" rel="me noopener" aria-label={`Edgecipline on ${social.label}`}>
+            <Icon size={12} strokeWidth={2} aria-hidden="true" />
+          </a>
+        );
+      })}
+    </div>
   );
 }
 
@@ -114,11 +142,7 @@ export function EdgFooter() {
             <Link key={label} href={href}>{label}</Link>
           ))}
         </nav>
-        <div className="edg-footer-social">
-          <Link href="/contact" aria-label="Contact Edgecipline">✉</Link>
-          <Link href="/blog" aria-label="Edgecipline blog">◉</Link>
-          <Link href="/faq" aria-label="Help and FAQ">?</Link>
-        </div>
+        <FooterSocial />
         <p>© 2026 Edgecipline. All rights reserved.<br />Built for traders, worldwide.</p>
       </footer>
     </div>

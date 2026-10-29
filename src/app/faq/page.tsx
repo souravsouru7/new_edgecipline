@@ -9,7 +9,7 @@ import { RevealObserver } from "@/components/motion/RevealObserver";
 import { FaqBrowser } from "@/components/faq/FaqBrowser";
 import { faqItems, SUPPORT_EMAIL } from "@/data/faq";
 import { WAITLIST_HREF } from "@/data/features";
-import { BRAND_NAME, OG_IMAGE_PATH, OG_IMAGE_SIZE, WEBSITE_ID, absoluteUrl } from "@/data/brand";
+import { BRAND_NAME, OG_LOCALE, TWITTER_DEFAULTS, OG_IMAGE_PATH, OG_IMAGE_SIZE, WEBSITE_ID, absoluteUrl } from "@/data/brand";
 import styles from "@/components/faq/Faq.module.css";
 
 const css = (name: string) => styles[name] || name;
@@ -25,6 +25,7 @@ export const metadata: Metadata = {
   alternates: { canonical: absoluteUrl("/faq") },
   openGraph: {
     siteName: BRAND_NAME,
+    locale: OG_LOCALE,
     title,
     description:
       "Everything you want to know about Edgecipline — Trading DNA, missions & streaks, Forex + Indian market support, pricing, and data privacy.",
@@ -33,6 +34,7 @@ export const metadata: Metadata = {
           images: [{ url: OG_IMAGE_PATH, ...OG_IMAGE_SIZE }],
   },
   twitter: {
+    ...TWITTER_DEFAULTS,
     card: "summary_large_image",
     title: "Edgecipline FAQ — Common Questions Answered",
     description:

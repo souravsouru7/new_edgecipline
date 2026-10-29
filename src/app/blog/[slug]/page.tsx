@@ -11,7 +11,7 @@ import { PostCard, PostMeta, formatDate } from "@/components/blog/PostCard";
 import { renderMarkdown } from "@/components/blog/markdown";
 import { BLOG_POSTS, getBlogPost, getRelatedPosts } from "@/data/blog";
 import { WAITLIST_HREF } from "@/data/features";
-import { BRAND_NAME, ORGANIZATION_ID, absoluteUrl } from "@/data/brand";
+import { BRAND_NAME, OG_LOCALE, TWITTER_DEFAULTS, ORGANIZATION_ID, absoluteUrl } from "@/data/brand";
 import styles from "@/components/blog/Blog.module.css";
 
 const css = (name: string) => styles[name] || name;
@@ -45,6 +45,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: { canonical },
     openGraph: {
     siteName: BRAND_NAME,
+    locale: OG_LOCALE,
       title: post.title,
       description: post.description,
       type: "article",
@@ -54,6 +55,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: canonical,
     },
     twitter: {
+      ...TWITTER_DEFAULTS,
       card: "summary_large_image",
       title: post.title,
       description: post.description,

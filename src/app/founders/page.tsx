@@ -18,7 +18,7 @@ import {
   founders,
 } from "@/data/founders";
 import { WAITLIST_HREF } from "@/data/features";
-import { BRAND_NAME, LEGAL_NAME, OG_IMAGE_PATH, OG_IMAGE_SIZE, absoluteUrl } from "@/data/brand";
+import { BRAND_NAME, OG_LOCALE, TWITTER_DEFAULTS, LEGAL_NAME, OG_IMAGE_PATH, OG_IMAGE_SIZE, absoluteUrl } from "@/data/brand";
 import styles from "@/components/founders/Founders.module.css";
 
 const css = (name: string) => styles[name] || name;
@@ -37,13 +37,14 @@ export const metadata: Metadata = {
   alternates: { canonical: url("/founders") },
   openGraph: {
     siteName: BRAND_NAME,
+    locale: OG_LOCALE,
     title,
     description,
     type: "website",
     url: url("/founders"),
     images: [{ url: OG_IMAGE_PATH, ...OG_IMAGE_SIZE }],
   },
-  twitter: { card: "summary_large_image", title, description },
+  twitter: { ...TWITTER_DEFAULTS, card: "summary_large_image", title, description },
 };
 
 /**

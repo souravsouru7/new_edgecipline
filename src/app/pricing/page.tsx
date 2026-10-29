@@ -9,7 +9,7 @@ import { PlanCards } from "@/components/pricing/PlanCards";
 import { PlanCompare } from "@/components/pricing/PlanCompare";
 import { PricingFaq } from "@/components/pricing/PricingFaq";
 import { WAITLIST_HREF } from "@/data/features";
-import { BRAND_NAME, SOFTWARE_ID, WEBSITE_ID, absoluteUrl, jsonLd } from "@/data/brand";
+import { BRAND_NAME, OG_LOCALE, TWITTER_DEFAULTS, SOFTWARE_ID, WEBSITE_ID, absoluteUrl, jsonLd } from "@/data/brand";
 import styles from "@/components/pricing/Pricing.module.css";
 
 const css = (name: string) => styles[name] || name;
@@ -30,6 +30,7 @@ export const metadata: Metadata = {
   alternates: { canonical: absoluteUrl("/pricing") },
   openGraph: {
     siteName: BRAND_NAME,
+    locale: OG_LOCALE,
     title,
     description:
       "See Edgecipline plans from ₹349/month. Start with a 7-day trial; free accounts can save up to 2 trades. Access is currently invite-only.",
@@ -37,6 +38,7 @@ export const metadata: Metadata = {
     url: absoluteUrl("/pricing"),
   },
   twitter: {
+    ...TWITTER_DEFAULTS,
     card: "summary_large_image",
     title: "Edgecipline Pricing — From ₹349/month",
     description:

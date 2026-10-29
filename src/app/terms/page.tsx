@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { LegalPage } from "@/components/legal/LegalPage";
 import { legalDateModified, termsOfService } from "@/data/legal";
-import { BRAND_NAME, LEGAL_NAME, OG_IMAGE_PATH, OG_IMAGE_SIZE, absoluteUrl } from "@/data/brand";
+import { BRAND_NAME, OG_LOCALE, TWITTER_DEFAULTS, LEGAL_NAME, OG_IMAGE_PATH, OG_IMAGE_SIZE, absoluteUrl } from "@/data/brand";
 
 const url = absoluteUrl;
 
@@ -15,13 +15,14 @@ export const metadata: Metadata = {
   alternates: { canonical: url("/terms") },
   openGraph: {
     siteName: BRAND_NAME,
+    locale: OG_LOCALE,
     title,
     description: termsOfService.description,
     type: "article",
     url: url("/terms"),
     images: [{ url: OG_IMAGE_PATH, ...OG_IMAGE_SIZE }],
   },
-  twitter: { card: "summary", title, description: termsOfService.description },
+  twitter: { ...TWITTER_DEFAULTS, card: "summary", title, description: termsOfService.description },
 };
 
 /**

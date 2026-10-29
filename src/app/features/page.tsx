@@ -8,7 +8,7 @@ import { FeaturesCta } from "@/components/features/FeaturesCta";
 import { FeaturesHero } from "@/components/features/FeaturesHero";
 import { StageHeader } from "@/components/features/StageHeader";
 import { features, featuresInGroup, groups } from "@/data/features";
-import { BRAND_NAME, SOFTWARE_ID, WEBSITE_ID, absoluteUrl, jsonLd } from "@/data/brand";
+import { BRAND_NAME, OG_LOCALE, TWITTER_DEFAULTS, SOFTWARE_ID, WEBSITE_ID, absoluteUrl, jsonLd } from "@/data/brand";
 import styles from "@/components/features/Features.module.css";
 
 const css = (name: string) => styles[name] || name;
@@ -29,12 +29,14 @@ export const metadata: Metadata = {
   alternates: { canonical: absoluteUrl("/features") },
   openGraph: {
     siteName: BRAND_NAME,
+    locale: OG_LOCALE,
     title,
     description,
     type: "website",
     url: absoluteUrl("/features"),
   },
   twitter: {
+    ...TWITTER_DEFAULTS,
     card: "summary_large_image",
     title,
     description,

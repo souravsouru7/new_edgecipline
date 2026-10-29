@@ -13,7 +13,8 @@
 //   ⚠ Never put the word "discipline" on its own in a `name` or
 //     `alternateName` field. An alternateName must be a real alternative name
 //     for this brand — never a competitor's name, never a deliberate
-//     misspelling. Feeding a misspelling into alternateName teaches search
+//     misspelling. Spaced or hyphenated forms of the exact spelling ("Edge
+//     Cipline") are fine: they are how people type the name. Feeding a misspelling into alternateName teaches search
 //     engines the opposite of what we want.
 //
 // This module exists because the facts below were previously restated in
@@ -53,9 +54,11 @@ export const LEGAL_NAME = "Edgecipline Private Limited";
  */
 export const FOUNDING_YEAR = "2026";
 
-/** All-caps wordmark plus the product variants people actually type. */
+/** All-caps wordmark, the spaced forms, and the product variants people type. */
 export const BRAND_ALTERNATE_NAMES = [
   "EDGECIPLINE",
+  "Edge Cipline",
+  "Edge-cipline",
   "Edgecipline App",
   "Edgecipline Trading Journal",
 ];
@@ -68,7 +71,7 @@ export const SITE_ALTERNATE_NAMES = ["EDGECIPLINE", "edgecipline.com"];
  * it reads as a proper noun rather than a query to spell-correct.
  */
 export const SITE_TITLE =
-  "Edgecipline | AI Trading Journal";
+  "Edgecipline | AI Trading Journal for Forex & Indian Traders";
 
 /** Shown on the home page, in OG tags and as the WebSite description. */
 export const SITE_DESCRIPTION =
@@ -88,6 +91,13 @@ export const BRAND_ETYMOLOGY =
 
 export const CONTACT_EMAIL = "support@edgecipline.com";
 export const TWITTER_HANDLE = "@edgecipline";
+
+/**
+ * Next replaces a parent's `twitter` / `openGraph` object wholesale when a page
+ * sets its own, so pages spread these back in to keep the handle and locale.
+ */
+export const TWITTER_DEFAULTS = { site: TWITTER_HANDLE, creator: TWITTER_HANDLE } as const;
+export const OG_LOCALE = "en_IN";
 
 export const HEADQUARTERS = {
   addressLocality: "Kozhikode",

@@ -59,6 +59,9 @@ html:has(.edg-page) .nl { display: none; }
 .edg-hero-copy { position: relative; z-index: 2; min-width: 0; padding: 0 0 35px 25px; }
 .edg-eyebrow { margin-bottom: 17px !important; color: #777d76; font-size: 11px; font-weight: 500; letter-spacing: .16em; }
 .edg-hero h1 { font-size: clamp(48px, 5.55vw, 87px); max-width: 830px; white-space: nowrap; }
+/* The brand line lives inside the h1 but keeps the eyebrow's text styling. */
+.edg-hero h1 .edg-eyebrow { display: block; font-family: var(--font-inter), Arial, sans-serif; line-height: 1.4; white-space: normal; }
+.edg-hero-lines { display: block; }
 .edg-hero-description { max-width: 350px; margin-top: 27px !important; font-size: 14px; line-height: 1.55; }
 .edg-hero-actions { display: flex; align-items: center; gap: 18px; margin-top: 22px; }
 .edg-play-button { display: inline-flex; align-items: center; gap: 9px; padding: 0; border: 0; background: transparent; color: var(--edg-ink); font-size: 11px !important; font-weight: 600 !important; white-space: nowrap; }

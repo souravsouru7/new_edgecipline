@@ -53,6 +53,17 @@ FIREBASE_PRIVATE_KEY=
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | no | `google-site-verification` meta tag for Search Console. |
 | `NEXT_PUBLIC_BING_SITE_VERIFICATION` | no | `msvalidate.01` meta tag for Bing Webmaster Tools. |
 
+### SEO launch checklist
+
+Things outside the code that brand recognition depends on:
+
+- [x] Google Search Console property verified.
+- [ ] Vercel → Domains: `edgecipline.com` 301-redirects to `https://www.edgecipline.com`.
+- [ ] Production env: `NEXT_PUBLIC_SITE_URL` is unset or exactly `https://www.edgecipline.com`. Any other value makes the whole site `noindex`.
+- [ ] Search Console: submit `/sitemap.xml`, then request indexing of `/`.
+- [ ] Every social profile in `src/data/brand.ts` (`SOCIAL_PROFILES`) links back to the site and spells the name "Edgecipline".
+- [ ] When the Android app is on Google Play, uncomment `sameAs: ["PLAY_STORE_URL_HERE"]` in the SoftwareApplication node in `src/app/layout.tsx` and put the real URL in.
+
 ## Layout
 
 ```

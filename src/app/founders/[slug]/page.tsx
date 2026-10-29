@@ -15,7 +15,7 @@ import {
   otherFounder,
 } from "@/data/founders";
 import { WAITLIST_HREF } from "@/data/features";
-import { BRAND_NAME, LEGAL_NAME, absoluteUrl } from "@/data/brand";
+import { BRAND_NAME, OG_LOCALE, TWITTER_DEFAULTS, LEGAL_NAME, absoluteUrl } from "@/data/brand";
 import styles from "@/components/founders/Founders.module.css";
 
 const css = (name: string) => styles[name] || name;
@@ -45,12 +45,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: { canonical },
     openGraph: {
     siteName: BRAND_NAME,
+    locale: OG_LOCALE,
       title,
       description,
       type: "profile",
       url: canonical, images: [{ url: founder.image, width: 900, height: 900 }],
     },
-    twitter: { card: "summary", title, description, images: [founder.image] },
+    twitter: { ...TWITTER_DEFAULTS, card: "summary", title, description, images: [founder.image] },
   };
 }
 
