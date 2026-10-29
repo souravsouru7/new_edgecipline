@@ -61,6 +61,23 @@ const nextConfig: NextConfig = {
     minimumCacheTTL: 31_536_000,
   },
 
+  /**
+   * The project's default *.vercel.app domain serves production too, so it is
+   * a full duplicate of the site. Send it to the canonical www origin so only
+   * one host is ever crawled. Preview deployments use other hosts and are
+   * unaffected; edgecipline.com → www is handled in Vercel's domain settings.
+   */
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "new-edgecipline-nine.vercel.app" }],
+        destination: "https://www.edgecipline.com/:path*",
+        permanent: true,
+      },
+    ];
+  },
+
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },

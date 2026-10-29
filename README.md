@@ -58,7 +58,8 @@ FIREBASE_PRIVATE_KEY=
 Things outside the code that brand recognition depends on:
 
 - [x] Google Search Console property verified.
-- [ ] Vercel → Domains: `edgecipline.com` 301-redirects to `https://www.edgecipline.com`.
+- [x] Vercel → Domains: `edgecipline.com` 301-redirects to `https://www.edgecipline.com`.
+- [x] `new-edgecipline-nine.vercel.app` redirects to www (see `redirects()` in `next.config.ts`).
 - [ ] Production env: `NEXT_PUBLIC_SITE_URL` is unset or exactly `https://www.edgecipline.com`. Any other value makes the whole site `noindex`.
 - [ ] Search Console: submit `/sitemap.xml`, then request indexing of `/`.
 - [ ] Every social profile in `src/data/brand.ts` (`SOCIAL_PROFILES`) links back to the site and spells the name "Edgecipline".
