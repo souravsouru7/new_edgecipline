@@ -1,9 +1,9 @@
 /* ==========================================================================
    The waitlist form
 
-   CSS Modules are NOT scoped in this project (next.config.ts routes every
-   *.css through the Tailwind turbopack loader), so these names land in the
-   global stylesheet as written. Prefix: `wl`.
+   These names are hashed like any CSS Module. WaitlistForm also emits the
+   plain names, so the dialog re-skin (`.edg-dialog .wlField` in
+   reference-landing.css and reference-theme.css) can override them. Prefix: `wl`.
 
    The form sits inside the home page's closing scene, which is already a busy
    image, so the surface is solid enough to read against it rather than

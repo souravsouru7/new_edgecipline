@@ -5,7 +5,9 @@ import { ArrowRight, Check, LoaderCircle, Mail, TriangleAlert } from "lucide-rea
 
 import styles from "./Waitlist.module.css";
 
-const css = (name: string) => styles[name] || name;
+// The module classes are hashed, so the plain name rides along too: the dialog
+// re-skin in reference-landing.css / reference-theme.css targets `.wlField` etc.
+const css = (name: string) => (styles[name] ? `${styles[name]} ${name}` : name);
 
 /**
  * The waitlist form.
