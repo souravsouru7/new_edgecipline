@@ -8,7 +8,7 @@
  * from the homepage would pull its stylesheet in with it.
  */
 export const stepCopy = [
-  { number: "01", title: "Upload Your Trades", description: "Screenshot a trade. The AI fills in the journal entry." },
-  { number: "02", title: "AI Analysis", description: "Our AI analyses your behavior, patterns and emotional triggers." },
-  { number: "03", title: "Learn & Improve", description: "Get personalized insights to build better habits and consistency." },
+  { number: "01", label: "AI Screenshot Capture", title: "Capture Your Trades", description: "Screenshot a trade. The AI fills in the journal entry for you to review." },
+  { number: "02", label: "Behavior Analysis", title: "Discover Your Patterns", description: "As your history grows, Edgecipline identifies the behavioral and psychological patterns in your own trades." },
+  { number: "03", label: "Practical Insights", title: "Improve Your Discipline", description: "Get practical insights to improve your discipline and execution." },
 ] as const;

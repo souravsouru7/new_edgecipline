@@ -348,8 +348,8 @@ export default function FoundersPage() {
             </h2>
 
             <p data-reveal style={vars({ "--mo-delay": ".1s" })}>
-              The Android app is on Google Play now and iOS is in development. Join the waitlist to
-              hear when the official launch happens.
+              Android testing is underway with a limited group of users, and iOS is in development.
+              Join the waitlist to hear when the official launch happens.
             </p>
 
             <div className={css("fdCtaActions")} data-reveal style={vars({ "--mo-delay": ".18s" })}>

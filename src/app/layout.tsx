@@ -314,7 +314,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               // CSS reads this attribute to lock the viewport. Mutating <html>
               // is safe because that is the element whose hydration warning is
               // suppressed; mutating <body style> caused a React mismatch.
-              "if(window.location.pathname==='/'){document.documentElement.dataset.edgLoading='';}",
+              // A Back/Forward load after the opener has played this session
+              // skips it instead (LandingLoader sets the sessionStorage key).
+              "if(window.location.pathname==='/'){var d=document.documentElement,n=performance.getEntriesByType&&performance.getEntriesByType('navigation')[0],s=false;try{s=sessionStorage.getItem('edg-opener-seen')==='1';}catch(e){}if(s&&n&&n.type==='back_forward'){d.dataset.edgOpener='skip';}else{d.dataset.edgLoading='';}}",
           }}
         />
         {/* rel=me links for entity verification */}

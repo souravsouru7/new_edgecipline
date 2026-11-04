@@ -51,7 +51,7 @@ export function FeaturesCta() {
           <ul className={css("ftxTrust")} data-reveal="fade" style={vars({ "--mo-delay": ".24s" })}>
             <li>
               <Sparkles aria-hidden="true" size={14} />
-              Android on Google Play · iOS in development
+              Android in testing · iOS in development
             </li>
             <li>
               <Globe2 aria-hidden="true" size={14} />

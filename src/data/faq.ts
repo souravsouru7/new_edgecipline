@@ -98,7 +98,7 @@ export const faqItems: readonly FaqItem[] = [
     id: "is-there-a-mobile-app",
     category: "About Edgecipline",
     q: "Is there a mobile app?",
-    a: "Yes. The Android app is available to download on Google Play, where a limited group of users is currently testing it. The iOS app is in development, and the official public launch across all platforms will follow once it is ready.",
+    a: "Android testing is underway with a limited group of users, and the iOS app is in development. The official public launch across all platforms will follow once iOS is ready.",
   },
 
   // ── AI & Features ─────────────────────────────────────────────────────────

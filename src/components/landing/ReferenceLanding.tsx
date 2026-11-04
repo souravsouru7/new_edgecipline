@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -19,6 +19,7 @@ import { HomepageMotion } from "./HomepageMotion";
 import { InteractiveTerrain } from "./InteractiveTerrain";
 import { ThemeToggle } from "./ThemeToggle";
 import { LandingLoader } from "./LandingLoader";
+import { getOpenerPhase, getServerOpenerPhase, openerCoversPage, subscribeOpener } from "./openerState";
 import { TypedHeadline } from "./TypedHeadline";
 import {
   BuiltByTradersContent,
@@ -82,6 +83,8 @@ export function ReferenceLanding() {
   const dialog = useRef<HTMLDialogElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [term, setTerm] = useState<PlanId>(plans[0].id);
+  // While the opener covers the page, nothing behind it can take focus or clicks.
+  const openerPhase = useSyncExternalStore(subscribeOpener, getOpenerPhase, getServerOpenerPhase);
 
   const showDialog = () => {
     setMenuOpen(false);
@@ -91,7 +94,7 @@ export function ReferenceLanding() {
   return (
     <>
       <LandingLoader />
-      <div className="edg-page" id="home">
+      <div className="edg-page" id="home" inert={openerCoversPage(openerPhase)}>
       <HomepageMotion />
       <a className="edg-skip" href="#main-content">Skip to content</a>
       <header className="edg-header">
@@ -134,7 +137,7 @@ export function ReferenceLanding() {
 
         <section className="edg-section edg-process" id="how-it-works" aria-labelledby="edg-process-title">
           <div className="edg-section-intro"><SectionLabel number="04">A SMARTER WAY</SectionLabel><h2 id="edg-process-title">TURN YOUR<br/>TRADES INTO<br/><em>REAL PROGRESS.</em></h2><p>Log your trades, thoughts and emotions in seconds. Get clear insights, identify patterns and improve over time.</p><a className="edg-text-link" href="/features">Explore all features <ArrowRight size={14}/></a></div>
-          <div className="edg-step-cards"><article><span className="edg-step-number">01</span><div className="edg-icon"><ClipboardList size={27}/></div><small>{stepCopy[0].title}</small><h3>Journal Easily</h3><p>{stepCopy[0].description}</p><a href="/features" aria-label="Explore journal features"><ArrowRight size={16}/></a></article><article><span className="edg-step-number">02</span><div className="edg-icon"><ChartNoAxesColumnIncreasing size={27}/></div><small>{stepCopy[1].title}</small><h3>AI Insights</h3><p>{stepCopy[1].description}</p><a href="/features" aria-label="Explore AI insights"><ArrowRight size={16}/></a></article><article><span className="edg-step-number">03</span><div className="edg-icon"><Target size={27}/></div><small>{stepCopy[2].title}</small><h3>Build Habits</h3><p>{stepCopy[2].description}</p><a href="/features" aria-label="Explore habit tools"><ArrowRight size={16}/></a></article></div>
+          <div className="edg-step-cards"><article><span className="edg-step-number">01</span><div className="edg-icon"><ClipboardList size={27}/></div><small>{stepCopy[0].label}</small><h3>{stepCopy[0].title}</h3><p>{stepCopy[0].description}</p><a href="/features" aria-label="Explore journal features"><ArrowRight size={16}/></a></article><article><span className="edg-step-number">02</span><div className="edg-icon"><ChartNoAxesColumnIncreasing size={27}/></div><small>{stepCopy[1].label}</small><h3>{stepCopy[1].title}</h3><p>{stepCopy[1].description}</p><a href="/features" aria-label="Explore AI insights"><ArrowRight size={16}/></a></article><article><span className="edg-step-number">03</span><div className="edg-icon"><Target size={27}/></div><small>{stepCopy[2].label}</small><h3>{stepCopy[2].title}</h3><p>{stepCopy[2].description}</p><a href="/features" aria-label="Explore habit tools"><ArrowRight size={16}/></a></article></div>
         </section>
 
         <section className="edg-section edg-insights" id="insights" aria-labelledby="edg-insights-title"><div className="edg-section-intro"><SectionLabel number="05">CLEAR INSIGHTS</SectionLabel><h2 id="edg-insights-title">SEE THE FULL<br/><em>PICTURE.</em></h2><p>Your trading data reveals more than numbers. Edgecipline turns it into clear, actionable insights so you can grow with discipline.</p><a className="edg-outline-button" href="#how-it-works">See how it works <ArrowRight size={16}/></a></div><PerformanceCard/></section>
@@ -148,7 +151,7 @@ export function ReferenceLanding() {
         <section className="edg-section edg-features" aria-labelledby="edg-features-title"><div className="edg-section-intro"><SectionLabel number="10">BUILT FOR REAL TRADERS</SectionLabel><h2 id="edg-features-title">EVERYTHING YOU NEED.<br/><em>NOTHING YOU DON’T.</em></h2><p>Practical tools to help you stay accountable, in control and focused on long-term growth.</p></div><div className="edg-feature-grid"><div><span className="edg-icon"><Heart size={25}/></span><p><strong>Emotion Tracking</strong><small>Understand your mindset</small></p></div><div><span className="edg-icon"><Sparkles size={25}/></span><p><strong>Trading DNA</strong><small>Know your trading style</small></p></div><div><span className="edg-icon"><ShieldCheck size={25}/></span><p><strong>Risk Management</strong><small>Stay in control</small></p></div><div><span className="edg-icon"><BrainCircuit size={25}/></span><p><strong>Personalized Guidance</strong><small>Tips that actually help</small></p></div></div></section>
 
         <section className="edg-section edg-pricing" id="pricing" aria-labelledby="edg-pricing-title">
-          <div className="edg-section-intro"><SectionLabel number="11">PRICING</SectionLabel><h2 id="edg-pricing-title">SIMPLE. TRANSPARENT.<br/><em>CHOOSE YOUR PATH.</em></h2><p>Start small. Upgrade anytime.</p></div>
+          <div className="edg-section-intro"><SectionLabel number="11">PRICING</SectionLabel><h2 id="edg-pricing-title">SIMPLE. TRANSPARENT.<br/><em>CHOOSE YOUR PATH.</em></h2><p>Choose the duration that works for you. All three plans include the same features and differ only in subscription duration.</p></div>
           <div className="edg-pricing-content">
             <div className="edg-billing" role="group" aria-label="Plan term">
               {plans.map((plan) => <button key={plan.id} className={term === plan.id ? "active" : ""} type="button" aria-pressed={term === plan.id} onClick={() => setTerm(plan.id)}>{termLabel(plan.months)}</button>)}
@@ -170,7 +173,7 @@ export function ReferenceLanding() {
 
       <footer className="edg-footer"><Logo/><nav aria-label="Footer navigation">{nav.map(([label, href]) => <a key={label} href={href}>{label}</a>)}{metaFooterLinks.map(([label, href]) => <Link key={label} href={href}>{label}</Link>)}</nav><FooterSocial/><p>© 2026 Edgecipline. All rights reserved.<br/>Built for traders, worldwide.</p></footer>
 
-      <dialog className="edg-dialog" ref={dialog} aria-labelledby="edg-dialog-title" onClick={(event) => { if (event.target === dialog.current) dialog.current?.close(); }}><button type="button" className="edg-dialog-close" aria-label="Close dialog" onClick={() => dialog.current?.close()}><X size={19}/></button><h2 id="edg-dialog-title">Join the Edgecipline waitlist</h2><p>The Android app is on Google Play now and iOS is in development. Join to hear when the official launch across all platforms happens.</p><WaitlistForm/></dialog>
+      <dialog className="edg-dialog" ref={dialog} aria-labelledby="edg-dialog-title" onClick={(event) => { if (event.target === dialog.current) dialog.current?.close(); }}><button type="button" className="edg-dialog-close" aria-label="Close dialog" onClick={() => dialog.current?.close()}><X size={19}/></button><h2 id="edg-dialog-title">Join the Edgecipline waitlist</h2><p>Android testing is underway with a limited group of users, and iOS is in development. Join to hear when the official launch across all platforms happens.</p><WaitlistForm/></dialog>
       </div>
     </>
   );

@@ -159,7 +159,7 @@ export default function PricingPage() {
             </h2>
 
             <p data-reveal style={{ ["--mo-delay" as string]: ".1s" }}>
-              The Android app is on Google Play now and iOS is in development. Get notified when the official launch happens. No credit card required.
+              Android testing is underway with a limited group of users, and iOS is in development. Get notified when the official launch happens. No credit card required.
             </p>
 
             <div

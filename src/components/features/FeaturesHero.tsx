@@ -86,7 +86,7 @@ export function FeaturesHero() {
             </div>
 
             <p className={css("ftxFinePrint")} data-reveal style={vars({ "--mo-delay": ".4s" })}>
-              The Android app is on Google Play now and iOS is in development. Official launch coming soon.
+              Android testing is underway and iOS is in development. Official launch coming soon.
             </p>
           </div>
 

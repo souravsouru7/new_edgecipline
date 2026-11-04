@@ -103,7 +103,7 @@ html:has(.edg-page) .nl { display: none; }
 .edg-icon { display: grid; flex: none; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: #dce6db; color: #284e39; }
 .edg-step-cards article > small { display: block; margin-top: 21px; color: var(--edg-green); font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
 .edg-step-cards h3 { margin-top: 5px; font-family: var(--font-inter), sans-serif; font-size: 16px; font-weight: 700; letter-spacing: -.035em; line-height: 1.15; }
-.edg-step-cards p { margin-top: 7px; color: #888d86; font-size: 12px; line-height: 1.35; }
+.edg-step-cards p { margin-top: 7px; color: #5c665e; font-size: 12px; line-height: 1.35; }
 .edg-step-cards article > a { position: absolute; right: 17px; bottom: 15px; display: grid; place-items: center; width: 28px; height: 28px; border: 1px solid var(--edg-line); border-radius: 50%; }
 
 .edg-insights { min-height: 440px; }
@@ -134,7 +134,7 @@ html:has(.edg-page) .nl { display: none; }
 .edg-coach-messages .edg-icon { width: 45px; height: 45px; }
 .edg-coach-messages p { flex: 1; font-size: 12px; line-height: 1.4; }
 .edg-coach-messages p strong { font-weight: 600; }
-.edg-coach-messages small { color: #9a9f98; font-size: 9px; white-space: nowrap; }
+.edg-coach-messages small { color: #5c665e; font-size: 9px; white-space: nowrap; }
 
 .edg-features { min-height: 270px; }
 .edg-feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px 10px; padding: 10px 0; }
@@ -419,9 +419,9 @@ html:has(.edg-page) .nl { display: none; }
 .edg-story-moment-body p { margin: 2px 0 0; color: var(--edg-muted); font-size: 11px; line-height: 1.4; }
 .edg-story-moment-trend { color: #c76960; }
 .edg-story-moment-up .edg-story-moment-trend { color: var(--edg-green); }
-.edg-story-note { margin: 0; padding-left: 4px; color: #8a9188; font-size: 10px; }
+.edg-story-note { margin: 0; padding-left: 4px; color: #5c665e; font-size: 10px; }
 /* Visible "Example data" label on illustrative dashboards and coach messages. */
-.edg-page .edg-example-tag { display: block; padding: 0 4px 10px; color: #778779; font-size: 10px; }
+.edg-page .edg-example-tag { display: block; padding: 0 4px 10px; color: #5c665e; font-size: 10px; }
 
 @media (hover: hover) and (pointer: fine) {
   .edg-story-moment { transition: transform .4s cubic-bezier(.2,.7,.2,1), box-shadow .4s ease, border-color .3s ease; }
@@ -449,7 +449,7 @@ html:has(.edg-page) .nl { display: none; }
 .edg-weekly-panel { display: grid; grid-template-columns: 40% 60%; gap: 0 20px; width: min(100%, 650px); margin-left: auto; padding: 17px 19px 16px; border: 1px solid var(--edg-line); border-radius: 19px; background: rgba(255,255,255,.23); }
 .edg-weekly-head { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--edg-line); }
 .edg-weekly-head strong { font-size: 12px; }
-.edg-weekly-head span { color: #778779; font-size: 10px; }
+.edg-weekly-head span { color: #5c665e; font-size: 10px; }
 .edg-weekly-stats { display: grid; grid-template-columns: repeat(2,1fr); gap: 7px; align-content: center; }
 .edg-weekly-stats > div { display: grid; align-content: center; min-height: 132px; padding: 10px; text-align: center; }
 .edg-weekly-stats strong { color: var(--edg-green); font-family: var(--edg-doto); font-size: clamp(27px, 3vw, 42px); font-weight: 500; line-height: 1; }
@@ -474,7 +474,7 @@ html:has(.edg-page) .nl { display: none; }
 .edg-billing { display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 18px; }
 .edg-billing button { min-width: 105px; min-height: 34px; padding: 0 18px; border: 1px solid var(--edg-line); border-radius: 99px; background: transparent; font-size: 11px; font-weight: 600; }
 .edg-billing button.active { border-color: #101613; background: #101613; color: #fff; }
-.edg-plan-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+.edg-plan-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; }
 .edg-plan { position: relative; display: flex; flex-direction: column; min-height: 300px; padding: 21px 18px 15px; border: 1px solid var(--edg-line); border-radius: 19px; background: rgba(255,255,255,.2); }
 .edg-plan.popular { border-color: #adbcad; background: rgba(255,255,255,.38); }
 .edg-popular { position: absolute; top: -12px; left: 50%; padding: 4px 14px; border-radius: 99px; background: #209554; color: white; font-size: 9px; font-weight: 700; white-space: nowrap; transform: translateX(-50%); }
@@ -483,8 +483,8 @@ html:has(.edg-page) .nl { display: none; }
 .edg-plan-price strong { font-family: var(--edg-doto); font-size: clamp(25px, 2.5vw, 39px); font-weight: 600; line-height: 1; color: var(--edg-green); }
 .edg-plan-price span { padding-bottom: 4px; font-size: 10px; font-weight: 600; }
 .edg-plan ul { display: grid; gap: 7px; margin: 24px 0 16px; padding: 0; list-style: none; }
-.edg-plan li { display: flex; align-items: center; gap: 6px; color: #626b63; font-size: 10px; white-space: nowrap; }
-.edg-plan li svg { color: #263c2e; }
+.edg-plan li { display: flex; align-items: flex-start; gap: 6px; color: #626b63; font-size: 10px; line-height: 1.35; }
+.edg-plan li svg { flex-shrink: 0; margin-top: 1px; color: #263c2e; }
 .edg-plan > button { width: 100%; margin-top: auto; min-height: 36px; padding: 0 10px; font-size: 10px !important; }
 .edg-yearly-message { display: grid; place-items: start; align-content: center; min-height: 300px; padding: 35px; border: 1px solid var(--edg-line); border-radius: 19px; background: rgba(255,255,255,.2); }
 .edg-yearly-message strong { font-family: var(--edg-doto); font-size: 28px; }
@@ -543,6 +543,9 @@ html:has(.edg-page) .nl { display: none; }
   .edg-section h2 { font-size: clamp(36px, 4vw, 49px); }
   .edg-section-intro { padding-left: 32px; padding-right: 16px; }
   .edg-plan { padding-inline: 12px; }
+  /* Too narrow for three cards beside the intro: stack the intro above them. */
+  .edg-pricing { grid-template-columns: 1fr; gap: 25px; }
+  .edg-pricing-content { width: 100%; margin-left: 0; }
   .edg-footer { gap: 18px; }
   .edg-footer nav { gap: 10px; }
 }

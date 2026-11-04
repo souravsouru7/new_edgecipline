@@ -86,7 +86,7 @@ export const milestones: readonly Milestone[] = [
   {
     year: "2026",
     label: "Product Complete",
-    text: "Completed the web and Android product with AI screenshot extraction, Trading DNA, gamified missions & streaks, and daily AI coaching, and published the Android app on Google Play for a limited group of testers. The iOS app is in development, and the official public launch follows once it is ready.",
+    text: "Completed the web and Android product with AI screenshot extraction, Trading DNA, gamified missions & streaks, and daily AI coaching, and began Android testing with a limited group of users. The iOS app is in development, and the official public launch follows once it is ready.",
   },
 ] as const;
 
@@ -125,6 +125,6 @@ export const beliefs: readonly Belief[] = [
 
 export const launchStatus = {
   eyebrow: "Public Launch Coming Soon",
-  state: "Android on Google Play — iOS in development",
+  state: "Android in testing — iOS in development",
   body: `${LAUNCH_STATUS} Join the free waitlist to hear when the official launch happens.`,
 } as const;

@@ -178,6 +178,10 @@ export function HomepageMotion() {
     )];
     const cardMove = (event: PointerEvent) => {
       if (!pointer.matches || reduced.matches || document.hidden) return;
+      // Hold the tilt while the pointer is over the card's button or link, so
+      // the control does not move between mousedown and mouseup (which made
+      // the browser drop the click).
+      if ((event.target as HTMLElement).closest("button, a")) return;
       const card = event.currentTarget as HTMLElement;
       const box = card.getBoundingClientRect();
       const x = (event.clientX - box.left) / box.width - 0.5;

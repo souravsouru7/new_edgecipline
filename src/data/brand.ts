@@ -75,19 +75,19 @@ export const SITE_TITLE =
 
 /** Shown on the home page, in OG tags and as the WebSite description. */
 export const SITE_DESCRIPTION =
-  "Edgecipline is an AI trading journal for Forex and Indian market traders. Screenshot a trade and the AI fills in the journal entry. On Android now; official launch soon.";
+  "Edgecipline is an AI trading journal for Forex and Indian market traders. Screenshot a trade and the AI fills in the journal entry. Official launch coming soon.";
 
 /**
- * Launch status, as confirmed by the owner. The web app is ready; the Android
- * app is published on Google Play and publicly downloadable, with a limited
- * group of users testing it; iOS is in development; and the official public
- * launch across platforms follows iOS. Never state a launch date, describe iOS
- * as available, describe Android as unavailable, or call the product
- * invite-only. Reused wherever the site states its status, so every page says
- * the same thing.
+ * Launch status, as confirmed by the owner. The web app is ready; Android is
+ * in testing with a limited group of users; iOS is in development; and the
+ * official public launch across platforms follows iOS. The Android app is not
+ * promoted before that launch: no Google Play link or download CTA. Never state
+ * a launch date, describe iOS as available, describe Android as unpublished,
+ * or call the product invite-only. Reused wherever the site states its status,
+ * so every page says the same thing.
  */
 export const LAUNCH_STATUS =
-  "The Edgecipline web app is ready, and the Android app is available to download on Google Play, where a limited group of users is currently testing it. The iOS app is in development. The official public launch across all platforms will follow once the iOS app is ready.";
+  "The Edgecipline web app is ready. Android testing is underway with a limited group of users, and the iOS app is in development. The official public launch across all platforms will follow once iOS is ready.";
 
 /** Short form for labels, badges and the waitlist CTAs. */
 export const LAUNCH_STATUS_SHORT = "Public launch coming soon";

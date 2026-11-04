@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from "react";
 
+import { whenOpener } from "./openerState";
+
 /** A small, lazy WebGL enhancement. The SVG underneath remains the fallback. */
 export function InteractiveTerrain() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -20,8 +22,17 @@ export function InteractiveTerrain() {
     let cleanupScene: (() => void) | undefined;
     let resumeScene: (() => void) | undefined;
 
+    // The scene (three.js import, shader compile, render loop) waits until the
+    // opener starts its exit fade, so it never competes with the opener for
+    // the main thread. The static SVG landscape shows until it is ready.
+    let openerReleased = false;
+    const stopWaiting = whenOpener(["exiting", "done"], () => {
+      openerReleased = true;
+      if (sceneVisible) void start();
+    });
+
     const start = async () => {
-      if (sceneStarted || reduced.matches || disposed) return;
+      if (sceneStarted || reduced.matches || disposed || !openerReleased) return;
       sceneStarted = true;
 
       try {
@@ -272,6 +283,7 @@ export function InteractiveTerrain() {
 
     return () => {
       disposed = true;
+      stopWaiting();
       observer.disconnect();
       reduced.removeEventListener("change", onInitialMotionChange);
       cancelAnimationFrame(frame);
