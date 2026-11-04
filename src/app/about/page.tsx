@@ -36,7 +36,7 @@ const vars = (value: Record<string, string | number>) => value as CSSProperties;
 
 const title = "About Edgecipline — Built by Traders Who Felt This Problem";
 const description =
-  "Why Edgecipline exists: the mission, the vision, the founder story, and the journey from a behavioural journal to an AI discipline coach for Forex and Indian market traders.";
+  "Why Edgecipline exists: the mission, the founder story and the journey from a behaviour journal to an AI discipline coach for Forex and Indian traders.";
 
 export const metadata: Metadata = {
   title: { absolute: title },

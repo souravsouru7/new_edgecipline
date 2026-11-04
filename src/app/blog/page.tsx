@@ -17,7 +17,7 @@ const vars = (value: Record<string, string | number>) => value as CSSProperties;
 
 const url = absoluteUrl;
 
-const title = "Blog — Trading Psychology, Journaling & Behavior Analytics";
+const title = "Trading Psychology & Journaling Blog";
 const description =
   "Articles on trading psychology, building a journaling habit, risk management, Trading DNA and NIFTY & BANKNIFTY behaviour — from the team building Edgecipline.";
 

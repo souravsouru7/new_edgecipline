@@ -48,6 +48,8 @@ export type Feature = {
   group: GroupId;
   /** Extra search terms for the explorer, beyond the title itself. */
   keywords: readonly string[];
+  /** Slug of a related blog article, linked under the benefits. */
+  article?: string;
 };
 
 export type Group = {
@@ -88,6 +90,7 @@ export const features: readonly Feature[] = [
   {
     number: "01",
     id: "screenshot",
+    article: "ai-in-trading-journals",
     title: "AI Screenshot Extraction",
     tagline: "Screenshot. That’s it.",
     problem:
@@ -106,6 +109,7 @@ export const features: readonly Feature[] = [
   {
     number: "02",
     id: "dual-market",
+    article: "nifty-banknifty-trading-psychology",
     title: "Forex & Indian Market Modes",
     tagline: "Built for two markets, not a generic one.",
     problem:
@@ -124,6 +128,7 @@ export const features: readonly Feature[] = [
   {
     number: "03",
     id: "journal",
+    article: "how-to-build-a-trading-journal-habit",
     title: "Trading Journal",
     tagline: "Your entire trading history, organized.",
     problem:
@@ -142,6 +147,7 @@ export const features: readonly Feature[] = [
   {
     number: "04",
     id: "trading-dna",
+    article: "what-is-trading-dna",
     title: "Trading DNA & Pattern Detection",
     tagline: "Discover your repeatable edge.",
     problem:
@@ -178,6 +184,7 @@ export const features: readonly Feature[] = [
   {
     number: "06",
     id: "risk-patterns",
+    article: "risk-management-for-retail-traders",
     title: "Risk Pattern Detection",
     tagline: "Catch tilt spirals before they blow up your account.",
     problem:

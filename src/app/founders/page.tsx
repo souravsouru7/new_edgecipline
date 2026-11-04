@@ -18,7 +18,7 @@ import {
   founders,
 } from "@/data/founders";
 import { WAITLIST_HREF } from "@/data/features";
-import { BRAND_NAME, OG_LOCALE, TWITTER_DEFAULTS, LEGAL_NAME, OG_IMAGE_PATH, OG_IMAGE_SIZE, absoluteUrl } from "@/data/brand";
+import { BRAND_NAME, OG_LOCALE, TWITTER_DEFAULTS, ORGANIZATION_ID, OG_IMAGE_PATH, OG_IMAGE_SIZE, absoluteUrl } from "@/data/brand";
 import styles from "@/components/founders/Founders.module.css";
 
 const css = (name: string) => styles[name] || name;
@@ -29,7 +29,7 @@ const personId = (slug: string) => (url(`/founders/${slug}`) ? `${url(`/founders
 
 const title = `Founders of Edgecipline — ${FOUNDER_NAMES_SENTENCE}`;
 const description =
-  "Edgecipline has two founders. Sourav R is a co-founder and leads product, technology and strategy. Munavvir TP is a co-founder and leads operations, administration and people.";
+  "Edgecipline was founded by Sourav R, who leads product, technology and strategy, and Munavvir TP, who leads operations, administration and people.";
 
 export const metadata: Metadata = {
   title: { absolute: title },
@@ -80,7 +80,7 @@ export default function FoundersPage() {
     email: founder.email,
     sameAs: [founder.linkedin],
     ...(url(founder.image) ? { image: url(founder.image) } : {}),
-    worksFor: { "@id": `${url("/")}#organization` },
+    worksFor: { "@id": ORGANIZATION_ID },
   }));
 
   const graph = {
@@ -94,10 +94,10 @@ export default function FoundersPage() {
         inLanguage: "en-IN",
       },
       {
+        // Adds only the founder links to the sitewide Organization node
+        // (app/layout.tsx), which owns its name and legalName.
         "@type": "Organization",
-        "@id": `${url("/")}#organization`, url: url("/"),
-        name: LEGAL_NAME,
-        numberOfEmployees: founders.length,
+        "@id": ORGANIZATION_ID,
         founder: people.map((person) =>
           person["@id"] ? { "@id": person["@id"] } : { "@type": "Person", name: person.name },
         ),

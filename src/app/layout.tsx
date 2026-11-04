@@ -160,21 +160,19 @@ export const metadata: Metadata = {
  * The viewport, which is a separate export from `metadata` — `themeColor` and
  * `colorScheme` moved here, and setting them on `metadata` is deprecated.
  *
- * The site has one palette: the deep navy canvas `--bg` in globals.css. Both
- * theme colours are therefore the same value, declared per scheme anyway so a
- * light-mode browser tints its chrome to the page rather than to white. And
- * `colorScheme: "dark"` is what stops a browser painting a white canvas for
- * the fraction of a second before the stylesheet applies — the one flash a
- * dark site cannot style its way out of.
+ * Every route uses the paper palette (#efeee8), so mobile browser chrome is
+ * tinted to match it in both schemes, and `colorScheme: "light"` keeps the
+ * browser from painting a dark canvas before the stylesheet applies. (Only
+ * the homepage offers a dark theme; it is opt-in or OS-driven at runtime.)
  *
  * No `maximumScale` or `userScalable`: pinch-zoom stays available. Disabling
  * it is an accessibility failure, and it is never worth the tidier layout.
  */
 export const viewport: Viewport = {
-  colorScheme: "dark",
+  colorScheme: "light",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#050914" },
-    { media: "(prefers-color-scheme: dark)", color: "#050914" },
+    { media: "(prefers-color-scheme: light)", color: "#efeee8" },
+    { media: "(prefers-color-scheme: dark)", color: "#efeee8" },
   ],
 };
 

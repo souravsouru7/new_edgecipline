@@ -23,6 +23,7 @@ export const metaFooterLinks = [
   ["Privacy", "/privacy"],
   ["Terms", "/terms"],
   ["Founders", "/founders"],
+  ["Our Story", "/story"],
 ] as const;
 
 function Logo() {

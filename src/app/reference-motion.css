@@ -117,6 +117,8 @@ html:has(.edg-page) { scroll-behavior: auto; }
   animation: none;
 }
 .edg-type-live { display: inline; white-space: pre-wrap; }
+/* Typed letters come from data-text so they never duplicate the h1 text (see TypedHeadline). */
+.edg-type-glyphs::before { content: attr(data-text); }
 .edg-type-caret {
   display: inline-block;
   width: .08em;

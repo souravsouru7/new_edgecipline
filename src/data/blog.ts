@@ -50,158 +50,179 @@ export const BLOG_POSTS: BlogPost[] = [
 
 Many traders spend years searching for a better strategy. A trading journal can also help them examine how they followed the strategy they already had.
 
-SEBI reported that 93% of individual traders in India's equity futures and options segment incurred losses between FY22 and FY24. That statistic applies to this segment and period; the study does not establish that psychology or inconsistent execution caused those losses.
+SEBI's study of India's equity futures and options (F&O) segment found that 93% of more than 1 crore individual traders incurred losses over the three years from FY22 to FY24. Their average loss was around ₹2 lakh per trader, inclusive of transaction costs, and their aggregate losses exceeded ₹1.8 lakh crore. These figures apply to individual traders in this segment over this period, and the study does not establish that psychology or inconsistent execution caused those losses.
 
-## Behavior, Not Strategy
+The same study reports how costs and profits were distributed. Individual traders spent an average of ₹26,000 each on F&O transaction costs in FY24, and about ₹50,000 crore collectively over FY22 to FY24, of which 51% was brokerage and 20% exchange fees. In FY24, proprietary traders and foreign portfolio investors (FPIs) booked gross trading profits of ₹33,000 crore and ₹28,000 crore respectively, before transaction costs, and 96% of the proprietary traders' profits and 97% of the FPIs' profits came from algorithmic trading. These figures describe outcomes across groups of participants; on their own, they do not explain why any individual trader lost money.
 
-The following behaviors are useful to review in your own trading records:
+## Behaviors Worth Reviewing
 
-**1. Revenge trading after losses**
-The emotional need to "get your money back" after a loss leads to oversized positions, broken rules, and compounding losses. It's not a strategy problem — it's an emotional regulation problem.
+Strategy, costs and market conditions all shape results. Alongside them, these behaviors are worth checking in your own trading records:
 
-**2. Bad time-of-day habits**
-Most traders have peak performance windows. But they keep trading outside those windows, especially when trying to recover from a bad session.
+**1. Trading after losses**
+Do your position size, rule-following or number of trades change after a loss? Compare the trades you take straight after a losing trade with the rest of your record. Some traders call this pattern revenge trading.
 
-**3. Setup delusion**
-Traders convince themselves that a mediocre setup is valid because they want to trade. The setup looks like the one they've been waiting for. It isn't.
+**2. Time-of-day habits**
+Do your results differ between sessions? If they do, check whether you keep trading in the periods where your record is weakest, especially when trying to recover from a bad session.
 
-**4. Inconsistent position sizing**
-In winning trades: too small. In "sure thing" trades: too large. This asymmetry alone can turn a positive strategy into a losing one.
+**3. Setup discipline**
+Did each trade meet the criteria you set in advance? Marking the trades that did not can show whether you take marginal setups simply to be in the market.
+
+**4. Position sizing**
+You cannot know in advance which trades will win, so compare your planned and actual size across every trade. Inconsistent sizing, such as trading larger on setups that feel certain, can change your overall results even when your entries follow your plan.
 
 ## What Journaling Changes
 
-The problem with most trading journals is that they only track P&L. Green days feel like skill. Red days feel like bad luck. But behavior analytics changes this.
+A record that holds only P&L shows what happened, but not why.
 
 When you track *why* you took a trade, *what emotion you felt*, and *whether you followed your rules*, you can compare decisions across sessions and setups. Any pattern needs enough observations and careful interpretation before it can guide a change.
 
 This is what Edgecipline is built to reveal.
 
-## The Mirror Principle
+## What a Journal Can and Cannot Show
 
-The market is a mirror. It doesn't care about your P&L target. A journal can show whether you followed your plan, while results also depend on the strategy, costs, market conditions, and risk.
-
-Journaling is the mirror. Behavior analytics is the flashlight.
+A journal can show whether you followed your plan. Your results also depend on your strategy, costs, market conditions and risk.
 
 ## Where to Start
 
-1. **Track every trade, not just the losses.** Winners have patterns worth repeating.
+1. **Track every trade, not just the losses.** Winning trades can show what you do well.
 2. **Record your emotional state.** Just one word: calm, anxious, confident, frustrated.
-3. **Note your setup type.** In 3 months, you'll see which setups you actually execute well.
-4. **Review weekly, not daily.** Daily P&L creates noise. Weekly behavior creates signal.
+3. **Note your setup type.** As your record grows, you can compare how consistently you execute each setup.
+4. **Review weekly.** A week usually contains more trades than a single day, which makes it easier to compare decisions instead of reacting to one day's result.
 
-Reviewing your behavior alongside strategy and risk gives you a clearer record of what you can change.`,
+Reviewing your behavior alongside strategy, costs and risk gives you a clearer record of what you can change.`,
   },
   {
     slug: "how-to-build-a-trading-journal-habit",
     title: "How to Build a Trading Journal Habit That Actually Sticks",
     description:
-      "Most traders start a journal and quit in two weeks. Here's the psychology behind building a journaling habit that compounds over time.",
+      "Why trading journals get abandoned, and how to build a journaling habit that lasts: a four-field minimum entry, a fixed routine and a weekly review.",
     category: "Trading Journal",
     publishedAt: "2025-11-28",
     updatedAt: "2026-10-21",
+    sources: [
+      {
+        title: "Lally, van Jaarsveld, Potts and Wardle (2010), How are habits formed: Modelling habit formation in the real world, European Journal of Social Psychology",
+        url: "https://doi.org/10.1002/ejsp.674",
+      },
+    ],
     readTime: 5,
     featured: true,
-    content: `## Why Journals Fail
+    content: `## Why Journals Stop
 
-You've probably started a trading journal before. Maybe a spreadsheet, maybe a notebook. Maybe a $10/month app. And you stopped.
+If you have started a trading journal and stopped, the problem may not be motivation. A detailed entry takes time: entry price, exit price, size, risk-reward, notes and emotions. When each entry takes several minutes, it is easy to skip one trade, then a whole week.
 
-The reason isn't laziness. It's friction.
+## Reduce the Steps
 
-Traditional journaling requires too many steps: open the journal, type the entry price, type the exit price, calculate R:R, write notes, select emotions... By the time you've finished one trade entry, your next setup is forming.
+Keep each entry short enough that you will complete it after every trade. A short entry you complete regularly is more useful than a detailed template you stop using.
 
-## The Friction Problem
+This is why Edgecipline starts with a screenshot. Upload it, review the trade details the AI extracts, correct anything it got wrong, and add how you felt and whether you followed your rules. When you have no screenshot, you can enter the trade manually instead.
 
-The more steps a journal entry requires, the harder it can be to maintain the habit. A short entry that you complete regularly is more useful than a detailed template you stop using.
+## Make It a Routine
 
-This is why Edgecipline starts with a screenshot. One screenshot. That's the entire input. The AI extracts everything else.
+Habits tend to form through repetition in a consistent context. In a study published in the European Journal of Social Psychology, volunteers repeated a chosen everyday behavior in the same context, such as "after breakfast," for 12 weeks. The time it took them to reach 95% of their maximum automaticity ranged from 18 to 254 days, and missing a single opportunity did not materially affect the process.
 
-## Building the Habit Loop
+The study looked at eating, drinking and exercise habits, not trading, but two practical points carry over:
 
-Every habit has three parts: cue, routine, reward.
+- **Tie the entry to a fixed cue**, such as closing a trade or the end of the session.
+- **Do not give up after a missed day.** Log the missing trades the next day and continue.
 
-**For trade journaling:**
-- **Cue**: Close your trade
-- **Routine**: Take a screenshot and check the captured details
-- **Reward**: See your running behavioral stats update
+## The Minimum Entry
 
-The reward must be immediate. "Build discipline over months" is not a reward your brain can feel. Seeing your win rate update in real-time is.
+When you are short of time, record four things:
 
-## The Minimum Viable Journal Entry
+1. Instrument and direction (for example, "BANKNIFTY CE, long")
+2. Result (win, loss or breakeven)
+3. One word for your emotional state
+4. Whether you followed your rules (yes or no)
 
-If you can't use AI screenshot extraction, here's the minimum viable entry:
-1. Trade direction + instrument (e.g., "BANKNIFTY CE long")
-2. Result (W/L/BE)
-3. One word: your emotional state
-4. Did you follow your rules? (Y/N)
+These four fields are enough to compare rule-following and emotional state with results later. You can add detail when you have more time.
 
-That's it. Four data points. If you can't maintain that, nothing else will work.
+## A Weekly Review Routine
 
-## The Weekly Review
+A journal becomes useful when you review it. Set a regular time each week, for example 30 minutes after your last session, and work through the same questions:
 
-Journals only compound when you review them. The review is where insights form.
+- Which setups did I trade, and did each trade meet my criteria?
+- Which trades broke my rules, and what happened just before them?
+- How did I feel before my weakest trades?
+- What one change will I test next week?
 
-Schedule 30 minutes every Sunday. Look for:
-- Which setups are actually working?
-- What time of day am I losing?
-- What emotion precedes my worst trades?
-- What does my "worst week" look like before it starts?
+Write down the change you choose, and check it at the next review.
 
-After a period of consistent entries, review whether you have enough comparable trades to spot a useful pattern.
+## Be Patient With the Data
 
-## The Compound Effect
-
-For example, a trader might notice more rule breaks after an early loss or a difference between morning and afternoon sessions. These are questions to test against their own records, not typical outcomes or promised timelines.
-
-This is why discipline compounds. Not because of willpower. Because of data.`,
+A few weeks of entries rarely show a reliable pattern. As your history grows, you can compare more trades within each setup, session and emotional state, and your conclusions become more trustworthy. Treat early differences as questions to keep testing.`,
   },
   {
     slug: "nifty-banknifty-trading-psychology",
     title: "NIFTY & BANKNIFTY Psychology: The India-Specific Edge",
     description:
-      "Indian equity markets have unique psychological traps that Western trading books don't cover. Here's what actually matters for NIFTY and BANKNIFTY traders.",
+      "How expiry days, SEBI's 2024 index-derivative changes and the opening session can affect NIFTY and BANKNIFTY decisions, and what to record in your journal.",
     category: "NIFTY & Options",
     publishedAt: "2025-11-10",
     updatedAt: "2026-10-21",
-    sources: [{
-      title: "NSE equity derivatives contract specifications",
-      url: "https://www.nseindia.com/static/products-services/equity-derivatives-contract-specifications",
-    }],
+    sources: [
+      {
+        title: "SEBI circular SEBI/HO/MRD/TPD-1/P/CIR/2024/132: Measures to Strengthen Equity Index Derivatives Framework, October 1, 2024",
+        url: "https://www.sebi.gov.in/legal/circulars/oct-2024/measures-to-strengthen-equity-index-derivatives-framework-for-increased-investor-protection-and-market-stability_87208.html",
+      },
+      {
+        title: "NSE equity derivatives contract specifications",
+        url: "https://www.nseindia.com/static/products-services/equity-derivatives-contract-specifications",
+      },
+      {
+        title: "NSE market timings",
+        url: "https://www.nseindia.com/static/market-data/market-timings",
+      },
+    ],
     readTime: 7,
     featured: false,
-    content: `## The India Difference
+    content: `## Why Index Options Need Their Own Review
 
-NIFTY and BANKNIFTY options traders face market hours, expiry schedules, and contract mechanics that deserve attention in a trading review. General trading psychology advice may miss these details.
+NIFTY and BANKNIFTY futures and options come with features that general trading-psychology advice rarely covers: fixed expiry dates, contract sizes set by regulation, and a defined trading session. Each of these can shape your decisions, and each can be recorded in a journal.
 
-## The Expiry Psychology Problem
+## What Changed in 2024
 
-Expiry schedules can affect how traders plan a session. Check the current NSE contract specifications for the instrument you trade; expiry days and available contracts can change.
+SEBI's circular of October 1, 2024 introduced several measures for equity index derivatives, including:
 
-Near expiry, an option's remaining time value can decline quickly. Rapid price changes and a short decision window can tempt a trader to depart from a plan.
+- **One weekly expiry per exchange.** From November 20, 2024, each exchange may offer weekly expiry contracts on only one of its benchmark indices.
+- **Larger contracts.** New index derivative contracts introduced after November 20, 2024 must be worth at least ₹15 lakh when introduced, and lot sizes are reviewed to keep the contract value between ₹15 lakh and ₹20 lakh.
+- **Upfront option premium.** From February 1, 2025, brokers must collect the option premium upfront from option buyers.
+- **Higher margin on expiring short options.** From November 20, 2024, short options contracts expiring that day carry an additional extreme loss margin of 2%.
 
-Compare your own expiry and non-expiry trades before deciding whether that pressure affects your decisions. A difference in outcomes alone does not establish the cause.
+Expiry days and lot sizes can change, so check NSE's current contract specifications for the instrument you trade before relying on any date or quantity.
 
-## Morning Session Trap
+## Expiry Day
 
-Indian market opens at 9:15 AM, and the first 15 minutes are often the most volatile. Most retail traders feel compelled to trade the opening.
+In the same circular, SEBI described expiry-day trading in index options as "largely speculative," pointing to hyperactive trading, average holding periods measured in minutes, and increased index volatility through the day. That describes the market as a whole, not your own trading, but it is a good reason to review your expiry-day trades separately.
 
-Some traders choose to observe the opening before placing a trade. Your journal can show how opening trades compare with later ones in your own history.
+Tag each trade as expiry day or not, then compare the two groups:
 
-If you track your P&L by time-of-day, you may find that your first-15-minute trades have dramatically different win rates than your 10:00–11:00 trades.
+- how many trades you take
+- how long you hold them
+- whether your entries, stops and exits followed your plan
 
-## The Options Premium Decay Trap
+For option buyers, time value generally erodes as expiry approaches, all else being equal. In practice, the premium also moves with the price of the underlying index and with implied volatility. Recording both your plan and what you actually did lets you review a losing expiry trade for the decision, not only the result.
 
-Time decay is one factor in an option's price. Its effect is not constant, and changes in the underlying price, volatility, and other factors also matter.
+## The Opening Minutes
 
-Some traders may hold a losing option longer than their plan allows, hoping to avoid realizing the loss. Record planned and actual exits to see whether this occurs in your own trades.
+NSE lists the equity derivatives normal market as opening at 9:15 a.m. Prices can move quickly in the first minutes, and it can be tempting to act at once.
 
-## What This Means for Your Journal
+Your journal can show whether trading the open suits you. Record your entry time and group trades into periods such as the first 15 minutes, the rest of the morning, and the afternoon. If your opening trades break your rules more often, or their results differ from your later trades, look more closely. A handful of trades is a prompt for review, not proof.
 
-If you're journaling your NIFTY/BANKNIFTY trades, specifically track:
-1. **Expiry vs non-expiry day performance** (compare your own results)
-2. **Time of entry** (compare your own performance across trading sessions)
-3. **Trade duration vs outcome** (are you holding losers too long?)
+## Holding Losing Options
 
-These filters can help you ask more precise questions about your own decisions.`,
+With options, holding a losing position past its planned exit can be expensive because, all else being equal, time value keeps eroding while you wait. Write down your planned exit before you enter, record your actual exit afterwards, and compare the two across your losing trades.
+
+## What to Record for Index Options
+
+A few fields make these questions answerable:
+
+1. **Expiry day or not**, and the number of days to expiry at entry
+2. **Entry time**, to compare sessions
+3. **Planned and actual exit**, by price and time
+4. **Option details**: strike price, option type (CE or PE) and expiry date
+
+Edgecipline's Indian market mode records strike price, option type, expiry date and lot details, and asks you to choose your broker when you upload a screenshot. As your history grows, these fields let you compare your own expiry and non-expiry trades, opening and later trades, and planned and actual exits.`,
   },
   {
     slug: "risk-management-for-retail-traders",
@@ -211,21 +232,27 @@ These filters can help you ask more precise questions about your own decisions.`
     category: "Risk Management",
     publishedAt: "2025-10-22",
     updatedAt: "2026-10-21",
+    sources: [
+      {
+        title: "SEBI circular SEBI/HO/MRD/TPD-1/P/CIR/2024/132: Measures to Strengthen Equity Index Derivatives Framework, October 1, 2024",
+        url: "https://www.sebi.gov.in/legal/circulars/oct-2024/measures-to-strengthen-equity-index-derivatives-framework-for-increased-investor-protection-and-market-stability_87208.html",
+      },
+    ],
     readTime: 8,
     featured: false,
-    content: `## Why the 1% Rule Alone Fails
+    content: `## Why a Per-Trade Limit Is Not Enough
 
 Some traders use a 1% per-trade limit as a planning example. No fixed percentage is appropriate for every person or strategy, and position size is only one part of risk.
 
-Here are four other dimensions to consider when reviewing your own plan.
+Here are five dimensions to consider when reviewing your own plan.
 
 ## The 5 Dimensions of Trading Risk
 
-**1. Per-trade risk (the 1% rule)**
-Define a loss limit that fits your circumstances and understand how position size, leverage, and gaps can affect the actual loss.
+**1. Per-trade risk**
+Define a loss limit that fits your circumstances, and understand how position size, leverage and price gaps can make the actual loss larger than planned. Contract size matters too. Under SEBI's October 2024 circular, a new index derivative contract must have a contract value of at least ₹15 lakh when it is introduced. That is the value of the exposure behind one lot, not the premium an option buyer pays, and an option buyer's maximum loss is generally the premium paid. For futures and for option sellers, however, the contract value shows how much exposure a single lot carries relative to your account.
 
 **2. Correlation risk**
-If you have 3 open NIFTY positions and 2 BANKNIFTY positions, you're not 5 separate trades — you're essentially one large position on Indian equity indices. When one sells off, they all sell off.
+Positions on NIFTY and BANKNIFTY are all exposed to the Indian equity market, so they can lose value at the same time. Three NIFTY positions and two BANKNIFTY positions may behave less like five separate trades and more like one larger position. Check your combined exposure before adding a trade.
 
 **3. Session risk**
 Consider whether your plan has a session loss limit and what action you will take if you reach it.
@@ -238,81 +265,105 @@ How does your decision-making change after consecutive losses or a large drawdow
 
 ## The Daily Loss Limit Framework
 
+Write your limits down before the session starts:
+
 - **Daily loss limit**: Define when you will stop for the session
 - **Weekly review trigger**: Review repeated breaches of your own limit
 - **Strategy pause**: Set a drawdown level that prompts a review
 - **Position review**: Check combined exposure to correlated instruments
 
+A written rule might read: "If I reach my daily loss limit, I stop trading for the day. If that happens more than once in a week, I review my trades at the weekend before trading again."
+
 ## The Journal-Risk Connection
 
-Risk management without journaling is theory. With journaling, it becomes data-driven.
+A written risk plan is easier to follow when you can check it against your records.
 
 With enough recorded trades, you can begin to ask:
-- What's my average loss vs my rule-defined max loss? (Are you actually using stops?)
-- What's my drawdown pattern? (Do losses cluster on certain days?)
-- At what drawdown percentage does my win rate start dropping?
 
-This is the difference between risk management as a principle versus as a practice.`,
+- How does your average loss compare with your rule-defined maximum loss? (Are your stops being honored?)
+- Do your losses cluster on particular days or sessions?
+- Does your rule-following change as a drawdown deepens?
+
+Each of these questions compares your written plan with what you actually did.`,
   },
   {
     slug: "what-is-trading-dna",
     title: "Your Trading DNA: Why Every Trader Has a Unique Behavioral Fingerprint",
     description:
-      "No two traders fail the same way. Understanding your unique behavioral fingerprint is the first step to fixing it.",
+      "What Trading DNA means, which behavior patterns research has documented in real trading records, and how to check your own journal for them.",
     category: "Behavior Analytics",
     publishedAt: "2025-10-05",
     updatedAt: "2026-10-21",
+    sources: [
+      {
+        title: "Shefrin and Statman (1985), The Disposition to Sell Winners Too Early and Ride Losers Too Long: Theory and Evidence, Journal of Finance",
+        url: "https://doi.org/10.1111/j.1540-6261.1985.tb05002.x",
+      },
+      {
+        title: "Odean (1998), Are Investors Reluctant to Realize Their Losses?, Journal of Finance",
+        url: "https://doi.org/10.1111/0022-1082.00072",
+      },
+      {
+        title: "Coval and Shumway (2005), Do Behavioral Biases Affect Prices?, Journal of Finance",
+        url: "https://doi.org/10.1111/j.1540-6261.2005.00723.x",
+      },
+      {
+        title: "Barber and Odean (2000), Trading Is Hazardous to Your Wealth, Journal of Finance",
+        url: "https://doi.org/10.1111/0022-1082.00226",
+      },
+    ],
     readTime: 5,
     featured: false,
-    content: `## The Behavioral Fingerprint
+    content: `## What Trading DNA Means
 
-Every trader has a unique set of behavioral patterns that emerge under different market conditions. Just like a fingerprint, no two trading DNAs are identical.
+"Trading DNA" is Edgecipline's name for a profile of how you trade, built from your journal: your strengths, weaknesses, best setup and best session, including patterns such as increasing position size after a loss. The name is a metaphor. The profile describes patterns in your past records. It is not a fixed trait, and it changes as your trading changes.
 
-Some traders are revenge traders. Others are chronic over-traders. Some exit winners too early. Others hold losers too long. Many have time-of-day blind spots. A few have specific instrument weaknesses.
+## Patterns Found in Real Trading Records
 
-Understanding your Trading DNA is the difference between fixing a symptom and fixing the cause.
+Some behavior patterns have been studied using actual trading data:
 
-## The Four Behavioral Archetypes
+- **Selling winners early and holding losers.** Hersh Shefrin and Meir Statman described "a general disposition to sell winners too early and hold losers too long." Terrance Odean later tested this using trading records for 10,000 accounts at a US discount brokerage and found "a strong preference for realizing winners rather than losers."
+- **Taking more risk after losses.** Joshua Coval and Tyler Shumway studied proprietary traders at the Chicago Board of Trade and found that they regularly assumed "above-average afternoon risk to recover from morning losses."
+- **Trading frequently.** Brad Barber and Terrance Odean studied 66,465 US households with accounts at a discount broker from 1991 to 1996. The households that traded most earned an annual return of 11.4%, while the market returned 17.9%.
 
-The following are illustrative behavior patterns to look for. They are not validated trader categories or findings from a published study:
+These studies covered US investors and traders in specific periods. They show that such patterns appear in real records. They do not show that any particular trader has them, so the useful question is whether they appear in yours.
 
-**The Revenge Trader**
-- After a loss, increases position size to "get it back"
-- Win rate drops sharply after their first loss of the day
-- Typically their biggest losing days start with a small loss that triggers the spiral
+## Four Patterns to Check
 
-**The FOMO Chaser**
-- Enters setups late, after the move has started
-- Frequently takes trades that don't meet their own criteria
-- Worst performance happens after watching a big move they missed
+The following are illustrative patterns to look for. They are not validated trader categories or findings from a published study.
 
-**The Early Exit**
-- Consistently closes winners before target
-- P&L math: right direction, wrong size outcome
-- Has a high win rate but poor R:R due to premature exits
+**Trading after losses**
+- Position size or the number of trades rises after a loss
+- Results after the first loss of a session differ from the rest of your record
 
-**The Loss Holder**
-- Exits beyond their planned stop
-- Classic loss aversion in action
-- Great at identifying direction, terrible at respecting stops
+**Late entries**
+- Entries come after a move has already started
+- Trades that miss your own criteria appear more often after a large move you did not take
 
-## How to Identify Your Archetype
+**Early exits**
+- Winning trades are closed before their planned target
+- A high win rate combined with a small average win compared with the average loss
 
-You can't identify your archetype from memory. Memory is biased toward your best trades. The data doesn't lie.
+**Holding losers**
+- Losing trades are closed beyond the planned stop
+- Average losses are larger than your rule-defined maximum loss
 
-Track these four metrics for 30 trades:
-1. What was my planned stop vs actual exit on losing trades?
-2. What was my planned target vs actual exit on winning trades?
-3. What's my win rate on the trade directly after a loss?
-4. What was my emotional state before my worst trades?
+## How to Check Your Own Records
 
-Use these observations as prompts for a closer review of your plan, sample size, and market conditions.`,
+Reviewing trades from memory makes fair comparison difficult. Recorded trades give you something specific to compare. For each pattern, look at planned versus actual values:
+
+1. On losing trades, your planned stop versus your actual exit
+2. On winning trades, your planned target versus your actual exit
+3. On the trade after a loss, its size and result compared with your other trades
+4. Before your weakest trades, the emotional state you recorded
+
+With only a few dozen trades, differences can easily be chance. Use these observations as prompts for a closer review of your plan, sample size, and market conditions, and check them again as your record grows.`,
   },
   {
     slug: "ai-in-trading-journals",
     title: "How AI Is Changing Trading Journals Forever",
     description:
-      "The spreadsheet era of trading journals is ending. Here's how AI is transforming how traders learn from their trades.",
+      "What AI can and cannot do for a trading journal: faster screenshot entry, pattern analysis that improves as trades accumulate, and the limits to know.",
     category: "Trading Journal",
     publishedAt: "2025-09-18",
     updatedAt: "2026-10-21",
@@ -320,38 +371,37 @@ Use these observations as prompts for a closer review of your plan, sample size,
     featured: false,
     content: `## The Spreadsheet Problem
 
-For the past 20 years, the "serious trader's journal" meant a spreadsheet. Date, instrument, direction, entry, exit, P&L. Maybe a notes column. Maybe a setup name.
-
-This approach has a fundamental problem: it only captures *what happened*, not *why it happened*. And the "why" is where all the insight lives.
+A spreadsheet journal usually records what happened: date, instrument, direction, entry, exit and P&L, perhaps with a notes column. That record is useful, but unless you add the fields yourself, it does not capture why you took a trade or whether you followed your plan.
 
 ## What AI Changes
 
-AI changes three things about trading journals:
+AI can help a trading journal in three ways:
 
 **1. Input takes fewer steps**
 Manual entry can be tedious. Screenshot extraction is designed to capture fields such as pair, direction, entry, exit, P&L, time, and lot size. Review extracted details before relying on them.
 
-**2. Patterns become visible immediately**
-A human reviewing a trading journal looks for patterns manually. This takes time and is subject to confirmation bias — you'll see the patterns you're looking for, not the patterns that are actually there.
+In Edgecipline, you see the screenshot and confirm it before extraction starts. The app shows a confidence score for the extracted data, and you can check and correct each trade before it is saved. A screenshot containing several trades can create several journal entries, and images that do not appear to be trade screenshots are rejected and not saved.
 
-Analysis can group trades in ways you might not check manually, such as performance after an early loss. A difference in a small sample is a prompt to investigate, not proof of a reliable edge.
+**2. Patterns become more meaningful as your history grows**
+When you review a journal by hand, it is easy to notice the patterns you already expect and overlook others.
 
-**3. Coaching becomes personalized**
-Generic trading psychology advice tells you to "control your emotions" and "follow your rules." This is correct and useless.
+Analysis can group trades in ways you might not check manually, such as performance after an early loss. A difference in a small sample is a prompt to investigate, not proof of a reliable edge. Edgecipline keeps some insights locked until there is enough data, and tells you so instead of guessing.
 
-Personalized coaching can point out a difference between setups or trading sessions and ask you to review your rules. It should not turn a correlation into an unqualified trading instruction.
+**3. Feedback is based on your own records**
+General advice such as "control your emotions" and "follow your rules" is accurate but hard to act on.
 
-## The Behavioral Layer
+Feedback drawn from your own records can point out a difference between setups or trading sessions and ask you to review the related rule. It should not turn a correlation into an unqualified trading instruction. Edgecipline's AI coach answers questions using your journal data, including your recent trades.
 
-The real breakthrough isn't data extraction — it's the behavioral layer. When a trading journal tracks not just your trades but your emotional state, your rule adherence, and your setup discipline, it stops being a record and starts being a mirror.
+## What AI Cannot Do
 
-This is why the next generation of trading tools is built around behavior, not just data.
+- **It can misread a screenshot.** Check every extracted field before you save.
+- **It cannot know your reasons or emotions.** You add why you took the trade, how you felt and whether you followed your rules.
+- **It cannot make a small sample reliable.** Only more trades make a comparison more trustworthy.
+- **It does not predict the market.** It describes your past records, not what prices will do next.
 
 ## What This Means for You
 
-If you use a spreadsheet, you can still record setup, emotion, rule adherence, and result. Software may make those records easier to organize and compare.
-
-Edgecipline is built on this principle: every screenshot tells a story. The AI's job is to read it.`,
+If you use a spreadsheet, you can still record setup, emotion, rule adherence, and result. Software may make those records easier to organize and compare.`,
   },
 ]
 

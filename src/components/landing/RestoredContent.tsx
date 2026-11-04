@@ -1,4 +1,5 @@
 import { ArrowRight, Flame, Ban, RotateCw, TrendingDown, Eye, ShieldOff, Repeat, Sparkles } from "lucide-react";
+import Link from "next/link";
 import type { CSSProperties } from "react";
 
 function Label({ number, children }: { number: string; children: React.ReactNode }) {
@@ -205,6 +206,7 @@ export function TradingDnaContent() {
         <h2 id="edg-dna-title">KNOW YOUR<br/><em>PATTERNS.</em></h2>
         <p>A deeper process. A powerful shift.</p>
         <p>A deeper understanding leads to better decisions. Know your patterns. Trade a stronger version of yourself.</p>
+        <Link className="edg-text-link" href="/blog/what-is-trading-dna">What is Trading DNA? <ArrowRight size={14}/></Link>
       </div>
       <div className="edg-dna-content">
         <div className="edg-dna-traits">{dnaTraits.map(([title, description], index) => <div key={title}><span>{String(index + 1).padStart(2, "0")}</span><p><strong>{title}</strong><small>{description}</small></p></div>)}</div>

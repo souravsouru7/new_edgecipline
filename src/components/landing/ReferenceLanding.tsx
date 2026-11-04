@@ -114,7 +114,7 @@ export function ReferenceLanding() {
             {/* The brand line sits inside the h1 so the page's main heading
                 names Edgecipline as text, not only the typed slogan. */}
             <h1 id="edg-hero-title">
-              <span className="edg-eyebrow">EDGECIPLINE — AI TRADING JOURNAL &amp; DISCIPLINE COACH</span>
+              <span className="edg-eyebrow">EDGECIPLINE — AI TRADING JOURNAL &amp; DISCIPLINE COACH</span>{" "}
               {/* Own wrapper so the typed lines keep their :nth-child motion indices. */}
               <span className="edg-hero-lines"><TypedHeadline /></span>
             </h1>

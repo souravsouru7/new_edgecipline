@@ -16,7 +16,7 @@ import {
   type SocialId,
 } from "@/data/contact";
 import { WAITLIST_HREF } from "@/data/features";
-import { BRAND_NAME, OG_LOCALE, TWITTER_DEFAULTS, HEADQUARTERS, OG_IMAGE_PATH, OG_IMAGE_SIZE, absoluteUrl } from "@/data/brand";
+import { BRAND_NAME, OG_LOCALE, TWITTER_DEFAULTS, ORGANIZATION_ID, OG_IMAGE_PATH, OG_IMAGE_SIZE, absoluteUrl } from "@/data/brand";
 import styles from "@/components/contact/Contact.module.css";
 
 const css = (name: string) => styles[name] || name;
@@ -26,7 +26,7 @@ const url = absoluteUrl;
 
 const title = "Contact Edgecipline — Get in Touch";
 const description =
-  "Have a question about Edgecipline? Reach out to the team. We respond to every message within 24–48 hours. Questions about waitlist, features, pricing, or partnerships welcome.";
+  "Questions about Edgecipline, the AI trading journal? Contact the team about the waitlist, features, pricing or partnerships. We reply within 24–48 hours.";
 
 export const metadata: Metadata = {
   title: { absolute: title },
@@ -89,23 +89,11 @@ export default function ContactPage() {
         name: title,
         description,
         inLanguage: "en-IN",
-      },
-      {
-        "@type": "Organization",
-        "@id": `${url("/")}#organization`, url: url("/"),
-        name: company.name,
-        email: CONTACT_EMAIL,
-        address: { "@type": "PostalAddress", ...HEADQUARTERS },
-        sameAs: socials.map((social) => social.href),
-        contactPoint: [
-          {
-            "@type": "ContactPoint",
-            contactType: "customer support",
-            email: CONTACT_EMAIL,
-            areaServed: "IN",
-            availableLanguage: ["en"],
-          },
-        ],
+        // The Organization (name, address, contact point, profiles) is the
+        // sitewide node in app/layout.tsx; restating it here gave it a second,
+        // conflicting name.
+        about: { "@id": ORGANIZATION_ID },
+        mainEntity: { "@id": ORGANIZATION_ID },
       },
       {
         "@type": "BreadcrumbList",

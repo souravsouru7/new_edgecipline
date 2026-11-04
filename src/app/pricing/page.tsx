@@ -16,7 +16,7 @@ const css = (name: string) => styles[name] || name;
 
 const title = "Pricing — Edgecipline Plans & Launch Waitlist";
 const description =
-  "Edgecipline pricing: Standard ₹349 for 1 month, Professional ₹899 for 3 months (~₹9.99/day), Ultimate ₹1,499 for 6 months (~₹8.33/day). Every paid plan includes all features. Free users get 2 AI screenshot extractions and unlimited manual entries. Public launch coming soon.";
+  "Edgecipline pricing: ₹349 for 1 month, ₹899 for 3 months or ₹1,499 for 6 months. Every paid plan includes all features. Public launch coming soon.";
 
   /* No `images` here on purpose: `opengraph-image.tsx` in this segment
      generates the card, and an explicit `images` in metadata would override
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     locale: OG_LOCALE,
     title,
     description:
-      "Edgecipline plans from ₹349 for 1 month. Every paid plan includes all features; free users get 2 AI screenshot extractions and unlimited manual entries. Public launch coming soon.",
+      "Edgecipline plans from ₹349 for 1 month. Every paid plan includes all features, and free users get 2 AI screenshot extractions. Public launch coming soon.",
     type: "website",
     url: absoluteUrl("/pricing"),
   },

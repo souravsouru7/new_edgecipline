@@ -17,7 +17,7 @@ const vars = (value: Record<string, string | number>) => value as CSSProperties;
 
 const title = "FAQ — Edgecipline Questions & Answers";
 const description =
-  "Frequently asked questions about Edgecipline — the AI trading journal, discipline coach, and gamified improvement system. Who founded Edgecipline, Trading DNA, missions & streaks, Forex + Indian market support, pricing, and data privacy.";
+  "Answers about Edgecipline, the AI trading journal: Trading DNA, psychology analytics, Forex and Indian market support, pricing, access and data privacy.";
 
 export const metadata: Metadata = {
   title: { absolute: title },

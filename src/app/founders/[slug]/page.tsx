@@ -15,7 +15,7 @@ import {
   otherFounder,
 } from "@/data/founders";
 import { WAITLIST_HREF } from "@/data/features";
-import { BRAND_NAME, OG_LOCALE, TWITTER_DEFAULTS, LEGAL_NAME, absoluteUrl } from "@/data/brand";
+import { BRAND_NAME, OG_LOCALE, TWITTER_DEFAULTS, ORGANIZATION_ID, absoluteUrl } from "@/data/brand";
 import styles from "@/components/founders/Founders.module.css";
 
 const css = (name: string) => styles[name] || name;
@@ -36,8 +36,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!founder) return {};
 
   const canonical = url(`/founders/${founder.slug}`);
-  const title = `${founder.name} — ${founder.role}, Edgecipline`;
-  const description = `${founder.name} is a co-founder of Edgecipline and leads ${founder.leads}. ${founder.bio}`;
+  const title = `${founder.name} — Co-Founder, Edgecipline`;
+  const description = `${founder.name} is a co-founder of Edgecipline, the AI trading journal and discipline coach, and leads ${founder.leads}.`;
 
   return {
     title: { absolute: title },
@@ -104,16 +104,7 @@ export default async function FounderProfilePage({ params }: Props) {
         email: founder.email,
         sameAs: [founder.linkedin],
         ...(url(founder.image) ? { image: url(founder.image) } : {}),
-        ...(url("/")
-          ? {
-              worksFor: {
-                "@type": "Organization",
-                "@id": `${url("/")}#organization`,
-                name: LEGAL_NAME,
-                url: url("/"),
-              },
-            }
-          : {}),
+        worksFor: { "@id": ORGANIZATION_ID },
         ...(otherId ? { colleague: { "@id": otherId } } : {}),
       },
       {

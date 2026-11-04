@@ -13,9 +13,9 @@ import styles from "@/components/features/Features.module.css";
 
 const css = (name: string) => styles[name] || name;
 
-const title = "Edgecipline Features | AI Trading Discipline Coach for Forex & India";
+const title = "Edgecipline Features — AI Trading Journal & Discipline Coach";
 const description =
-  "All 14 Edgecipline features: AI screenshot extraction, Forex and Indian market modes, Trading DNA, the psychology cost calculator, missions and streaks, and daily AI coaching.";
+  "Edgecipline features: AI screenshot extraction, Trading DNA, psychology cost analytics, Forex and Indian market modes, missions and daily AI coaching.";
 
   /* No `images` here on purpose: `opengraph-image.tsx` in this segment
      generates the card, and an explicit `images` in metadata would override

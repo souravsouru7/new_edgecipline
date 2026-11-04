@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
+import { getBlogPost } from "@/data/blog";
 import { type Feature, type FeatureId, WAITLIST_HREF } from "@/data/features";
 import { FeatureVisual } from "./FeatureVisual";
 import { TiltPlate } from "./TiltPlate";
@@ -56,6 +57,7 @@ export function FeatureSection({
   cta?: boolean;
 }) {
   const layout = LAYOUT[feature.id];
+  const article = feature.article ? getBlogPost(feature.article) : undefined;
 
   return (
     <article
@@ -117,6 +119,12 @@ export function FeatureSection({
                       </li>
                     ))}
                   </ul>
+                  {article && (
+                    <Link className={css("ftReadMore")} href={`/blog/${article.slug}`}>
+                      Read: {article.title}
+                      <ArrowRight aria-hidden="true" size={13} />
+                    </Link>
+                  )}
                 </div>
 
                 {/* The source repeats its waitlist link under all fourteen

@@ -68,18 +68,21 @@ export function TypedHeadline() {
     }
   }
 
+  // The animated letters are drawn from data-text by CSS (::before), so they
+  // are not text in the document. The h1's only copy of the slogan is the
+  // sr-only line below, which crawlers and screen readers both read once.
   const renderText = (lineIndex: number, text: string) => {
     if (lineIndex === 1) {
       const plain = text.slice(0, 2);
       const emphasized = text.slice(2);
       return (
         <>
-          {plain}
-          {emphasized && <em>{emphasized}</em>}
+          <span className="edg-type-glyphs" data-text={plain} />
+          {emphasized && <em className="edg-type-glyphs" data-text={emphasized} />}
         </>
       );
     }
-    return text;
+    return <span className="edg-type-glyphs" data-text={text} />;
   };
 
   return (

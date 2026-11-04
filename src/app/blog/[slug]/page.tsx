@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const canonical = url(`/blog/${post.slug}`);
 
   return {
-    title: { absolute: `${post.title} | Edgecipline Blog` },
+    title: { absolute: `${post.title} | Edgecipline` },
     description: post.description,
     alternates: { canonical },
     openGraph: {

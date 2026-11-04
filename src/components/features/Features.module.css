@@ -816,6 +816,23 @@ html[data-edg-theme="dark"] .ftxPrimary:hover { background: #5fe0a4; }
   text-transform: uppercase;
 }
 
+/* Related article under a feature's benefits: a quiet text link. */
+.ftReadMore {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  /* A deeper shade of --ftx-green: the brand green is under 4.5:1 at this size. */
+  color: #1f6e49;
+  font-size: 12.5px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+  transition: text-decoration-color .2s ease;
+}
+.ftReadMore:hover, .ftReadMore:focus-visible { text-decoration-color: currentColor; }
+
 .ftBenefits {
   display: grid;
   gap: 9px;
