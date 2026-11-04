@@ -20,7 +20,13 @@
  * reading instead; both the table and the cards follow it.
  */
 
+import { LAUNCH_STATUS } from "./brand";
+
 export const EVERY_PLAN_INCLUDES_EVERYTHING = true;
+
+/** The free tier, as confirmed by the owner. Shared by the FAQ and pricing copy. */
+export const FREE_PLAN_SUMMARY =
+  "Free users get 2 AI screenshot extractions and can create unlimited manual trade entries.";
 
 export const ALL_PLAN_FEATURES = [
   "Trading journal and AI screenshot extraction",
@@ -202,15 +208,19 @@ export const compareGroups = [...new Set(compareRows.map((row) => row.group))];
 export const pricingFaqs = [
   {
     q: "How do I access Edgecipline?",
-    a: "Registration is open, while product access is currently invite-only. Join the waitlist to request access and founding-member pricing.",
+    a: `${LAUNCH_STATUS} Join the free waitlist to hear when Edgecipline officially launches.`,
+  },
+  {
+    q: "What is the difference between the plans?",
+    a: "Only the term. Standard covers 1 month, Professional 3 months and Ultimate 6 months, and all three paid plans include every feature.",
   },
   {
     q: "Can I switch plans after subscribing?",
     a: "Yes. You can upgrade or downgrade your plan at any time. Upgrades take effect immediately; downgrades take effect at the end of your current billing period.",
   },
   {
-    q: "Is there a free trial?",
-    a: "Yes. New accounts receive a 7-day premium trial. After the trial, the free account is limited to two saved trades.",
+    q: "Is there a free plan?",
+    a: FREE_PLAN_SUMMARY,
   },
   {
     q: "What currencies do you support?",
@@ -218,7 +228,7 @@ export const pricingFaqs = [
   },
   {
     q: "Do I need a credit card to join the waitlist?",
-    a: "No. The waitlist is free, and no card is required to request an invitation. Payment is required only when you choose a paid subscription.",
+    a: "No. The waitlist is free, and no card is required to join it. Payment is required only when you choose a paid subscription.",
   },
   {
     q: "What’s your refund policy?",
@@ -228,4 +238,4 @@ export const pricingFaqs = [
 
 /** The reassurance line that sat under the plan cards. */
 export const PRICING_FOOTNOTE =
-  "All prices in INR. The waitlist is free; payment is required only when you choose a paid subscription.";
+  `All prices in INR. All paid plans include every feature. ${FREE_PLAN_SUMMARY} The waitlist is free; payment is required only when you choose a paid plan.`;

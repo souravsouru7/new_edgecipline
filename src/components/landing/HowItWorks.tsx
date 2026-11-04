@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { BrainCircuit, CloudUpload, TrendingUp } from "lucide-react";
+import { stepCopy } from "@/data/howItWorks";
 import styles from "./HowItWorks.module.css";
 
 // The CSS module is shared with the existing global selector names.
@@ -17,9 +18,9 @@ const vars = (value: Record<string, string | number>) => value as CSSProperties;
  * that is for both to read this array.
  */
 export const steps = [
-  { number: "01", title: "Upload Your Trades", description: "Import your trading history in seconds.", icon: CloudUpload, step: "upload" },
-  { number: "02", title: "AI Analysis", description: "Our AI analyses your behavior, patterns and emotional triggers.", icon: BrainCircuit, step: "analysis" },
-  { number: "03", title: "Learn & Improve", description: "Get personalized insights to build better habits and consistency.", icon: TrendingUp, step: "improve" },
+  { ...stepCopy[0], icon: CloudUpload, step: "upload" },
+  { ...stepCopy[1], icon: BrainCircuit, step: "analysis" },
+  { ...stepCopy[2], icon: TrendingUp, step: "improve" },
 ] as const;
 
 /** Where the data motes start before they converge on the AI icon. */

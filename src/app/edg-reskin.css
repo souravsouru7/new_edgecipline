@@ -337,14 +337,14 @@ html:has(.lgPage), body:has(.lgPage) {
    `<small>`: 10px.
    The `.edg-chrome` header/footer keep their own tuned sizes. */
 
-body :is(p, li, dd, blockquote, figcaption, cite, address):not(.edg-chrome *):not(.edg-page *):not(.ftxPage *) {
+body :is(p, li, dd, blockquote, figcaption, cite, address):not(.edg-chrome *):not(.edg-page *):not(.ftxPage *):not(.story-page *) {
   font-family: var(--font-inter), Arial, sans-serif !important;
   font-weight: 400 !important;
   font-size: 14px !important;
   line-height: 1.55 !important;
   color: var(--edg-ink) !important;
 }
-body dt:not(.edg-chrome *):not(.edg-page *):not(.ftxPage *) {
+body dt:not(.edg-chrome *):not(.edg-page *):not(.ftxPage *):not(.story-page *) {
   font-family: var(--font-inter), Arial, sans-serif !important;
   font-weight: 600 !important;
   font-size: 11px !important;
@@ -355,10 +355,10 @@ body dt:not(.edg-chrome *):not(.edg-page *):not(.ftxPage *) {
 body :is([class*="Eyebrow"], [class*="SectionLabel"], [class*="Crumb"],
          [class*="Kicker"], [class*="Tag"], [class*="Chip"], [class*="Pill"]:not([class*="Pillar"]),
          [class*="Badge"], [class*="Caption"], [class*="Note"], [class*="Meta"],
-         [class*="Trust"], [class*="Hint"], [class*="Detail"]):not(.edg-chrome *):not(.edg-page *):not(.ftxPage *) {
+         [class*="Trust"], [class*="Hint"], [class*="Detail"]):not(.edg-chrome *):not(.edg-page *):not(.ftxPage *):not(.story-page *) {
   font-size: 11px !important;
 }
-body small:not(.edg-chrome *):not(.edg-page *):not(.ftxPage *) {
+body small:not(.edg-chrome *):not(.edg-page *):not(.ftxPage *):not(.story-page *) {
   font-family: var(--font-inter), Arial, sans-serif !important;
   font-weight: 400 !important;
   font-size: 10px !important;

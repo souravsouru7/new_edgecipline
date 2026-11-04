@@ -16,7 +16,7 @@ const TELEMETRY = [
   ["MODULES", String(features.length).padStart(2, "0")],
   ["STAGES", "04"],
   ["MARKETS", "FX / IN"],
-  ["STATUS", "INVITE-ONLY"],
+  ["STATUS", "PRE-LAUNCH"],
 ] as const;
 
 /**
@@ -86,7 +86,7 @@ export function FeaturesHero() {
             </div>
 
             <p className={css("ftxFinePrint")} data-reveal style={vars({ "--mo-delay": ".4s" })}>
-              The product is complete on web and Android. Access is currently invite-only.
+              The Android app is on Google Play now and iOS is in development. Official launch coming soon.
             </p>
           </div>
 

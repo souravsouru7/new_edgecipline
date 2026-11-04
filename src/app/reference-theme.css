@@ -146,6 +146,7 @@ html[data-edg-theme="dark"] .edg-page .edg-plan li svg { color: var(--edg-green)
 html[data-edg-theme="dark"] .edg-page .edg-dna-tags { color: var(--edg-muted); }
 html[data-edg-theme="dark"] .edg-page .edg-moment-note { color: var(--edg-muted); }
 html[data-edg-theme="dark"] .edg-page .edg-story-note { color: var(--edg-muted); }
+html[data-edg-theme="dark"] .edg-page .edg-example-tag { color: var(--edg-muted); }
 html[data-edg-theme="dark"] .edg-page .edg-weekly-panel > p { color: var(--edg-muted); background: rgba(255,255,255,.05); }
 html[data-edg-theme="dark"] .edg-page .edg-weekly-panel > p strong { color: var(--edg-ink); }
 

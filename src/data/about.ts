@@ -1,3 +1,5 @@
+import { LAUNCH_STATUS } from "./brand";
+
 /**
  * /about content, taken from the previous site's copy deck:
  * `edgeclipine/site-content.md` → "# About Page".
@@ -84,7 +86,7 @@ export const milestones: readonly Milestone[] = [
   {
     year: "2026",
     label: "Product Complete",
-    text: "Completed the web and Android product with AI screenshot extraction, Trading DNA, gamified missions & streaks, and daily AI coaching. Access remains invite-only while iOS is prepared for a future release.",
+    text: "Completed the web and Android product with AI screenshot extraction, Trading DNA, gamified missions & streaks, and daily AI coaching, and published the Android app on Google Play for a limited group of testers. The iOS app is in development, and the official public launch follows once it is ready.",
   },
 ] as const;
 
@@ -122,7 +124,7 @@ export const beliefs: readonly Belief[] = [
 ] as const;
 
 export const launchStatus = {
-  eyebrow: "Invite-Only Access — 2026",
-  state: "Product complete — access by invitation",
-  body: "Registration is open for the completed web and Android product. Join the waitlist to request invite-only access and founding-member pricing. An iOS release is planned for the future.",
+  eyebrow: "Public Launch Coming Soon",
+  state: "Android on Google Play — iOS in development",
+  body: `${LAUNCH_STATUS} Join the free waitlist to hear when the official launch happens.`,
 } as const;

@@ -1,18 +1,19 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  ArrowRight, BarChart3, BrainCircuit, ChartNoAxesColumnIncreasing, Check,
-  ChevronDown, CirclePlay, ClipboardList, Heart, Menu, ShieldCheck,
+  ArrowDown, ArrowRight, BarChart3, BrainCircuit, ChartNoAxesColumnIncreasing, Check,
+  ChevronDown, ClipboardList, Heart, Menu, ShieldCheck,
   Sparkles, Target, X,
 } from "lucide-react";
 
 import { WaitlistForm } from "@/components/waitlist/WaitlistForm";
 import { homepageFaqItems } from "@/data/faq";
 import { features } from "@/data/features";
-import { plans } from "@/data/pricing";
+import { stepCopy } from "@/data/howItWorks";
+import { plans, type PlanId } from "@/data/pricing";
 import { FooterSocial, metaFooterLinks } from "./EdgChrome";
 import { HomepageMotion } from "./HomepageMotion";
 import { InteractiveTerrain } from "./InteractiveTerrain";
@@ -49,9 +50,13 @@ function SectionLabel({ number, children }: { number: string; children: React.Re
   return <div className="edg-section-label"><span className="edg-label-line" /><span>{number} / {children}</span></div>;
 }
 
-function PlayButton({ onClick }: { onClick: () => void }) {
-  return <button type="button" className="edg-play-button" onClick={onClick}><span><CirclePlay size={23} strokeWidth={1.5} /></span>Watch Demo</button>;
+// No demo video exists yet, so this scrolls to the How It Works section
+// instead of promising one.
+function HowItWorksLink() {
+  return <a className="edg-play-button" href="#how-it-works"><span><ArrowDown size={23} strokeWidth={1.5} /></span>See How It Works</a>;
 }
+
+const termLabel = (months: number) => `${months} ${months === 1 ? "Month" : "Months"}`;
 
 function PerformanceCard() {
   return (
@@ -68,40 +73,17 @@ function PerformanceCard() {
       </div>
       <div className="edg-months"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span></div>
       <div className="edg-chart-metrics"><div><strong>78% <span>↑</span></strong><small>Discipline Score</small></div><div><strong className="edg-negative">-42% <span>↓</span></strong><small>Revenge Trades</small></div><div><strong>2.4x <span>↑</span></strong><small>More Consistent</small></div></div>
+      <span className="edg-example-tag">Example data. Illustrative figures, not customer results.</span>
     </div>
   );
 }
 
 export function ReferenceLanding() {
   const dialog = useRef<HTMLDialogElement>(null);
-  const [dialogMode, setDialogMode] = useState<"waitlist" | "demo">("waitlist");
   const [menuOpen, setMenuOpen] = useState(false);
-  const [billing, setBilling] = useState<"monthly" | "yearly">("monthly");
-  const pricingView = useRef<HTMLDivElement>(null);
+  const [term, setTerm] = useState<PlanId>(plans[0].id);
 
-  const changeBilling = (next: "monthly" | "yearly") => {
-    if (next === billing) return;
-    const view = pricingView.current;
-    if (view && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      view.style.height = `${view.getBoundingClientRect().height}px`;
-      view.style.overflow = "hidden";
-    }
-    setBilling(next);
-  };
-
-  useLayoutEffect(() => {
-    const view = pricingView.current;
-    if (!view?.style.height) return;
-    const nextHeight = view.firstElementChild?.getBoundingClientRect().height;
-    if (nextHeight === undefined) return;
-    const frame = requestAnimationFrame(() => { view.style.height = `${nextHeight}px`; });
-    const reset = () => { view.style.height = ""; view.style.overflow = ""; };
-    const timer = window.setTimeout(reset, 520);
-    return () => { cancelAnimationFrame(frame); window.clearTimeout(timer); };
-  }, [billing]);
-
-  const showDialog = (mode: "waitlist" | "demo") => {
-    setDialogMode(mode);
+  const showDialog = () => {
     setMenuOpen(false);
     if (!dialog.current?.open) dialog.current?.showModal();
   };
@@ -117,10 +99,10 @@ export function ReferenceLanding() {
         <div className="edg-header-inner">
           <Logo />
           <nav className="edg-nav" aria-label="Main navigation">{nav.map(([label, href]) => <a key={label} href={href} aria-current={label === "Home" ? "page" : undefined}>{label}</a>)}</nav>
-          <div className="edg-header-actions"><ThemeToggle /><button className="edg-button edg-button-small" type="button" onClick={() => showDialog("waitlist")}>Join Waitlist <ArrowRight size={15}/></button></div>
+          <div className="edg-header-actions"><ThemeToggle /><button className="edg-button edg-button-small" type="button" onClick={showDialog}>Join Waitlist <ArrowRight size={15}/></button></div>
           <div className="edg-header-mobile-actions"><ThemeToggle /><button className="edg-menu-toggle" type="button" aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X/> : <Menu/>}</button></div>
         </div>
-        {menuOpen && <nav className="edg-mobile-nav" aria-label="Mobile navigation">{nav.map(([label, href]) => <a key={label} href={href} onClick={() => setMenuOpen(false)}>{label}</a>)}<button type="button" onClick={() => showDialog("waitlist")}>Join Waitlist →</button></nav>}
+        {menuOpen && <nav className="edg-mobile-nav" aria-label="Mobile navigation">{nav.map(([label, href]) => <a key={label} href={href} onClick={() => setMenuOpen(false)}>{label}</a>)}<button type="button" onClick={showDialog}>Join Waitlist →</button></nav>}
       </header>
 
       <main id="main-content" className="edg-main">
@@ -133,8 +115,8 @@ export function ReferenceLanding() {
               {/* Own wrapper so the typed lines keep their :nth-child motion indices. */}
               <span className="edg-hero-lines"><TypedHeadline /></span>
             </h1>
-            <p className="edg-hero-description">Edgecipline is an AI trading journal that helps you journal, analyze, and build better habits. Turn your trading data into real progress.</p>
-            <div className="edg-hero-actions"><button className="edg-button" type="button" onClick={() => showDialog("waitlist")}>Join Waitlist <ArrowRight size={18}/></button><PlayButton onClick={() => showDialog("demo")}/></div>
+            <p className="edg-hero-description">Edgecipline shows you how you actually trade: the patterns that keep repeating, the psychological and execution mistakes behind your results, and where your discipline breaks down. Screenshot a trade and the AI captures the details, so every insight comes from your own data. Built for Forex and Indian market traders.</p>
+            <div className="edg-hero-actions"><button className="edg-button" type="button" onClick={showDialog}>Join Waitlist <ArrowRight size={18}/></button><HowItWorksLink/></div>
           </div>
           <div className="edg-hero-art" aria-hidden="true"><span className="edg-hero-landscape"><Image src="/landing/halftone-landscape.svg" alt="" fill priority sizes="(max-width: 800px) 100vw, 55vw"/></span><InteractiveTerrain/><div className="edg-awareness"><span>AWARENESS</span><span>CLARITY</span><span>BETTER HABITS</span><span>DISCIPLINE</span><span>CONSISTENCY</span></div><p>SAME MARKETS.<br/>A <b>CALMER,<br/>STRONGER<br/>TRADER.</b></p></div>
         </section>
@@ -143,7 +125,7 @@ export function ReferenceLanding() {
           <div><strong>2</strong><span>Market Modes</span></div>
           <div><strong>{features.length}</strong><span>Product Capabilities</span></div>
           <div><strong>Free</strong><span>Waitlist Access</span></div>
-          <div><strong>Private</strong><span>Early Access</span></div>
+          <div><strong>Soon</strong><span>Public Launch</span></div>
         </section>
 
         <EmotionalLoopContent />
@@ -152,12 +134,12 @@ export function ReferenceLanding() {
 
         <section className="edg-section edg-process" id="how-it-works" aria-labelledby="edg-process-title">
           <div className="edg-section-intro"><SectionLabel number="04">A SMARTER WAY</SectionLabel><h2 id="edg-process-title">TURN YOUR<br/>TRADES INTO<br/><em>REAL PROGRESS.</em></h2><p>Log your trades, thoughts and emotions in seconds. Get clear insights, identify patterns and improve over time.</p><a className="edg-text-link" href="/features">Explore all features <ArrowRight size={14}/></a></div>
-          <div className="edg-step-cards"><article><span className="edg-step-number">01</span><div className="edg-icon"><ClipboardList size={27}/></div><small>Upload Your Trades</small><h3>Journal Easily</h3><p>Import your trading history in seconds.</p><a href="/features" aria-label="Explore journal features"><ArrowRight size={16}/></a></article><article><span className="edg-step-number">02</span><div className="edg-icon"><ChartNoAxesColumnIncreasing size={27}/></div><small>AI Analysis</small><h3>AI Insights</h3><p>Our AI analyses your behavior, patterns and emotional triggers.</p><a href="/features" aria-label="Explore AI insights"><ArrowRight size={16}/></a></article><article><span className="edg-step-number">03</span><div className="edg-icon"><Target size={27}/></div><small>Learn &amp; Improve</small><h3>Build Habits</h3><p>Get personalized insights to build better habits and consistency.</p><a href="/features" aria-label="Explore habit tools"><ArrowRight size={16}/></a></article></div>
+          <div className="edg-step-cards"><article><span className="edg-step-number">01</span><div className="edg-icon"><ClipboardList size={27}/></div><small>{stepCopy[0].title}</small><h3>Journal Easily</h3><p>{stepCopy[0].description}</p><a href="/features" aria-label="Explore journal features"><ArrowRight size={16}/></a></article><article><span className="edg-step-number">02</span><div className="edg-icon"><ChartNoAxesColumnIncreasing size={27}/></div><small>{stepCopy[1].title}</small><h3>AI Insights</h3><p>{stepCopy[1].description}</p><a href="/features" aria-label="Explore AI insights"><ArrowRight size={16}/></a></article><article><span className="edg-step-number">03</span><div className="edg-icon"><Target size={27}/></div><small>{stepCopy[2].title}</small><h3>Build Habits</h3><p>{stepCopy[2].description}</p><a href="/features" aria-label="Explore habit tools"><ArrowRight size={16}/></a></article></div>
         </section>
 
-        <section className="edg-section edg-insights" id="insights" aria-labelledby="edg-insights-title"><div className="edg-section-intro"><SectionLabel number="05">REAL INSIGHTS</SectionLabel><h2 id="edg-insights-title">SEE THE FULL<br/><em>PICTURE.</em></h2><p>Your trading data reveals more than numbers. Edgecipline turns it into clear, actionable insights so you can grow with discipline.</p><a className="edg-outline-button" href="#how-it-works">See how it works <ArrowRight size={16}/></a></div><PerformanceCard/></section>
+        <section className="edg-section edg-insights" id="insights" aria-labelledby="edg-insights-title"><div className="edg-section-intro"><SectionLabel number="05">CLEAR INSIGHTS</SectionLabel><h2 id="edg-insights-title">SEE THE FULL<br/><em>PICTURE.</em></h2><p>Your trading data reveals more than numbers. Edgecipline turns it into clear, actionable insights so you can grow with discipline.</p><a className="edg-outline-button" href="#how-it-works">See how it works <ArrowRight size={16}/></a></div><PerformanceCard/></section>
 
-        <section className="edg-section edg-coach" id="ai-coach" aria-labelledby="edg-coach-title"><div className="edg-section-intro"><SectionLabel number="06">YOUR AI COACH</SectionLabel><h2 id="edg-coach-title">A COACH THAT<br/>UNDERSTANDS <em>YOU.</em></h2><p>Get personalized feedback, identify emotional triggers and build habits that actually stick.</p><a className="edg-outline-button" href="/features">Meet your AI Coach <ArrowRight size={16}/></a></div><div className="edg-coach-messages"><article><span className="edg-icon"><ClipboardList size={24}/></span><p>You took 3 trades after a loss.<br/><strong>Try following your plan.</strong></p><small>10:24 AM</small></article><article><span className="edg-icon"><BarChart3 size={24}/></span><p>Your win rate is higher when you<br/>trade during London session.</p><small>Yesterday</small></article><article><span className="edg-icon"><BrainCircuit size={24}/></span><p>You’re more consistent this week.<br/><strong>Keep it up! 🚀</strong></p><small>Today</small></article></div></section>
+        <section className="edg-section edg-coach" id="ai-coach" aria-labelledby="edg-coach-title"><div className="edg-section-intro"><SectionLabel number="06">YOUR AI COACH</SectionLabel><h2 id="edg-coach-title">A COACH THAT<br/>UNDERSTANDS <em>YOU.</em></h2><p>Get personalized feedback, identify emotional triggers and build habits that actually stick.</p><a className="edg-outline-button" href="/features">Meet your AI Coach <ArrowRight size={16}/></a></div><div className="edg-coach-messages"><article><span className="edg-icon"><ClipboardList size={24}/></span><p>You took 3 trades after a loss.<br/><strong>Try following your plan.</strong></p><small>10:24 AM</small></article><article><span className="edg-icon"><BarChart3 size={24}/></span><p>Your win rate is higher when you<br/>trade during London session.</p><small>Yesterday</small></article><article><span className="edg-icon"><BrainCircuit size={24}/></span><p>You’re more consistent this week.<br/><strong>Keep it up! 🚀</strong></p><small>Today</small></article><span className="edg-example-tag">Example data. Illustrative coach messages, not real user data.</span></div></section>
 
         <TradingDnaContent />
         <WeeklyReflectionContent />
@@ -168,30 +150,27 @@ export function ReferenceLanding() {
         <section className="edg-section edg-pricing" id="pricing" aria-labelledby="edg-pricing-title">
           <div className="edg-section-intro"><SectionLabel number="11">PRICING</SectionLabel><h2 id="edg-pricing-title">SIMPLE. TRANSPARENT.<br/><em>CHOOSE YOUR PATH.</em></h2><p>Start small. Upgrade anytime.</p></div>
           <div className="edg-pricing-content">
-            <div className="edg-billing" role="group" aria-label="Billing term">
-              <button className={billing === "monthly" ? "active" : ""} type="button" aria-pressed={billing === "monthly"} onClick={() => changeBilling("monthly")}>Monthly</button>
-              <button className={billing === "yearly" ? "active" : ""} type="button" aria-pressed={billing === "yearly"} onClick={() => changeBilling("yearly")}>Yearly</button>
+            <div className="edg-billing" role="group" aria-label="Plan term">
+              {plans.map((plan) => <button key={plan.id} className={term === plan.id ? "active" : ""} type="button" aria-pressed={term === plan.id} onClick={() => setTerm(plan.id)}>{termLabel(plan.months)}</button>)}
             </div>
-            <div className="edg-pricing-view" ref={pricingView}>
-              {billing === "monthly" ? (
-                <div className="edg-plan-grid">
-                  {plans.map((plan) => <article key={plan.id} className={plan.featured ? "edg-plan popular" : "edg-plan"}>{plan.featured && <span className="edg-popular">MOST POPULAR</span>}<small>{plan.name}</small><div className="edg-plan-price"><strong>{plan.price}</strong><span>{plan.period}</span></div><ul>{plan.features.map((item) => <li key={item}><Check size={13}/>{item}</li>)}</ul><button type="button" className={plan.featured ? "edg-button" : "edg-outline-button"} onClick={() => showDialog("waitlist")}>Join Waitlist <ArrowRight size={15}/></button></article>)}
-                </div>
-              ) : (
-                <div className="edg-yearly-message"><strong>Yearly plans are coming.</strong><p>Join the waitlist to receive confirmed annual-plan updates.</p><button className="edg-button" type="button" onClick={() => showDialog("waitlist")}>Join Waitlist <ArrowRight size={16}/></button></div>
-              )}
+            <div className="edg-pricing-view">
+              {/* Every plan stays visible; the selected term reuses the existing
+                  highlighted-card style (`popular`). */}
+              <div className="edg-plan-grid">
+                {plans.map((plan) => { const selected = term === plan.id; return <article key={plan.id} className={selected ? "edg-plan popular" : "edg-plan"} aria-current={selected ? "true" : undefined}><small>{plan.name}</small><div className="edg-plan-price"><strong>{plan.price}</strong><span>{plan.period}</span></div><ul>{plan.features.map((item) => <li key={item}><Check size={13}/>{item}</li>)}</ul><button type="button" className={selected ? "edg-button" : "edg-outline-button"} onClick={showDialog}>Join Waitlist <ArrowRight size={15}/></button></article>; })}
+              </div>
             </div>
           </div>
         </section>
 
         <section className="edg-section edg-faq" id="faq" aria-labelledby="edg-faq-title"><div className="edg-section-intro"><SectionLabel number="12">FAQ</SectionLabel><h2 id="edg-faq-title">FREQUENTLY<br/>ASKED <em>QUESTIONS.</em></h2><p>Everything you need to know.</p></div><div className="edg-faq-list">{homepageFaqItems.map((item) => <details key={item.id} id={`home-${item.id}`}><summary>{item.q}<span aria-hidden="true">+</span></summary><p>{item.a}</p></details>)}</div></section>
 
-        <section className="edg-final" id="waitlist" aria-labelledby="edg-final-title"><div className="edg-final-art" aria-hidden="true"/><span className="edg-final-kicker">JOIN THE MOVEMENT</span><h2 id="edg-final-title">A CALMER MIND.<br/>A <em>STRONGER TRADER.</em></h2><p>Same markets. A better you.</p><div><button className="edg-button" type="button" onClick={() => showDialog("waitlist")}>Join Waitlist <ArrowRight size={17}/></button><PlayButton onClick={() => showDialog("demo")}/></div></section>
+        <section className="edg-final" id="waitlist" aria-labelledby="edg-final-title"><div className="edg-final-art" aria-hidden="true"/><span className="edg-final-kicker">JOIN THE MOVEMENT</span><h2 id="edg-final-title">A CALMER MIND.<br/>A <em>STRONGER TRADER.</em></h2><p>Same markets. A better you.</p><div><button className="edg-button" type="button" onClick={showDialog}>Join Waitlist <ArrowRight size={17}/></button><HowItWorksLink/></div></section>
       </main>
 
       <footer className="edg-footer"><Logo/><nav aria-label="Footer navigation">{nav.map(([label, href]) => <a key={label} href={href}>{label}</a>)}{metaFooterLinks.map(([label, href]) => <Link key={label} href={href}>{label}</Link>)}</nav><FooterSocial/><p>© 2026 Edgecipline. All rights reserved.<br/>Built for traders, worldwide.</p></footer>
 
-      <dialog className="edg-dialog" ref={dialog} onClick={(event) => { if (event.target === dialog.current) dialog.current?.close(); }}><button type="button" className="edg-dialog-close" aria-label="Close dialog" onClick={() => dialog.current?.close()}><X size={19}/></button>{dialogMode === "waitlist" ? <><h2>Join the Edgecipline waitlist</h2><p>Get early access updates and an invitation when the product opens.</p><WaitlistForm/></> : <><span className="edg-dialog-icon"><CirclePlay size={29}/></span><h2>Watch the Edgecipline demo</h2><p>The walkthrough is being recorded. Join the waitlist and we’ll let you know when it is ready.</p><button className="edg-button" type="button" onClick={() => showDialog("waitlist")}>Join Waitlist <ArrowRight size={16}/></button></>}</dialog>
+      <dialog className="edg-dialog" ref={dialog} aria-labelledby="edg-dialog-title" onClick={(event) => { if (event.target === dialog.current) dialog.current?.close(); }}><button type="button" className="edg-dialog-close" aria-label="Close dialog" onClick={() => dialog.current?.close()}><X size={19}/></button><h2 id="edg-dialog-title">Join the Edgecipline waitlist</h2><p>The Android app is on Google Play now and iOS is in development. Join to hear when the official launch across all platforms happens.</p><WaitlistForm/></dialog>
       </div>
     </>
   );

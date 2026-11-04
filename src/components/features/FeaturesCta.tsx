@@ -26,7 +26,7 @@ export function FeaturesCta() {
         <div className={css("ftxCtaInner")}>
           <p className={css("ftxEyebrow")} data-reveal="fade">
             <i aria-hidden="true" />
-            Early access open
+            Public launch coming soon
           </p>
 
           <h2 id="features-cta-title" data-reveal>
@@ -35,7 +35,7 @@ export function FeaturesCta() {
 
           <p className={css("ftxLead")} data-reveal style={vars({ "--mo-delay": ".1s" })}>
             Edgecipline brings AI extraction, Trading DNA, gamified missions, and daily coaching
-            together for Forex and Indian markets. Join the waitlist for early access.
+            together for Forex and Indian markets. Join the waitlist for launch updates.
           </p>
 
           <div className={css("ftxActions")} data-reveal style={vars({ "--mo-delay": ".18s" })}>
@@ -51,7 +51,7 @@ export function FeaturesCta() {
           <ul className={css("ftxTrust")} data-reveal="fade" style={vars({ "--mo-delay": ".24s" })}>
             <li>
               <Sparkles aria-hidden="true" size={14} />
-              Early access is open
+              Android on Google Play · iOS in development
             </li>
             <li>
               <Globe2 aria-hidden="true" size={14} />

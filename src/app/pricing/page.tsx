@@ -9,14 +9,14 @@ import { PlanCards } from "@/components/pricing/PlanCards";
 import { PlanCompare } from "@/components/pricing/PlanCompare";
 import { PricingFaq } from "@/components/pricing/PricingFaq";
 import { WAITLIST_HREF } from "@/data/features";
-import { BRAND_NAME, OG_LOCALE, TWITTER_DEFAULTS, SOFTWARE_ID, WEBSITE_ID, absoluteUrl, jsonLd } from "@/data/brand";
+import { BRAND_NAME, LAUNCH_STATUS_SHORT, OG_LOCALE, TWITTER_DEFAULTS, SOFTWARE_ID, WEBSITE_ID, absoluteUrl, jsonLd } from "@/data/brand";
 import styles from "@/components/pricing/Pricing.module.css";
 
 const css = (name: string) => styles[name] || name;
 
-const title = "Pricing — Edgecipline Plans & Early Access";
+const title = "Pricing — Edgecipline Plans & Launch Waitlist";
 const description =
-  "Edgecipline pricing: Standard ₹349/month, Professional ₹899 for 3 months (~₹9.99/day), Ultimate ₹1,499 for 6 months (~₹8.33/day). Start with a 7-day trial; free accounts can save up to 2 trades. Access is currently invite-only.";
+  "Edgecipline pricing: Standard ₹349 for 1 month, Professional ₹899 for 3 months (~₹9.99/day), Ultimate ₹1,499 for 6 months (~₹8.33/day). Every paid plan includes all features. Free users get 2 AI screenshot extractions and unlimited manual entries. Public launch coming soon.";
 
   /* No `images` here on purpose: `opengraph-image.tsx` in this segment
      generates the card, and an explicit `images` in metadata would override
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     locale: OG_LOCALE,
     title,
     description:
-      "See Edgecipline plans from ₹349/month. Start with a 7-day trial; free accounts can save up to 2 trades. Access is currently invite-only.",
+      "Edgecipline plans from ₹349 for 1 month. Every paid plan includes all features; free users get 2 AI screenshot extractions and unlimited manual entries. Public launch coming soon.",
     type: "website",
     url: absoluteUrl("/pricing"),
   },
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Edgecipline Pricing — From ₹349/month",
     description:
-      "Standard ₹349/mo · Professional ₹899/3mo · Ultimate ₹1,499/6mo. Request invite-only access.",
+      "Standard ₹349/1mo · Professional ₹899/3mo · Ultimate ₹1,499/6mo. All features on every plan. Public launch coming soon.",
   },
 };
 
@@ -151,15 +151,15 @@ export default function PricingPage() {
           <div className={css("ppCtaInner")}>
             <p className={css("ppLabel")} data-reveal="fade">
               <i aria-hidden="true" />
-              Early Access Open
+              {LAUNCH_STATUS_SHORT}
             </p>
 
             <h2 id="pricing-cta-title" data-reveal>
-              Join the free early-access waitlist.
+              Join the free launch waitlist.
             </h2>
 
             <p data-reveal style={{ ["--mo-delay" as string]: ".1s" }}>
-              Request invite-only access and receive product and plan updates. No credit card required.
+              The Android app is on Google Play now and iOS is in development. Get notified when the official launch happens. No credit card required.
             </p>
 
             <div

@@ -339,7 +339,7 @@ export default function AboutPage() {
           <div className={css("abCtaInner")}>
             <p className={css("abLabel")} data-reveal="fade">
               <i aria-hidden="true" />
-              Early Access Open
+              Public Launch Coming Soon
             </p>
 
             <h2 id="about-cta-title" data-reveal>
@@ -347,8 +347,8 @@ export default function AboutPage() {
             </h2>
 
             <p data-reveal style={vars({ "--mo-delay": ".1s" })}>
-              Request an invitation to the completed web and Android product. Priority access is
-              offered to early members.
+              The Android app is on Google Play now and iOS is in development. Join the waitlist to
+              hear when the official launch happens.
             </p>
 
             <div className={css("abCtaActions")} data-reveal style={vars({ "--mo-delay": ".18s" })}>

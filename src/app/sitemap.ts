@@ -50,6 +50,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: at("/pricing"), priority: 0.8, changeFrequency: "monthly" },
     { url: at("/blog"), priority: 0.7, changeFrequency: "weekly" },
     { url: at("/about"), priority: 0.6, changeFrequency: "yearly" },
+    { url: at("/story"), priority: 0.6, changeFrequency: "yearly" },
     { url: at("/faq"), priority: 0.6, changeFrequency: "monthly" },
     { url: at("/contact"), priority: 0.5, changeFrequency: "yearly" },
     { url: at("/founders"), priority: 0.6, changeFrequency: "yearly" },

@@ -252,7 +252,7 @@ export default async function BlogPostPage({ params }: Props) {
           <div className={css("blCtaInner")}>
             <p className={css("blLabel")} data-reveal="fade">
               <i aria-hidden="true" />
-              Early Access Open
+              Public Launch Coming Soon
             </p>
 
             <h2 id="post-cta-title" data-reveal>
@@ -261,7 +261,7 @@ export default async function BlogPostPage({ params }: Props) {
 
             <p data-reveal style={vars({ "--mo-delay": ".1s" })}>
               Edgecipline measures the behaviour this article describes — from your own screenshots.
-              Join the waitlist for early access.
+              Join the waitlist for launch updates.
             </p>
 
             <div className={css("blCtaActions")} data-reveal style={vars({ "--mo-delay": ".18s" })}>

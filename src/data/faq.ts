@@ -7,6 +7,9 @@
  * clarified so they do not imply unverified live product capabilities.
  */
 
+import { LAUNCH_STATUS } from "./brand";
+import { FREE_PLAN_SUMMARY } from "./pricing";
+
 export type FaqCategory =
   | "Founders & Company"
   | "About Edgecipline"
@@ -89,13 +92,13 @@ export const faqItems: readonly FaqItem[] = [
     id: "when-will-it-launch",
     category: "About Edgecipline",
     q: "Is Edgecipline available?",
-    a: "The Edgecipline product is complete on web and Android. Registration is open, while product access is currently invite-only. Join the waitlist to request access and founding-member pricing.",
+    a: `${LAUNCH_STATUS} Join the free waitlist to hear when the official launch happens.`,
   },
   {
     id: "is-there-a-mobile-app",
     category: "About Edgecipline",
     q: "Is there a mobile app?",
-    a: "Yes. The Android app is available through Google Play, although product access is currently invite-only. An iOS release is planned for the future.",
+    a: "Yes. The Android app is available to download on Google Play, where a limited group of users is currently testing it. The iOS app is in development, and the official public launch across all platforms will follow once it is ready.",
   },
 
   // ── AI & Features ─────────────────────────────────────────────────────────
@@ -167,13 +170,13 @@ export const faqItems: readonly FaqItem[] = [
     id: "how-much-does-it-cost",
     category: "Pricing & Access",
     q: "How much does Edgecipline cost?",
-    a: "The paid plans are Standard at ₹349/month, Professional at ₹899 for 3 months, and Ultimate at ₹1,499 for 6 months. A 7-day trial is available, and free accounts can save up to 2 trades. Joining the waitlist is free; payment is only required when you choose a paid subscription.",
+    a: `The paid plans are Standard at ₹349 for 1 month, Professional at ₹899 for 3 months, and Ultimate at ₹1,499 for 6 months. All three paid plans include every feature; they differ only by term. ${FREE_PLAN_SUMMARY} Joining the waitlist is free; payment is only required when you choose a paid plan.`,
   },
   {
     id: "is-the-waitlist-free",
     category: "Pricing & Access",
     q: "Is the waitlist free?",
-    a: "Yes, completely free. Joining requests an invitation and does not require a credit card.",
+    a: "Yes, completely free. Joining signs you up for launch and product updates and does not require a credit card.",
   },
   {
     id: "waitlist-member-benefits",
@@ -184,8 +187,8 @@ export const faqItems: readonly FaqItem[] = [
   {
     id: "free-trial",
     category: "Pricing & Access",
-    q: "Is there a free trial?",
-    a: "New accounts receive a 7-day premium trial. After the trial, the free account is limited to two saved trades.",
+    q: "Is there a free plan?",
+    a: FREE_PLAN_SUMMARY,
   },
 
   // ── Privacy & Data ────────────────────────────────────────────────────────
@@ -205,7 +208,7 @@ export const faqItems: readonly FaqItem[] = [
     id: "waitlist-data-collected",
     category: "Privacy & Data",
     q: "What data is collected when I join the waitlist?",
-    a: "When you join the waitlist, we collect your name, email address, optional phone number, and trading experience level so we can manage invitation requests. See our Privacy Policy for full details.",
+    a: "When you join the waitlist, we collect your name, email address, optional phone number, and trading experience level so we can manage the waitlist and send launch updates. See our Privacy Policy for full details.",
   },
 ] as const;
 

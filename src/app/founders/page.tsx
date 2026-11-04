@@ -340,7 +340,7 @@ export default function FoundersPage() {
           <div className={css("fdCtaInner")}>
             <p className={css("fdLabel")} data-reveal="fade">
               <i aria-hidden="true" />
-              Early Access Open
+              Public Launch Coming Soon
             </p>
 
             <h2 id="founders-cta-title" data-reveal>
@@ -348,8 +348,8 @@ export default function FoundersPage() {
             </h2>
 
             <p data-reveal style={vars({ "--mo-delay": ".1s" })}>
-              Request an invitation to the completed web and Android product. Priority access is
-              offered to early members.
+              The Android app is on Google Play now and iOS is in development. Join the waitlist to
+              hear when the official launch happens.
             </p>
 
             <div className={css("fdCtaActions")} data-reveal style={vars({ "--mo-delay": ".18s" })}>

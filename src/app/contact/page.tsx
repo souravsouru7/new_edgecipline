@@ -237,7 +237,7 @@ export default function ContactPage() {
           <div className={css("ctCtaInner")}>
             <p className={css("ctLabel")} data-reveal="fade">
               <i aria-hidden="true" />
-              Early Access Open
+              Public Launch Coming Soon
             </p>
 
             <h2 id="contact-cta-title" data-reveal>
@@ -245,8 +245,8 @@ export default function ContactPage() {
             </h2>
 
             <p data-reveal style={vars({ "--mo-delay": ".1s" })}>
-              The waitlist is free. Join to request invite-only access and receive product and plan
-              updates.
+              The waitlist is free. Join to hear when Edgecipline officially launches and receive
+              product and plan updates.
             </p>
 
             <div className={css("ctCtaActions")} data-reveal style={vars({ "--mo-delay": ".18s" })}>

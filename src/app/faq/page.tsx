@@ -167,7 +167,7 @@ export default function FaqPage() {
           <div className={css("fqCtaInner")}>
             <p className={css("fqLabel")} data-reveal="fade">
               <i aria-hidden="true" />
-              Early Access Open
+              Public Launch Coming Soon
             </p>
 
             <h2 id="faq-cta-title" data-reveal>
@@ -175,7 +175,7 @@ export default function FaqPage() {
             </h2>
 
             <p data-reveal style={vars({ "--mo-delay": ".1s" })}>
-              Join the waitlist to request invite-only access and receive product and plan updates.
+              Join the waitlist to hear when Edgecipline officially launches and receive product and plan updates.
             </p>
 
             <div className={css("fqCtaActions")} data-reveal style={vars({ "--mo-delay": ".18s" })}>

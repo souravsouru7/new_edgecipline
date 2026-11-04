@@ -159,7 +159,7 @@ export default function BlogPage() {
           <div className={css("blCtaInner")}>
             <p className={css("blLabel")} data-reveal="fade">
               <i aria-hidden="true" />
-              Early Access Open
+              Public Launch Coming Soon
             </p>
 
             <h2 id="blog-cta-title" data-reveal>
@@ -168,7 +168,7 @@ export default function BlogPage() {
 
             <p data-reveal style={vars({ "--mo-delay": ".1s" })}>
               Edgecipline turns the behaviour these articles describe into something you can see in
-              your own trades. Join the waitlist for early access.
+              your own trades. Join the waitlist for launch updates.
             </p>
 
             <div className={css("blCtaActions")} data-reveal style={vars({ "--mo-delay": ".18s" })}>

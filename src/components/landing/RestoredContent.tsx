@@ -98,7 +98,7 @@ export function ChartStoryContent() {
         <Label number="02">BEYOND THE NUMBERS</Label>
         <h2 id="edg-chart-story-title">THE CHART IS NOT<br/><em>THE WHOLE STORY.</em></h2>
         <p>Behind every candle is a thought, an emotion, a decision. Edgecipline helps you see the full picture.</p>
-        <div className="edg-story-badges"><span>Real Struggles</span><span>Real Traders</span><span>A Clearer Tomorrow</span></div>
+        <div className="edg-story-badges"><span>Real Struggles</span><span>Real Decisions</span><span>A Clearer Tomorrow</span></div>
       </div>
       <div className="edg-story-stage" aria-label="Four trading decisions behind the chart">
         <figure className="edg-story-chart" aria-hidden="true">
