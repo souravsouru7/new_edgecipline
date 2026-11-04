@@ -31,7 +31,7 @@ const MODES: readonly Mode[] = [
   {
     id: "forex",
     label: "Forex",
-    platforms: "MT5 now · MT4 and cTrader planned",
+    platforms: "MT5",
     currency: "Pips · lots",
     rows: [
       ["Pair", "EUR/USD"],

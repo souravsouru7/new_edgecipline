@@ -74,7 +74,7 @@ export const faqItems: readonly FaqItem[] = [
     id: "what-is-edgecipline",
     category: "About Edgecipline",
     q: "What is Edgecipline?",
-    a: "Edgecipline is an AI-powered trading journal, discipline coach, and gamified improvement system — not just a P&L tracker. Upload a screenshot of your trade and the AI automatically extracts the details, builds your Trading DNA profile, and reveals your emotional patterns, execution mistakes, and behavioral blind spots over time.",
+    a: "Edgecipline is an AI-powered trading journal, discipline coach, and gamified improvement system — not just a P&L tracker. Upload a screenshot of your trade and the AI extracts the details for you to review and correct. As your history grows, Edgecipline builds your Trading DNA profile and shows your emotional patterns, execution mistakes and behavioral blind spots.",
   },
   {
     id: "how-is-it-spelled",
@@ -86,7 +86,7 @@ export const faqItems: readonly FaqItem[] = [
     id: "who-is-it-for",
     category: "About Edgecipline",
     q: "Who is Edgecipline built for?",
-    a: "Edgecipline is built for retail Forex traders using MT5, and Indian retail traders on NIFTY, BANKNIFTY, options, and equity through brokers like Zerodha, Upstox, Angel One, Dhan, and Groww — anyone tired of losing money to emotional decisions and inconsistent execution. MT4 and cTrader support are planned.",
+    a: "Edgecipline is built for retail Forex traders using MT5, and Indian retail traders on NIFTY, BANKNIFTY, options, and equity through brokers like Zerodha, Upstox, Angel One, Dhan, and Groww — traders who want to understand the emotional decisions and inconsistent execution in their own records.",
   },
   {
     id: "when-will-it-launch",
@@ -106,43 +106,43 @@ export const faqItems: readonly FaqItem[] = [
     id: "how-extraction-works",
     category: "AI & Features",
     q: "How does AI screenshot extraction work?",
-    a: "Take a screenshot of your trade terminal after any trade. Edgecipline’s AI reads the screenshot to extract: trading pair, direction (long/short), entry price, exit price, P&L, lot size, and time. No manual data entry required.",
+    a: "Take a screenshot of your trade terminal after any trade. Edgecipline’s AI reads the screenshot to extract details such as trading pair, direction (long/short), entry price, exit price, P&L, lot size and time. You review and correct the extracted details before saving, and add your own psychology information.",
   },
   {
     id: "supported-brokers",
     category: "AI & Features",
     q: "What brokers and platforms does Edgecipline support?",
-    a: "Edgecipline currently supports MT5 and major Indian brokers such as Zerodha, Upstox, Angel One, Dhan and Groww. MT4 and cTrader support are planned for a future update.",
+    a: "Edgecipline currently supports MT5 and major Indian brokers such as Zerodha, Upstox, Angel One, Dhan and Groww.",
   },
   {
     id: "what-is-trading-dna",
     category: "AI & Features",
     q: "What is Trading DNA?",
-    a: "Trading DNA is your behavioral fingerprint — a comprehensive profile of your unique trading patterns, strengths, weaknesses, and psychological tendencies, built from your actual data. It also powers a Pattern Detection Engine that finds high-edge combinations like ‘London session + confident mood + breakout setup.’",
+    a: "Trading DNA is a profile of how you trade, built from your journal: your strengths, weaknesses, best setup and best session. Alongside it, pattern detection looks for habits such as losing after a win, overtrading or tilt. Insights unlock once enough trades are recorded.",
   },
   {
     id: "psychology-cost-calculator",
     category: "AI & Features",
     q: "What is the Psychology Cost Calculator?",
-    a: "It groups your trades by emotion and mistake tag — revenge, FOMO, greed, no stop loss, chased price — and calculates the exact P&L cost of each behavior, so you see a real number instead of a vague feeling.",
+    a: "It groups your trades by emotion and mistake tag — revenge, FOMO, greed, no stop loss, chased price — and totals the P&L of each group, so you can see what trades taken in each state have produced. It shows outcomes for your tagged trades; it does not prove that a behavior caused them.",
   },
   {
     id: "missions-streaks-mentor",
     category: "AI & Features",
     q: "What are Missions, Streaks, and the Morning Mentor?",
-    a: "Missions are AI-recommended challenges targeting your specific weaknesses, like avoiding emotional trades for 7 days. Streaks reward consistent daily journaling. The Morning Mentor sends a personalized AI message every morning at 6am based on your real trading data.",
+    a: "Missions are goals recommended for your current weaknesses, such as going a set period without revenge trades, with progress tracked automatically from your trades. Streaks track consistent journaling and discipline. The Morning Mentor is a short message each morning to help you set your focus for the day.",
   },
   {
     id: "patterns-detected",
     category: "AI & Features",
     q: "What behavioral patterns does Edgecipline detect?",
-    a: "Edgecipline detects revenge trading patterns, FOMO entry behavior, tilt spirals, time-of-day performance changes, size escalation after win streaks, rule adherence breakdowns, setup delusion, and emotional state correlations with outcomes.",
+    a: "Edgecipline looks for patterns such as losing after a win, overtrading, tilt and trades that look like revenge trading. It also shows how your results vary by session and time of day, how often you follow your setup rules, which mistakes you repeat most, and how mood, confidence and emotions relate to your results.",
   },
   {
     id: "weekly-reports",
     category: "AI & Features",
     q: "What are the weekly AI coaching reports?",
-    a: "Every Sunday, Edgecipline generates a personalized report based on your actual trade data from the week: what worked, what didn’t, your biggest behavioral pattern, win rate by setup, and one specific improvement focus for next week. Not generic tips — specific to your data.",
+    a: "Each week, Edgecipline generates a report from your trades covering your performance, your discipline and what to improve next. The report is also sent to your email, and past reports stay available in the app.",
   },
 
   // ── Forex & Indian Markets ────────────────────────────────────────────────
@@ -150,19 +150,19 @@ export const faqItems: readonly FaqItem[] = [
     id: "forex-support",
     category: "Forex & Indian Markets",
     q: "Does Edgecipline support Forex trading on MT5?",
-    a: "Yes. Edgecipline has a dedicated Forex mode for MT5, with its own journal, analytics, and screenshot extraction tuned for pip-based currency pairs. MT4 and cTrader support are planned for a future update.",
+    a: "Yes. Edgecipline has a dedicated Forex mode for MT5, with its own journal, analytics, and screenshot extraction tuned for pip-based currency pairs.",
   },
   {
     id: "nifty-banknifty",
     category: "Forex & Indian Markets",
     q: "Is Edgecipline suitable for NIFTY and BANKNIFTY traders?",
-    a: "Yes — Edgecipline has a dedicated Indian Market mode covering NIFTY, BANKNIFTY, options, futures, and equity trades, with pricing in INR and insights tailored for Indian market hours.",
+    a: "Yes — Edgecipline has a dedicated Indian Market mode covering NIFTY, BANKNIFTY, options and equity trades, with P&L shown in rupees and analytics kept separate from your Forex data.",
   },
   {
     id: "options-traders",
     category: "Forex & Indian Markets",
     q: "Does it work for options traders?",
-    a: "Yes. Indian Market mode captures F&O-specific fields — strike price, option type (CE/PE), expiry date, and lot size — and tracks behavioral patterns unique to options, like theta decay denial and expiry-day FOMO.",
+    a: "Yes. Indian Market mode captures F&O-specific fields — strike price, option type (CE/PE), expiry date, and lot size — alongside the same psychology fields and analytics as every other trade.",
   },
 
   // ── Pricing & Access ──────────────────────────────────────────────────────
@@ -182,7 +182,7 @@ export const faqItems: readonly FaqItem[] = [
     id: "waitlist-member-benefits",
     category: "Pricing & Access",
     q: "What do waitlist members get?",
-    a: "Priority access before the general public, potential founding pricing discounts, early beta access to new features, and the ability to shape the product through feedback.",
+    a: "Waitlist members receive email updates about the official launch and about Edgecipline’s product and plans.",
   },
   {
     id: "free-trial",

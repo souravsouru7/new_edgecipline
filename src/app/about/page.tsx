@@ -34,7 +34,7 @@ import styles from "@/components/about/About.module.css";
 const css = (name: string) => styles[name] || name;
 const vars = (value: Record<string, string | number>) => value as CSSProperties;
 
-const title = "About Edgecipline — Built by Traders Who Felt This Problem";
+const title = "About Edgecipline — Built for Traders Who Know This Problem";
 const description =
   "Why Edgecipline exists: the mission, the founder story and the journey from a behaviour journal to an AI discipline coach for Forex and Indian traders.";
 
@@ -148,9 +148,9 @@ export default function AboutPage() {
             </p>
 
             <h1 id="about-title" className={css("abTitle")}>
-              <span data-reveal>Built by traders who</span>
+              <span data-reveal>Built for traders who</span>
               <span data-reveal style={vars({ "--mo-delay": ".09s" })}>
-                felt this problem.
+                know this problem.
               </span>
             </h1>
 

@@ -26,7 +26,7 @@ export const EVERY_PLAN_INCLUDES_EVERYTHING = true;
 
 /** The free tier, as confirmed by the owner. Shared by the FAQ and pricing copy. */
 export const FREE_PLAN_SUMMARY =
-  "Free users get 2 AI screenshot extractions and can create unlimited manual trade entries.";
+  "Start with 2 AI screenshot extractions. You can also explore manual trade journaling.";
 
 export const ALL_PLAN_FEATURES = [
   "Trading journal and AI screenshot extraction",
@@ -187,9 +187,6 @@ const MATRIX: readonly CompareRow[] = [
   { group: "Trading DNA", label: "Self-awareness score", standard: false, professional: false, ultimate: true },
   { group: "Trading DNA", label: "Psychology timeline", standard: false, professional: false, ultimate: true },
 
-  { group: "Review & extras", label: "Monthly performance review", standard: false, professional: false, ultimate: true },
-  { group: "Review & extras", label: "Lifetime trade backup", standard: false, professional: false, ultimate: true },
-  { group: "Review & extras", label: "Early beta access", standard: false, professional: false, ultimate: true },
 ];
 
 export const compareRows: readonly CompareRow[] = EVERY_PLAN_INCLUDES_EVERYTHING
@@ -216,7 +213,7 @@ export const pricingFaqs = [
   },
   {
     q: "Can I switch plans after subscribing?",
-    a: "Yes. You can upgrade or downgrade your plan at any time. Upgrades take effect immediately; downgrades take effect at the end of your current billing period.",
+    a: "All three paid plans include the same features and differ only in subscription duration. For questions about changing plans, email support@edgecipline.com.",
   },
   {
     q: "Is there a free plan?",

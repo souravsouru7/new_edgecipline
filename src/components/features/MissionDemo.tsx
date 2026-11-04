@@ -65,8 +65,7 @@ export function MissionDemo() {
 
         <div className={css("ftStreakBody")}>
           <p>
-            Daily streak with milestone notifications, and a streak protector grace period so one
-            missed day doesn’t reset you.
+            Journal and discipline streaks, with a reminder when you miss a journal day.
           </p>
           <button
             className={css("ftDemoButton")}

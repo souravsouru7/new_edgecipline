@@ -321,7 +321,7 @@ export default function FoundersPage() {
                 Why the company exists
               </p>
               <h2 id="why-title" data-reveal>
-                Built by traders who felt this problem
+                Built for traders who know this problem
               </h2>
               <p data-reveal>{WHY_NOTE}</p>
             </header>

@@ -56,8 +56,8 @@ export function ChecklistDemo() {
 
       <div className={css("ftChecklistFoot")}>
         <p>
-          Adherence this trade: <b>{percent}%</b> — logged against the outcome, so you can see how
-          rule adherence predicts results.
+          Adherence this trade: <b>{percent}%</b> — logged against the outcome, so you can compare
+          rule-following with your results.
         </p>
       </div>
     </div>

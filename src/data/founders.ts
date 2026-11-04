@@ -147,7 +147,7 @@ export const SPLIT_NOTE =
   "Product and technology decisions sit with one founder. Operations, administration and people sit with the other. Between them the company is covered end to end.";
 
 export const WHY_NOTE =
-  "Edgecipline was built by traders who lost money the same way most traders do — not from bad strategies, but from bad behavior. Read the full story behind the product.";
+  "Edgecipline was built to help traders understand the behavior behind their results, alongside strategy and risk. Read the full story behind the product.";
 
 /**
  * The founder FAQ, shown on this page in the old site too.

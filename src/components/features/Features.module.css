@@ -1510,7 +1510,7 @@ html[data-edg-theme="dark"] .ftDemoButton { color: #06160e; background: var(--ft
   background: var(--ftx-green-soft);
 }
 
-.ftMorning time { color: var(--ftx-ink); font-family: var(--ftx-display); font-size: 18px; font-weight: 500; }
+.ftMorning time, .ftMorning b { color: var(--ftx-ink); font-family: var(--ftx-display); font-size: 18px; font-weight: 500; }
 .ftMorning p { margin: 0; color: var(--ftx-muted); font-size: 12px; line-height: 1.45; }
 
 /* -- 11 — weekly report ---------------------------------------------------- */

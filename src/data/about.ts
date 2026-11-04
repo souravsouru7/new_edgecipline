@@ -26,14 +26,14 @@ export type Milestone = {
 };
 
 export const INTRO =
-  "Edgecipline exists because we lived through the same painful cycle most traders face: good strategy, inconsistent execution, unexplained losses. The problem wasn’t the market.";
+  "Edgecipline exists to help traders break a familiar cycle: a strategy that works on paper, inconsistent execution, and losses that are hard to explain.";
 
 export const pillars = [
   {
     eyebrow: "Mission",
     /** Split so the page can set the accent word without splitting the string. */
     statement: ["Help every trader understand ", "themselves", " as clearly as the market."],
-    body: "Most trading tools track what happened. We track why — and then help you build the habit to fix it. By surfacing behavioral patterns that drive losses — revenge trading, FOMO entries, time-of-day blind spots — and turning them into daily missions, streaks, and coaching, we help traders fix the root cause, not just the symptoms.",
+    body: "Most trading tools track what happened. We track why — and then help you build the habit to fix it. By surfacing behavioral patterns such as revenge trading, FOMO entries and time-of-day blind spots, and turning them into missions, streaks and coaching, we help traders work on the behavior behind their results.",
   },
   {
     eyebrow: "Vision",
@@ -85,8 +85,8 @@ export const milestones: readonly Milestone[] = [
   },
   {
     year: "2026",
-    label: "Product Complete",
-    text: "Completed the web and Android product with AI screenshot extraction, Trading DNA, gamified missions & streaks, and daily AI coaching, and began Android testing with a limited group of users. The iOS app is in development, and the official public launch follows once it is ready.",
+    label: "Web App Ready",
+    text: "Built the web app and the Android app with AI screenshot extraction, Trading DNA, missions and streaks, and AI coaching, and began Android testing with a limited group of users. The iOS app is in development, and the official public launch follows once it is ready.",
   },
 ] as const;
 
@@ -118,8 +118,8 @@ export const beliefs: readonly Belief[] = [
   },
   {
     icon: "traders",
-    title: "Built by Traders",
-    body: "We trade. We journal. We’ve had the same psychological struggles. We built the tool we wish we had.",
+    title: "Built for Traders",
+    body: "Edgecipline is built around the decisions traders make every day: entries, exits, rules, and the emotions behind them.",
   },
 ] as const;
 

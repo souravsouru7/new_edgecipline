@@ -128,7 +128,7 @@ export function ReferenceLanding() {
           <div><strong>2</strong><span>Market Modes</span></div>
           <div><strong>{features.length}</strong><span>Product Capabilities</span></div>
           <div><strong>Free</strong><span>Waitlist Access</span></div>
-          <div><strong>Soon</strong><span>Public Launch</span></div>
+          <div><strong>Web</strong><span>App Ready</span></div>
         </section>
 
         <EmotionalLoopContent />

@@ -39,7 +39,7 @@ export const BLOG_POSTS: BlogPost[] = [
       "SEBI reported widespread losses among individual equity F&O traders. Learn what that study does and does not show, and how reviewing your own decisions may help.",
     category: "Trading Psychology",
     publishedAt: "2025-12-15",
-    updatedAt: "2026-10-21",
+    updatedAt: "2026-11-04",
     sources: [{
       title: "SEBI: Updated study of individual equity F&O traders, September 2024",
       url: "https://www.sebi.gov.in/media-and-notifications/press-releases/sep-2024/updated-sebi-study-reveals-93-of-individual-traders-incurred-losses-in-equity-fando-between-fy22-and-fy24-aggregate-losses-exceed-1-8-lakh-crores-over-three-years_86906.html",
@@ -98,7 +98,7 @@ Reviewing your behavior alongside strategy, costs and risk gives you a clearer r
       "Why trading journals get abandoned, and how to build a journaling habit that lasts: a four-field minimum entry, a fixed routine and a weekly review.",
     category: "Trading Journal",
     publishedAt: "2025-11-28",
-    updatedAt: "2026-10-21",
+    updatedAt: "2026-11-04",
     sources: [
       {
         title: "Lally, van Jaarsveld, Potts and Wardle (2010), How are habits formed: Modelling habit formation in the real world, European Journal of Social Psychology",
@@ -159,7 +159,7 @@ A few weeks of entries rarely show a reliable pattern. As your history grows, yo
       "How expiry days, SEBI's 2024 index-derivative changes and the opening session can affect NIFTY and BANKNIFTY decisions, and what to record in your journal.",
     category: "NIFTY & Options",
     publishedAt: "2025-11-10",
-    updatedAt: "2026-10-21",
+    updatedAt: "2026-11-04",
     sources: [
       {
         title: "SEBI circular SEBI/HO/MRD/TPD-1/P/CIR/2024/132: Measures to Strengthen Equity Index Derivatives Framework, October 1, 2024",
@@ -231,7 +231,7 @@ Edgecipline's Indian market mode records strike price, option type, expiry date 
       "A per-trade limit is only one part of a risk plan. Consider correlation, session limits, drawdowns, and decisions after losses.",
     category: "Risk Management",
     publishedAt: "2025-10-22",
-    updatedAt: "2026-10-21",
+    updatedAt: "2026-11-04",
     sources: [
       {
         title: "SEBI circular SEBI/HO/MRD/TPD-1/P/CIR/2024/132: Measures to Strengthen Equity Index Derivatives Framework, October 1, 2024",
@@ -293,7 +293,7 @@ Each of these questions compares your written plan with what you actually did.`,
       "What Trading DNA means, which behavior patterns research has documented in real trading records, and how to check your own journal for them.",
     category: "Behavior Analytics",
     publishedAt: "2025-10-05",
-    updatedAt: "2026-10-21",
+    updatedAt: "2026-11-04",
     sources: [
       {
         title: "Shefrin and Statman (1985), The Disposition to Sell Winners Too Early and Ride Losers Too Long: Theory and Evidence, Journal of Finance",
@@ -366,7 +366,7 @@ With only a few dozen trades, differences can easily be chance. Use these observ
       "What AI can and cannot do for a trading journal: faster screenshot entry, pattern analysis that improves as trades accumulate, and the limits to know.",
     category: "Trading Journal",
     publishedAt: "2025-09-18",
-    updatedAt: "2026-10-21",
+    updatedAt: "2026-11-04",
     readTime: 4,
     featured: false,
     content: `## The Spreadsheet Problem

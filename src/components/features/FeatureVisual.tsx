@@ -380,9 +380,9 @@ function SelfAwarenessVisual() {
 
 const ANALYTICS_METRICS = [
   ["By dimension", "Setup, session, instrument"],
-  ["Drawdown", "Maximum and recovery"],
+  ["Drawdown", "Losing periods"],
   ["Calendar", "P&L heatmap"],
-  ["Advanced", "Sharpe, profit factor, streaks"],
+  ["Risk", "Risk:reward breakdown"],
 ] as const;
 
 function AnalyticsVisual() {
@@ -501,10 +501,10 @@ function AiCoachVisual() {
       </dl>
 
       <div className={css("ftMorning")}>
-        <time dateTime="06:00">6am</time>
+        <b>Morning</b>
         <p>
-          The Morning Mentor arrives as a push notification referencing your actual streak,
-          mistakes and mission progress.
+          The Morning Mentor is a short message each morning to help you set your focus for the
+          day.
         </p>
       </div>
     </Panel>
@@ -520,7 +520,7 @@ function ReportsVisual() {
         <p className={css("ftReportHead")}>
           <b>Weekly coaching report</b>
           <span>
-            <BookOpen size={12} aria-hidden="true" /> Delivered Sunday
+            <BookOpen size={12} aria-hidden="true" /> Delivered weekly
           </span>
         </p>
 
@@ -605,9 +605,9 @@ function AndroidVisual() {
 
           <div className={css("ftShade")} style={{ marginTop: 10 }}>
             <p className={css("ftShadeHead")}>
-              <AlarmClock size={12} aria-hidden="true" /> 6am · Morning Mentor
+              <AlarmClock size={12} aria-hidden="true" /> Morning Mentor
             </p>
-            <p>Your streak, your mistakes and your mission progress, before the session opens.</p>
+            <p>A short message to help you set your focus for the day.</p>
           </div>
         </div>
       </div>

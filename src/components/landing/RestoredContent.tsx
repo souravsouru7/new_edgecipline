@@ -178,12 +178,12 @@ export function BuiltByTradersContent() {
     <section className="edg-section edg-restored edg-built-by" id="story" aria-labelledby="edg-built-by-title">
       <div className="edg-section-intro">
         <Label number="03">OUR STORY</Label>
-        <h2 id="edg-built-by-title">BUILT BY TRADERS,<br/><em>FOR TRADERS.</em></h2>
-        <p>Edgecipline was born from real trading struggles — the overtrading, the impulsive decisions, the frustration. We built it to help traders like us gain self-awareness, understand behavior, and trade with a calmer, clearer mind.</p>
+        <h2 id="edg-built-by-title">BUILT FOR TRADERS,<br/><em>AROUND REAL DECISIONS.</em></h2>
+        <p>Edgecipline is built around common trading struggles — overtrading, impulsive decisions, frustration — and is designed to help traders gain self-awareness, understand their behavior, and trade with a calmer, clearer mind.</p>
         <a className="edg-text-link" href="/about">Read our story <ArrowRight size={14}/></a>
       </div>
       <div className="edg-story-values">
-        <div><span>01</span><strong>Real Experience</strong><p>Built from the trading challenges we know firsthand.</p></div>
+        <div><span>01</span><strong>Real Problems</strong><p>Built around the challenges traders face in their own records.</p></div>
         <div><span>02</span><strong>Practical Insights</strong><p>Understand the choices behind every trade.</p></div>
         <div><span>03</span><strong>A Calmer, Stronger You</strong><p>Turn awareness into a more consistent approach.</p></div>
       </div>
